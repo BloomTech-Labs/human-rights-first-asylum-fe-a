@@ -5,5 +5,4 @@ const config = {
   pkce: true,
   scopes: ['openid', 'email', 'profile'],
 };
-
 export { config };
