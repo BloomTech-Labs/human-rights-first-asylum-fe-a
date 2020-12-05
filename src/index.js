@@ -8,6 +8,12 @@ import {
 } from 'react-router-dom';
 import { Security, LoginCallback, SecureRoute } from '@okta/okta-react';
 
+// REDUX AND STARTER REDUCER
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+import { starterReducer } from './state/reducers';
+
 import 'antd/dist/antd.less';
 
 import { NotFoundPage } from './components/pages/NotFound';
@@ -20,12 +26,28 @@ import { ExampleDataViz } from './components/pages/ExampleDataViz';
 import { config } from './utils/oktaConfig';
 import { LoadingComponent } from './components/common';
 
+const store = createStore(starterReducer, applyMiddleware(thunk, customLogger));
+function customLogger(store) {
+  return function(next) {
+    return function(action) {
+      console.group(action.type);
+      console.log('prev state', store.getState());
+      console.log('ACTION: ', action);
+      next(action);
+      console.log('next state', store.getState());
+      console.groupEnd();
+    };
+  };
+}
+
 ReactDOM.render(
-  <Router>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </Router>,
+  <Provider store={store}>
+    <Router>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </Router>
+  </Provider>,
   document.getElementById('root')
 );
 
@@ -39,6 +61,8 @@ function App() {
     // It'll automatically check if userToken is available and push back to login if not :)
     history.push('/login');
   };
+
+  console.log(store.getState());
 
   return (
     <Security {...config} onAuthRequired={authHandler}>
