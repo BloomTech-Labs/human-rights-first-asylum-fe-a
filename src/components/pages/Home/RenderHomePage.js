@@ -1,28 +1,19 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import CaseTable from '../CaseTable/CaseTable';
+import DashboardNav from '../DashboardNav/DashboardNav';
+
 import axios from 'axios';
 // import { Button } from '../../common';
 
 function RenderHomePage(props) {
   const { userInfo, authService } = props;
 
-  const [fakeData, setFakeData] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get('https://jsonplaceholder.typicode.com/users')
-      .then(res => {
-        setFakeData(res.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }, []);
-
   return (
     <div>
-      <h1>Hi {userInfo.name} Welcome to Labs Basic SPA</h1>
+      {/* <h1>Hi {userInfo.name} Welcome to Labs Basic SPA</h1> */}
       <div className="dashboard-container">
+        <DashboardNav />
+
         <CaseTable />
       </div>
 
