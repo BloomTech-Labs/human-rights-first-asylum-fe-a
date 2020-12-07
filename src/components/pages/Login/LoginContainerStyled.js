@@ -38,7 +38,7 @@ export const LeftSide = styled.div`
   h2 {
     font-size: 5rem;
     margin: 0;
-    line-height: 5rem;
+    line-height: 7rem;
   }
 `;
 export const RightSide = styled.div`
@@ -53,6 +53,7 @@ export const RightSide = styled.div`
     width: 85%;
     justify-content: space-between;
     align-items: center;
+    margin: 3% 0;
     p {
       font-size: 2.5rem;
       margin: 0;

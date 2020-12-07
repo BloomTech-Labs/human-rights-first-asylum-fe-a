@@ -15,7 +15,11 @@ import {
   OverlayDiv,
   CloseLogin,
 } from './LoginContainerStyled';
-import VerticalSplitIcon from '@material-ui/icons/VerticalSplit';
+
+import TableChartOutlinedIcon from '@material-ui/icons/TableChartOutlined';
+import DescriptionIcon from '@material-ui/icons/Description';
+import CloudDoneIcon from '@material-ui/icons/CloudDone';
+import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 
 const LoginContainer = () => {
   const [login, setLogin] = useState(false);
@@ -88,16 +92,16 @@ const LoginContainer = () => {
         </LeftSide>
         <RightSide>
           <div>
-            <VerticalSplitIcon style={{ fontSize: '6rem' }} />
-            <p>lorem ipsum lorem ipsum lorem ipsum</p>
+            <TableChartOutlinedIcon style={{ fontSize: '6rem' }} />
+            <p>Perform custom queries and analyze data</p>
           </div>
           <div>
-            <p>lorem ipsum lorem ipsum lorem ipsum</p>
-            <VerticalSplitIcon style={{ fontSize: '6rem' }} />
+            <p>Upload &amp; download cases in PDF or CSV</p>
+            <CloudDoneIcon style={{ fontSize: '6rem' }} />
           </div>
           <div>
-            <VerticalSplitIcon style={{ fontSize: '6rem' }} />
-            <p>lorem ipsum lorem ipsum lorem ipsum</p>
+            <DescriptionOutlinedIcon style={{ fontSize: '6rem' }} />
+            <p>Access detailed reports on Judges and Cases</p>
           </div>
         </RightSide>
       </InfoDiv>
