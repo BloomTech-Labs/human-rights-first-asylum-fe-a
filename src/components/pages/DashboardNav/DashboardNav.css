@@ -5,14 +5,14 @@
 .dashboard-nav {
     background-color: rgb(0, 55, 103);
     height: 80px;
-    display: felx;
+    display: flex;
     justify-content: flex-start;
     align-items: center;
 
 }
 
-.menu-bars {
-    margin-left: 2rem;
+.toggle-icon {
+    
     font-size: 2rem;
     background: none;
     color: rgb(211,148,95);
@@ -27,7 +27,7 @@
     position: fixed;
     top: 0;
     left: -100%;
-    transition: 850ms;
+    transition: 750ms;
  }
 
  .nav-menu.active {
@@ -40,7 +40,7 @@
     color: whitesmoke;
     justify-content: flex-start;
     align-items: center;
-    padding: 8px 0px 8px 16px;
+    padding: 8px 0px 8px 0px;
     list-style: none;
     height: 60px;
 

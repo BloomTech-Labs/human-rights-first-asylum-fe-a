@@ -4,6 +4,7 @@ import './DashboardNav.css';
 import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 import { SidedrawerData } from './SidedrawerData';
+import Button from '@material-ui/core/Button/Button';
 
 export default function DashboardNav(props) {
   const { logout } = props;
@@ -14,16 +15,16 @@ export default function DashboardNav(props) {
   return (
     <>
       <div className="dashboard-nav">
-        <a className="menu-bars">
-          <MenuIcon onClick={toggleSidebar} />
-        </a>
+        <Button className="menu-bars" onClick={toggleSidebar}>
+          <MenuIcon className="toggle-icon" />
+        </Button>
       </div>
       <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
         <ul className="nav-menu-items">
           <li className="navbar-toggle">
-            <a className="menu-bars">
-              <CloseIcon onClick={toggleSidebar} />
-            </a>
+            <Button className="menu-bars" onClick={toggleSidebar}>
+              <CloseIcon className="toggle-icon" />
+            </Button>
           </li>
           {SidedrawerData.map((item, index) => {
             return (

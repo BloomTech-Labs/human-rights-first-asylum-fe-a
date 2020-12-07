@@ -30,10 +30,4 @@ export const SidedrawerData = [
     icon: <HelpIcon />,
     className: 'drawer-text',
   },
-  // {
-  //   title: 'Logout',
-  //   path: '/',
-  //   icon: <CloseIcon />,
-  //   className: 'drawer-text',
-  // },
 ];
