@@ -4,10 +4,19 @@ import '@okta/okta-signin-widget/dist/css/okta-sign-in.min.css';
 
 import { config } from '../../../utils/oktaConfig';
 
-import { LoginDiv } from './LoginContainerStyled';
+import {
+  LoginDiv,
+  Header,
+  InfoDiv,
+  LoginButtonDiv,
+  SecureLogin,
+  LeftSide,
+  RightSide,
+} from './LoginContainerStyled';
+import VerticalSplitIcon from '@material-ui/icons/VerticalSplit';
 
 const LoginContainer = () => {
-  // const [login, setLogin] = useState(false)
+  const [login, setLogin] = useState(false);
 
   useEffect(() => {
     const { pkce, issuer, clientId, redirectUri, scopes } = config;
@@ -37,23 +46,68 @@ const LoginContainer = () => {
       },
     });
 
-    widget.renderEl(
-      { el: '#sign-in-widget' },
-      () => {
-        /**
-         * In this flow, the success handler will not be called because we redirect
-         * to the Okta org for the authentication workflow.
-         */
-      },
-      err => {
-        throw err;
-      }
-    );
-  }, []);
+    if (login) {
+      widget.renderEl(
+        { el: '#sign-in-widget' },
+        () => {
+          /**
+           * In this flow, the success handler will not be called because we redirect
+           * to the Okta org for the authentication workflow.
+           */
+        },
+        err => {
+          throw err;
+        }
+      );
+    } else {
+      widget.remove();
+    }
+  }, [login]);
 
   return (
     <LoginDiv>
-      <div id="sign-in-widget" />
+      <Header>Welcome to Human Rights First©</Header>
+
+      <InfoDiv>
+        {' '}
+        {/* Logo, application name, 3 icons with single line description */}
+        <LeftSide>
+          <img src={require('./hrf-logo.png')} alt="An Image" />
+          <h2>
+            Refugee <br />
+            Asylum <br />
+            Case <br />
+            Database
+          </h2>
+        </LeftSide>
+        <RightSide>
+          <div>
+            <VerticalSplitIcon style={{ fontSize: '4rem' }} />
+            <p>lorem ipsum lorem ipsum lorem ipsum</p>
+          </div>
+          <div>
+            <p>lorem ipsum lorem ipsum lorem ipsum</p>
+            <VerticalSplitIcon style={{ fontSize: '4rem' }} />
+          </div>
+          <div>
+            <VerticalSplitIcon style={{ fontSize: '4rem' }} />
+            <p>lorem ipsum lorem ipsum lorem ipsum</p>
+          </div>
+        </RightSide>
+      </InfoDiv>
+
+      <LoginButtonDiv>
+        <SecureLogin
+          onClick={e => {
+            e.preventDefault();
+            setLogin(!login);
+          }}
+        >
+          Secure Login
+        </SecureLogin>
+      </LoginButtonDiv>
+
+      {login && <div id="sign-in-widget" />}
     </LoginDiv>
   );
 };
