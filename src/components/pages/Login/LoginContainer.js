@@ -12,11 +12,18 @@ import {
   SecureLogin,
   LeftSide,
   RightSide,
+  OverlayDiv,
+  CloseLogin,
 } from './LoginContainerStyled';
 import VerticalSplitIcon from '@material-ui/icons/VerticalSplit';
 
 const LoginContainer = () => {
   const [login, setLogin] = useState(false);
+
+  const toggleLogin = event => {
+    event.preventDefault();
+    setLogin(!login);
+  };
 
   useEffect(() => {
     const { pkce, issuer, clientId, redirectUri, scopes } = config;
@@ -28,13 +35,13 @@ const LoginContainer = () => {
       registration: {
         // there is more we can do to handle some errors here.
       },
-      features: { registration: false },
+      features: { registration: true },
       // turning this feature on allows your widget to use Okta for user registration
-      logo: 'path-to-your-logo',
+      logo: require('./hrf-logo.png'),
       // add your custom logo to your signing/register widget here.
       i18n: {
         en: {
-          'primaryauth.title': 'Welcome to Labs Basic SPA Please sign in',
+          'primaryauth.title': 'Refugee Asylum Case Database',
           // change title for your app
         },
       },
@@ -69,7 +76,6 @@ const LoginContainer = () => {
       <Header>Welcome to Human Rights First©</Header>
 
       <InfoDiv>
-        {' '}
         {/* Logo, application name, 3 icons with single line description */}
         <LeftSide>
           <img src={require('./hrf-logo.png')} alt="An Image" />
@@ -82,32 +88,29 @@ const LoginContainer = () => {
         </LeftSide>
         <RightSide>
           <div>
-            <VerticalSplitIcon style={{ fontSize: '4rem' }} />
+            <VerticalSplitIcon style={{ fontSize: '6rem' }} />
             <p>lorem ipsum lorem ipsum lorem ipsum</p>
           </div>
           <div>
             <p>lorem ipsum lorem ipsum lorem ipsum</p>
-            <VerticalSplitIcon style={{ fontSize: '4rem' }} />
+            <VerticalSplitIcon style={{ fontSize: '6rem' }} />
           </div>
           <div>
-            <VerticalSplitIcon style={{ fontSize: '4rem' }} />
+            <VerticalSplitIcon style={{ fontSize: '6rem' }} />
             <p>lorem ipsum lorem ipsum lorem ipsum</p>
           </div>
         </RightSide>
       </InfoDiv>
 
       <LoginButtonDiv>
-        <SecureLogin
-          onClick={e => {
-            e.preventDefault();
-            setLogin(!login);
-          }}
-        >
-          Secure Login
-        </SecureLogin>
+        {!login && (
+          <SecureLogin onClick={toggleLogin}>Secure Login</SecureLogin>
+        )}
       </LoginButtonDiv>
 
       {login && <div id="sign-in-widget" />}
+      {login && <CloseLogin onClick={toggleLogin}>X</CloseLogin>}
+      {login && <OverlayDiv></OverlayDiv>}
     </LoginDiv>
   );
 };
