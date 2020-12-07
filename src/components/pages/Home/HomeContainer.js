@@ -28,6 +28,7 @@ function HomeContainer({ LoadingComponent }) {
     return () => (isSubscribed = false);
   }, [memoAuthService]);
 
+  // JWT access token can be accessed from the authState object if needed
   return (
     <>
       {authState.isAuthenticated && !userInfo && (
