@@ -19,7 +19,7 @@ export const SidedrawerData = [
     className: 'drawer-text',
   },
   {
-    title: 'Upload a Case',
+    title: 'Upload Case',
     path: '/',
     icon: <PublishIcon />,
     className: 'drawer-text',
@@ -30,10 +30,10 @@ export const SidedrawerData = [
     icon: <HelpIcon />,
     className: 'drawer-text',
   },
-  {
-    title: 'Logout',
-    path: '/',
-    icon: <CloseIcon />,
-    className: 'drawer-text',
-  },
+  // {
+  //   title: 'Logout',
+  //   path: '/',
+  //   icon: <CloseIcon />,
+  //   className: 'drawer-text',
+  // },
 ];

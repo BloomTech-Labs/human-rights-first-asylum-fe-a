@@ -1,3 +1,7 @@
+/* * {
+    border: 1px solid white
+} */
+
 .dashboard-nav {
     background-color: rgb(0, 55, 103);
     height: 80px;
@@ -11,6 +15,7 @@
     margin-left: 2rem;
     font-size: 2rem;
     background: none;
+    color: rgb(211,148,95);
 }
 
  .nav-menu {
@@ -71,7 +76,7 @@
 
  }
 
- span {
+ .item-title {
      margin-left: 16px;
  }
 

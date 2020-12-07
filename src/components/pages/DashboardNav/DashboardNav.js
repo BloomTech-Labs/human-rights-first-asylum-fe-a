@@ -5,7 +5,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 import { SidedrawerData } from './SidedrawerData';
 
-export default function DashboardNav() {
+export default function DashboardNav(props) {
+  const { logout } = props;
   const [sidebar, setSidebar] = useState(false);
 
   const toggleSidebar = () => setSidebar(!sidebar);
@@ -27,12 +28,19 @@ export default function DashboardNav() {
           {SidedrawerData.map((item, index) => {
             return (
               <li key={index} className={item.className}>
-                <Link to={item.path} />
-                <a>{item.icon}</a>
-                <span>{item.title}</span>
+                <Link to={item.path}>
+                  {item.icon}
+                  <span className="item-title">{item.title}</span>
+                </Link>
               </li>
             );
           })}
+          <li className="drawer-text">
+            <Link onClick={logout()}>
+              <CloseIcon />
+              <span className="item-title">Logout</span>
+            </Link>
+          </li>
         </ul>
       </nav>
     </>
