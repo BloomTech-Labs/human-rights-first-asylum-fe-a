@@ -7,6 +7,18 @@ import axios from 'axios';
 
 function RenderHomePage(props) {
   const { userInfo, authService } = props;
+  const [caseData, setCaseData] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:8080/case')
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, []);
 
   const logout = () => authService.logout;
 
