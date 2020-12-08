@@ -2,13 +2,13 @@ import React, { useMemo, useState, useEffect } from 'react';
 import CaseTable from '../CaseTable/CaseTable';
 import DashboardNav from '../DashboardNav/DashboardNav';
 import PDFViewer from '../PDFViewer/PDFViewer';
+import { Route, Switch } from 'react-router-dom';
 
 import axios from 'axios';
 // import { Button } from '../../common';
 
 function RenderHomePage(props) {
   const { userInfo, authService } = props;
-  const [mainComponent, setMainComponent] = useState('PDFViewer');
 
   const logout = () => authService.logout;
 
@@ -18,9 +18,15 @@ function RenderHomePage(props) {
       <div className="dashboard-container">
         <DashboardNav logout={logout} />
 
-        {mainComponent === 'CaseTable' && <CaseTable />}
+        <Switch>
+          <Route exact path="/">
+            <CaseTable />
+          </Route>
 
-        {mainComponent === 'PDFViewer' && <PDFViewer />}
+          <Route path="/pdfviewer/:id">
+            <PDFViewer />
+          </Route>
+        </Switch>
       </div>
     </div>
   );

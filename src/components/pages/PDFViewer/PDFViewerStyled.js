@@ -37,7 +37,8 @@ export const PageButton = styled.button`
   margin: 0 6%;
   border: none;
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-  RR :hover {
+
+  :hover {
     transition: ${props => (!props.disabled ? 'all 0.3s ease 0s' : 'none')};
     background-color: ${props =>
       !props.disabled ? 'rgb(127,155,179)' : 'white'};
