@@ -3,7 +3,6 @@ import CaseTable from '../CaseTable/CaseTable';
 import DashboardNav from '../DashboardNav/DashboardNav';
 
 import axios from 'axios';
-// import { Button } from '../../common';
 
 function RenderHomePage(props) {
   const { userInfo, authService } = props;
@@ -13,7 +12,7 @@ function RenderHomePage(props) {
     axios
       .get('http://localhost:8080/case')
       .then(res => {
-        console.log(res.data);
+        setCaseData(res.data);
       })
       .catch(err => {
         console.log(err);
@@ -26,9 +25,9 @@ function RenderHomePage(props) {
     <div>
       {/* <h1>Hi {userInfo.name} Welcome to Labs Basic SPA</h1> */}
       <div className="dashboard-container">
-        <DashboardNav logout={logout} />
+        <DashboardNav logout={logout} userInfo={userInfo} />
 
-        <CaseTable />
+        <CaseTable caseData={caseData} />
       </div>
     </div>
   );
