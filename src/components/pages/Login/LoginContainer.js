@@ -17,7 +17,6 @@ import {
 } from './LoginContainerStyled';
 
 import TableChartOutlinedIcon from '@material-ui/icons/TableChartOutlined';
-import DescriptionIcon from '@material-ui/icons/Description';
 import CloudDoneIcon from '@material-ui/icons/CloudDone';
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 

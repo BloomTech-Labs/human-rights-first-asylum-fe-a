@@ -73,7 +73,7 @@ function App() {
         {/* any of the routes you need secured should be registered as SecureRoutes */}
         <SecureRoute
           path="/"
-          exact
+          // exact
           component={() => <HomePage LoadingComponent={LoadingComponent} />}
         />
         <SecureRoute path="/example-list" component={ExampleListPage} />
