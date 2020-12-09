@@ -109,7 +109,9 @@ export default function CaseTable(props) {
 
   const search = rows => {
     return rows.filter(
-      row => row[columnToSearch].toLowerCase().indexOf(searchQuery) > -1
+      row =>
+        row[columnToSearch].toLowerCase().indexOf(searchQuery.toLowerCase()) >
+        -1
     );
   };
 
