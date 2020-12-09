@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { DataGrid } from '@material-ui/data-grid';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
 
@@ -121,8 +120,15 @@ export default function CaseTable(props) {
         <MenuItem value="court_type">Court Type</MenuItem>
         <MenuItem value="hearing_type">Hearing Type</MenuItem>
         <MenuItem value="refugee_origin">Refugee Origin</MenuItem>
+        <MenuItem value="hearing_location">Hearing Location</MenuItem>
         <MenuItem value="protected_ground">Protected Ground</MenuItem>
+        <MenuItem value="hearing_date">Hearing Date</MenuItem>
+        <MenuItem value="decision_date">Decision Date</MenuItem>
+        <MenuItem value="credibility_of_refugee">Refugee Credibility</MenuItem>
+        <MenuItem value="case_status">Case Status</MenuItem>
+        <MenuItem value="social_group_type">Social Group</MenuItem>
         <MenuItem value="judge_name">Judge Name</MenuItem>
+        <MenuItem value="hearing_date">Hearing Date</MenuItem>
       </Select>
       <TextField
         value={searchQuery}

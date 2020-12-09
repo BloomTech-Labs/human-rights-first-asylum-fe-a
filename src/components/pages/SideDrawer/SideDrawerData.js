@@ -1,6 +1,5 @@
 import React from 'react';
 import AccountIcon from '@material-ui/icons/AccountCircle';
-import CloseIcon from '@material-ui/icons/Close';
 import BookmarksIcon from '@material-ui/icons/Bookmarks';
 import PublishIcon from '@material-ui/icons/Publish';
 import HelpIcon from '@material-ui/icons/Help';

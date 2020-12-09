@@ -139,7 +139,7 @@ export default function SideDrawer(props) {
         <Divider />
         <List>
           {itemList.map((item, index) => (
-            <ListItem button key={item}>
+            <ListItem button key={item.title}>
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.title} />
             </ListItem>
