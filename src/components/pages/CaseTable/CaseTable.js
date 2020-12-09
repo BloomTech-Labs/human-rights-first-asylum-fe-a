@@ -45,6 +45,54 @@ const columns = [
   { field: 'case_status', headerName: 'Case Status', width: 120 },
 ];
 
+const sampleRows = [
+  {
+    id: 'test01',
+    court_type: 'Supreme Court',
+    hearing_type: 'Primary',
+    refugee_origin: 'Honduras',
+    hearing_location: 'Miami',
+    protected_ground: 'Political',
+    hearing_date: '01-11-16',
+    decision_date: '02-12-16',
+    credibility_of_refugee: 'Questionable',
+    case_status: 'Closed',
+    social_group_type: 'Male',
+    judge_decision: 'Yes',
+    judge_name: 'Elaine Gonzalez',
+  },
+  {
+    id: 'test02',
+    court_type: 'Lower',
+    hearing_type: 'Primary',
+    refugee_origin: 'El Salvador',
+    hearing_location: 'Miami',
+    protected_ground: 'Political',
+    hearing_date: '01-11-16',
+    decision_date: '02-12-16',
+    credibility_of_refugee: 'Questionable',
+    case_status: 'Closed',
+    social_group_type: 'Male',
+    judge_decision: 'Yes',
+    judge_name: 'Elaine Gonzalez',
+  },
+  {
+    id: 'test03',
+    court_type: 'Supreme ',
+    hearing_type: 'Secondary',
+    refugee_origin: 'Honduras',
+    hearing_location: 'Atlanta',
+    protected_ground: 'War',
+    hearing_date: '04-23-18',
+    decision_date: 'NA',
+    credibility_of_refugee: 'High',
+    case_status: 'Open',
+    social_group_type: 'Female',
+    judge_decision: 'NA',
+    judge_name: 'John Watson',
+  },
+];
+
 export default function CaseTable(props) {
   const { caseData } = props;
   const [columnToSearch, setColumnToSearch] = useState('');
@@ -56,6 +104,16 @@ export default function CaseTable(props) {
     setColumnToSearch(event.target.value);
   };
 
+  const handleSearchChange = event => {
+    setSearchQuery(event.target.value);
+  };
+
+  const search = rows => {
+    return rows.filter(
+      row => row[columnToSearch].toLowerCase().indexOf(searchQuery) > -1
+    );
+  };
+
   return (
     <div className={classes.tbl_container}>
       <InputLabel>Search By ...</InputLabel>
@@ -64,13 +122,22 @@ export default function CaseTable(props) {
         <MenuItem value="hearing_type">Hearing Type</MenuItem>
         <MenuItem value="refugee_origin">Refugee Origin</MenuItem>
         <MenuItem value="protected_ground">Protected Ground</MenuItem>
+        <MenuItem value="judge_name">Judge Name</MenuItem>
       </Select>
+      <TextField
+        value={searchQuery}
+        placeholder="Enter Query ..."
+        onChange={handleSearchChange}
+        type="text"
+      />
+
       <DataGrid
-        rows={caseData}
+        rows={columnToSearch ? search(sampleRows) : sampleRows}
         columns={columns}
         className={classes.grid}
         autoHeight={true}
         loading={caseData ? false : true}
+        sortModel
       />
     </div>
   );
