@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import CaseTable from '../CaseTable/CaseTable';
-import DashboardNav from '../DashboardNav/DashboardNav';
-import SideDrawer from '../DashboardNav/SideDrawer';
+
+import SideDrawer from '../SideDrawer/SideDrawer';
 import PDFViewer from '../PDFViewer/PDFViewer';
 import { Route, Switch } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
