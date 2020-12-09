@@ -62,7 +62,7 @@ function App() {
     history.push('/login');
   };
 
-  console.log(store.getState());
+  // console.log(store.getState());
 
   return (
     <Security {...config} onAuthRequired={authHandler}>
