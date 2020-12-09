@@ -1,8 +1,17 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import CaseTable from '../CaseTable/CaseTable';
 import DashboardNav from '../DashboardNav/DashboardNav';
-
+import SideDrawer from '../DashboardNav/SideDrawer';
+import PDFViewer from '../PDFViewer/PDFViewer';
+import { Route, Switch } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
+
+const useStyles = makeStyles({
+  container: {
+    display: 'flex',
+  },
+});
 
 function RenderHomePage(props) {
   const { userInfo, authService } = props;
@@ -20,14 +29,23 @@ function RenderHomePage(props) {
   }, []);
 
   const logout = () => authService.logout;
-
+  const classes = useStyles();
   return (
     <div>
       {/* <h1>Hi {userInfo.name} Welcome to Labs Basic SPA</h1> */}
-      <div className="dashboard-container">
-        <DashboardNav logout={logout} userInfo={userInfo} />
 
-        <CaseTable caseData={caseData} />
+      <div className={classes.container}>
+        <SideDrawer logout={logout} userInfo={userInfo} />
+
+        <Switch>
+          <Route exact path="/">
+            <CaseTable caseData={caseData} />
+          </Route>
+
+          <Route path="/pdfviewer/:id">
+            <PDFViewer />
+          </Route>
+        </Switch>
       </div>
     </div>
   );

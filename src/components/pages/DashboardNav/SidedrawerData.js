@@ -5,29 +5,25 @@ import BookmarksIcon from '@material-ui/icons/Bookmarks';
 import PublishIcon from '@material-ui/icons/Publish';
 import HelpIcon from '@material-ui/icons/Help';
 
-export const SidedrawerData = [
+export const SideDrawerData = [
   {
     title: 'Account',
     path: '/',
     icon: <AccountIcon />,
-    className: 'drawer-text',
   },
   {
     title: 'Saved Cases',
     path: '/',
     icon: <BookmarksIcon />,
-    className: 'drawer-text',
   },
   {
     title: 'Upload Case',
     path: '/',
     icon: <PublishIcon />,
-    className: 'drawer-text',
   },
   {
     title: 'Support',
     path: '/',
     icon: <HelpIcon />,
-    className: 'drawer-text',
   },
 ];
