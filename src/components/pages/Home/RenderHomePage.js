@@ -17,16 +17,17 @@ function RenderHomePage(props) {
   const { userInfo, authService } = props;
   const [caseData, setCaseData] = useState([]);
 
-  useEffect(() => {
-    axios
-      .get('http://localhost:8080/case')
-      .then(res => {
-        setCaseData(res.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get('http://localhost:8080/case')
+  //     .then(res => {
+  //       setCaseData(res.data);
+  //       console.log(res.data);
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // }, []);
 
   const logout = () => authService.logout;
   const classes = useStyles();
