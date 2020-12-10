@@ -16,10 +16,12 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import CloseIcon from '@material-ui/icons/Close';
+import BookmarkPanel from '../Bookmarks/BookmarksQuickview';
+import BookmarksIcon from '@material-ui/icons/Bookmarks';
 
 import { SideDrawerData } from './SideDrawerData';
 
-const drawerWidth = 240;
+const drawerWidth = 300;
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -152,6 +154,15 @@ export default function SideDrawer(props) {
           </ListItem>
         </List>
         <Divider />
+        <List>
+          <ListItem button>
+            <ListItemIcon>
+              <BookmarksIcon />
+            </ListItemIcon>
+            <ListItemText primary="Saved Cases" />
+          </ListItem>
+          {/* <BookmarkPanel /> */}
+        </List>
       </Drawer>
       <main
         className={clsx(classes.content, {

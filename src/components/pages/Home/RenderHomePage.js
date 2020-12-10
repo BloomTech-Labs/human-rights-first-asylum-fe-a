@@ -16,6 +16,7 @@ const useStyles = makeStyles({
 function RenderHomePage(props) {
   const { userInfo, authService } = props;
   const [caseData, setCaseData] = useState([]);
+  const [judgeData, setJudgeData] = useState([]);
 
   // useEffect(() => {
   //   axios
@@ -28,6 +29,18 @@ function RenderHomePage(props) {
   //       console.log(err);
   //     });
   // }, []);
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:8080/judge')
+      .then(res => {
+        setJudgeData(res.data);
+        console.log(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, []);
 
   const logout = () => authService.logout;
   const classes = useStyles();

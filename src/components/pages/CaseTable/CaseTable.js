@@ -6,10 +6,11 @@ import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
 
 import { makeStyles } from '@material-ui/core/styles';
+import { Button } from 'antd';
 
 const useStyles = makeStyles(theme => ({
   grid: {
-    marginTop: 100,
+    marginTop: 15,
   },
   tbl_container: {
     display: 'flex',
@@ -21,6 +22,15 @@ const useStyles = makeStyles(theme => ({
   select: {
     margin: 70,
     height: 20,
+  },
+  search_container: {
+    display: 'flex',
+    alignItems: 'flex-end',
+  },
+  colFilter: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: 200,
   },
 }));
 
@@ -109,41 +119,49 @@ export default function CaseTable(props) {
 
   const search = rows => {
     return rows.filter(
-      row => row[columnToSearch].toLowerCase().indexOf(searchQuery) > -1
+      row =>
+        row[columnToSearch].toLowerCase().indexOf(searchQuery.toLowerCase()) >
+        -1
     );
   };
 
   return (
     <div className={classes.tbl_container}>
-      <InputLabel>Search By ...</InputLabel>
-      <Select value={columnToSearch} onChange={handleChange}>
-        <MenuItem value="court_type">Court Type</MenuItem>
-        <MenuItem value="hearing_type">Hearing Type</MenuItem>
-        <MenuItem value="refugee_origin">Refugee Origin</MenuItem>
-        <MenuItem value="hearing_location">Hearing Location</MenuItem>
-        <MenuItem value="protected_ground">Protected Ground</MenuItem>
-        <MenuItem value="hearing_date">Hearing Date</MenuItem>
-        <MenuItem value="decision_date">Decision Date</MenuItem>
-        <MenuItem value="credibility_of_refugee">Refugee Credibility</MenuItem>
-        <MenuItem value="case_status">Case Status</MenuItem>
-        <MenuItem value="social_group_type">Social Group</MenuItem>
-        <MenuItem value="judge_name">Judge Name</MenuItem>
-        <MenuItem value="hearing_date">Hearing Date</MenuItem>
-      </Select>
-      <TextField
-        value={searchQuery}
-        placeholder="Enter Query ..."
-        onChange={handleSearchChange}
-        type="text"
-      />
-
+      <div className={classes.search_container}>
+        <div className={classes.colFilter}>
+          <InputLabel>Search By ...</InputLabel>
+          <Select value={columnToSearch} onChange={handleChange}>
+            <MenuItem value="court_type">Court Type</MenuItem>
+            <MenuItem value="hearing_type">Hearing Type</MenuItem>
+            <MenuItem value="refugee_origin">Refugee Origin</MenuItem>
+            <MenuItem value="hearing_location">Hearing Location</MenuItem>
+            <MenuItem value="protected_ground">Protected Ground</MenuItem>
+            <MenuItem value="hearing_date">Hearing Date</MenuItem>
+            <MenuItem value="decision_date">Decision Date</MenuItem>
+            <MenuItem value="credibility_of_refugee">
+              Refugee Credibility
+            </MenuItem>
+            <MenuItem value="case_status">Case Status</MenuItem>
+            <MenuItem value="social_group_type">Social Group</MenuItem>
+            <MenuItem value="judge_name">Judge Name</MenuItem>
+            <MenuItem value="hearing_date">Hearing Date</MenuItem>
+          </Select>
+        </div>
+        <TextField
+          value={searchQuery}
+          placeholder="Enter Query ..."
+          onChange={handleSearchChange}
+          type="text"
+          style={{ width: 900, marginLeft: 20 }}
+        />
+      </div>
       <DataGrid
         rows={columnToSearch ? search(sampleRows) : sampleRows}
         columns={columns}
         className={classes.grid}
         autoHeight={true}
         loading={caseData ? false : true}
-        sortModel
+        checkboxSelection={true}
       />
     </div>
   );
