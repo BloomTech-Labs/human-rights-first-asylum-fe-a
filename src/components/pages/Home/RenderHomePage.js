@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import CaseTable from '../CaseTable/CaseTable';
-
+import JudgeTable from '../JudgeTable/JudgeTable';
 import SideDrawer from '../SideDrawer/SideDrawer';
 import PDFViewer from '../PDFViewer/PDFViewer';
 import { Route, Switch } from 'react-router-dom';
@@ -53,7 +53,8 @@ function RenderHomePage(props) {
 
         <Switch>
           <Route exact path="/">
-            <CaseTable caseData={caseData} />
+            {/* <CaseTable caseData={caseData} /> */}
+            <JudgeTable judgeData={judgeData} />
           </Route>
 
           <Route path="/pdfviewer/:id">

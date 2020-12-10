@@ -152,7 +152,7 @@ export default function CaseTable(props) {
           placeholder="Enter Query ..."
           onChange={handleSearchChange}
           type="text"
-          style={{ width: 900, marginLeft: 20 }}
+          style={{ width: 950, marginLeft: 20 }}
         />
       </div>
       <DataGrid
