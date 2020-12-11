@@ -24,7 +24,7 @@ function RenderHomePage(props) {
           </Route>
 
           <Route path="/pdfviewer/:id">
-            <PDFViewer />
+            <PDFViewer pageWidth="800" componentWidth="1400px" />
           </Route>
         </Switch>
       </div>

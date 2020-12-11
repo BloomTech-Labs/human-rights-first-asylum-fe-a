@@ -12,8 +12,8 @@ import ArrowBackIosRoundedIcon from '@material-ui/icons/ArrowBackIosRounded';
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const PDFViewer = props => {
-  const pageHeight = props.pageHeight | '800'; // DEFINE HEIGHT OF PDF IN PIXELS ONLY
-  const pageWidth = props.pageWidth | null; // DEFINE WIDTH OF PDF IN PIXELS ONLY
+  const pageHeight = props.pageHeight | '800'; // DEFINE HEIGHT OF PDF IN PIXELS (NUMBER ONLY)
+  const pageWidth = props.pageWidth | null; // DEFINE WIDTH OF PDF IN PIXELS (NUMBER ONLY)
   const { componentWidth, componentHeight } = props; // DEFINE HEIGHT/WIDTH OF TOTAL COMPONENT IN ANY UNIT
 
   const { path } = props;
@@ -42,15 +42,20 @@ const PDFViewer = props => {
   }
 
   useEffect(() => {
-    if (pageNumber === numPages) {
+    if (numPages === 1) {
       setDisableButton({
-        left: false,
+        left: true,
         right: true,
       });
     } else if (pageNumber === 1) {
       setDisableButton({
         left: true,
         right: false,
+      });
+    } else if (pageNumber === numPages) {
+      setDisableButton({
+        left: false,
+        right: true,
       });
     } else {
       setDisableButton({
