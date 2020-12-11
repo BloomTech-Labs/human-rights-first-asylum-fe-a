@@ -12,7 +12,10 @@ import ArrowBackIosRoundedIcon from '@material-ui/icons/ArrowBackIosRounded';
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const PDFViewer = props => {
-  // GRABBING PATH FROM PROPS, SAVING IN COMPONENT STATE
+  const pageHeight = props.pageHeight | '800'; // DEFINE HEIGHT OF PDF IN PIXELS (NUMBER ONLY)
+  const pageWidth = props.pageWidth | null; // DEFINE WIDTH OF PDF IN PIXELS (NUMBER ONLY)
+  const { componentWidth, componentHeight } = props; // DEFINE HEIGHT/WIDTH OF TOTAL COMPONENT IN ANY UNIT
+
   const { path } = props;
   const [pdfPath, setPdfPath] = useState(path);
   const [numPages, setNumPages] = useState(null);
@@ -39,15 +42,20 @@ const PDFViewer = props => {
   }
 
   useEffect(() => {
-    if (pageNumber === numPages) {
+    if (numPages === 1) {
       setDisableButton({
-        left: false,
+        left: true,
         right: true,
       });
     } else if (pageNumber === 1) {
       setDisableButton({
         left: true,
         right: false,
+      });
+    } else if (pageNumber === numPages) {
+      setDisableButton({
+        left: false,
+        right: true,
       });
     } else {
       setDisableButton({
@@ -58,13 +66,16 @@ const PDFViewer = props => {
   }, [pageNumber]);
 
   return (
-    <PageWrapper>
+    <PageWrapper
+      componentWidth={componentWidth}
+      componentHeight={componentHeight}
+    >
       <Document
         file={require('./samplePDF.pdf')}
         onLoadSuccess={onDocumentLoadSuccess}
       >
-        <Page width="1000" pageNumber={pageNumber} />
-        <PageControls>
+        <Page width={pageWidth} height={pageHeight} pageNumber={pageNumber} />
+        <PageControls pageHeight={pageHeight} pageWidth={pageWidth}>
           <PageButton
             onClick={e => {
               e.preventDefault();

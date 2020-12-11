@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const PageWrapper = styled.div`
-  width: 60%;
+  width: ${props => (props.componentWidth ? props.componentWidth : '60%')};
+  height: ${props => (props.componentHeight ? props.componentHeight : 'auto')};
   display: flex;
   justify-content: center;
   border: 2px solid black;
@@ -9,20 +10,27 @@ export const PageWrapper = styled.div`
 `;
 
 export const PageControls = styled.div`
-  display: none;
+  visibility: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
   position: relative;
   width: 200px;
   height: 60px;
-  left: 400px;
-  bottom: 150px;
+  left: ${props =>
+    props.pageWidth
+      ? `${props.pageWidth / 2 - 100}px`
+      : `${((8.5 / 11) * props.pageHeight) / 2 - 100}px`};
+  bottom: ${props =>
+    props.pageWidth
+      ? `${(11 / 8.5) * props.pageWidth * 0.15 + 30}px`
+      : `${props.pageHeight * 0.15 + 30}px`};
   z-index: 998;
   border-radius: 30px;
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
   ${PageWrapper}:hover & {
-    display: flex !important;
-    justify-content: center;
-    align-items: center;
-    background: white;
+    visibility: visible;
   }
 `;
 
