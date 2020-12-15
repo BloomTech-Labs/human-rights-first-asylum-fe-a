@@ -4,9 +4,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
-
 import { makeStyles } from '@material-ui/core/styles';
-import { Button } from 'antd';
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -35,20 +33,20 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 100 },
+  // { field: 'id', headerName: 'ID', width: 100 },
   { field: 'court_type', headerName: 'Court Type', width: 115 },
   { field: 'hearing_type', headerName: 'Hearing Type', width: 120 },
-  { field: 'refugee_origin', headerName: 'Refugee Origin', width: 120 },
-  { field: 'protected_ground', headerName: 'Protected Ground', width: 120 },
+  { field: 'refugee_origin', headerName: 'Refugee Origin', width: 150 },
+  { field: 'protected_ground', headerName: 'Protected Ground', width: 150 },
   { field: 'hearing_location', headerName: 'Location', width: 120 },
   { field: 'hearing_date', headerName: 'Hearing Date', width: 120 },
-  { field: 'decision_date', headerName: 'Decision Date', width: 120 },
+  { field: 'decision_date', headerName: 'Decision Date', width: 150 },
   {
     field: 'credibility_of_refugee',
     headerName: 'Refugee Credibility',
-    width: 120,
+    width: 160,
   },
-  { field: 'social_group_type', headerName: 'Social Group Type', width: 120 },
+  { field: 'social_group_type', headerName: 'Social Group', width: 150 },
   { field: 'judge_name', headerName: 'Judge Name', width: 120 },
   { field: 'judge_decision', headerName: 'Decision', width: 120 },
   { field: 'case_status', headerName: 'Case Status', width: 120 },
@@ -111,6 +109,7 @@ export default function CaseTable(props) {
 
   const handleChange = event => {
     setColumnToSearch(event.target.value);
+    setSearchQuery('');
   };
 
   const handleSearchChange = event => {
@@ -156,7 +155,7 @@ export default function CaseTable(props) {
         />
       </div>
       <DataGrid
-        rows={columnToSearch ? search(sampleRows) : sampleRows}
+        rows={columnToSearch ? search(caseData) : caseData}
         columns={columns}
         className={classes.grid}
         autoHeight={true}

@@ -35,7 +35,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const columns = [
-  { field: 'judge_image', headerName: 'Image', width: 100 },
+  //   { field: 'judge_image', headerName: 'Image', width: 100 },
   { field: 'name', headerName: 'Name', width: 115 },
   { field: 'judge_county', headerName: 'County', width: 120 },
   { field: 'date_appointed', headerName: 'Date Appointed', width: 120 },

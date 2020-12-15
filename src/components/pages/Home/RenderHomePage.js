@@ -3,8 +3,10 @@ import CaseTable from '../CaseTable/CaseTable';
 import JudgeTable from '../JudgeTable/JudgeTable';
 import SideDrawer from '../SideDrawer/SideDrawer';
 import PDFViewer from '../PDFViewer/PDFViewer';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
+import { useOktaAuth } from '@okta/okta-react';
+
 import axios from 'axios';
 
 const useStyles = makeStyles({
@@ -14,33 +16,49 @@ const useStyles = makeStyles({
 });
 
 function RenderHomePage(props) {
-  const { userInfo, authService } = props;
+  const { userInfo, authService, authState } = props;
   const [caseData, setCaseData] = useState([]);
   const [judgeData, setJudgeData] = useState([]);
 
-  // useEffect(() => {
-  //   axios
-  //     .get('http://localhost:8080/case')
-  //     .then(res => {
-  //       setCaseData(res.data);
-  //       console.log(res.data);
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-  // }, []);
+  // should move these API calls into a separate index folder at some point
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:8080/case')
+      .then(res => {
+        setCaseData(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, []);
 
   useEffect(() => {
     axios
       .get('http://localhost:8080/judge')
       .then(res => {
         setJudgeData(res.data);
-        console.log(res.data);
       })
       .catch(err => {
         console.log(err);
       });
   }, []);
+
+  console.log(userInfo.sub);
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/profile/${userInfo.sub}`, {
+        headers: {
+          Authorization: 'Bearer ' + authState.idToken,
+        },
+      })
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, [authState.idToken]);
 
   const logout = () => authService.logout;
   const classes = useStyles();
@@ -53,8 +71,8 @@ function RenderHomePage(props) {
 
         <Switch>
           <Route exact path="/">
-            {/* <CaseTable caseData={caseData} /> */}
-            <JudgeTable judgeData={judgeData} />
+            <CaseTable caseData={caseData} />
+            {/* <JudgeTable judgeData={judgeData} /> */}
           </Route>
 
           <Route path="/pdfviewer/:id">
