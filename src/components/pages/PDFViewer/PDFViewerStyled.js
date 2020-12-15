@@ -6,7 +6,30 @@ export const PageWrapper = styled.div`
   display: flex;
   justify-content: center;
   border: 2px solid black;
-  background-color: lightblue;
+  background-color: black;
+  margin-top: 100px;
+`;
+
+export const ClosePDF = styled.span`
+  visibility: hidden;
+  background: white;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  left: ${props =>
+    props.pageWidth
+      ? `${props.pageWidth - 40}px`
+      : `${(8.5 / 11) * props.pageHeight - 40}px`};
+  bottom: ${props =>
+    props.pageWidth
+      ? `${(11 / 8.5) * props.pageWidth - 40}px`
+      : `${props.pageHeight - 40}px`};
+  z-index: 998;
+  border-radius: 5px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  ${PageWrapper}:hover & {
+    visibility: visible;
+  }
 `;
 
 export const PageControls = styled.div`
