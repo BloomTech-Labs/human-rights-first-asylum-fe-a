@@ -5,6 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
+import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -33,7 +34,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const columns = [
-  // { field: 'id', headerName: 'ID', width: 100 },
+  { field: 'id', headerName: 'ID', width: 100 },
   { field: 'court_type', headerName: 'Court Type', width: 115 },
   { field: 'hearing_type', headerName: 'Hearing Type', width: 120 },
   { field: 'refugee_origin', headerName: 'Refugee Origin', width: 150 },
@@ -101,9 +102,10 @@ const sampleRows = [
 ];
 
 export default function CaseTable(props) {
-  const { caseData } = props;
+  const { caseData, setSavedCases, savedCases } = props;
   const [columnToSearch, setColumnToSearch] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedRows, setSelectedRows] = useState({});
 
   const classes = useStyles();
 
@@ -122,6 +124,31 @@ export default function CaseTable(props) {
         row[columnToSearch].toLowerCase().indexOf(searchQuery.toLowerCase()) >
         -1
     );
+  };
+
+  const findRowByID = (rowID, rowData) => {
+    for (let i = 0; i < rowData.length; i++) {
+      let currentRow = rowData[i];
+      if (currentRow.id === rowID) {
+        return currentRow;
+      }
+    }
+    return 'Row does not exist';
+  };
+
+  const bookmarkCases = targetRows => {
+    // loop through currently selected cases and do post requests
+    // need to reference rows by id, as that is all that selection stores
+    // need to account for duplicates as well
+    if (targetRows) {
+      for (let i = 0; i < targetRows.length; i++) {
+        console.log(findRowByID(targetRows[i], caseData));
+      }
+    }
+  };
+
+  const onCheckboxSelect = selections => {
+    setSelectedRows(selections);
   };
 
   return (
@@ -161,7 +188,11 @@ export default function CaseTable(props) {
         autoHeight={true}
         loading={caseData ? false : true}
         checkboxSelection={true}
+        onSelectionChange={onCheckboxSelect}
       />
+      <button onClick={() => bookmarkCases(selectedRows.rowIds)}>
+        Bookmark Selected Rows
+      </button>
     </div>
   );
 }

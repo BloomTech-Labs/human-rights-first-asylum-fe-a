@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, componentDidUpdate } from 'react';
 import CaseTable from '../CaseTable/CaseTable';
 import JudgeTable from '../JudgeTable/JudgeTable';
 import SideDrawer from '../SideDrawer/SideDrawer';
@@ -19,6 +19,7 @@ function RenderHomePage(props) {
   const { userInfo, authService, authState } = props;
   const [caseData, setCaseData] = useState([]);
   const [judgeData, setJudgeData] = useState([]);
+  const [savedCases, setSavedCases] = useState([]);
 
   // should move these API calls into a separate index folder at some point
 
@@ -44,7 +45,7 @@ function RenderHomePage(props) {
       });
   }, []);
 
-  console.log(userInfo.sub);
+  // need to reread on dependency arrays to understand them better
   useEffect(() => {
     axios
       .get(`http://localhost:8080/profile/${userInfo.sub}`, {
@@ -53,12 +54,12 @@ function RenderHomePage(props) {
         },
       })
       .then(res => {
-        console.log(res);
+        setSavedCases(res.data.case_bookmarks);
       })
       .catch(err => {
         console.log(err);
       });
-  }, [authState.idToken]);
+  }, []);
 
   const logout = () => authService.logout;
   const classes = useStyles();
@@ -71,7 +72,11 @@ function RenderHomePage(props) {
 
         <Switch>
           <Route exact path="/">
-            <CaseTable caseData={caseData} />
+            <CaseTable
+              caseData={caseData}
+              setSavedCases={setSavedCases}
+              savedCases={savedCases}
+            />
             {/* <JudgeTable judgeData={judgeData} /> */}
           </Route>
 
