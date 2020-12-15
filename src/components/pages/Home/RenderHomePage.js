@@ -37,12 +37,12 @@ function RenderHomePage(props) {
         <CaseTable caseData={caseData} />
       </Route>
 
-      {/* <Route path="/pdfviewer/:id"> */}
-      {/* FIXED DIV, 100VH 100VW, OVERLAY BACKGROUND, Z-INDEX 998, PDF VIEWER Z-INDEX 999 */}
-      {/* <PDFViewer file={file} pageWidth="" componentWidth="" /> */}
-      {/* </Route> */}
+      <Route path="/pdfviewer/:id">
+        {/* FIXED DIV, 100VH 100VW, OVERLAY BACKGROUND, Z-INDEX 998, PDF VIEWER Z-INDEX 999 */}
+        <PDFViewer file={file} pageWidth="" componentWidth="" />
+      </Route>
 
-      {/* {smallPDF && <PDFViewer file={file} pageWidth="" componentWidth="" />} */}
+      {smallPDF && <PDFViewer file={file} pageWidth="" componentWidth="" />}
     </div>
   );
 }
