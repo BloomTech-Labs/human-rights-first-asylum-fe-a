@@ -54,6 +54,7 @@ function RenderHomePage(props) {
         },
       })
       .then(res => {
+        console.log(res.data);
         setSavedCases(res.data.case_bookmarks);
       })
       .catch(err => {
@@ -74,7 +75,7 @@ function RenderHomePage(props) {
           <Route exact path="/">
             <CaseTable
               caseData={caseData}
-              setSavedCases={setSavedCases}
+              userInfo={userInfo}
               savedCases={savedCases}
             />
             {/* <JudgeTable judgeData={judgeData} /> */}

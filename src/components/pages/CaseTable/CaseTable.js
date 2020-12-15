@@ -102,7 +102,7 @@ const sampleRows = [
 ];
 
 export default function CaseTable(props) {
-  const { caseData, setSavedCases, savedCases } = props;
+  const { caseData, userInfo, savedCases } = props;
   const [columnToSearch, setColumnToSearch] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedRows, setSelectedRows] = useState({});
@@ -136,13 +136,35 @@ export default function CaseTable(props) {
     return 'Row does not exist';
   };
 
+  const postBookmark = rowToPost => {
+    axios
+      .post(
+        `http://localhost:8080/profile/${userInfo.sub}/${rowToPost.id}`,
+        rowToPost
+      )
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   const bookmarkCases = targetRows => {
     // loop through currently selected cases and do post requests
     // need to reference rows by id, as that is all that selection stores
     // need to account for duplicates as well
+    let bookmarks = [];
     if (targetRows) {
       for (let i = 0; i < targetRows.length; i++) {
-        console.log(findRowByID(targetRows[i], caseData));
+        bookmarks.push(findRowByID(targetRows[i], caseData));
+      }
+    }
+    for (let i = 0; i < bookmarks.length; i++) {
+      if (!savedCases.includes(bookmarks[i])) {
+        postBookmark(bookmarks[i]);
+      } else {
+        return 'Case already saved to bookmarks';
       }
     }
   };
@@ -180,6 +202,9 @@ export default function CaseTable(props) {
           type="text"
           style={{ width: 950, marginLeft: 20 }}
         />
+        <button onClick={() => bookmarkCases(selectedRows.rowIds)}>
+          Bookmark Selected Rows
+        </button>
       </div>
       <DataGrid
         rows={columnToSearch ? search(caseData) : caseData}
@@ -190,9 +215,6 @@ export default function CaseTable(props) {
         checkboxSelection={true}
         onSelectionChange={onCheckboxSelect}
       />
-      <button onClick={() => bookmarkCases(selectedRows.rowIds)}>
-        Bookmark Selected Rows
-      </button>
     </div>
   );
 }
