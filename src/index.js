@@ -7,6 +7,7 @@ import {
   Switch,
 } from 'react-router-dom';
 import { Security, LoginCallback, SecureRoute } from '@okta/okta-react';
+import GlobalStyle from './globalStyles';
 
 // REDUX AND STARTER REDUCER
 import { createStore, applyMiddleware } from 'redux';
@@ -62,10 +63,9 @@ function App() {
     history.push('/login');
   };
 
-  // console.log(store.getState());
-
   return (
     <Security {...config} onAuthRequired={authHandler}>
+      <GlobalStyle />
       <Switch>
         <Route path="/login" component={LoginPage} />
         <Route path="/implicit/callback" component={LoginCallback} />
