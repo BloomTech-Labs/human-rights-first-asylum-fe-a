@@ -139,7 +139,7 @@ export default function CaseTable(props) {
   const postBookmark = rowToPost => {
     axios
       .post(
-        `http://localhost:8080/profile/${userInfo.sub}/${rowToPost.id}`,
+        `http://localhost:8080/profile/${userInfo.sub}/case/${rowToPost.id}`,
         rowToPost
       )
       .then(res => {
@@ -162,6 +162,7 @@ export default function CaseTable(props) {
     }
     for (let i = 0; i < bookmarks.length; i++) {
       if (!savedCases.includes(bookmarks[i])) {
+        console.log(bookmarks[i]);
         postBookmark(bookmarks[i]);
       } else {
         return 'Case already saved to bookmarks';
