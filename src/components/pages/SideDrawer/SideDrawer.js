@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -18,6 +18,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import CloseIcon from '@material-ui/icons/Close';
 import BookmarkPanel from '../Bookmarks/BookmarksQuickview';
 import BookmarksIcon from '@material-ui/icons/Bookmarks';
+import NoteIcon from '@material-ui/icons/Receipt';
+import GavelIcon from '@material-ui/icons/Gavel';
 
 import { SideDrawerData } from './SideDrawerData';
 
@@ -86,7 +88,7 @@ export default function SideDrawer(props) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const itemList = SideDrawerData;
-  const { logout, userInfo } = props;
+  const { logout, userInfo, savedCases } = props;
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -95,6 +97,11 @@ export default function SideDrawer(props) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  if (!savedCases) {
+    // surely there is a better way to do this?? idk
+    return <div></div>;
+  }
 
   return (
     <div className={classes.root}>
@@ -155,13 +162,29 @@ export default function SideDrawer(props) {
         </List>
         <Divider />
         <List>
-          <ListItem button>
+          <ListItem>
             <ListItemIcon>
               <BookmarksIcon />
             </ListItemIcon>
             <ListItemText primary="Saved Cases" />
           </ListItem>
-          {/* <BookmarkPanel /> */}
+          {savedCases.slice(0, 6).map(item => (
+            <ListItem key={item.id}>
+              <ListItemIcon>
+                <NoteIcon />
+              </ListItemIcon>
+              <ListItemText primary={`Case ID: ${item.id}`} />
+            </ListItem>
+          ))}
+        </List>
+        <Divider />
+        <List>
+          <ListItem>
+            <ListItemIcon>
+              <GavelIcon />
+            </ListItemIcon>
+            <ListItemText primary="Saved Judges" />
+          </ListItem>
         </List>
       </Drawer>
       <main

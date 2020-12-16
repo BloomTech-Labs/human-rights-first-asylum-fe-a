@@ -77,19 +77,11 @@ function RenderHomePage(props) {
   const logout = () => authService.logout;
   const classes = useStyles();
 
-  useEffect(() => {
-    // API CALL TO GET DATA
-  }, []);
-
   return (
     <div className={classes.container}>
-      <SideDrawer logout={logout} userInfo={userInfo} />
-
-
-      
+      <SideDrawer logout={logout} userInfo={userInfo} savedCases={savedCases} />
 
       <Route path="/">
-
         <CaseTable
           caseData={caseData}
           userInfo={userInfo}
