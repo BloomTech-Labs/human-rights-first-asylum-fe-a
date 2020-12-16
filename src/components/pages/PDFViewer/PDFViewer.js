@@ -87,7 +87,7 @@ const PDFViewer = props => {
         onLoadSuccess={onDocumentLoadSuccess}
       >
         <Page
-          scale="1"
+          scale={1}
           width={pageWidth}
           height={pageHeight}
           pageNumber={pageNumber}

@@ -49,7 +49,7 @@ table {
 /* My own reset style--------*/
 * {
     box-sizing:border-box;
-	/* max-width: 100% !important; */ // this line prevents the table from rendering for wahtever reason
+	/* max-width: 100% !important; // this line prevents the table from rendering for wahtever reason */
 }
 `;
 
