@@ -4,6 +4,7 @@ export const PageWrapper = styled.div`
   width: ${props => (props.componentWidth ? props.componentWidth : 'auto')};
   height: ${props => (props.componentHeight ? props.componentHeight : 'auto')};
   display: flex;
+  flex-shrink: 0;
   justify-content: center;
   align-items: center;
   box-shadow: 0px 8px 15px rgba(255, 255, 255, 0.7);
