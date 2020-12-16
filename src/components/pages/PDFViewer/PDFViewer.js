@@ -19,7 +19,7 @@ const PDFViewer = props => {
   const history = useHistory();
   const pageHeight = props.pageHeight | '800'; // DEFINE HEIGHT OF PDF IN PIXELS (NUMBER ONLY)
   const pageWidth = props.pageWidth | null; // DEFINE WIDTH OF PDF IN PIXELS (NUMBER ONLY)
-  const { componentWidth, componentHeight } = props; // DEFINE HEIGHT/WIDTH OF TOTAL COMPONENT IN ANY UNIT
+  const { componentWidth, componentHeight, location, setSmallPDF } = props; // DEFINE HEIGHT/WIDTH OF TOTAL COMPONENT IN ANY UNIT, ALSO GRABBING URL
 
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
@@ -40,8 +40,12 @@ const PDFViewer = props => {
     }
   }
 
-  function openFullPDF() {
-    history.push(`/pdfviewer/${props.file.id}`);
+  function togglePDFView() {
+    if (/pdfviewer/.test(location.pathname)) {
+      history.push('/');
+    } else {
+      history.push(`/pdfviewer/${1}`);
+    }
   }
 
   function onDocumentLoadSuccess({ numPages }) {
@@ -74,18 +78,35 @@ const PDFViewer = props => {
 
   return (
     <PageWrapper
+      notFullScreen={props.notFullScreen}
       componentWidth={componentWidth}
       componentHeight={componentHeight}
     >
       <Document
-        file={props.file.case_url}
+        file={props.file} // ADD .CASE_URL TO ACCESS CASE URL ON FILE OBJECT
         onLoadSuccess={onDocumentLoadSuccess}
       >
-        <Page width={pageWidth} height={pageHeight} pageNumber={pageNumber} />
-        <ClosePDF pageHeight={pageHeight} pageWidth={pageWidth}>
-          <CloseIcon />
-        </ClosePDF>
-        <PageControls pageHeight={pageHeight} pageWidth={pageWidth}>
+        <Page
+          scale="1"
+          width={pageWidth}
+          height={pageHeight}
+          pageNumber={pageNumber}
+        />
+        {props.notFullScreen ? (
+          <ClosePDF
+            onClick={event => {
+              event.preventDefault();
+              setSmallPDF(false);
+            }}
+          >
+            <CloseIcon />
+          </ClosePDF>
+        ) : null}
+        <PageControls
+          notFullScreen={props.notFullScreen}
+          pageHeight={pageHeight}
+          pageWidth={pageWidth}
+        >
           <PageButton
             onClick={e => {
               e.preventDefault();
@@ -99,10 +120,14 @@ const PDFViewer = props => {
           <PageButton
             onClick={event => {
               event.preventDefault();
-              openFullPDF();
+              togglePDFView();
             }}
           >
-            <OpenInNewIcon />
+            {/pdfviewer/.test(location.pathname) ? (
+              <CloseIcon />
+            ) : (
+              <OpenInNewIcon />
+            )}
           </PageButton>
 
           <PageButton
