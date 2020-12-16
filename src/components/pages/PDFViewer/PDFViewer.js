@@ -1,23 +1,26 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { pdfjs } from 'react-pdf';
 import { Document, Page } from 'react-pdf';
 import {
   PageControls,
   PageButton,
   PageWrapper,
-  PdfWrapper,
+  ClosePDF,
 } from './PDFViewerStyled';
+
 import ArrowForwardIosRoundedIcon from '@material-ui/icons/ArrowForwardIosRounded';
 import ArrowBackIosRoundedIcon from '@material-ui/icons/ArrowBackIosRounded';
+import OpenInNewIcon from '@material-ui/icons/OpenInNew';
+import CloseIcon from '@material-ui/icons/Close';
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const PDFViewer = props => {
+  const history = useHistory();
   const pageHeight = props.pageHeight | '800'; // DEFINE HEIGHT OF PDF IN PIXELS (NUMBER ONLY)
   const pageWidth = props.pageWidth | null; // DEFINE WIDTH OF PDF IN PIXELS (NUMBER ONLY)
   const { componentWidth, componentHeight } = props; // DEFINE HEIGHT/WIDTH OF TOTAL COMPONENT IN ANY UNIT
 
-  const { path } = props;
-  const [pdfPath, setPdfPath] = useState(path);
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [disableButton, setDisableButton] = useState({
@@ -35,6 +38,10 @@ const PDFViewer = props => {
         setPageNumber(pageNumber - 1);
       }
     }
+  }
+
+  function openFullPDF() {
+    history.push(`/pdfviewer/${props.file.id}`);
   }
 
   function onDocumentLoadSuccess({ numPages }) {
@@ -71,10 +78,13 @@ const PDFViewer = props => {
       componentHeight={componentHeight}
     >
       <Document
-        file={require('./samplePDF.pdf')}
+        file={props.file.case_url}
         onLoadSuccess={onDocumentLoadSuccess}
       >
         <Page width={pageWidth} height={pageHeight} pageNumber={pageNumber} />
+        <ClosePDF pageHeight={pageHeight} pageWidth={pageWidth}>
+          <CloseIcon />
+        </ClosePDF>
         <PageControls pageHeight={pageHeight} pageWidth={pageWidth}>
           <PageButton
             onClick={e => {
@@ -85,6 +95,16 @@ const PDFViewer = props => {
           >
             <ArrowBackIosRoundedIcon />
           </PageButton>
+
+          <PageButton
+            onClick={event => {
+              event.preventDefault();
+              openFullPDF();
+            }}
+          >
+            <OpenInNewIcon />
+          </PageButton>
+
           <PageButton
             onClick={e => {
               e.preventDefault();

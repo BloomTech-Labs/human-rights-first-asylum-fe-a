@@ -6,6 +6,9 @@ import PDFViewer from '../PDFViewer/PDFViewer';
 import { Route, Switch } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
+import { hidden } from 'kleur';
+
+import * as pdfFile from '../PDFViewer/samplePDF.pdf';
 
 const useStyles = makeStyles({
   container: {
@@ -16,38 +19,30 @@ const useStyles = makeStyles({
 function RenderHomePage(props) {
   const { userInfo, authService } = props;
   const [caseData, setCaseData] = useState([]);
-
-  // useEffect(() => {
-  //   axios
-  //     .get('http://localhost:8080/case')
-  //     .then(res => {
-  //       setCaseData(res.data);
-  //       console.log(res.data);
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-  // }, []);
+  const [smallPDF, setSmallPDF] = useState(true);
+  const [file, setFile] = useState(pdfFile);
 
   const logout = () => authService.logout;
   const classes = useStyles();
+
+  useEffect(() => {
+    // API CALL TO GET DATA
+  }, []);
+
   return (
-    <div>
-      {/* <h1>Hi {userInfo.name} Welcome to Labs Basic SPA</h1> */}
+    <div className={classes.container}>
+      <SideDrawer logout={logout} userInfo={userInfo} />
 
-      <div className={classes.container}>
-        <SideDrawer logout={logout} userInfo={userInfo} />
+      <Route path="/">
+        <CaseTable caseData={caseData} />
+      </Route>
 
-        <Switch>
-          <Route exact path="/">
-            <CaseTable caseData={caseData} />
-          </Route>
+      <Route path="/pdfviewer/:id">
+        {/* FIXED DIV, 100VH 100VW, OVERLAY BACKGROUND, Z-INDEX 998, PDF VIEWER Z-INDEX 999 */}
+        <PDFViewer file={file} pageWidth="" componentWidth="" />
+      </Route>
 
-          <Route path="/pdfviewer/:id">
-            <PDFViewer pageWidth="800" componentWidth="1400px" />
-          </Route>
-        </Switch>
-      </div>
+      {smallPDF && <PDFViewer file={file} pageWidth="" componentWidth="" />}
     </div>
   );
 }
