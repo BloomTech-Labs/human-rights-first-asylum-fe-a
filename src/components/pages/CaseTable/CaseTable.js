@@ -148,8 +148,10 @@ export default function CaseTable(props) {
         }
       )
       .then(res => {
-        console.log(res);
         setSavedCases(...savedCases, res.data.case_bookmarks);
+        // there's no need for me to set saved cases here - the post request should update
+        // the backend, so the get request for a profile
+        console.log('hello again');
       })
       .catch(err => {
         console.log(err);
@@ -165,13 +167,18 @@ export default function CaseTable(props) {
       for (let i = 0; i < targetRows.length; i++) {
         bookmarks.push(findRowByID(targetRows[i], caseData));
       }
-    }
-    for (let i = 0; i < bookmarks.length; i++) {
-      if (!savedCases.includes(bookmarks[i])) {
-        console.log(bookmarks[i]);
-        postBookmark(bookmarks[i]);
-      } else {
-        return 'Case already saved to bookmarks';
+      let savedIds = [];
+      for (let i = 0; i < savedCases.length; i++) {
+        savedIds.push(savedCases[i].id);
+      }
+
+      for (let i = 0; i < bookmarks.length; i++) {
+        if (savedIds.includes(bookmarks[i].id)) {
+          console.log('Case already saved to bookmarks');
+          continue;
+        } else {
+          postBookmark(bookmarks[i]);
+        }
       }
     }
   };
@@ -186,6 +193,7 @@ export default function CaseTable(props) {
         <div className={classes.colFilter}>
           <InputLabel>Search By ...</InputLabel>
           <Select value={columnToSearch} onChange={handleChange}>
+            <MenuItem value="id">Case ID</MenuItem>
             <MenuItem value="court_type">Court Type</MenuItem>
             <MenuItem value="hearing_type">Hearing Type</MenuItem>
             <MenuItem value="refugee_origin">Refugee Origin</MenuItem>

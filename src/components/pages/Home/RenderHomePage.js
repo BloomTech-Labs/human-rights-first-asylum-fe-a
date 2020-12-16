@@ -85,7 +85,11 @@ function RenderHomePage(props) {
     <div className={classes.container}>
       <SideDrawer logout={logout} userInfo={userInfo} />
 
+
+      
+
       <Route path="/">
+
         <CaseTable
           caseData={caseData}
           userInfo={userInfo}
