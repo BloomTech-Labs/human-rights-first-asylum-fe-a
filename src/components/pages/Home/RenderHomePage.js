@@ -77,6 +77,8 @@ function RenderHomePage(props) {
               caseData={caseData}
               userInfo={userInfo}
               savedCases={savedCases}
+              setSavedCases={setSavedCases}
+              authState={authState}
             />
             {/* <JudgeTable judgeData={judgeData} /> */}
           </Route>

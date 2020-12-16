@@ -102,7 +102,7 @@ const sampleRows = [
 ];
 
 export default function CaseTable(props) {
-  const { caseData, userInfo, savedCases } = props;
+  const { caseData, userInfo, savedCases, setSavedCases, authState } = props;
   const [columnToSearch, setColumnToSearch] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedRows, setSelectedRows] = useState({});
@@ -140,10 +140,16 @@ export default function CaseTable(props) {
     axios
       .post(
         `http://localhost:8080/profile/${userInfo.sub}/case/${rowToPost.id}`,
-        rowToPost
+        rowToPost,
+        {
+          headers: {
+            Authorization: 'Bearer ' + authState.idToken,
+          },
+        }
       )
       .then(res => {
         console.log(res);
+        setSavedCases(...savedCases, res.data.case_bookmarks);
       })
       .catch(err => {
         console.log(err);
