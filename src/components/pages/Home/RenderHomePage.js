@@ -74,7 +74,6 @@ function RenderHomePage(props) {
   const [location, setLocation] = useState(useLocation());
   const { height, width } = useWindowDimensions();
 
-
   const logout = () => authService.logout;
   const classes = useStyles();
 
@@ -83,36 +82,18 @@ function RenderHomePage(props) {
   }, []);
 
   return (
-
-    <div>
-      {/* <h1>Hi {userInfo.name} Welcome to Labs Basic SPA</h1> */}
-
-      <div className={classes.container}>
-        <SideDrawer logout={logout} userInfo={userInfo} />
-
-        <Switch>
-          <Route exact path="/">
-            <CaseTable
-              caseData={caseData}
-              userInfo={userInfo}
-              savedCases={savedCases}
-              setSavedCases={setSavedCases}
-              authState={authState}
-            />
-            {/* <JudgeTable judgeData={judgeData} /> */}
-          </Route>
-
-          <Route path="/pdfviewer/:id">
-            <PDFViewer />
-          </Route>
-        </Switch>
-      </div>
-
     <div className={classes.container}>
       <SideDrawer logout={logout} userInfo={userInfo} />
 
       <Route path="/">
-        <CaseTable caseData={caseData} />
+        <CaseTable
+          caseData={caseData}
+          userInfo={userInfo}
+          savedCases={savedCases}
+          setSavedCases={setSavedCases}
+          authState={authState}
+        />
+        {/* <JudgeTable judgeData={judgeData} /> */}
       </Route>
 
       <Route path="/pdfviewer/:id">
@@ -138,7 +119,6 @@ function RenderHomePage(props) {
           componentWidth="750px !important"
         />
       )}
-
     </div>
   );
 }
