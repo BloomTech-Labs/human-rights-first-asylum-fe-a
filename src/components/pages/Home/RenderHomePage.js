@@ -1,6 +1,7 @@
 import React, { useState, useEffect, componentDidUpdate } from 'react';
 import CaseTable from '../CaseTable/CaseTable';
 import JudgeTable from '../JudgeTable/JudgeTable';
+import { useLocation } from 'react-router-dom';
 import SideDrawer from '../SideDrawer/SideDrawer';
 import PDFViewer from '../PDFViewer/PDFViewer';
 import { Route, Switch, useParams } from 'react-router-dom';
@@ -8,6 +9,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useOktaAuth } from '@okta/okta-react';
 
 import axios from 'axios';
+import { hidden } from 'kleur';
+import { FullscreenOverlay } from '../PDFViewer/PDFViewerStyled';
+import useWindowDimensions from '../../../utils/useWindowDimensions';
+
+import * as pdfFile from '../PDFViewer/samplePDF.pdf';
 
 const useStyles = makeStyles({
   container: {
@@ -18,6 +24,7 @@ const useStyles = makeStyles({
 function RenderHomePage(props) {
   const { userInfo, authService, authState } = props;
   const [caseData, setCaseData] = useState([]);
+
   const [judgeData, setJudgeData] = useState([]);
   const [savedCases, setSavedCases] = useState([]);
 
@@ -62,9 +69,21 @@ function RenderHomePage(props) {
       });
   }, []);
 
+  const [smallPDF, setSmallPDF] = useState(true);
+  const [file, setFile] = useState(pdfFile);
+  const [location, setLocation] = useState(useLocation());
+  const { height, width } = useWindowDimensions();
+
+
   const logout = () => authService.logout;
   const classes = useStyles();
+
+  useEffect(() => {
+    // API CALL TO GET DATA
+  }, []);
+
   return (
+
     <div>
       {/* <h1>Hi {userInfo.name} Welcome to Labs Basic SPA</h1> */}
 
@@ -88,6 +107,38 @@ function RenderHomePage(props) {
           </Route>
         </Switch>
       </div>
+
+    <div className={classes.container}>
+      <SideDrawer logout={logout} userInfo={userInfo} />
+
+      <Route path="/">
+        <CaseTable caseData={caseData} />
+      </Route>
+
+      <Route path="/pdfviewer/:id">
+        {/* FIXED DIV, 100VH 100VW, OVERLAY BACKGROUND, Z-INDEX 998, PDF VIEWER Z-INDEX 999 */}
+        <FullscreenOverlay>
+          <PDFViewer
+            location={location}
+            file={file}
+            pageHeight={height <= 1023 ? height : '1023'}
+            componentWidth="60%"
+            componentHeight="100%"
+          />
+        </FullscreenOverlay>
+      </Route>
+
+      {smallPDF && (
+        <PDFViewer
+          setSmallPDF={setSmallPDF}
+          notFullScreen={true}
+          location={location}
+          file={file}
+          pageWidth="700"
+          componentWidth="750px !important"
+        />
+      )}
+
     </div>
   );
 }

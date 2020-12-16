@@ -1,28 +1,47 @@
 import styled from 'styled-components';
 
 export const PageWrapper = styled.div`
-  width: 60%;
+  width: ${props => (props.componentWidth ? props.componentWidth : 'auto')};
+  height: ${props => (props.componentHeight ? props.componentHeight : 'auto')};
   display: flex;
   justify-content: center;
-  border: 2px solid black;
-  background-color: lightblue;
+  align-items: center;
+  box-shadow: 0px 8px 15px rgba(255, 255, 255, 0.7);
+  background-color: black;
+  margin: 70px 1% 0 1%;
+  padding: ${props => (props.notFullScreen ? '60px 1% 0 1%' : '0')};
 `;
 
 export const PageControls = styled.div`
-  display: none;
-  position: relative;
+  visibility: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  position: ${props => (props.notFullScreen ? 'relative' : 'absolute')};
   width: 200px;
   height: 60px;
-  left: 400px;
-  bottom: 150px;
+  left: ${props => {
+    return !props.notFullScreen
+      ? '50%'
+      : props.pageWidth
+      ? `${props.pageWidth / 2 - 100}px`
+      : `${((8.5 / 11) * props.pageHeight) / 2 - 100}px`;
+  }};
+  transform: ${props =>
+    props.notFullScreen ? 'none' : 'translate(-100px, -30px)'};
+  bottom: ${props => {
+    return !props.notFullScreen
+      ? '10%'
+      : props.pageWidth
+      ? `${(11 / 8.5) * props.pageWidth * 0.15 + 30}px`
+      : `${props.pageHeight * 0.15 + 30}px`;
+  }};
   z-index: 998;
   border-radius: 30px;
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
   ${PageWrapper}:hover & {
-    display: flex !important;
-    justify-content: center;
-    align-items: center;
-    background: white;
+    visibility: visible;
   }
 `;
 
@@ -49,4 +68,25 @@ export const PageButton = styled.button`
     color: ${props => (!props.disabled ? 'black' : 'inherit')};
     transform: ${props => (!props.disabled ? 'translateY(-7px)' : 'none')};
   }
+`;
+
+export const FullscreenOverlay = styled.div`
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 996;
+`;
+
+export const ClosePDF = styled.span`
+  position: absolute;
+  z-index: 999;
+  top: 80px;
+  right: 1.5%;
+  color: white;
 `;
