@@ -27,6 +27,7 @@ function RenderHomePage(props) {
 
   const [judgeData, setJudgeData] = useState([]);
   const [savedCases, setSavedCases] = useState([]);
+  const [showCaseTable, setShowCaseTable] = useState(true);
 
   // should move these API calls into a separate index folder at some point
 
@@ -61,13 +62,28 @@ function RenderHomePage(props) {
         },
       })
       .then(res => {
-        console.log(res.data);
         setSavedCases(res.data.case_bookmarks);
+        console.log(savedCases);
       })
       .catch(err => {
         console.log(err);
       });
-  }, []);
+  }, [savedCases.length]); // can't think of any instances when just using length doesn't hit what i'm looking for
+
+  const deleteBookmark = caseID => {
+    axios
+      .delete(`http://localhost:8080/${userInfo.sub}/case/${caseID}`, {
+        headers: {
+          Authorization: 'Bearer ' + authState.idToken,
+        },
+      })
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   const [smallPDF, setSmallPDF] = useState(true);
   const [file, setFile] = useState(pdfFile);
@@ -79,17 +95,30 @@ function RenderHomePage(props) {
 
   return (
     <div className={classes.container}>
-      <SideDrawer logout={logout} userInfo={userInfo} savedCases={savedCases} />
+      <SideDrawer
+        logout={logout}
+        userInfo={userInfo}
+        savedCases={savedCases}
+        deleteBookmark={deleteBookmark}
+      />
 
       <Route path="/">
-        <CaseTable
-          caseData={caseData}
-          userInfo={userInfo}
-          savedCases={savedCases}
-          setSavedCases={setSavedCases}
-          authState={authState}
-        />
-        {/* <JudgeTable judgeData={judgeData} /> */}
+        <button
+          style={{ height: 130, marginTop: 160 }}
+          onClick={() => setShowCaseTable(!showCaseTable)}
+        >
+          Toggle Tables
+        </button>
+        {showCaseTable && (
+          <CaseTable
+            caseData={caseData}
+            userInfo={userInfo}
+            savedCases={savedCases}
+            setSavedCases={setSavedCases}
+            authState={authState}
+          />
+        )}
+        {!showCaseTable && <JudgeTable judgeData={judgeData} />}
       </Route>
 
       <Route path="/pdfviewer/:id">

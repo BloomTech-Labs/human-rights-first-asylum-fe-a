@@ -20,6 +20,7 @@ import BookmarkPanel from '../Bookmarks/BookmarksQuickview';
 import BookmarksIcon from '@material-ui/icons/Bookmarks';
 import NoteIcon from '@material-ui/icons/Receipt';
 import GavelIcon from '@material-ui/icons/Gavel';
+import DeleteIcon from '@material-ui/icons/DeleteForever';
 
 import { SideDrawerData } from './SideDrawerData';
 
@@ -88,7 +89,7 @@ export default function SideDrawer(props) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const itemList = SideDrawerData;
-  const { logout, userInfo, savedCases } = props;
+  const { logout, userInfo, savedCases, deleteBookmark } = props;
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -174,6 +175,9 @@ export default function SideDrawer(props) {
                 <NoteIcon />
               </ListItemIcon>
               <ListItemText primary={`Case ID: ${item.id}`} />
+              <IconButton onClick={() => deleteBookmark(item.id)}>
+                <DeleteIcon />
+              </IconButton>
             </ListItem>
           ))}
         </List>

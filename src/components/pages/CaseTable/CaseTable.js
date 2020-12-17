@@ -126,6 +126,7 @@ export default function CaseTable(props) {
     );
   };
 
+  // the need for idParamName arose from case_id and id being used in different scenarios
   const findRowByID = (rowID, rowData) => {
     for (let i = 0; i < rowData.length; i++) {
       let currentRow = rowData[i];
@@ -148,10 +149,13 @@ export default function CaseTable(props) {
         }
       )
       .then(res => {
-        setSavedCases(...savedCases, res.data.case_bookmarks);
+        let justAdded = res.data.case_bookmarks.slice(-1);
+        let justAddedID = justAdded[0].case_id;
+        let wholeAddedRow = findRowByID(justAddedID, caseData);
+        setSavedCases(...savedCases, wholeAddedRow);
+        // setSavedCases(...savedCases);
         // there's no need for me to set saved cases here - the post request should update
         // the backend, so the get request for a profile
-        console.log('hello again');
       })
       .catch(err => {
         console.log(err);
