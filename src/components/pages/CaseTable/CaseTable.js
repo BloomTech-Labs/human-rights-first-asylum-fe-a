@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
   tbl_container: {
     display: 'flex',
     flexDirection: 'column',
-    width: '70%',
+    width: '57%',
     margin: 'auto',
     marginTop: 100,
   },
@@ -34,71 +34,23 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 100 },
-  { field: 'court_type', headerName: 'Court Type', width: 115 },
-  { field: 'hearing_type', headerName: 'Hearing Type', width: 120 },
-  { field: 'refugee_origin', headerName: 'Refugee Origin', width: 150 },
+  { field: 'id', headerName: 'ID', width: 50 },
+  { field: 'court_type', headerName: 'Court Type', width: 105 },
+  // { field: 'hearing_type', headerName: 'Hearing Type', width: 120 },
+  { field: 'refugee_origin', headerName: 'Refugee Origin', width: 130 },
   { field: 'protected_ground', headerName: 'Protected Ground', width: 150 },
-  { field: 'hearing_location', headerName: 'Location', width: 120 },
-  { field: 'hearing_date', headerName: 'Hearing Date', width: 120 },
-  { field: 'decision_date', headerName: 'Decision Date', width: 150 },
-  {
-    field: 'credibility_of_refugee',
-    headerName: 'Refugee Credibility',
-    width: 160,
-  },
-  { field: 'social_group_type', headerName: 'Social Group', width: 150 },
+  // { field: 'hearing_location', headerName: 'Location', width: 120 },
+  // { field: 'hearing_date', headerName: 'Hearing Date', width: 120 },
+  // { field: 'decision_date', headerName: 'Decision Date', width: 150 },
+  // {
+  //   field: 'credibility_of_refugee',
+  //   headerName: 'Refugee Credibility',
+  //   width: 160,
+  // },
+  { field: 'social_group_type', headerName: 'Social Group', width: 130 },
   { field: 'judge_name', headerName: 'Judge Name', width: 120 },
-  { field: 'judge_decision', headerName: 'Decision', width: 120 },
+  { field: 'judge_decision', headerName: 'Decision', width: 105 },
   { field: 'case_status', headerName: 'Case Status', width: 120 },
-];
-
-const sampleRows = [
-  {
-    id: 'test01',
-    court_type: 'Supreme Court',
-    hearing_type: 'Primary',
-    refugee_origin: 'Honduras',
-    hearing_location: 'Miami',
-    protected_ground: 'Political',
-    hearing_date: '01-11-16',
-    decision_date: '02-12-16',
-    credibility_of_refugee: 'Questionable',
-    case_status: 'Closed',
-    social_group_type: 'Male',
-    judge_decision: 'Yes',
-    judge_name: 'Elaine Gonzalez',
-  },
-  {
-    id: 'test02',
-    court_type: 'Lower',
-    hearing_type: 'Primary',
-    refugee_origin: 'El Salvador',
-    hearing_location: 'Miami',
-    protected_ground: 'Political',
-    hearing_date: '01-11-16',
-    decision_date: '02-12-16',
-    credibility_of_refugee: 'Questionable',
-    case_status: 'Closed',
-    social_group_type: 'Male',
-    judge_decision: 'Yes',
-    judge_name: 'Elaine Gonzalez',
-  },
-  {
-    id: 'test03',
-    court_type: 'Supreme ',
-    hearing_type: 'Secondary',
-    refugee_origin: 'Honduras',
-    hearing_location: 'Atlanta',
-    protected_ground: 'War',
-    hearing_date: '04-23-18',
-    decision_date: 'NA',
-    credibility_of_refugee: 'High',
-    case_status: 'Open',
-    social_group_type: 'Female',
-    judge_decision: 'NA',
-    judge_name: 'John Watson',
-  },
 ];
 
 export default function CaseTable(props) {
@@ -199,19 +151,14 @@ export default function CaseTable(props) {
           <Select value={columnToSearch} onChange={handleChange}>
             <MenuItem value="id">Case ID</MenuItem>
             <MenuItem value="court_type">Court Type</MenuItem>
-            <MenuItem value="hearing_type">Hearing Type</MenuItem>
             <MenuItem value="refugee_origin">Refugee Origin</MenuItem>
-            <MenuItem value="hearing_location">Hearing Location</MenuItem>
             <MenuItem value="protected_ground">Protected Ground</MenuItem>
-            <MenuItem value="hearing_date">Hearing Date</MenuItem>
-            <MenuItem value="decision_date">Decision Date</MenuItem>
             <MenuItem value="credibility_of_refugee">
               Refugee Credibility
             </MenuItem>
             <MenuItem value="case_status">Case Status</MenuItem>
             <MenuItem value="social_group_type">Social Group</MenuItem>
             <MenuItem value="judge_name">Judge Name</MenuItem>
-            <MenuItem value="hearing_date">Hearing Date</MenuItem>
           </Select>
         </div>
         <TextField
@@ -233,6 +180,7 @@ export default function CaseTable(props) {
         loading={caseData ? false : true}
         checkboxSelection={true}
         onSelectionChange={onCheckboxSelect}
+        onRowHover={item => console.log(item.row)}
       />
     </div>
   );

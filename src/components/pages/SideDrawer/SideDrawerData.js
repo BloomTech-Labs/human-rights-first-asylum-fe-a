@@ -9,12 +9,6 @@ export const SideDrawerData = [
     path: '/',
     icon: <AccountIcon />,
   },
-  // {
-  //   title: 'Saved Cases',
-  //   path: '/',
-  //   icon: <BookmarksIcon />,
-
-  // },
   {
     title: 'Upload Case',
     path: '/',

@@ -7,6 +7,8 @@ import PDFViewer from '../PDFViewer/PDFViewer';
 import { Route, Switch, useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { useOktaAuth } from '@okta/okta-react';
+import SwitchTableIcon from '@material-ui/icons/Autorenew';
+import IconButton from '@material-ui/core/IconButton';
 
 import axios from 'axios';
 import { hidden } from 'kleur';
@@ -28,6 +30,7 @@ function RenderHomePage(props) {
   const [judgeData, setJudgeData] = useState([]);
   const [savedCases, setSavedCases] = useState([]);
   const [showCaseTable, setShowCaseTable] = useState(true);
+  const [savedJudges, setSavedJudges] = useState([]);
 
   // should move these API calls into a separate index folder at some point
 
@@ -63,6 +66,7 @@ function RenderHomePage(props) {
       })
       .then(res => {
         setSavedCases(res.data.case_bookmarks);
+        // set saved Judges here as well
         console.log(savedCases);
       })
       .catch(err => {
@@ -104,10 +108,10 @@ function RenderHomePage(props) {
 
       <Route path="/">
         <button
-          style={{ height: 130, marginTop: 160 }}
+          style={{ height: 70, marginTop: 160, marginRight: 50 }}
           onClick={() => setShowCaseTable(!showCaseTable)}
         >
-          Toggle Tables
+          {showCaseTable ? 'View Judges' : 'View Cases'}
         </button>
         {showCaseTable && (
           <CaseTable
@@ -118,7 +122,15 @@ function RenderHomePage(props) {
             authState={authState}
           />
         )}
-        {!showCaseTable && <JudgeTable judgeData={judgeData} />}
+        {!showCaseTable && (
+          <JudgeTable
+            judgeData={judgeData}
+            userInfo={userInfo}
+            savedJudges={savedJudges}
+            setSavedJudges={setSavedJudges}
+            authState={authState}
+          />
+        )}
       </Route>
 
       <Route path="/pdfviewer/:id">
