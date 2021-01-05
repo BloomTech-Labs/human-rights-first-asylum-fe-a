@@ -53,8 +53,8 @@ export default function JudgeTable(props) {
   const [selectedRows, setSelectedRows] = useState({});
 
   judgeData.forEach((item, idx) => {
-    item.id = idx + 1;
-  }); // this is very hacky, but the table doesn't take data without ids
+    item.id = idx;
+  }); // this is very hacky, but the table doesn't take data without ids'
 
   const classes = useStyles();
 
@@ -77,17 +77,35 @@ export default function JudgeTable(props) {
   const findRowByID = (rowID, rowData) => {
     for (let i = 0; i < rowData.length; i++) {
       let currentRow = rowData[i];
-      if (currentRow.id === rowID) {
+      if (currentRow.id == rowID) {
         return currentRow;
       }
     }
     return 'Row does not exist';
   };
 
+  const findRowByJudgeName = (judgeName, rowData) => {
+    for (let i = 0; i < rowData.length; i++) {
+      let currentRow = rowData[i];
+      if (currentRow.name == judgeName) {
+        return currentRow;
+      }
+    }
+    return 'Row does not exist';
+  };
+
+  const formatJudgeName = name => {
+    let arr = name.split(' ');
+    let result = arr.join('%20');
+    return result;
+  };
+
   const postJudge = rowToPost => {
     axios
       .post(
-        `http://localhost:8080/profile/${userInfo.sub}/judge/${rowToPost.name}`, // check structure of name
+        `http://localhost:8080/profile/${userInfo.sub}/judge/${formatJudgeName(
+          rowToPost.name
+        )}`,
         rowToPost,
         {
           headers: {
@@ -96,13 +114,12 @@ export default function JudgeTable(props) {
         }
       )
       .then(res => {
-        let justAdded = res.data.case_bookmarks.slice(-1);
-        let justAddedID = justAdded[0].case_id;
-        let wholeAddedRow = findRowByID(justAddedID, judgeData);
-        setSavedJudges(...savedJudges, wholeAddedRow);
-        // setSavedCases(...savedCases);
-        // there's no need for me to set saved cases here - the post request should update
-        // the backend, so the get request for a profile
+        console.log(res.data);
+        let justAdded = res.data.judge_bookmarks.slice(-1);
+        let justAddedName = justAdded[0].judge_name;
+        let wholeAddedRow = findRowByJudgeName(justAddedName, judgeData);
+        console.log(wholeAddedRow);
+        setSavedJudges([...savedJudges, wholeAddedRow]);
       })
       .catch(err => {
         console.log(err);
@@ -116,19 +133,19 @@ export default function JudgeTable(props) {
     let bookmarks = [];
     if (targetRows) {
       for (let i = 0; i < targetRows.length; i++) {
+        console.log(targetRows[i]);
         bookmarks.push(findRowByID(targetRows[i], judgeData));
       }
-      let savedIds = [];
+      let savedNames = [];
       for (let i = 0; i < savedJudges.length; i++) {
-        savedIds.push(savedJudges[i].id);
+        savedNames.push(savedJudges[i].name);
       }
 
       for (let i = 0; i < bookmarks.length; i++) {
-        if (savedIds.includes(bookmarks[i].id)) {
+        if (savedNames.includes(bookmarks[i].name)) {
           console.log('Judge already saved to bookmarks');
           continue;
         } else {
-          console.log(bookmarks[i]);
           postJudge(bookmarks[i]);
         }
       }
@@ -164,7 +181,12 @@ export default function JudgeTable(props) {
           type="text"
           style={{ width: 950, marginLeft: 20 }}
         />
-        <button onClick={() => bookmarkJudges(selectedRows.rowIds)}>
+        <button
+          onClick={() => {
+            console.log(selectedRows.rowIds);
+            bookmarkJudges(selectedRows.rowIds);
+          }}
+        >
           Bookmark Selected Rows
         </button>
       </div>

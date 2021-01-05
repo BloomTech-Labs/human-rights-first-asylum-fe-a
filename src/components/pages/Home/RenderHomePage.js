@@ -57,6 +57,7 @@ function RenderHomePage(props) {
         },
       })
       .then(res => {
+        console.log(res.data);
         setJudgeData(res.data);
       })
       .catch(err => {
@@ -64,7 +65,6 @@ function RenderHomePage(props) {
       });
   }, []);
 
-  // need to reread on dependency arrays to understand them better
   useEffect(() => {
     axios
       .get(`http://localhost:8080/profile/${userInfo.sub}`, {
@@ -81,11 +81,11 @@ function RenderHomePage(props) {
       .catch(err => {
         console.log(err);
       });
-  }, [authState.idToken, userInfo.sub, savedCases.length, savedJudges.length]); // can't think of any instances when just using length doesn't hit what i'm looking for
+  }, [authState.idToken, userInfo.sub, savedCases.length, savedJudges.length]);
 
   const deleteFromStateById = (id, state, setState) => {
+    // i made this function non case specific but now I'm remembering that cases get deleted by name
     let index = state.findIndex(item => item.id === id);
-    console.log(index);
     return setState(state.slice(0, index).concat(state.slice(index + 1)));
   };
 
