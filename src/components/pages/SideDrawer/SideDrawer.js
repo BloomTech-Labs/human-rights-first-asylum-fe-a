@@ -66,6 +66,9 @@ const useStyles = makeStyles(theme => ({
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
   },
+  favorites: {
+    overflowY: 'scroll',
+  },
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
@@ -169,8 +172,8 @@ export default function SideDrawer(props) {
             </ListItemIcon>
             <ListItemText primary="Saved Cases" />
           </ListItem>
-          {savedCases.slice(0, 6).map(item => (
-            <ListItem key={item.id}>
+          {savedCases.map(item => (
+            <ListItem key={item.id} className={classes.favorites}>
               <ListItemIcon>
                 <NoteIcon />
               </ListItemIcon>

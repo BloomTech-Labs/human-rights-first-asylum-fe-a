@@ -36,8 +36,13 @@ function RenderHomePage(props) {
 
   useEffect(() => {
     axios
-      .get('http://localhost:8080/case')
+      .get('http://localhost:8080/case', {
+        headers: {
+          Authorization: 'Bearer ' + authState.idToken,
+        },
+      })
       .then(res => {
+        console.log(res.data);
         setCaseData(res.data);
       })
       .catch(err => {
@@ -47,7 +52,11 @@ function RenderHomePage(props) {
 
   useEffect(() => {
     axios
-      .get('http://localhost:8080/judge')
+      .get('http://localhost:8080/judge', {
+        headers: {
+          Authorization: 'Bearer ' + authState.idToken,
+        },
+      })
       .then(res => {
         setJudgeData(res.data);
       })
@@ -65,18 +74,19 @@ function RenderHomePage(props) {
         },
       })
       .then(res => {
+        console.log(res.data);
         setSavedCases(res.data.case_bookmarks);
         // set saved Judges here as well
-        console.log(savedCases);
+        setSavedJudges(res.data.judge_bookmarks);
       })
       .catch(err => {
         console.log(err);
       });
-  }, [savedCases.length]); // can't think of any instances when just using length doesn't hit what i'm looking for
+  }, [authState.idToken, userInfo.sub, savedCases.length, savedJudges.length]); // can't think of any instances when just using length doesn't hit what i'm looking for
 
   const deleteBookmark = caseID => {
     axios
-      .delete(`http://localhost:8080/${userInfo.sub}/case/${caseID}`, {
+      .delete(`http://localhost:8080/profile/${userInfo.sub}/case/${caseID}`, {
         headers: {
           Authorization: 'Bearer ' + authState.idToken,
         },

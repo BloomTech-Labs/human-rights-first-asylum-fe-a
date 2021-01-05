@@ -7,6 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button } from 'antd';
 import axios from 'axios';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -40,8 +41,8 @@ const columns = [
   { field: 'judge_county', headerName: 'County', width: 110 },
   { field: 'date_appointed', headerName: 'Date Appointed', width: 140 },
   { field: 'birth_date', headerName: 'Birth Date', width: 110 },
-  { field: 'denial_rate', headerName: 'Asylum Denial Rate', width: 165 },
-  { field: 'approval_rate', headerName: 'Asylum Approval Rate', width: 175 },
+  { field: 'denial_rate', headerName: '% Case Denied', width: 140 },
+  { field: 'approval_rate', headerName: '% Case Approved', width: 140 },
   { field: 'appointed_by', headerName: 'Appointed by', width: 120 },
 ];
 
@@ -127,6 +128,7 @@ export default function JudgeTable(props) {
           console.log('Judge already saved to bookmarks');
           continue;
         } else {
+          console.log(bookmarks[i]);
           postJudge(bookmarks[i]);
         }
       }
@@ -135,6 +137,10 @@ export default function JudgeTable(props) {
 
   const onCheckboxSelect = selections => {
     setSelectedRows(selections);
+  };
+
+  const displayTooltip = text => {
+    return <Tooltip title={text} />;
   };
 
   return (
@@ -170,7 +176,6 @@ export default function JudgeTable(props) {
         loading={judgeData ? false : true}
         checkboxSelection={true}
         onSelectionChange={onCheckboxSelect}
-        onRowHover={row => console.log(row)}
       />
     </div>
   );

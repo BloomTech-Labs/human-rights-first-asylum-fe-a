@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 50 },
+  { field: 'id', headerName: 'ID', width: 100 },
   { field: 'court_type', headerName: 'Court Type', width: 105 },
   // { field: 'hearing_type', headerName: 'Hearing Type', width: 120 },
   { field: 'refugee_origin', headerName: 'Refugee Origin', width: 130 },
@@ -101,13 +101,10 @@ export default function CaseTable(props) {
         }
       )
       .then(res => {
-        let justAdded = res.data.case_bookmarks.slice(-1);
+        let justAdded = res.data.case_bookmarks.slice(-1); // response comes back as array of all existing bookmarks
         let justAddedID = justAdded[0].case_id;
         let wholeAddedRow = findRowByID(justAddedID, caseData);
-        setSavedCases(...savedCases, wholeAddedRow);
-        // setSavedCases(...savedCases);
-        // there's no need for me to set saved cases here - the post request should update
-        // the backend, so the get request for a profile
+        setSavedCases([...savedCases, wholeAddedRow]);
       })
       .catch(err => {
         console.log(err);
@@ -180,7 +177,7 @@ export default function CaseTable(props) {
         loading={caseData ? false : true}
         checkboxSelection={true}
         onSelectionChange={onCheckboxSelect}
-        onRowHover={item => console.log(item.row)}
+        // onRowHover={item => console.log(item.row)}
       />
     </div>
   );
