@@ -92,7 +92,14 @@ export default function SideDrawer(props) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const itemList = SideDrawerData;
-  const { logout, userInfo, savedCases, deleteBookmark } = props;
+  const {
+    logout,
+    userInfo,
+    savedCases,
+    savedJudges,
+    deleteBookmark,
+    deleteSavedJudge,
+  } = props;
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -104,6 +111,7 @@ export default function SideDrawer(props) {
 
   if (!savedCases) {
     // surely there is a better way to do this?? idk
+    // two weeks later and I have no idea what purpose this served
     return <div></div>;
   }
 
@@ -192,6 +200,17 @@ export default function SideDrawer(props) {
             </ListItemIcon>
             <ListItemText primary="Saved Judges" />
           </ListItem>
+          {savedJudges.map((item, idx) => (
+            <ListItem key={idx} className={classes.favorites}>
+              <ListItemIcon>
+                <NoteIcon />
+              </ListItemIcon>
+              <ListItemText primary={item.judge_name} />
+              <IconButton onClick={() => deleteSavedJudge(item.judge_name)}>
+                <DeleteIcon />
+              </IconButton>
+            </ListItem>
+          ))}
         </List>
       </Drawer>
       <main

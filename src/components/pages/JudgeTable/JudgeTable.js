@@ -114,11 +114,9 @@ export default function JudgeTable(props) {
         }
       )
       .then(res => {
-        console.log(res.data);
         let justAdded = res.data.judge_bookmarks.slice(-1);
         let justAddedName = justAdded[0].judge_name;
         let wholeAddedRow = findRowByJudgeName(justAddedName, judgeData);
-        console.log(wholeAddedRow);
         setSavedJudges([...savedJudges, wholeAddedRow]);
       })
       .catch(err => {
@@ -133,7 +131,6 @@ export default function JudgeTable(props) {
     let bookmarks = [];
     if (targetRows) {
       for (let i = 0; i < targetRows.length; i++) {
-        console.log(targetRows[i]);
         bookmarks.push(findRowByID(targetRows[i], judgeData));
       }
       let savedNames = [];

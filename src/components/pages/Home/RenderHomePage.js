@@ -57,7 +57,6 @@ function RenderHomePage(props) {
         },
       })
       .then(res => {
-        console.log(res.data);
         setJudgeData(res.data);
       })
       .catch(err => {
@@ -75,7 +74,6 @@ function RenderHomePage(props) {
       .then(res => {
         console.log(res.data);
         setSavedCases(res.data.case_bookmarks);
-        // set saved Judges here as well
         setSavedJudges(res.data.judge_bookmarks);
       })
       .catch(err => {
@@ -90,6 +88,7 @@ function RenderHomePage(props) {
   };
 
   const deleteBookmark = caseID => {
+    // only works for cases, judge requires name instead of ID to delete
     axios
       .delete(`http://localhost:8080/profile/${userInfo.sub}/case/${caseID}`, {
         headers: {
@@ -98,6 +97,35 @@ function RenderHomePage(props) {
       })
       .then(res => {
         deleteFromStateById(caseID, savedCases, setSavedCases);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  const deleteFromStateByName = (name, state, setState) => {
+    let index = state.findIndex(item => item.judge_name === name);
+    return setState(state.slice(0, index).concat(state.slice(index + 1)));
+  };
+
+  const formatJudgeName = name => {
+    return name.split(' ').join('%20');
+  };
+
+  const deleteSavedJudge = name => {
+    axios
+      .delete(
+        `http://localhost:8080/profile/${userInfo.sub}/judge/${formatJudgeName(
+          name
+        )}`,
+        {
+          headers: {
+            Authorization: 'Bearer ' + authState.idToken,
+          },
+        }
+      )
+      .then(res => {
+        deleteFromStateByName(name, savedJudges, setSavedJudges);
       })
       .catch(err => {
         console.log(err);
@@ -118,7 +146,9 @@ function RenderHomePage(props) {
         logout={logout}
         userInfo={userInfo}
         savedCases={savedCases}
+        savedJudges={savedJudges}
         deleteBookmark={deleteBookmark}
+        deleteSavedJudge={deleteSavedJudge}
       />
 
       <Route path="/">
