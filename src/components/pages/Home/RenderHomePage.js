@@ -42,7 +42,6 @@ function RenderHomePage(props) {
         },
       })
       .then(res => {
-        console.log(res.data);
         setCaseData(res.data);
       })
       .catch(err => {
@@ -84,6 +83,12 @@ function RenderHomePage(props) {
       });
   }, [authState.idToken, userInfo.sub, savedCases.length, savedJudges.length]); // can't think of any instances when just using length doesn't hit what i'm looking for
 
+  const deleteFromStateById = (id, state, setState) => {
+    let index = state.findIndex(item => item.id === id);
+    console.log(index);
+    return setState(state.slice(0, index).concat(state.slice(index + 1)));
+  };
+
   const deleteBookmark = caseID => {
     axios
       .delete(`http://localhost:8080/profile/${userInfo.sub}/case/${caseID}`, {
@@ -92,7 +97,7 @@ function RenderHomePage(props) {
         },
       })
       .then(res => {
-        console.log(res);
+        deleteFromStateById(caseID, savedCases, setSavedCases);
       })
       .catch(err => {
         console.log(err);
