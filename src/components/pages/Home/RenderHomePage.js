@@ -84,45 +84,44 @@ function RenderHomePage(props) {
   }, []);
 
   return (
-    <JudgePage />
-    // <div className={classes.container}>
-    //   <SideDrawer logout={logout} userInfo={userInfo} />
+    <div className={classes.container}>
+      <SideDrawer logout={logout} userInfo={userInfo} />
 
-    //   <Route path="/">
-    //     <CaseTable
-    //       caseData={caseData}
-    //       userInfo={userInfo}
-    //       savedCases={savedCases}
-    //       setSavedCases={setSavedCases}
-    //       authState={authState}
-    //     />
-    //     {/* <JudgeTable judgeData={judgeData} /> */}
-    //   </Route>
+      <Route path="/">
+        <CaseTable
+          caseData={caseData}
+          userInfo={userInfo}
+          savedCases={savedCases}
+          setSavedCases={setSavedCases}
+          authState={authState}
+        />
+        {/* <JudgeTable judgeData={judgeData} /> */}
+      </Route>
 
-    //   <Route path="/pdfviewer/:id">
-    //     {/* FIXED DIV, 100VH 100VW, OVERLAY BACKGROUND, Z-INDEX 998, PDF VIEWER Z-INDEX 999 */}
-    //     <FullscreenOverlay>
-    //       <PDFViewer
-    //         location={location}
-    //         file={file}
-    //         pageHeight={height <= 1023 ? height : '1023'}
-    //         componentWidth="60%"
-    //         componentHeight="100%"
-    //       />
-    //     </FullscreenOverlay>
-    //   </Route>
+      <Route path="/pdfviewer/:id">
+        {/* FIXED DIV, 100VH 100VW, OVERLAY BACKGROUND, Z-INDEX 998, PDF VIEWER Z-INDEX 999 */}
+        <FullscreenOverlay>
+          <PDFViewer
+            location={location}
+            file={file}
+            pageHeight={height <= 1023 ? height : '1023'}
+            componentWidth="60%"
+            componentHeight="100%"
+          />
+        </FullscreenOverlay>
+      </Route>
 
-    //   {smallPDF && (
-    //     <PDFViewer
-    //       setSmallPDF={setSmallPDF}
-    //       notFullScreen={true}
-    //       location={location}
-    //       file={file}
-    //       pageWidth="700"
-    //       componentWidth="750px !important"
-    //     />
-    //   )}
-    // </div>
+      {smallPDF && (
+        <PDFViewer
+          setSmallPDF={setSmallPDF}
+          notFullScreen={true}
+          location={location}
+          file={file}
+          pageWidth="700"
+          componentWidth="750px !important"
+        />
+      )}
+    </div>
   );
 }
 export default RenderHomePage;

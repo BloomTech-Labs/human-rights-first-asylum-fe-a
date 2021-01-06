@@ -27,15 +27,11 @@ export default function JudgePage() {
       </div>
 
       <FlexDiv>
-                    data={[
-              {
-                  //* values are granted: value, denial: value, other: value
-            }
+        {
+          //* values are granted: value, denial: value, other: value
+        }
         <Plot
           data={[
-              {
-                  //* values are granted: value, denial: value, other: value
-            }
             {
               type: 'pie',
               values: [112, 183, 115],
@@ -54,7 +50,8 @@ export default function JudgePage() {
         />
 
         {
-          //* marker size = number of uses, y = negative score, x = positive score
+          //*y = number of negative uses, x = number of positive uses
+          //* Text keyword, size = number of total uses - marker size: number of total uses * 10
         }
         <Plot
           data={[
@@ -94,6 +91,9 @@ export default function JudgePage() {
         />
       </FlexDiv>
       <FlexDiv>
+        {
+          //* x = country_origin/social_group_type/protected_ground, y = granted: value / denial:value / other value
+        }
         <Plot
           data={[
             {
