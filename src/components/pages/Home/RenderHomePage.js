@@ -111,6 +111,10 @@ function RenderHomePage(props) {
         </FullscreenOverlay>
       </Route>
 
+      <Route path="/judge/:name">
+        <JudgePage />
+      </Route>
+
       {smallPDF && (
         <PDFViewer
           setSmallPDF={setSmallPDF}
