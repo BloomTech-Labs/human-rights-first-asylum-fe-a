@@ -7,6 +7,8 @@ import PDFViewer from '../PDFViewer/PDFViewer';
 import { Route, Switch, useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { useOktaAuth } from '@okta/okta-react';
+import SwitchTableIcon from '@material-ui/icons/Autorenew';
+import IconButton from '@material-ui/core/IconButton';
 
 import axios from 'axios';
 import { hidden } from 'kleur';
@@ -24,15 +26,21 @@ const useStyles = makeStyles({
 function RenderHomePage(props) {
   const { userInfo, authService, authState } = props;
   const [caseData, setCaseData] = useState([]);
-
   const [judgeData, setJudgeData] = useState([]);
   const [savedCases, setSavedCases] = useState([]);
+  const [showCaseTable, setShowCaseTable] = useState(true);
+  const [savedJudges, setSavedJudges] = useState([]);
+  const [centerPDF, setCenterPDF] = useState(false);
 
   // should move these API calls into a separate index folder at some point
 
   useEffect(() => {
     axios
-      .get('http://localhost:8080/case')
+      .get('http://localhost:8080/case', {
+        headers: {
+          Authorization: 'Bearer ' + authState.idToken,
+        },
+      })
       .then(res => {
         setCaseData(res.data);
       })
@@ -43,7 +51,11 @@ function RenderHomePage(props) {
 
   useEffect(() => {
     axios
-      .get('http://localhost:8080/judge')
+      .get('http://localhost:8080/judge', {
+        headers: {
+          Authorization: 'Bearer ' + authState.idToken,
+        },
+      })
       .then(res => {
         setJudgeData(res.data);
       })
@@ -52,7 +64,6 @@ function RenderHomePage(props) {
       });
   }, []);
 
-  // need to reread on dependency arrays to understand them better
   useEffect(() => {
     axios
       .get(`http://localhost:8080/profile/${userInfo.sub}`, {
@@ -61,13 +72,64 @@ function RenderHomePage(props) {
         },
       })
       .then(res => {
-        console.log(res.data);
         setSavedCases(res.data.case_bookmarks);
+        setSavedJudges(res.data.judge_bookmarks);
       })
       .catch(err => {
         console.log(err);
       });
-  }, []);
+  }, [authState.idToken, userInfo.sub, savedCases.length, savedJudges.length]);
+
+  const deleteFromStateById = (id, state, setState) => {
+    // i made this function non case specific but now I'm remembering that cases get deleted by name
+    let index = state.findIndex(item => item.id === id);
+    return setState(state.slice(0, index).concat(state.slice(index + 1)));
+  };
+
+  const deleteBookmark = caseID => {
+    // only works for cases, judge requires name instead of ID to delete
+    axios
+      .delete(`http://localhost:8080/profile/${userInfo.sub}/case/${caseID}`, {
+        headers: {
+          Authorization: 'Bearer ' + authState.idToken,
+        },
+      })
+      .then(res => {
+        deleteFromStateById(caseID, savedCases, setSavedCases);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  const deleteFromStateByName = (name, state, setState) => {
+    let index = state.findIndex(item => item.judge_name === name);
+    return setState(state.slice(0, index).concat(state.slice(index + 1)));
+  };
+
+  const formatJudgeName = name => {
+    return name.split(' ').join('%20');
+  };
+
+  const deleteSavedJudge = name => {
+    axios
+      .delete(
+        `http://localhost:8080/profile/${userInfo.sub}/judge/${formatJudgeName(
+          name
+        )}`,
+        {
+          headers: {
+            Authorization: 'Bearer ' + authState.idToken,
+          },
+        }
+      )
+      .then(res => {
+        deleteFromStateByName(name, savedJudges, setSavedJudges);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   const [smallPDF, setSmallPDF] = useState(true);
   const [file, setFile] = useState(pdfFile);
@@ -77,27 +139,42 @@ function RenderHomePage(props) {
   const logout = () => authService.logout;
   const classes = useStyles();
 
-  useEffect(() => {
-    // API CALL TO GET DATA
-  }, []);
-
   return (
     <div className={classes.container}>
-      <SideDrawer logout={logout} userInfo={userInfo} />
-
-
-      
+      <SideDrawer
+        logout={logout}
+        userInfo={userInfo}
+        savedCases={savedCases}
+        savedJudges={savedJudges}
+        deleteBookmark={deleteBookmark}
+        deleteSavedJudge={deleteSavedJudge}
+      />
 
       <Route path="/">
-
-        <CaseTable
-          caseData={caseData}
-          userInfo={userInfo}
-          savedCases={savedCases}
-          setSavedCases={setSavedCases}
-          authState={authState}
-        />
-        {/* <JudgeTable judgeData={judgeData} /> */}
+        <button
+          style={{ height: 70, marginTop: 160, marginRight: 50 }}
+          onClick={() => setShowCaseTable(!showCaseTable)}
+        >
+          {showCaseTable ? 'View Judges' : 'View Cases'}
+        </button>
+        {showCaseTable && (
+          <CaseTable
+            caseData={caseData}
+            userInfo={userInfo}
+            savedCases={savedCases}
+            setSavedCases={setSavedCases}
+            authState={authState}
+          />
+        )}
+        {!showCaseTable && (
+          <JudgeTable
+            judgeData={judgeData}
+            userInfo={userInfo}
+            savedJudges={savedJudges}
+            setSavedJudges={setSavedJudges}
+            authState={authState}
+          />
+        )}
       </Route>
 
       <Route path="/pdfviewer/:id">

@@ -4,9 +4,10 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
-
 import { makeStyles } from '@material-ui/core/styles';
 import { Button } from 'antd';
+import axios from 'axios';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -15,7 +16,7 @@ const useStyles = makeStyles(theme => ({
   tbl_container: {
     display: 'flex',
     flexDirection: 'column',
-    width: '70%',
+    width: '57%',
     margin: 'auto',
     marginTop: 100,
   },
@@ -35,24 +36,26 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const columns = [
-  //   { field: 'judge_image', headerName: 'Image', width: 100 },
+  // { field: 'id', headerName: 'id', width: 100 },
   { field: 'name', headerName: 'Name', width: 115 },
-  { field: 'judge_county', headerName: 'County', width: 120 },
-  { field: 'date_appointed', headerName: 'Date Appointed', width: 120 },
-  { field: 'birth_date', headerName: 'Birth Date', width: 120 },
-  { field: 'denial_rate', headerName: 'Asylum Denial Rate', width: 120 },
-  { field: 'approval_rate', headerName: 'Asylum Approval Rate', width: 120 },
+  { field: 'judge_county', headerName: 'County', width: 110 },
+  { field: 'date_appointed', headerName: 'Date Appointed', width: 140 },
+  { field: 'birth_date', headerName: 'Birth Date', width: 110 },
+  { field: 'denial_rate', headerName: '% Case Denied', width: 140 },
+  { field: 'approval_rate', headerName: '% Case Approved', width: 140 },
   { field: 'appointed_by', headerName: 'Appointed by', width: 120 },
+  { field: 'download', headerName: 'Download', width: 120 },
 ];
 
 export default function JudgeTable(props) {
-  const { judgeData } = props;
+  const { judgeData, userInfo, savedJudges, setSavedJudges, authState } = props;
   const [columnToSearch, setColumnToSearch] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedRows, setSelectedRows] = useState({});
 
   judgeData.forEach((item, idx) => {
-    item.id = idx + 1;
-  });
+    item.id = idx;
+  }); // this is VERY hacky, but the table doesn't take data without ids
 
   const classes = useStyles();
 
@@ -72,6 +75,94 @@ export default function JudgeTable(props) {
     );
   };
 
+  const findRowByID = (rowID, rowData) => {
+    for (let i = 0; i < rowData.length; i++) {
+      let currentRow = rowData[i];
+      if (currentRow.id == rowID) {
+        return currentRow;
+      }
+    }
+    return 'Row does not exist';
+  };
+
+  const findRowByJudgeName = (judgeName, rowData) => {
+    for (let i = 0; i < rowData.length; i++) {
+      let currentRow = rowData[i];
+      if (currentRow.name == judgeName) {
+        return currentRow;
+      }
+    }
+    return 'Row does not exist';
+  };
+
+  const formatJudgeName = name => {
+    let arr = name.split(' ');
+    let result = arr.join('%20');
+    return result;
+  };
+
+  const postJudge = rowToPost => {
+    axios
+      .post(
+        `http://localhost:8080/profile/${userInfo.sub}/judge/${formatJudgeName(
+          rowToPost.name
+        )}`,
+        rowToPost,
+        {
+          headers: {
+            Authorization: 'Bearer ' + authState.idToken,
+          },
+        }
+      )
+      .then(res => {
+        let justAdded = res.data.judge_bookmarks.slice(-1);
+        let justAddedName = justAdded[0].judge_name;
+        let wholeAddedRow = findRowByJudgeName(justAddedName, judgeData);
+        console.log(wholeAddedRow);
+        let reformattedJudge = {
+          user_id: userInfo.sub,
+          judge_name: wholeAddedRow.name,
+        };
+        setSavedJudges([...savedJudges, reformattedJudge]);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  const bookmarkJudges = targetRows => {
+    // loop through currently selected cases and do post requests
+    // need to reference rows by id, as that is all that selection stores
+    // need to account for duplicates as well
+    let bookmarks = [];
+    if (targetRows) {
+      for (let i = 0; i < targetRows.length; i++) {
+        bookmarks.push(findRowByID(targetRows[i], judgeData));
+      }
+      let savedNames = [];
+      for (let i = 0; i < savedJudges.length; i++) {
+        savedNames.push(savedJudges[i].name);
+      }
+
+      for (let i = 0; i < bookmarks.length; i++) {
+        if (savedNames.includes(bookmarks[i].name)) {
+          console.log('Judge already saved to bookmarks');
+          continue;
+        } else {
+          postJudge(bookmarks[i]);
+        }
+      }
+    }
+  };
+
+  const onCheckboxSelect = selections => {
+    setSelectedRows(selections);
+  };
+
+  const displayTooltip = text => {
+    return <Tooltip title={text} />;
+  };
+
   return (
     <div className={classes.tbl_container}>
       <div className={classes.search_container}>
@@ -79,6 +170,7 @@ export default function JudgeTable(props) {
           <InputLabel>Search By ...</InputLabel>
           <Select value={columnToSearch} onChange={handleChange}>
             <MenuItem value="name">Name</MenuItem>
+            <MenuItem value="judge_county">County</MenuItem>
             <MenuItem value="date_appointed">Date Appointed</MenuItem>
             <MenuItem value="birth_date">Birth Date</MenuItem>
             <MenuItem value="denial_rate">Denial Rate</MenuItem>
@@ -93,6 +185,23 @@ export default function JudgeTable(props) {
           type="text"
           style={{ width: 950, marginLeft: 20 }}
         />
+        {/* this button is hardcoded, needs to be adjusted in the future*/}
+        <button>
+          <a
+            style={{ color: 'black' }}
+            href="http://localhost:8080/judge/Norris%20Hansen"
+          >
+            Download CSV on Selected Judge
+          </a>
+        </button>
+        <button
+          onClick={() => {
+            bookmarkJudges(selectedRows.rowIds);
+            setSelectedRows({});
+          }}
+        >
+          Bookmark Selected Rows
+        </button>
       </div>
       <DataGrid
         rows={columnToSearch ? search(judgeData) : judgeData}
@@ -101,6 +210,7 @@ export default function JudgeTable(props) {
         autoHeight={true}
         loading={judgeData ? false : true}
         checkboxSelection={true}
+        onSelectionChange={onCheckboxSelect}
       />
     </div>
   );
