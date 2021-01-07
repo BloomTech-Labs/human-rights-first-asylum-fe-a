@@ -2,32 +2,23 @@
 
 For steps on how to work with this repository [please see here](https://docs.labs.lambdaschool.com/labs-spa-starter/)
 
-🚫 Note: All lines that start with 🚫 are instructions and should be deleted before this is posted to your first Pull-Request is merged. This is intended to be a guideline. Feel free to add your own flare to it.
 
-# Title of project goes here
+# Human Rights First Front End
 
-You can find the deployed project at [🚫URL NAME GOES HERE](🚫copy and paste URL here).
+You can find the deployed project at https://a.humanrightsfirstasylum.dev/
 
 ## Contributors
 
-🚫Add contributor info below, make sure add images and edit the social links for each member. Add to or delete these place-holders as needed
 
-|                                                      [Student 1](https://github.com/)                                                       |                                                       [Student 2](https://github.com/)                                                        |                                                      [Student 3](https://github.com/)                                                       |                                                       [Student 4](https://github.com/)                                                        |                                                      [Student 5](https://github.com/)                                                       |
+
+|                                                      [Ava Wingfield](https://github.com/avawing)                                                       |                                                       [Tom Bauer](https://github.com/TBau23)                                                        |                                                      [Ryan Lee](https://github.com/SassyFatCat)                                                       |                                                                                                            |
 | :-----------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------: |
-| [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-male.png" width = "200" />](https://github.com/) | [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-female.png" width = "200" />](https://github.com/) | [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-male.png" width = "200" />](https://github.com/) | [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-female.png" width = "200" />](https://github.com/) | [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-male.png" width = "200" />](https://github.com/) |
-|                                [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/)                                |                            [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/honda0306)                             |                          [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/Mister-Corn)                           |                          [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/NandoTheessen)                           |                           [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/wvandolah)                            |
-|                [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/)                |                 [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/)                 |                [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/)                |                 [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/)                 |                [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/)                |
+| [<img src="https://ca.slack-edge.com/ESZCHB482-W014G4L7R1P-5e90ae004407-512" width = "200" />](https://github.com/avawing) | [<img src="https://ca.slack-edge.com/ESZCHB482-W015P694SUV-84c590ba765c-512" width = "200" />](https://github.com/TBau23) | [<img src="https://ca.slack-edge.com/ESZCHB482-W014G4N2FEV-9b9fece7a4af-512" width = "200" />](https://github.com/SassyFatCat) |
+|                                [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/avawing)                                |                            [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/TBau23)                             |                          [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/SassyFatCat)                           |
+|                [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/avawingfield/)                |                 [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/tombauer11/)                 |                [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/sassyfatcat/)                |                 
 
 <br>
 <br>
-
-🚫 Optional examples of using images with links for your tech stack, make sure to change these to fit your project
-
-![MIT](https://img.shields.io/packagist/l/doctrine/orm.svg)
-![React](https://img.shields.io/badge/react-v16.7.0--alpha.2-blue.svg)
-![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)
-
-🚫 more info on using badges [here](https://github.com/badges/shields)
 
 - Fork and clone the repo to install it as your own remote.
   - **note** please [be sure to set your remote](https://help.github.jp/enterprise/2.11/user/articles/changing-a-remote-s-url/) for this repo to point to your Labs Team Front End Repository.
@@ -36,57 +27,50 @@ You can find the deployed project at [🚫URL NAME GOES HERE](🚫copy and paste
 
 > When using Okta for authentication, the app will need to run locally on port 3000.
 
-### Key Features
+### Key Features and Notes to the Next Group
 
-- feature one
-- feature two
-- feature three
-- feature four
-- feature five
+- Our data science team had issues hooking up their database to our backend, so we never had a populated database. As a result of this all of the Axios requests are made to a locally hosted version of the backend. Thse will obviously all have to be changed once there is a hosted backend with actual data in it. 
 
-#### Front end deployed to `🚫insert service here`
+- Table can be searched by column parameters and sorted by clicking on column headers
 
-#### [Back end](🚫link to back end repo here) built using:
+- Cases can be bookmarked and saved to a user profile by checking their row's select box and clicking the bookmark button
+    - as of now, all this does is cause them to render in the sidebar
 
-#### 🚫 back end framework goes here
+- PDF viewer is incomplete and not styled in a very compelling way. We intended to hook it up to the table so that when a row was clicked
+  the PDF associated with that row would render.
 
-- point one
-- point two
-- point three
+- Clicking on a judge name in the judge table will take you to a page with some expanded info and basic plots
+    -This judge page was created at the end and we did virtually no styling formatting with it
+    -Other than the pie chart, the formulas for the other sample charts are hard coded and will need to be fixed once the database is actually populated beyond test data
 
-🚫 List the rest of the back end end features and libraries in the same format as the framework above
+- Data on judge and case table can be downloaded using the relevant buttons - however, the results of the PDF downloader are hardcoded for the moment since there is no data on the deployed backend. Regardless of which case PDF you select to download, it will pull the same sample PDF.
+
+- Annoying bug that I ran out of time to fix - if there are any saved judges, as soon as you save a case, the judges no longer render. The issue exists in the SideDrawer component
+
+#### Front end deployed to AWS
+
+#### [Back end](https://github.com/Lambda-School-Labs/human-rights-first-asylum-be-a) built using: AWS
+
+#### Backend details
+
+Read backend details at https://github.com/Lambda-School-Labs/human-rights-first-asylum-be-a 
 
 # APIs
 
 ## Authentication API here
 
-🚫Replace text below with a description of the API
-
-Water's like me. It's laaazy ... Boy, it always looks for the easiest way to do things A little happy sunlight shining through there. Let all these little things happen. Don't fight them. Learn to use them. Even the worst thing we can do here is good.
-
-## Payment API here
-
-🚫Replace text below with a description of the API
-
-This is the way you take out your flustrations. Get away from those little Christmas tree things we used to make in school. Isn't it fantastic that you can change your mind and create all these happy things? Everything's not great in life, but we can still find beauty in it.
-
-## Misc API here
-
-🚫Replace text below with a description of the API
-
-You can do anything your heart can imagine. In life you need colors. This is where you take out all your hostilities and frustrations. It's better than kicking the puppy dog around and all that so. I'm sort of a softy, I couldn't shoot Bambi except with a camera. Trees get lonely too, so we'll give him a little friend. We'll lay all these little funky little things in there.
+Authentication done via Okta
 
 # Installation Instructions
 
-🚫explain how to install the required dependencies to get this project up and running with yarn and NPM
+See https://docs.labs.lambdaschool.com/labs-spa-starter/
+
 
 ## Other Scripts
 
-🚫replace these examples with your own
-
-    * build - creates a build of the application
-    * start - starts the production server after a build is created
-    * test - runs tests in **tests** directory \* eject - copy the configuration files and dependencies into the project so you have full control over them
+    
+  * start - starts the production server after a build is created
+   
 
 # Contributing
 

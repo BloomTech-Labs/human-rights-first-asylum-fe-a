@@ -27,7 +27,7 @@ const columns = [
   //   width: 160,
   // },
   { field: 'social_group_type', headerName: 'Social Group', width: 130 },
-  { field: 'judge_name', headerName: 'Judge Name', width: 120 },
+  // { field: 'judge_name', headerName: 'Judge Name', width: 120 },
   { field: 'judge_decision', headerName: 'Decision', width: 105 },
   { field: 'case_status', headerName: 'Case Status', width: 120 },
 ];
@@ -85,11 +85,10 @@ export default function JudgePage(props) {
               columns={columns}
               rows={judge.case_data}
               autoHeight={true}
-              loading={judge ? false : true}
             />
           </div>
 
-          <FlexDiv>
+          <FlexDiv style={{ marginTop: 400 }}>
             {
               //* values are granted: value, denial: value, other: value
             }
@@ -97,7 +96,7 @@ export default function JudgePage(props) {
               data={[
                 {
                   type: 'pie',
-                  values: [112, 183, 115],
+                  values: [judge.approval_rate, judge.denial_rate, 0],
                   labels: ['Granted', 'Denial', 'Other'],
                   textinfo: 'label+percent',
                   textposition: 'outside',

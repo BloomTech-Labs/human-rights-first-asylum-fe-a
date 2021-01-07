@@ -22,6 +22,8 @@ import NoteIcon from '@material-ui/icons/Receipt';
 import GavelIcon from '@material-ui/icons/Gavel';
 import DeleteIcon from '@material-ui/icons/DeleteForever';
 import PersonIcon from '@material-ui/icons/Person';
+import HomeIcon from '@material-ui/icons/Home';
+import { Link } from 'react-router-dom';
 
 import { SideDrawerData } from './SideDrawerData';
 
@@ -160,6 +162,14 @@ export default function SideDrawer(props) {
         </div>
         <Divider />
         <List>
+          <ListItem button>
+            <ListItemIcon>
+              <HomeIcon />
+            </ListItemIcon>
+            <Link style={{ color: 'black' }} to="/">
+              <ListItemText primary="Home" />
+            </Link>
+          </ListItem>
           {itemList.map((item, index) => (
             <ListItem button key={item.title}>
               <ListItemIcon>{item.icon}</ListItemIcon>
