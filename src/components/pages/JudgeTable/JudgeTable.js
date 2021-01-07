@@ -41,14 +41,24 @@ const columns = [
   {
     field: 'name',
     headerName: 'Name',
-    width: 115,
+    width: 170,
     renderCell: params => (
-      <Link
-        to={`/judge/${params.value.split(' ').join('%20')}`}
-        style={{ color: 'black' }}
-      >
-        {params.value}
-      </Link>
+      <>
+        <Link
+          to={`/judge/${params.value.split(' ').join('%20')}`}
+          style={{ color: 'black' }}
+        >
+          {params.value}
+        </Link>
+        <a
+          style={{ marginLeft: 20, marginRight: 10 }}
+          href={`http://localhost:8080/judge/${params.value
+            .split(' ')
+            .join('%20')}/csv`}
+        >
+          CSV
+        </a>
+      </>
     ),
   },
   { field: 'judge_county', headerName: 'County', width: 110 },
@@ -217,6 +227,7 @@ export default function JudgeTable(props) {
         loading={judgeData ? false : true}
         checkboxSelection={true}
         onSelectionChange={onCheckboxSelect}
+        showCellRightBorder={true}
       />
     </div>
   );

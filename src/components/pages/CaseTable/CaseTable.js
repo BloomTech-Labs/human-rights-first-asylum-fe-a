@@ -17,6 +17,7 @@ const useStyles = makeStyles(theme => ({
     width: '57%',
     margin: 'auto',
     marginTop: 100,
+    flexGrow: 1,
   },
   select: {
     margin: 70,
@@ -42,13 +43,13 @@ const columns = [
       <div style={{ display: 'flex', flexDirection: 'row' }}>
         <span>{params.value}</span>
         <a
-          style={{ marginLeft: 20 }}
+          style={{ marginLeft: 20, marginRight: 5 }}
           href={`http://localhost:8080/case/${params.value}/download-pdf`}
         >
           PDF
         </a>
         <a
-          style={{ marginLeft: 20 }}
+          style={{ marginLeft: 20, marginRight: 5 }}
           href={`http://localhost:8080/case/${params.value}/download-csv`}
         >
           CSV
@@ -200,6 +201,7 @@ export default function CaseTable(props) {
         loading={caseData ? false : true}
         checkboxSelection={true}
         onSelectionChange={onCheckboxSelect}
+        showCellRightBorder={true}
 
         // onRowHover={item => console.log(item.row)}
       />
