@@ -26,11 +26,11 @@ const useStyles = makeStyles({
 function RenderHomePage(props) {
   const { userInfo, authService, authState } = props;
   const [caseData, setCaseData] = useState([]);
-
   const [judgeData, setJudgeData] = useState([]);
   const [savedCases, setSavedCases] = useState([]);
   const [showCaseTable, setShowCaseTable] = useState(true);
   const [savedJudges, setSavedJudges] = useState([]);
+  const [centerPDF, setCenterPDF] = useState(false);
 
   // should move these API calls into a separate index folder at some point
 
@@ -72,7 +72,6 @@ function RenderHomePage(props) {
         },
       })
       .then(res => {
-        console.log(res.data);
         setSavedCases(res.data.case_bookmarks);
         setSavedJudges(res.data.judge_bookmarks);
       })

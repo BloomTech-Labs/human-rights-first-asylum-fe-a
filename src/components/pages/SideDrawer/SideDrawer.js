@@ -21,6 +21,7 @@ import BookmarksIcon from '@material-ui/icons/Bookmarks';
 import NoteIcon from '@material-ui/icons/Receipt';
 import GavelIcon from '@material-ui/icons/Gavel';
 import DeleteIcon from '@material-ui/icons/DeleteForever';
+import PersonIcon from '@material-ui/icons/Person';
 
 import { SideDrawerData } from './SideDrawerData';
 
@@ -109,11 +110,11 @@ export default function SideDrawer(props) {
     setOpen(false);
   };
 
-  if (!savedCases) {
-    // surely there is a better way to do this?? idk
-    // two weeks later and I have no idea what purpose this served
-    return <div></div>;
-  }
+  // if (!savedCases ) {
+  //   // surely there is a better way to do this?? idk
+  //   // two weeks later and I have no idea what purpose this served
+  //   return <div></div>;
+  // }
 
   return (
     <div className={classes.root}>
@@ -200,13 +201,13 @@ export default function SideDrawer(props) {
             </ListItemIcon>
             <ListItemText primary="Saved Judges" />
           </ListItem>
-          {savedJudges.map((item, idx) => (
-            <ListItem key={idx} className={classes.favorites}>
+          {savedJudges.map((judge, idx) => (
+            <ListItem key={idx}>
               <ListItemIcon>
-                <NoteIcon />
+                <PersonIcon />
               </ListItemIcon>
-              <ListItemText primary={item.judge_name} />
-              <IconButton onClick={() => deleteSavedJudge(item.judge_name)}>
+              <ListItemText primary={judge.judge_name} />
+              <IconButton onClick={() => deleteSavedJudge(judge.judge_name)}>
                 <DeleteIcon />
               </IconButton>
             </ListItem>

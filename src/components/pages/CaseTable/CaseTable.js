@@ -78,6 +78,21 @@ export default function CaseTable(props) {
     );
   };
 
+  const downloadPdf = caseID => {
+    axios
+      .get(`http://localhost:8080/case/${caseID}/download-pdf`, {
+        headers: {
+          Authorization: 'Bearer ' + authState.idToken,
+        },
+      })
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   // the need for idParamName arose from case_id and id being used in different scenarios
   const findRowByID = (rowID, rowData) => {
     for (let i = 0; i < rowData.length; i++) {
@@ -165,8 +180,25 @@ export default function CaseTable(props) {
           type="text"
           style={{ width: 950, marginLeft: 20 }}
         />
+        <button>
+          <a
+            style={{ color: 'black' }}
+            href="http://localhost:8080/case/npntv/download-pdf"
+          >
+            Download Selected PDF
+          </a>
+        </button>
+        {/* Both of these download buttons are hardcoded and will have to be case specific on the backend */}
+        <button>
+          <a
+            style={{ color: 'black' }}
+            href="http://localhost:8080/case/npntv/download-csv"
+          >
+            Download Selected CSV
+          </a>
+        </button>
         <button onClick={() => bookmarkCases(selectedRows.rowIds)}>
-          Bookmark Selected Rows
+          Bookmark Selected Cases
         </button>
       </div>
       <DataGrid

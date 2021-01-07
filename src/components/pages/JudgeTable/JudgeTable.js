@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const columns = [
-  //   { field: 'judge_image', headerName: 'Image', width: 100 },
+  // { field: 'id', headerName: 'id', width: 100 },
   { field: 'name', headerName: 'Name', width: 115 },
   { field: 'judge_county', headerName: 'County', width: 110 },
   { field: 'date_appointed', headerName: 'Date Appointed', width: 140 },
@@ -44,6 +44,7 @@ const columns = [
   { field: 'denial_rate', headerName: '% Case Denied', width: 140 },
   { field: 'approval_rate', headerName: '% Case Approved', width: 140 },
   { field: 'appointed_by', headerName: 'Appointed by', width: 120 },
+  { field: 'download', headerName: 'Download', width: 120 },
 ];
 
 export default function JudgeTable(props) {
@@ -54,7 +55,7 @@ export default function JudgeTable(props) {
 
   judgeData.forEach((item, idx) => {
     item.id = idx;
-  }); // this is very hacky, but the table doesn't take data without ids'
+  }); // this is VERY hacky, but the table doesn't take data without ids
 
   const classes = useStyles();
 
@@ -117,7 +118,12 @@ export default function JudgeTable(props) {
         let justAdded = res.data.judge_bookmarks.slice(-1);
         let justAddedName = justAdded[0].judge_name;
         let wholeAddedRow = findRowByJudgeName(justAddedName, judgeData);
-        setSavedJudges([...savedJudges, wholeAddedRow]);
+        console.log(wholeAddedRow);
+        let reformattedJudge = {
+          user_id: userInfo.sub,
+          judge_name: wholeAddedRow.name,
+        };
+        setSavedJudges([...savedJudges, reformattedJudge]);
       })
       .catch(err => {
         console.log(err);
@@ -164,6 +170,7 @@ export default function JudgeTable(props) {
           <InputLabel>Search By ...</InputLabel>
           <Select value={columnToSearch} onChange={handleChange}>
             <MenuItem value="name">Name</MenuItem>
+            <MenuItem value="judge_county">County</MenuItem>
             <MenuItem value="date_appointed">Date Appointed</MenuItem>
             <MenuItem value="birth_date">Birth Date</MenuItem>
             <MenuItem value="denial_rate">Denial Rate</MenuItem>
@@ -178,10 +185,19 @@ export default function JudgeTable(props) {
           type="text"
           style={{ width: 950, marginLeft: 20 }}
         />
+        {/* this button is hardcoded, needs to be adjusted in the future*/}
+        <button>
+          <a
+            style={{ color: 'black' }}
+            href="http://localhost:8080/judge/Norris%20Hansen"
+          >
+            Download CSV on Selected Judge
+          </a>
+        </button>
         <button
           onClick={() => {
-            console.log(selectedRows.rowIds);
             bookmarkJudges(selectedRows.rowIds);
+            setSelectedRows({});
           }}
         >
           Bookmark Selected Rows
