@@ -169,10 +169,6 @@ export default function JudgeTable(props) {
     setSelectedRows(selections);
   };
 
-  const displayTooltip = text => {
-    return <Tooltip title={text} />;
-  };
-
   return (
     <div className={classes.tbl_container}>
       <div className={classes.search_container}>

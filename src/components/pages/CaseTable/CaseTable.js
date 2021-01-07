@@ -209,6 +209,7 @@ export default function CaseTable(props) {
         loading={caseData ? false : true}
         checkboxSelection={true}
         onSelectionChange={onCheckboxSelect}
+
         // onRowHover={item => console.log(item.row)}
       />
     </div>

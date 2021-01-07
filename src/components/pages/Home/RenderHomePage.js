@@ -154,8 +154,9 @@ function RenderHomePage(props) {
 
       <Route exact path="/judge/:name">
         <JudgePage
-        // clicking on a judge name should bring you to a url with their name in it
-        // get request to get details of that judge
+          // clicking on a judge name should bring you to a url with their name in it
+          // get request to get details of that judge
+          authState={authState}
         />
       </Route>
 
