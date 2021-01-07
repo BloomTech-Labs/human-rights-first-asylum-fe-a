@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Button } from 'antd';
 import axios from 'axios';
 import Tooltip from '@material-ui/core/Tooltip';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -37,14 +38,25 @@ const useStyles = makeStyles(theme => ({
 
 const columns = [
   // { field: 'id', headerName: 'id', width: 100 },
-  { field: 'name', headerName: 'Name', width: 115 },
+  {
+    field: 'name',
+    headerName: 'Name',
+    width: 115,
+    renderCell: params => (
+      <Link
+        to={`/judge/${params.value.split(' ').join('%20')}`}
+        style={{ color: 'black' }}
+      >
+        {params.value}
+      </Link>
+    ),
+  },
   { field: 'judge_county', headerName: 'County', width: 110 },
   { field: 'date_appointed', headerName: 'Date Appointed', width: 140 },
   { field: 'birth_date', headerName: 'Birth Date', width: 110 },
   { field: 'denial_rate', headerName: '% Case Denied', width: 140 },
   { field: 'approval_rate', headerName: '% Case Approved', width: 140 },
   { field: 'appointed_by', headerName: 'Appointed by', width: 120 },
-  { field: 'download', headerName: 'Download', width: 120 },
 ];
 
 export default function JudgeTable(props) {
@@ -96,9 +108,7 @@ export default function JudgeTable(props) {
   };
 
   const formatJudgeName = name => {
-    let arr = name.split(' ');
-    let result = arr.join('%20');
-    return result;
+    return name.split(' ').join('%20');
   };
 
   const postJudge = rowToPost => {

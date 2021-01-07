@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import Plot from 'react-plotly.js';
 import { FullPage, FlexDiv, Profile } from './JudgePageStyled';
 

@@ -152,7 +152,14 @@ function RenderHomePage(props) {
         deleteSavedJudge={deleteSavedJudge}
       />
 
-      <Route path="/">
+      <Route exact path="/judge/:name">
+        <JudgePage
+        // clicking on a judge name should bring you to a url with their name in it
+        // get request to get details of that judge
+        />
+      </Route>
+
+      <Route exact path="/">
         <button
           style={{ height: 70, marginTop: 160, marginRight: 50 }}
           onClick={() => setShowCaseTable(!showCaseTable)}
@@ -177,9 +184,20 @@ function RenderHomePage(props) {
             authState={authState}
           />
         )}
+
+        {smallPDF && (
+          <PDFViewer
+            setSmallPDF={setSmallPDF}
+            notFullScreen={true}
+            location={location}
+            file={file}
+            pageWidth="700"
+            componentWidth="750px !important"
+          />
+        )}
       </Route>
 
-      <Route path="/pdfviewer/:id">
+      <Route exact path="/pdfviewer/:id">
         {/* FIXED DIV, 100VH 100VW, OVERLAY BACKGROUND, Z-INDEX 998, PDF VIEWER Z-INDEX 999 */}
         <FullscreenOverlay>
           <PDFViewer
@@ -191,21 +209,6 @@ function RenderHomePage(props) {
           />
         </FullscreenOverlay>
       </Route>
-
-      <Route path="/judge/:name">
-        <JudgePage />
-      </Route>
-
-      {smallPDF && (
-        <PDFViewer
-          setSmallPDF={setSmallPDF}
-          notFullScreen={true}
-          location={location}
-          file={file}
-          pageWidth="700"
-          componentWidth="750px !important"
-        />
-      )}
     </div>
   );
 }
