@@ -17,6 +17,7 @@ const useStyles = makeStyles(theme => ({
     width: '57%',
     margin: 'auto',
     marginTop: 100,
+    flexGrow: 1,
   },
   select: {
     margin: 70,
@@ -34,7 +35,29 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 100 },
+  {
+    field: 'id',
+    headerName: 'ID & Downloads',
+    width: 200,
+    renderCell: params => (
+      <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <span>{params.value}</span>
+        <a
+          style={{ marginLeft: 20, marginRight: 5 }}
+          href={`http://localhost:8080/case/${params.value}/download-pdf`}
+        >
+          PDF
+        </a>
+        <a
+          style={{ marginLeft: 20, marginRight: 5 }}
+          href={`http://localhost:8080/case/${params.value}/download-csv`}
+        >
+          CSV
+        </a>
+      </div>
+    ),
+  },
+  // {field: 'download', headerName: 'Download', width: 100},
   { field: 'court_type', headerName: 'Court Type', width: 105 },
   // { field: 'hearing_type', headerName: 'Hearing Type', width: 120 },
   { field: 'refugee_origin', headerName: 'Refugee Origin', width: 130 },
@@ -49,8 +72,8 @@ const columns = [
   // },
   { field: 'social_group_type', headerName: 'Social Group', width: 130 },
   { field: 'judge_name', headerName: 'Judge Name', width: 120 },
-  { field: 'judge_decision', headerName: 'Decision', width: 105 },
-  { field: 'case_status', headerName: 'Case Status', width: 120 },
+  { field: 'judge_decision', headerName: 'Decision', width: 90 },
+  { field: 'case_status', headerName: 'Case Status', width: 110 },
 ];
 
 export default function CaseTable(props) {
@@ -76,21 +99,6 @@ export default function CaseTable(props) {
         row[columnToSearch].toLowerCase().indexOf(searchQuery.toLowerCase()) >
         -1
     );
-  };
-
-  const downloadPdf = caseID => {
-    axios
-      .get(`http://localhost:8080/case/${caseID}/download-pdf`, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken,
-        },
-      })
-      .then(res => {
-        console.log(res);
-      })
-      .catch(err => {
-        console.log(err);
-      });
   };
 
   // the need for idParamName arose from case_id and id being used in different scenarios
@@ -180,23 +188,7 @@ export default function CaseTable(props) {
           type="text"
           style={{ width: 950, marginLeft: 20 }}
         />
-        <button>
-          <a
-            style={{ color: 'black' }}
-            href="http://localhost:8080/case/npntv/download-pdf"
-          >
-            Download Selected PDF
-          </a>
-        </button>
-        {/* Both of these download buttons are hardcoded and will have to be case specific on the backend */}
-        <button>
-          <a
-            style={{ color: 'black' }}
-            href="http://localhost:8080/case/npntv/download-csv"
-          >
-            Download Selected CSV
-          </a>
-        </button>
+
         <button onClick={() => bookmarkCases(selectedRows.rowIds)}>
           Bookmark Selected Cases
         </button>
@@ -209,6 +201,8 @@ export default function CaseTable(props) {
         loading={caseData ? false : true}
         checkboxSelection={true}
         onSelectionChange={onCheckboxSelect}
+        showCellRightBorder={true}
+
         // onRowHover={item => console.log(item.row)}
       />
     </div>
