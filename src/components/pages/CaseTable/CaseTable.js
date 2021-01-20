@@ -6,6 +6,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
+import { WrapText } from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -18,6 +19,7 @@ const useStyles = makeStyles(theme => ({
     margin: 'auto',
     marginTop: 100,
     flexGrow: 1,
+    paddingRight: 30,
   },
   select: {
     margin: 70,
@@ -39,24 +41,20 @@ const columns = [
     field: 'id',
     headerName: 'ID & Downloads',
     width: 200,
+
     renderCell: params => (
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          wordWrap: 'break-word',
+        }}
+      >
         <span>{params.value}</span>
-        <a
-          style={{ marginLeft: 20, marginRight: 5 }}
-          href={`http://localhost:8080/case/${params.value}/download-pdf`}
-        >
-          PDF
-        </a>
-        <a
-          style={{ marginLeft: 20, marginRight: 5 }}
-          href={`http://localhost:8080/case/${params.value}/download-csv`}
-        >
-          CSV
-        </a>
       </div>
     ),
   },
+
   // {field: 'download', headerName: 'Download', width: 100},
   { field: 'court_type', headerName: 'Court Type', width: 105 },
   // { field: 'hearing_type', headerName: 'Hearing Type', width: 120 },
@@ -74,6 +72,28 @@ const columns = [
   { field: 'judge_name', headerName: 'Judge Name', width: 120 },
   { field: 'judge_decision', headerName: 'Decision', width: 90 },
   { field: 'case_status', headerName: 'Case Status', width: 110 },
+
+  {
+    field: 'download',
+    headerName: 'Download',
+    width: 120,
+    renderCell: params => (
+      <div>
+        <a
+          style={{ marginLeft: 20, marginRight: 5 }}
+          href={`http://localhost:8080/case/${params.value}/download-pdf`}
+        >
+          PDF
+        </a>
+        <a
+          style={{ marginLeft: 20, marginRight: 5 }}
+          href={`http://localhost:8080/case/${params.value}/download-csv`}
+        >
+          CSV
+        </a>
+      </div>
+    ),
+  },
 ];
 
 export default function CaseTable(props) {

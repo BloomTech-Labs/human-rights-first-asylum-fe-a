@@ -100,7 +100,7 @@ export default function JudgeTable(props) {
   const findRowByID = (rowID, rowData) => {
     for (let i = 0; i < rowData.length; i++) {
       let currentRow = rowData[i];
-      if (currentRow.id == rowID) {
+      if (currentRow.id === rowID) {
         return currentRow;
       }
     }
@@ -110,7 +110,7 @@ export default function JudgeTable(props) {
   const findRowByJudgeName = (judgeName, rowData) => {
     for (let i = 0; i < rowData.length; i++) {
       let currentRow = rowData[i];
-      if (currentRow.name == judgeName) {
+      if (currentRow.name === judgeName) {
         return currentRow;
       }
     }
