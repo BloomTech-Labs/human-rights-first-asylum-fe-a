@@ -187,7 +187,7 @@ export default function CaseTable(props) {
     <div className={classes.tbl_container}>
       <div className={classes.search_container}>
         <div className={classes.colFilter}>
-          <InputLabel>Search By ...</InputLabel>
+          <InputLabel>Search By Column...</InputLabel>
           <Select value={columnToSearch} onChange={handleChange}>
             <MenuItem value="id">Case ID</MenuItem>
             <MenuItem value="court_type">Court Type</MenuItem>

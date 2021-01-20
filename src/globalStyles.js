@@ -43,6 +43,7 @@ q:before, q:after {
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
+	font-family: 'Oswald', sans-serif;
 }
 /* End of Meyer Reset ------------ */
 
