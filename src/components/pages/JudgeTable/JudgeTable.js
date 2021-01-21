@@ -20,6 +20,8 @@ const useStyles = makeStyles(theme => ({
     width: '57%',
     margin: 'auto',
     marginTop: 100,
+    flexGrow: 1,
+    paddingRight: 30,
   },
   select: {
     margin: 70,
@@ -50,14 +52,6 @@ const columns = [
         >
           {params.value}
         </Link>
-        <a
-          style={{ marginLeft: 20, marginRight: 10 }}
-          href={`http://localhost:8080/judge/${params.value
-            .split(' ')
-            .join('%20')}/csv`}
-        >
-          CSV
-        </a>
       </>
     ),
   },
@@ -67,6 +61,21 @@ const columns = [
   { field: 'denial_rate', headerName: '% Case Denied', width: 140 },
   { field: 'approval_rate', headerName: '% Case Approved', width: 140 },
   { field: 'appointed_by', headerName: 'Appointed by', width: 120 },
+  {
+    field: 'download',
+    headerName: 'Download',
+    width: 120,
+    renderCell: params => (
+      <div>
+        <a
+          style={{ marginLeft: 20, marginRight: 5 }}
+          href={`http://localhost:8080/case/${params.value}/download-csv`}
+        >
+          CSV
+        </a>
+      </div>
+    ),
+  },
 ];
 
 export default function JudgeTable(props) {
