@@ -39,7 +39,7 @@ function RenderHomePage(props) {
 
   useEffect(() => {
     axios
-      .get('http://localhost:8080/case', {
+      .get('https://asylum-a-api.herokuapp.com/cases', {
         headers: {
           Authorization: 'Bearer ' + authState.idToken,
         },
@@ -134,7 +134,7 @@ function RenderHomePage(props) {
       });
   };
 
-  const [smallPDF, setSmallPDF] = useState(true);
+  const [smallPDF, setSmallPDF] = useState(false);
   const [file, setFile] = useState(pdfFile);
   const [location, setLocation] = useState(useLocation());
   const { height, width } = useWindowDimensions();
