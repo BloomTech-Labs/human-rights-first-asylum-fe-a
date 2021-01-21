@@ -58,7 +58,7 @@ export default function CaseTable(props) {
   const columns = [
     {
       field: 'id',
-      headerName: 'ID & Downloads',
+      headerName: 'ID',
       width: 200,
       renderCell: params => (
         <div style={{ display: 'flex', flexDirection: 'row' }}>

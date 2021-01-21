@@ -99,21 +99,6 @@ export default function JudgeTable(props) {
         </>
       ),
     },
-    {
-      field: 'download',
-      headerName: 'Download',
-      width: 120,
-      renderCell: params => (
-        <div>
-          <a
-            style={{ marginLeft: 20, marginRight: 5 }}
-            href={`http://localhost:8080/case/${params.value}/download-csv`}
-          >
-            CSV
-          </a>
-        </div>
-      ),
-    },
   ];
 
   judgeData.forEach((item, idx) => {
