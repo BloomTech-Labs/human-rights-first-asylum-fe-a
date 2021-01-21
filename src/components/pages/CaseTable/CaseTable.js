@@ -6,6 +6,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
+import Tabs from '../Home/Tabs';
 // Imports for PDF Modal
 import PDFViewer from '../PDFViewer/PDFViewer';
 import { Button } from 'antd';
@@ -47,7 +48,15 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function CaseTable(props) {
-  const { caseData, userInfo, savedCases, setSavedCases, authState } = props;
+  const {
+    caseData,
+    userInfo,
+    savedCases,
+    setSavedCases,
+    authState,
+    setShowCaseTable,
+    showCaseTable,
+  } = props;
   const [columnToSearch, setColumnToSearch] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedRows, setSelectedRows] = useState({});
@@ -58,7 +67,7 @@ export default function CaseTable(props) {
   const columns = [
     {
       field: 'id',
-      headerName: 'ID & Downloads',
+      headerName: 'Case ID',
       width: 200,
       renderCell: params => (
         <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -221,6 +230,10 @@ export default function CaseTable(props) {
   return (
     <div className={classes.tbl_container}>
       <div className={classes.search_container}>
+        <Tabs
+          setShowCaseTable={setShowCaseTable}
+          showCaseTable={showCaseTable}
+        ></Tabs>
         <div className={classes.colFilter}>
           <InputLabel>Search By Column...</InputLabel>
           <Select value={columnToSearch} onChange={handleChange}>
