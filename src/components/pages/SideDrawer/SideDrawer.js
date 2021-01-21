@@ -120,7 +120,7 @@ export default function SideDrawer(props) {
 
   return (
     <div className={classes.root}>
-      <CssBaseline />
+      {/* <CssBaseline />
       <AppBar
         position="fixed"
         className={clsx(classes.appBar, {
@@ -234,7 +234,7 @@ export default function SideDrawer(props) {
         })}
       >
         <div className={classes.drawerHeader} />
-      </main>
+      </main> */}
     </div>
   );
 }
