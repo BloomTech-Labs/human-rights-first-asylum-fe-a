@@ -138,13 +138,7 @@ export default function SideDrawer(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            style={{ color: 'navy', fontSize: '1.5rem' }}
-          >
-            Human Rights First
-          </Typography>
+          <Typography></Typography>
         </Toolbar>
       </AppBar>
       <Drawer

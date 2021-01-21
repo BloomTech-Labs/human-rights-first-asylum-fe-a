@@ -71,14 +71,6 @@ export default function JudgeTable(props) {
           >
             {params.value}
           </Link>
-          <a
-            style={{ marginLeft: 20, marginRight: 10 }}
-            href={`http://localhost:8080/judge/${params.value
-              .split(' ')
-              .join('%20')}/csv`}
-          >
-            CSV
-          </a>
         </>
       ),
     },
