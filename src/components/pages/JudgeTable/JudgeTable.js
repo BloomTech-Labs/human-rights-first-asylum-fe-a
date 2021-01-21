@@ -264,14 +264,7 @@ export default function JudgeTable(props) {
           style={{ width: 950, marginLeft: 20 }}
         />
         {/* this button is hardcoded, needs to be adjusted in the future*/}
-        <button>
-          <a
-            style={{ color: 'black' }}
-            href="http://localhost:8080/judge/Norris%20Hansen"
-          >
-            Download CSV on Selected Judge
-          </a>
-        </button>
+
         <button
           onClick={() => {
             bookmarkJudges(selectedRows.rowIds);

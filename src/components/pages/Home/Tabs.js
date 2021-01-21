@@ -12,7 +12,6 @@ const TabItemLeft = styled.button`
   color: white;
 
   &:hover {
-    color: white;
     transform: scaleY(1.1) translateY(-2px);
   }
 `;
@@ -26,7 +25,6 @@ const TabItemRight = styled.button`
   color: white;
 
   &:hover {
-    color: white;
     transform: scaleY(1.1) translateY(-2px);
   }
 `;
@@ -44,13 +42,13 @@ function Tabs({ setShowCaseTable, showCaseTable }) {
         showCaseTable={showCaseTable}
         onClick={() => setShowCaseTable(true)}
       >
-        View Cases
+        Case View
       </TabItemLeft>
       <TabItemRight
         showCaseTable={!showCaseTable}
         onClick={() => setShowCaseTable(false)}
       >
-        View Judges
+        Judge View
       </TabItemRight>
     </TabDiv>
   );
