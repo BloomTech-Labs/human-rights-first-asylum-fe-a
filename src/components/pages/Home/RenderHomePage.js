@@ -133,7 +133,7 @@ function RenderHomePage(props) {
       });
   };
 
-  const [smallPDF, setSmallPDF] = useState(true);
+  const [smallPDF, setSmallPDF] = useState(false);
   const [file, setFile] = useState(pdfFile);
   const [location, setLocation] = useState(useLocation());
   const { height, width } = useWindowDimensions();

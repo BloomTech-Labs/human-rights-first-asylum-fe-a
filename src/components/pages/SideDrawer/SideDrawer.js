@@ -38,7 +38,8 @@ const useStyles = makeStyles(theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    backgroundColor: 'rgb(0, 55, 103)',
+    backgroundColor: 'white',
+    color: 'navy',
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
@@ -120,7 +121,7 @@ export default function SideDrawer(props) {
 
   return (
     <div className={classes.root}>
-      {/* <CssBaseline />
+      <CssBaseline />
       <AppBar
         position="fixed"
         className={clsx(classes.appBar, {
@@ -140,7 +141,7 @@ export default function SideDrawer(props) {
           <Typography
             variant="h6"
             noWrap
-            style={{ color: 'whitesmoke', fontSize: '1.5rem' }}
+            style={{ color: 'navy', fontSize: '1.5rem' }}
           >
             Human Rights First
           </Typography>
@@ -234,7 +235,7 @@ export default function SideDrawer(props) {
         })}
       >
         <div className={classes.drawerHeader} />
-      </main> */}
+      </main>
     </div>
   );
 }

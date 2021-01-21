@@ -22,6 +22,7 @@ const useStyles = makeStyles(theme => ({
     margin: 'auto',
     marginTop: 100,
     flexGrow: 1,
+    paddingRight: 30,
   },
   select: {
     margin: 70,
@@ -113,6 +114,27 @@ export default function CaseTable(props) {
         </>
       ),
     },
+    {
+      field: 'download',
+      headerName: 'Download',
+      width: 120,
+      renderCell: params => (
+        <div>
+          <a
+            style={{ marginLeft: 20, marginRight: 5 }}
+            href={`http://localhost:8080/case/${params.value}/download-pdf`}
+          >
+            PDF
+          </a>
+          <a
+            style={{ marginLeft: 20, marginRight: 5 }}
+            href={`http://localhost:8080/case/${params.value}/download-csv`}
+          >
+            CSV
+          </a>
+        </div>
+      ),
+    },
   ];
 
   const classes = useStyles();
@@ -200,7 +222,7 @@ export default function CaseTable(props) {
     <div className={classes.tbl_container}>
       <div className={classes.search_container}>
         <div className={classes.colFilter}>
-          <InputLabel>Search By ...</InputLabel>
+          <InputLabel>Search By Column...</InputLabel>
           <Select value={columnToSearch} onChange={handleChange}>
             <MenuItem value="id">Case ID</MenuItem>
             <MenuItem value="court_type">Court Type</MenuItem>
