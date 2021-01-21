@@ -6,7 +6,10 @@ import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
-import { WrapText } from '@material-ui/icons';
+// Imports for PDF Modal
+import PDFViewer from '../PDFViewer/PDFViewer';
+import { Button } from 'antd';
+import pdf from '../PDFViewer/samplePDF.pdf';
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -34,73 +37,105 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     width: 200,
   },
+  pdfView: {
+    width: '100%',
+    height: '500px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 }));
-
-const columns = [
-  {
-    field: 'id',
-    headerName: 'ID & Downloads',
-    width: 200,
-
-    renderCell: params => (
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          wordWrap: 'break-word',
-        }}
-      >
-        <span>{params.value}</span>
-      </div>
-    ),
-  },
-
-  // {field: 'download', headerName: 'Download', width: 100},
-  { field: 'court_type', headerName: 'Court Type', width: 105 },
-  // { field: 'hearing_type', headerName: 'Hearing Type', width: 120 },
-  { field: 'refugee_origin', headerName: 'Refugee Origin', width: 130 },
-  { field: 'protected_ground', headerName: 'Protected Ground', width: 150 },
-  // { field: 'hearing_location', headerName: 'Location', width: 120 },
-  // { field: 'hearing_date', headerName: 'Hearing Date', width: 120 },
-  // { field: 'decision_date', headerName: 'Decision Date', width: 150 },
-  // {
-  //   field: 'credibility_of_refugee',
-  //   headerName: 'Refugee Credibility',
-  //   width: 160,
-  // },
-  { field: 'social_group_type', headerName: 'Social Group', width: 130 },
-  { field: 'judge_name', headerName: 'Judge Name', width: 120 },
-  { field: 'judge_decision', headerName: 'Decision', width: 90 },
-  { field: 'case_status', headerName: 'Case Status', width: 110 },
-
-  {
-    field: 'download',
-    headerName: 'Download',
-    width: 120,
-    renderCell: params => (
-      <div>
-        <a
-          style={{ marginLeft: 20, marginRight: 5 }}
-          href={`http://localhost:8080/case/${params.value}/download-pdf`}
-        >
-          PDF
-        </a>
-        <a
-          style={{ marginLeft: 20, marginRight: 5 }}
-          href={`http://localhost:8080/case/${params.value}/download-csv`}
-        >
-          CSV
-        </a>
-      </div>
-    ),
-  },
-];
 
 export default function CaseTable(props) {
   const { caseData, userInfo, savedCases, setSavedCases, authState } = props;
   const [columnToSearch, setColumnToSearch] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedRows, setSelectedRows] = useState({});
+
+  // State for PDF Modal
+  const [showPdf, setShowPdf] = useState(false);
+
+  const columns = [
+    {
+      field: 'id',
+      headerName: 'ID & Downloads',
+      width: 200,
+      renderCell: params => (
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <span>{params.value}</span>
+          <a
+            style={{ marginLeft: 20, marginRight: 5 }}
+            href={`http://localhost:8080/case/${params.value}/download-pdf`}
+          >
+            PDF
+          </a>
+          <a
+            style={{ marginLeft: 20, marginRight: 5 }}
+            href={`http://localhost:8080/case/${params.value}/download-csv`}
+          >
+            CSV
+          </a>
+        </div>
+      ),
+    },
+    // {field: 'download', headerName: 'Download', width: 100},
+    { field: 'court_type', headerName: 'Court Type', width: 105 },
+    // { field: 'hearing_type', headerName: 'Hearing Type', width: 120 },
+    { field: 'refugee_origin', headerName: 'Refugee Origin', width: 130 },
+    { field: 'protected_ground', headerName: 'Protected Ground', width: 150 },
+    // { field: 'hearing_location', headerName: 'Location', width: 120 },
+    // { field: 'hearing_date', headerName: 'Hearing Date', width: 120 },
+    // { field: 'decision_date', headerName: 'Decision Date', width: 150 },
+    // {
+    //   field: 'credibility_of_refugee',
+    //   headerName: 'Refugee Credibility',
+    //   width: 160,
+    // },
+    { field: 'social_group_type', headerName: 'Social Group', width: 130 },
+    { field: 'judge_name', headerName: 'Judge Name', width: 120 },
+    { field: 'judge_decision', headerName: 'Decision', width: 90 },
+    { field: 'case_status', headerName: 'Case Status', width: 110 },
+    // MODAL for PDFs
+    {
+      field: 'view_pdf',
+      headerName: 'View PDF',
+      width: 110,
+      renderCell: params => (
+        // Hook to control whether or not to show the PDF Modal
+        <>
+          <div className={classes.pdfView}>
+            <PDFViewer
+              pdf={pdf}
+              onCancel={() => setShowPdf(false)}
+              visible={showPdf}
+            />
+            <Button onClick={() => setShowPdf(!showPdf)}>PDF</Button>
+          </div>
+        </>
+      ),
+    },
+    {
+      field: 'download',
+      headerName: 'Download',
+      width: 120,
+      renderCell: params => (
+        <div>
+          <a
+            style={{ marginLeft: 20, marginRight: 5 }}
+            href={`http://localhost:8080/case/${params.value}/download-pdf`}
+          >
+            PDF
+          </a>
+          <a
+            style={{ marginLeft: 20, marginRight: 5 }}
+            href={`http://localhost:8080/case/${params.value}/download-csv`}
+          >
+            CSV
+          </a>
+        </div>
+      ),
+    },
+  ];
 
   const classes = useStyles();
 
