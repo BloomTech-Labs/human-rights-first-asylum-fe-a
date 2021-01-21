@@ -38,7 +38,7 @@ function RenderHomePage(props) {
 
   useEffect(() => {
     axios
-      .get('http://localhost:8080/case', {
+      .get('https://asylum-a-api.herokuapp.com/cases', {
         headers: {
           Authorization: 'Bearer ' + authState.idToken,
         },
