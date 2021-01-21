@@ -1,6 +1,7 @@
 import React, { useState, useEffect, componentDidUpdate } from 'react';
 import CaseTable from '../CaseTable/CaseTable';
 import JudgeTable from '../JudgeTable/JudgeTable';
+import Tabs from './Tabs';
 import { useLocation } from 'react-router-dom';
 import SideDrawer from '../SideDrawer/SideDrawer';
 import PDFViewer from '../PDFViewer/PDFViewer';
@@ -161,14 +162,10 @@ function RenderHomePage(props) {
       </Route>
 
       <Route exact path="/">
-        <button
-          style={{ height: 70, marginTop: 160, marginRight: 50 }}
-          onClick={() => setShowCaseTable(!showCaseTable)}
-        >
-          {showCaseTable ? 'View Judges' : 'View Cases'}
-        </button>
         {showCaseTable && (
           <CaseTable
+            showCaseTable={showCaseTable}
+            setShowCaseTable={setShowCaseTable}
             caseData={caseData}
             userInfo={userInfo}
             savedCases={savedCases}
@@ -178,6 +175,8 @@ function RenderHomePage(props) {
         )}
         {!showCaseTable && (
           <JudgeTable
+            showCaseTable={showCaseTable}
+            setShowCaseTable={setShowCaseTable}
             judgeData={judgeData}
             userInfo={userInfo}
             savedJudges={savedJudges}

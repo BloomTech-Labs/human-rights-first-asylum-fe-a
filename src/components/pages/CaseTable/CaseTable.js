@@ -6,6 +6,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
+import Tabs from '../Home/Tabs';
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -77,7 +78,15 @@ const columns = [
 ];
 
 export default function CaseTable(props) {
-  const { caseData, userInfo, savedCases, setSavedCases, authState } = props;
+  const {
+    caseData,
+    userInfo,
+    savedCases,
+    setSavedCases,
+    authState,
+    setShowCaseTable,
+    showCaseTable,
+  } = props;
   const [columnToSearch, setColumnToSearch] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedRows, setSelectedRows] = useState({});
@@ -166,6 +175,10 @@ export default function CaseTable(props) {
   return (
     <div className={classes.tbl_container}>
       <div className={classes.search_container}>
+        <Tabs
+          setShowCaseTable={setShowCaseTable}
+          showCaseTable={showCaseTable}
+        ></Tabs>
         <div className={classes.colFilter}>
           <InputLabel>Search By ...</InputLabel>
           <Select value={columnToSearch} onChange={handleChange}>

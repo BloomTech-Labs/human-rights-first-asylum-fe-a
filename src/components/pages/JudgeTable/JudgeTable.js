@@ -9,6 +9,7 @@ import { Button } from 'antd';
 import axios from 'axios';
 import Tooltip from '@material-ui/core/Tooltip';
 import { Link } from 'react-router-dom';
+import Tabs from '../Home/Tabs';
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -70,7 +71,15 @@ const columns = [
 ];
 
 export default function JudgeTable(props) {
-  const { judgeData, userInfo, savedJudges, setSavedJudges, authState } = props;
+  const {
+    judgeData,
+    userInfo,
+    savedJudges,
+    setSavedJudges,
+    authState,
+    setShowCaseTable,
+    showCaseTable,
+  } = props;
   const [columnToSearch, setColumnToSearch] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedRows, setSelectedRows] = useState({});
@@ -100,7 +109,7 @@ export default function JudgeTable(props) {
   const findRowByID = (rowID, rowData) => {
     for (let i = 0; i < rowData.length; i++) {
       let currentRow = rowData[i];
-      if (currentRow.id == rowID) {
+      if (currentRow.id === rowID) {
         return currentRow;
       }
     }
@@ -110,7 +119,7 @@ export default function JudgeTable(props) {
   const findRowByJudgeName = (judgeName, rowData) => {
     for (let i = 0; i < rowData.length; i++) {
       let currentRow = rowData[i];
-      if (currentRow.name == judgeName) {
+      if (currentRow.name === judgeName) {
         return currentRow;
       }
     }
@@ -182,6 +191,10 @@ export default function JudgeTable(props) {
   return (
     <div className={classes.tbl_container}>
       <div className={classes.search_container}>
+        <Tabs
+          setShowCaseTable={setShowCaseTable}
+          showCaseTable={showCaseTable}
+        ></Tabs>
         <div className={classes.colFilter}>
           <InputLabel>Search By ...</InputLabel>
           <Select value={columnToSearch} onChange={handleChange}>
