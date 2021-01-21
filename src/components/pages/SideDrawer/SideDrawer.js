@@ -16,6 +16,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import CloseIcon from '@material-ui/icons/Close';
+import HRFlogo from './HRFlogo.png';
 /* import BookmarkPanel from '../Bookmarks/BookmarksQuickview'; */
 import BookmarksIcon from '@material-ui/icons/Bookmarks';
 import NoteIcon from '@material-ui/icons/Receipt';
@@ -138,7 +139,9 @@ export default function SideDrawer(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography></Typography>
+          <Typography>
+            <img src={HRFlogo} alt=" HRF logo" />
+          </Typography>
         </Toolbar>
       </AppBar>
       <Drawer
