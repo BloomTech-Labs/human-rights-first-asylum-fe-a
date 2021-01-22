@@ -16,6 +16,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import CloseIcon from '@material-ui/icons/Close';
+import HRFlogo from './HRFlogo.png';
 /* import BookmarkPanel from '../Bookmarks/BookmarksQuickview'; */
 import BookmarksIcon from '@material-ui/icons/Bookmarks';
 import NoteIcon from '@material-ui/icons/Receipt';
@@ -135,15 +136,12 @@ export default function SideDrawer(props) {
             onClick={handleDrawerOpen}
             edge="start"
             className={clsx(classes.menuButton, open && classes.hide)}
+            redundant
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            style={{ color: 'navy', fontSize: '1.5rem' }}
-          >
-            Human Rights First
+          <Typography>
+            <img src={HRFlogo} alt=" HRF logo" />
           </Typography>
         </Toolbar>
       </AppBar>
