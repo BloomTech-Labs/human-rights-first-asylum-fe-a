@@ -18,6 +18,12 @@ import { hidden } from 'kleur';
 import { FullscreenOverlay } from '../PDFViewer/PDFViewerStyled';
 import useWindowDimensions from '../../../utils/useWindowDimensions';
 import SavedCases from '../SavedCases/SavedCases';
+
+// Imports for loading spinner
+import { trackPromise } from 'react-promise-tracker';
+import { usePromiseTracker } from 'react-promise-tracker';
+import Loader from 'react-promise-loader';
+
 import * as pdfFile from '../PDFViewer/samplePDF.pdf';
 
 const useStyles = makeStyles({
@@ -39,12 +45,14 @@ function RenderHomePage(props) {
   // should move these API calls into a separate index folder at some point
 
   useEffect(() => {
-    axios
-      .get('http://localhost:8080/cases/', {
+    trackPromise(
+      // Tracks the axios call and implements spinning loader while executing
+      axios.get('http://localhost:8080/cases/', {
         headers: {
           Authorization: 'Bearer ' + authState.idToken,
         },
       })
+    )
       .then(res => {
         setCaseData(res.data);
       })
@@ -54,12 +62,14 @@ function RenderHomePage(props) {
   }, []);
 
   useEffect(() => {
-    axios
-      .get('http://localhost:8080/judge', {
+    trackPromise(
+      // Tracks the axios call and implements spinning loader while executing
+      axios.get('http://localhost:8080/judge', {
         headers: {
           Authorization: 'Bearer ' + authState.idToken,
         },
       })
+    )
       .then(res => {
         setJudgeData(res.data);
       })
@@ -166,28 +176,33 @@ function RenderHomePage(props) {
 
       <Route exact path="/">
         {showCaseTable && (
-          <CaseTable
-            showCaseTable={showCaseTable}
-            setShowCaseTable={setShowCaseTable}
-            caseData={caseData}
-            userInfo={userInfo}
-            savedCases={savedCases}
-            setSavedCases={setSavedCases}
-            authState={authState}
-            setSelectedRows={setSelectedRows}
-            selectedRows={selectedRows}
-          />
+          <>
+            <CaseTable
+              showCaseTable={showCaseTable}
+              setShowCaseTable={setShowCaseTable}
+              caseData={caseData}
+              userInfo={userInfo}
+              savedCases={savedCases}
+              setSavedCases={setSavedCases}
+              authState={authState}
+              selectedRows={selectedRows}
+            />
+            <Loader promiseTracker={usePromiseTracker} />
+          </>
         )}
         {!showCaseTable && (
-          <JudgeTable
-            showCaseTable={showCaseTable}
-            setShowCaseTable={setShowCaseTable}
-            judgeData={judgeData}
-            userInfo={userInfo}
-            savedJudges={savedJudges}
-            setSavedJudges={setSavedJudges}
-            authState={authState}
-          />
+          <>
+            <JudgeTable
+              showCaseTable={showCaseTable}
+              setShowCaseTable={setShowCaseTable}
+              judgeData={judgeData}
+              userInfo={userInfo}
+              savedJudges={savedJudges}
+              setSavedJudges={setSavedJudges}
+              authState={authState}
+            />
+            <Loader promiseTracker={usePromiseTracker} />
+          </>
         )}
 
         {smallPDF && (

@@ -80,23 +80,15 @@ export default function JudgeTable(props) {
           >
             {params.value}
           </Link>
-          <a
-            style={{ marginLeft: 20, marginRight: 10 }}
-            href={`http://localhost:8080/judge/${params.value
-              .split(' ')
-              .join('%20')}/csv`}
-          >
-            CSV
-          </a>
         </>
       ),
     },
     { field: 'judge_county', headerName: 'County', width: 110 },
     { field: 'date_appointed', headerName: 'Date Appointed', width: 140 },
-    { field: 'birth_date', headerName: 'Birth Date', width: 110 },
-    { field: 'denial_rate', headerName: '% Case Denied', width: 140 },
-    { field: 'approval_rate', headerName: '% Case Approved', width: 140 },
-    { field: 'appointed_by', headerName: 'Appointed by', width: 120 },
+    { field: 'biography', headerName: 'Biography', width: 200 },
+    { field: 'appointed_by', headerName: 'Appointed by', width: 160 },
+    { field: 'denial_rate', headerName: '% Denial', width: 110 },
+    { field: 'approval_rate', headerName: '% Approval', width: 110 },
     // MODAL for PDFs
     {
       field: 'view_pdf',
@@ -114,21 +106,6 @@ export default function JudgeTable(props) {
             <Button onClick={() => setShowPdf(!showPdf)}>PDF</Button>
           </div>
         </>
-      ),
-    },
-    {
-      field: 'download',
-      headerName: 'Download',
-      width: 120,
-      renderCell: params => (
-        <div>
-          <a
-            style={{ marginLeft: 20, marginRight: 5 }}
-            href={`http://localhost:8080/case/${params.value}/download-csv`}
-          >
-            CSV
-          </a>
-        </div>
       ),
     },
   ];
@@ -250,7 +227,7 @@ export default function JudgeTable(props) {
             <MenuItem value="name">Name</MenuItem>
             <MenuItem value="judge_county">County</MenuItem>
             <MenuItem value="date_appointed">Date Appointed</MenuItem>
-            <MenuItem value="birth_date">Birth Date</MenuItem>
+            <MenuItem value="biography">Biography</MenuItem>
             <MenuItem value="denial_rate">Denial Rate</MenuItem>
             <MenuItem value="approval_rate">Approval Rate</MenuItem>
             <MenuItem value="appointed_by">Appointed By</MenuItem>
