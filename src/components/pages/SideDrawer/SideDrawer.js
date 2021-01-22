@@ -136,6 +136,7 @@ export default function SideDrawer(props) {
             onClick={handleDrawerOpen}
             edge="start"
             className={clsx(classes.menuButton, open && classes.hide)}
+            redundant
           >
             <MenuIcon />
           </IconButton>
