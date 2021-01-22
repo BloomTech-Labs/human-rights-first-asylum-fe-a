@@ -278,7 +278,7 @@ export default function CaseTable(props) {
 const saveCaseBtnStyles = {
   position: 'absolute',
   top: '395px',
-  left: '807px',
+  left: '120px',
   padding: '5px',
   zIndex: '1',
 };
