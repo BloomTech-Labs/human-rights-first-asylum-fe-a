@@ -186,6 +186,7 @@ function RenderHomePage(props) {
               setSavedCases={setSavedCases}
               authState={authState}
               selectedRows={selectedRows}
+              setSelectedRows={setSelectedRows}
             />
             <Loader promiseTracker={usePromiseTracker} />
           </>
