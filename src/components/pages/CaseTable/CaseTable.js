@@ -241,15 +241,12 @@ export default function CaseTable(props) {
             <MenuItem value="judge_name">Judge Name</MenuItem>
           </Select>
         </div>
-        <DataGrid
-          rows={columnToSearch ? search(caseData) : caseData}
-          columns={columns}
-          className={classes.grid}
-          autoHeight={true}
-          loading={caseData ? false : true}
-          checkboxSelection={true}
-          onSelectionChange={onCheckboxSelect}
-          showCellRightBorder={true}
+        <TextField
+          value={searchQuery}
+          placeholder="Enter Query ..."
+          onChange={handleSearchChange}
+          type="text"
+          style={{ width: 950, marginLeft: 20 }}
         />
       </div>
       <button
@@ -264,6 +261,16 @@ export default function CaseTable(props) {
       >
         Save Cases
       </button>
+      <DataGrid
+        rows={columnToSearch ? search(caseData) : caseData}
+        columns={columns}
+        className={classes.grid}
+        autoHeight={true}
+        loading={caseData ? false : true}
+        checkboxSelection={true}
+        onSelectionChange={onCheckboxSelect}
+        showCellRightBorder={true}
+      />
     </div>
   );
 }
