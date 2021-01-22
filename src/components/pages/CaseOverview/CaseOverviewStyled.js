@@ -9,6 +9,7 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 1vw 1vh;
+  background-color: #e8eae6;
 `;
 
 // CASE/JUDGE CONTAINER
@@ -19,6 +20,7 @@ export const CaseSpecs = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 1vw 1vh;
+  background-color: #e8eae6;
 `;
 
 // CLIENT CONTAINER
@@ -29,6 +31,7 @@ export const ClientSpecs = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 1vw 1vh;
+  background-color: #e8eae6;
 `;
 
 // RESULTS
@@ -39,6 +42,7 @@ export const Results = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 1vw 1vh;
+  background-color: #e8eae6;
 `;
 
 export const KeyParagraph = styled.p``;

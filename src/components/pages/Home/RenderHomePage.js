@@ -1,6 +1,7 @@
 import React, { useState, useEffect, componentDidUpdate } from 'react';
 import CaseTable from '../CaseTable/CaseTable';
 import JudgeTable from '../JudgeTable/JudgeTable';
+import Tabs from './Tabs';
 import { useLocation } from 'react-router-dom';
 import SideDrawer from '../SideDrawer/SideDrawer';
 import PDFViewer from '../PDFViewer/PDFViewer';
@@ -39,7 +40,7 @@ function RenderHomePage(props) {
 
   useEffect(() => {
     axios
-      .get('http://localhost:8080/case', {
+      .get('http://localhost:8080/cases/', {
         headers: {
           Authorization: 'Bearer ' + authState.idToken,
         },
@@ -134,7 +135,7 @@ function RenderHomePage(props) {
       });
   };
 
-  const [smallPDF, setSmallPDF] = useState(true);
+  const [smallPDF, setSmallPDF] = useState(false);
   const [file, setFile] = useState(pdfFile);
   const [location, setLocation] = useState(useLocation());
   const { height, width } = useWindowDimensions();
@@ -153,11 +154,7 @@ function RenderHomePage(props) {
         deleteSavedJudge={deleteSavedJudge}
       />
       <Route exact path="/saved-cases">
-        <SavedCases
-          savedCases={savedCases}
-          deleteBookmark={deleteBookmark}
-          caseData={caseData}
-        />
+        <SavedCases savedCases={savedCases} deleteBookmark={deleteBookmark} />
       </Route>
       <Route exact path="/judge/:name">
         <JudgePage
@@ -168,15 +165,10 @@ function RenderHomePage(props) {
       </Route>
 
       <Route exact path="/">
-        <button
-          style={{ height: 70, marginTop: 160, marginRight: 50 }}
-          onClick={() => setShowCaseTable(!showCaseTable)}
-        >
-          {showCaseTable ? 'View Judges' : 'View Cases'}
-        </button>
-
         {showCaseTable && (
           <CaseTable
+            showCaseTable={showCaseTable}
+            setShowCaseTable={setShowCaseTable}
             caseData={caseData}
             userInfo={userInfo}
             savedCases={savedCases}
@@ -188,6 +180,8 @@ function RenderHomePage(props) {
         )}
         {!showCaseTable && (
           <JudgeTable
+            showCaseTable={showCaseTable}
+            setShowCaseTable={setShowCaseTable}
             judgeData={judgeData}
             userInfo={userInfo}
             savedJudges={savedJudges}

@@ -35,8 +35,8 @@ function SavedCases({ savedCases, deleteBookmark }) {
       width: 200,
       renderCell: params => (
         <div style={{ display: 'flex', flexDirection: 'row' }}>
-          <IconButton onClick={() => deleteBookmark(params.value)}>
-            <DeleteIcon />
+          <IconButton>
+            <DeleteIcon onClick={() => deleteBookmark(params.value)} />
           </IconButton>
           <span>{params.value}</span>
           <a
@@ -79,7 +79,7 @@ function SavedCases({ savedCases, deleteBookmark }) {
           columns={columns}
           className={classes.grid}
           autoHeight={true}
-          showCellRightBorder={true}
+          // showCellRightBorder={true}
         />
       )}
     </>

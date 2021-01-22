@@ -6,6 +6,11 @@ import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
+import Tabs from '../Home/Tabs';
+// Imports for PDF Modal
+import PDFViewer from '../PDFViewer/PDFViewer';
+import { Button } from 'antd';
+import pdf from '../PDFViewer/samplePDF.pdf';
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -19,6 +24,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: 100,
     flexGrow: 1,
     position: 'relative',
+    paddingRight: 30,
   },
   select: {
     margin: 70,
@@ -33,6 +39,13 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     width: 200,
   },
+  pdfView: {
+    width: '100%',
+    height: '500px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 }));
 
 export default function CaseTable(props) {
@@ -44,11 +57,19 @@ export default function CaseTable(props) {
     authState,
     setSelectedRows,
     selectedRows,
+    setShowCaseTable,
+    showCaseTable,
   } = props;
+  const [columnToSearch, setColumnToSearch] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // State for PDF Modal
+  const [showPdf, setShowPdf] = useState(false);
+  console.log('this is case data', caseData);
   const columns = [
     {
       field: 'id',
-      headerName: 'ID & Downloads',
+      headerName: 'Case ID',
       width: 200,
       renderCell: params => (
         <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -85,9 +106,47 @@ export default function CaseTable(props) {
     { field: 'judge_name', headerName: 'Judge Name', width: 120 },
     { field: 'judge_decision', headerName: 'Decision', width: 90 },
     { field: 'case_status', headerName: 'Case Status', width: 110 },
+    // MODAL for PDFs
+    {
+      field: 'view_pdf',
+      headerName: 'View PDF',
+      width: 110,
+      renderCell: params => (
+        // Hook to control whether or not to show the PDF Modal
+        <>
+          <div className={classes.pdfView}>
+            <PDFViewer
+              pdf={pdf}
+              onCancel={() => setShowPdf(false)}
+              visible={showPdf}
+            />
+            <Button onClick={() => setShowPdf(!showPdf)}>PDF</Button>
+          </div>
+        </>
+      ),
+    },
+    {
+      field: 'download',
+      headerName: 'Download',
+      width: 120,
+      renderCell: params => (
+        <div>
+          <a
+            style={{ marginLeft: 20, marginRight: 5 }}
+            href={`http://localhost:8080/case/${params.value}/download-pdf`}
+          >
+            PDF
+          </a>
+          <a
+            style={{ marginLeft: 20, marginRight: 5 }}
+            href={`http://localhost:8080/case/${params.value}/download-csv`}
+          >
+            CSV
+          </a>
+        </div>
+      ),
+    },
   ];
-  const [columnToSearch, setColumnToSearch] = useState('');
-  const [searchQuery, setSearchQuery] = useState('');
 
   const classes = useStyles();
 
@@ -172,44 +231,26 @@ export default function CaseTable(props) {
   };
 
   return (
-    <>
-      <div className={classes.tbl_container}>
-        <div className={classes.search_container}>
-          <div className={classes.colFilter}>
-            <InputLabel>Search By ...</InputLabel>
-            <Select value={columnToSearch} onChange={handleChange}>
-              <MenuItem value="id">Case ID</MenuItem>
-              <MenuItem value="court_type">Court Type</MenuItem>
-              <MenuItem value="refugee_origin">Refugee Origin</MenuItem>
-              <MenuItem value="protected_ground">Protected Ground</MenuItem>
-              <MenuItem value="credibility_of_refugee">
-                Refugee Credibility
-              </MenuItem>
-              <MenuItem value="case_status">Case Status</MenuItem>
-              <MenuItem value="social_group_type">Social Group</MenuItem>
-              <MenuItem value="judge_name">Judge Name</MenuItem>
-            </Select>
-          </div>
-
-          <TextField
-            value={searchQuery}
-            placeholder="Enter Query ..."
-            onChange={handleSearchChange}
-            type="text"
-            style={{ width: 950, marginLeft: 20 }}
-          />
-          <button
-            disabled={
-              Object.keys(selectedRows).length === 0 ||
-              selectedRows.rowIds.length === 0
-                ? true
-                : false
-            }
-            style={saveCaseBtnStyles}
-            onClick={() => bookmarkCases(selectedRows.rowIds)}
-          >
-            Save Cases
-          </button>
+    <div className={classes.tbl_container}>
+      <div className={classes.search_container}>
+        <Tabs
+          setShowCaseTable={setShowCaseTable}
+          showCaseTable={showCaseTable}
+        ></Tabs>
+        <div className={classes.colFilter}>
+          <InputLabel>Search By Column...</InputLabel>
+          <Select value={columnToSearch} onChange={handleChange}>
+            <MenuItem value="id">Case ID</MenuItem>
+            <MenuItem value="court_type">Court Type</MenuItem>
+            <MenuItem value="refugee_origin">Refugee Origin</MenuItem>
+            <MenuItem value="protected_ground">Protected Ground</MenuItem>
+            <MenuItem value="credibility_of_refugee">
+              Refugee Credibility
+            </MenuItem>
+            <MenuItem value="case_status">Case Status</MenuItem>
+            <MenuItem value="social_group_type">Social Group</MenuItem>
+            <MenuItem value="judge_name">Judge Name</MenuItem>
+          </Select>
         </div>
         <DataGrid
           rows={columnToSearch ? search(caseData) : caseData}
@@ -222,14 +263,26 @@ export default function CaseTable(props) {
           showCellRightBorder={true}
         />
       </div>
-    </>
+      <button
+        disabled={
+          Object.keys(selectedRows).length === 0 ||
+          selectedRows.rowIds.length === 0
+            ? true
+            : false
+        }
+        style={saveCaseBtnStyles}
+        onClick={() => bookmarkCases(selectedRows.rowIds)}
+      >
+        Save Cases
+      </button>
+    </div>
   );
 }
 
 const saveCaseBtnStyles = {
   position: 'absolute',
   top: '395px',
-  left: '140px',
+  left: '807px',
   padding: '5px',
   zIndex: '1',
 };
