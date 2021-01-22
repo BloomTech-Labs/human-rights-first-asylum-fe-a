@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import Tooltip from '@material-ui/core/Tooltip';
 import { Link } from 'react-router-dom';
+import Tabs from '../Home/Tabs';
 // Imports for PDF Modal
 import PDFViewer from '../PDFViewer/PDFViewer';
 import { Button } from 'antd';
@@ -49,7 +50,15 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function JudgeTable(props) {
-  const { judgeData, userInfo, savedJudges, setSavedJudges, authState } = props;
+  const {
+    judgeData,
+    userInfo,
+    savedJudges,
+    setSavedJudges,
+    authState,
+    setShowCaseTable,
+    showCaseTable,
+  } = props;
   const [columnToSearch, setColumnToSearch] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedRows, setSelectedRows] = useState({});
@@ -208,6 +217,10 @@ export default function JudgeTable(props) {
   return (
     <div className={classes.tbl_container}>
       <div className={classes.search_container}>
+        <Tabs
+          setShowCaseTable={setShowCaseTable}
+          showCaseTable={showCaseTable}
+        ></Tabs>
         <div className={classes.colFilter}>
           <InputLabel>Search By ...</InputLabel>
           <Select value={columnToSearch} onChange={handleChange}>
@@ -228,14 +241,7 @@ export default function JudgeTable(props) {
           style={{ width: 950, marginLeft: 20 }}
         />
         {/* this button is hardcoded, needs to be adjusted in the future*/}
-        <button>
-          <a
-            style={{ color: 'black' }}
-            href="http://localhost:8080/judge/Norris%20Hansen"
-          >
-            Download CSV on Selected Judge
-          </a>
-        </button>
+
         <button
           onClick={() => {
             bookmarkJudges(selectedRows.rowIds);
