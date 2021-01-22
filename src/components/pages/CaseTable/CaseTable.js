@@ -18,6 +18,7 @@ const useStyles = makeStyles(theme => ({
     margin: 'auto',
     marginTop: 100,
     flexGrow: 1,
+    position: 'relative',
   },
   select: {
     margin: 70,
@@ -34,53 +35,59 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const columns = [
-  {
-    field: 'id',
-    headerName: 'ID & Downloads',
-    width: 200,
-    renderCell: params => (
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
-        <span>{params.value}</span>
-        <a
-          style={{ marginLeft: 20, marginRight: 5 }}
-          href={`http://localhost:8080/case/${params.value}/download-pdf`}
-        >
-          PDF
-        </a>
-        <a
-          style={{ marginLeft: 20, marginRight: 5 }}
-          href={`http://localhost:8080/case/${params.value}/download-csv`}
-        >
-          CSV
-        </a>
-      </div>
-    ),
-  },
-  // {field: 'download', headerName: 'Download', width: 100},
-  { field: 'court_type', headerName: 'Court Type', width: 105 },
-  // { field: 'hearing_type', headerName: 'Hearing Type', width: 120 },
-  { field: 'refugee_origin', headerName: 'Refugee Origin', width: 130 },
-  { field: 'protected_ground', headerName: 'Protected Ground', width: 150 },
-  // { field: 'hearing_location', headerName: 'Location', width: 120 },
-  // { field: 'hearing_date', headerName: 'Hearing Date', width: 120 },
-  // { field: 'decision_date', headerName: 'Decision Date', width: 150 },
-  // {
-  //   field: 'credibility_of_refugee',
-  //   headerName: 'Refugee Credibility',
-  //   width: 160,
-  // },
-  { field: 'social_group_type', headerName: 'Social Group', width: 130 },
-  { field: 'judge_name', headerName: 'Judge Name', width: 120 },
-  { field: 'judge_decision', headerName: 'Decision', width: 90 },
-  { field: 'case_status', headerName: 'Case Status', width: 110 },
-];
-
 export default function CaseTable(props) {
-  const { caseData, userInfo, savedCases, setSavedCases, authState } = props;
+  const {
+    caseData,
+    userInfo,
+    savedCases,
+    setSavedCases,
+    authState,
+    setSelectedRows,
+    selectedRows,
+  } = props;
+  const columns = [
+    {
+      field: 'id',
+      headerName: 'ID & Downloads',
+      width: 200,
+      renderCell: params => (
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <span>{params.value}</span>
+          <a
+            style={{ marginLeft: 20, marginRight: 5 }}
+            href={`http://localhost:8080/case/${params.value}/download-pdf`}
+          >
+            PDF
+          </a>
+          <a
+            style={{ marginLeft: 20, marginRight: 5 }}
+            href={`http://localhost:8080/case/${params.value}/download-csv`}
+          >
+            CSV
+          </a>
+        </div>
+      ),
+    },
+    // {field: 'download', headerName: 'Download', width: 100},
+    { field: 'court_type', headerName: 'Court Type', width: 105 },
+    // { field: 'hearing_type', headerName: 'Hearing Type', width: 120 },
+    { field: 'refugee_origin', headerName: 'Refugee Origin', width: 130 },
+    { field: 'protected_ground', headerName: 'Protected Ground', width: 150 },
+    // { field: 'hearing_location', headerName: 'Location', width: 120 },
+    // { field: 'hearing_date', headerName: 'Hearing Date', width: 120 },
+    // { field: 'decision_date', headerName: 'Decision Date', width: 150 },
+    // {
+    //   field: 'credibility_of_refugee',
+    //   headerName: 'Refugee Credibility',
+    //   width: 160,
+    // },
+    { field: 'social_group_type', headerName: 'Social Group', width: 130 },
+    { field: 'judge_name', headerName: 'Judge Name', width: 120 },
+    { field: 'judge_decision', headerName: 'Decision', width: 90 },
+    { field: 'case_status', headerName: 'Case Status', width: 110 },
+  ];
   const [columnToSearch, setColumnToSearch] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedRows, setSelectedRows] = useState({});
 
   const classes = useStyles();
 
@@ -100,7 +107,7 @@ export default function CaseTable(props) {
         -1
     );
   };
-
+  console.log('this is selected rows', selectedRows);
   // the need for idParamName arose from case_id and id being used in different scenarios
   const findRowByID = (rowID, rowData) => {
     for (let i = 0; i < rowData.length; i++) {
@@ -157,6 +164,7 @@ export default function CaseTable(props) {
         }
       }
     }
+    alert('Cases Successfully Saved');
   };
 
   const onCheckboxSelect = selections => {
@@ -164,47 +172,64 @@ export default function CaseTable(props) {
   };
 
   return (
-    <div className={classes.tbl_container}>
-      <div className={classes.search_container}>
-        <div className={classes.colFilter}>
-          <InputLabel>Search By ...</InputLabel>
-          <Select value={columnToSearch} onChange={handleChange}>
-            <MenuItem value="id">Case ID</MenuItem>
-            <MenuItem value="court_type">Court Type</MenuItem>
-            <MenuItem value="refugee_origin">Refugee Origin</MenuItem>
-            <MenuItem value="protected_ground">Protected Ground</MenuItem>
-            <MenuItem value="credibility_of_refugee">
-              Refugee Credibility
-            </MenuItem>
-            <MenuItem value="case_status">Case Status</MenuItem>
-            <MenuItem value="social_group_type">Social Group</MenuItem>
-            <MenuItem value="judge_name">Judge Name</MenuItem>
-          </Select>
+    <>
+      <div className={classes.tbl_container}>
+        <div className={classes.search_container}>
+          <div className={classes.colFilter}>
+            <InputLabel>Search By ...</InputLabel>
+            <Select value={columnToSearch} onChange={handleChange}>
+              <MenuItem value="id">Case ID</MenuItem>
+              <MenuItem value="court_type">Court Type</MenuItem>
+              <MenuItem value="refugee_origin">Refugee Origin</MenuItem>
+              <MenuItem value="protected_ground">Protected Ground</MenuItem>
+              <MenuItem value="credibility_of_refugee">
+                Refugee Credibility
+              </MenuItem>
+              <MenuItem value="case_status">Case Status</MenuItem>
+              <MenuItem value="social_group_type">Social Group</MenuItem>
+              <MenuItem value="judge_name">Judge Name</MenuItem>
+            </Select>
+          </div>
+
+          <TextField
+            value={searchQuery}
+            placeholder="Enter Query ..."
+            onChange={handleSearchChange}
+            type="text"
+            style={{ width: 950, marginLeft: 20 }}
+          />
+          <button
+            disabled={
+              Object.keys(selectedRows).length === 0 ||
+              selectedRows.rowIds.length === 0
+                ? true
+                : false
+            }
+            style={saveCaseBtnStyles}
+            onClick={() => bookmarkCases(selectedRows.rowIds)}
+          >
+            Save Cases
+          </button>
         </div>
-        <TextField
-          value={searchQuery}
-          placeholder="Enter Query ..."
-          onChange={handleSearchChange}
-          type="text"
-          style={{ width: 950, marginLeft: 20 }}
+        <DataGrid
+          rows={columnToSearch ? search(caseData) : caseData}
+          columns={columns}
+          className={classes.grid}
+          autoHeight={true}
+          loading={caseData ? false : true}
+          checkboxSelection={true}
+          onSelectionChange={onCheckboxSelect}
+          showCellRightBorder={true}
         />
-
-        <button onClick={() => bookmarkCases(selectedRows.rowIds)}>
-          Bookmark Selected Cases
-        </button>
       </div>
-      <DataGrid
-        rows={columnToSearch ? search(caseData) : caseData}
-        columns={columns}
-        className={classes.grid}
-        autoHeight={true}
-        loading={caseData ? false : true}
-        checkboxSelection={true}
-        onSelectionChange={onCheckboxSelect}
-        showCellRightBorder={true}
-
-        // onRowHover={item => console.log(item.row)}
-      />
-    </div>
+    </>
   );
 }
+
+const saveCaseBtnStyles = {
+  position: 'absolute',
+  top: '395px',
+  left: '140px',
+  padding: '5px',
+  zIndex: '1',
+};

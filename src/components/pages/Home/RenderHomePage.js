@@ -16,7 +16,7 @@ import axios from 'axios';
 import { hidden } from 'kleur';
 import { FullscreenOverlay } from '../PDFViewer/PDFViewerStyled';
 import useWindowDimensions from '../../../utils/useWindowDimensions';
-
+import SavedCases from '../SavedCases/SavedCases';
 import * as pdfFile from '../PDFViewer/samplePDF.pdf';
 
 const useStyles = makeStyles({
@@ -33,6 +33,7 @@ function RenderHomePage(props) {
   const [showCaseTable, setShowCaseTable] = useState(true);
   const [savedJudges, setSavedJudges] = useState([]);
   const [centerPDF, setCenterPDF] = useState(false);
+  const [selectedRows, setSelectedRows] = useState({});
 
   // should move these API calls into a separate index folder at some point
 
@@ -151,7 +152,13 @@ function RenderHomePage(props) {
         deleteBookmark={deleteBookmark}
         deleteSavedJudge={deleteSavedJudge}
       />
-
+      <Route exact path="/saved-cases">
+        <SavedCases
+          savedCases={savedCases}
+          deleteBookmark={deleteBookmark}
+          caseData={caseData}
+        />
+      </Route>
       <Route exact path="/judge/:name">
         <JudgePage
           // clicking on a judge name should bring you to a url with their name in it
@@ -167,6 +174,7 @@ function RenderHomePage(props) {
         >
           {showCaseTable ? 'View Judges' : 'View Cases'}
         </button>
+
         {showCaseTable && (
           <CaseTable
             caseData={caseData}
@@ -174,6 +182,8 @@ function RenderHomePage(props) {
             savedCases={savedCases}
             setSavedCases={setSavedCases}
             authState={authState}
+            setSelectedRows={setSelectedRows}
+            selectedRows={selectedRows}
           />
         )}
         {!showCaseTable && (
