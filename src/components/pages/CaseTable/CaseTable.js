@@ -7,6 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import Tabs from '../Home/Tabs';
+import SortingArrows from './SortingArrows.png';
 // Imports for PDF Modal
 import PDFViewer from '../PDFViewer/PDFViewer';
 import { Button } from 'antd';
@@ -69,6 +70,9 @@ export default function CaseTable(props) {
       field: 'id',
       headerName: 'Case ID',
       width: 200,
+      options: {
+        filter: true,
+      },
       renderCell: params => (
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <span>{params.value}</span>
