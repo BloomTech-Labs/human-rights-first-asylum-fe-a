@@ -188,23 +188,14 @@ export default function SideDrawer(props) {
         </List>
         <Divider />
         <List>
-          <ListItem>
+          <ListItem button>
             <ListItemIcon>
               <BookmarksIcon />
             </ListItemIcon>
-            <ListItemText primary="Saved Cases" />
+            <Link to="/saved-cases">
+              <ListItemText primary="Saved Cases" style={textItemStyles} />
+            </Link>
           </ListItem>
-          {savedCases.map(item => (
-            <ListItem key={item.id} className={classes.favorites}>
-              <ListItemIcon>
-                <NoteIcon />
-              </ListItemIcon>
-              <ListItemText primary={`Case ID: ${item.id}`} />
-              <IconButton onClick={() => deleteBookmark(item.id)}>
-                <DeleteIcon />
-              </IconButton>
-            </ListItem>
-          ))}
         </List>
         <Divider />
         <List>
@@ -237,3 +228,7 @@ export default function SideDrawer(props) {
     </div>
   );
 }
+
+const textItemStyles = {
+  color: 'black',
+};
