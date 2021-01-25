@@ -29,8 +29,8 @@ function SavedCases({ savedCases, deleteBookmark }) {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '100vh',
-    width: '100vw',
+    height: '20vh',
+    width: '100%',
     flexDirection: 'column',
   };
   const h1Styles = {
@@ -97,24 +97,25 @@ function SavedCases({ savedCases, deleteBookmark }) {
   const classes = useStyles();
   return (
     <div className={classes.tbl_container}>
-      {savedCases.length != 0 ? (
+      {savedCases.length === 0 ? (
         <div style={divStyles}>
           <h1 style={h1Styles}>No Saved Cases</h1>
           <br />
           <Link to="/" style={{ color: '#3f51b5' }}>
-            Go Back Home
+            Return back to Home
           </Link>
         </div>
       ) : (
-        <DataGrid
-          rows={savedCases}
-          columns={columns}
-          className={classes.grid}
-          autoHeight={true}
-          loading={savedCases ? false : true}
-          // showCellRightBorder={true}
-        />
+        <></>
       )}
+      <DataGrid
+        rows={savedCases}
+        columns={columns}
+        className={classes.grid}
+        autoHeight={true}
+        loading={savedCases ? false : true}
+        // showCellRightBorder={true}
+      />
     </div>
   );
 }
