@@ -2,7 +2,7 @@ import React, { useState, useEffect, componentDidUpdate } from 'react';
 import CaseTable from '../CaseTable/CaseTable';
 import JudgeTable from '../JudgeTable/JudgeTable';
 import Tabs from './Tabs';
-import { UploadCase } from '../Upload/UploadCase';
+// import { UploadCase } from '../Upload/UploadCase';
 import { useLocation } from 'react-router-dom';
 import SideDrawer from '../SideDrawer/SideDrawer';
 import PDFViewer from '../PDFViewer/PDFViewer';
