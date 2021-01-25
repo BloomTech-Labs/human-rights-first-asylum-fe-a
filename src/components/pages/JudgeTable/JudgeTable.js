@@ -8,10 +8,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import Tooltip from '@material-ui/core/Tooltip';
 import { Link } from 'react-router-dom';
+// Buttons
 import Tabs from '../Home/Tabs';
+import SaveButton from '../CaseTable/SaveButton';
 // Imports for PDF Modal
 import PDFViewer from '../PDFViewer/PDFViewer';
-import { Button } from 'antd';
+import { Button, Empty } from 'antd';
 import pdf from '../PDFViewer/samplePDF.pdf';
 
 const useStyles = makeStyles(theme => ({
@@ -242,14 +244,11 @@ export default function JudgeTable(props) {
         />
         {/* this button is hardcoded, needs to be adjusted in the future*/}
 
-        <button
-          onClick={() => {
-            bookmarkJudges(selectedRows.rowIds);
-            setSelectedRows({});
-          }}
-        >
-          Bookmark Selected Rows
-        </button>
+        <SaveButton
+          selectedRows={selectedRows}
+          bookmarkCases={Empty}
+          text={'Save Judges'}
+        />
       </div>
       <DataGrid
         rows={columnToSearch ? search(judgeData) : judgeData}

@@ -6,7 +6,9 @@ import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
+// Buttons
 import Tabs from '../Home/Tabs';
+import SaveButton from './SaveButton';
 import SortingArrows from './SortingArrows.png';
 // Imports for PDF Modal
 import PDFViewer from '../PDFViewer/PDFViewer';
@@ -225,7 +227,7 @@ export default function CaseTable(props) {
         <Tabs
           setShowCaseTable={setShowCaseTable}
           showCaseTable={showCaseTable}
-        ></Tabs>
+        />
         <div className={classes.colFilter}>
           <InputLabel>Search By Column...</InputLabel>
           <Select value={columnToSearch} onChange={handleChange}>
@@ -248,19 +250,13 @@ export default function CaseTable(props) {
           type="text"
           style={{ width: 950, marginLeft: 20 }}
         />
+        <SaveButton
+          selectedRows={selectedRows}
+          bookmarkCases={bookmarkCases}
+          text={'Save Cases'}
+        />
       </div>
-      <button
-        disabled={
-          Object.keys(selectedRows).length === 0 ||
-          selectedRows.rowIds.length === 0
-            ? true
-            : false
-        }
-        style={saveCaseBtnStyles}
-        onClick={() => bookmarkCases(selectedRows.rowIds)}
-      >
-        Save Cases
-      </button>
+
       <DataGrid
         rows={columnToSearch ? search(caseData) : caseData}
         columns={columns}
@@ -274,11 +270,3 @@ export default function CaseTable(props) {
     </div>
   );
 }
-
-const saveCaseBtnStyles = {
-  position: 'absolute',
-  top: '395px',
-  left: '120px',
-  padding: '5px',
-  zIndex: '1',
-};
