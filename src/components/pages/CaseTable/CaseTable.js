@@ -125,13 +125,12 @@ export default function CaseTable(props) {
       renderCell: params => (
         <div>
           <a
-            style={{ marginLeft: 20, marginRight: 5 }}
             href={`${process.env.REACT_APP_API_URI}/case/${params.value}/download-pdf`}
           >
             PDF
           </a>
           <a
-            style={{ marginLeft: 20, marginRight: 5 }}
+            style={{ marginLeft: 20 }}
             href={`${process.env.REACT_APP_API_URI}/case/${params.value}/download-csv`}
           >
             CSV

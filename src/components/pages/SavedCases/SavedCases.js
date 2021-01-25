@@ -47,9 +47,6 @@ function SavedCases({ savedCases, deleteBookmark }) {
       },
       renderCell: params => (
         <div style={{ display: 'flex', flexDirection: 'row' }}>
-          <IconButton>
-            <DeleteIcon onClick={() => deleteBookmark(params.value)} />
-          </IconButton>
           <span>{params.value}</span>
         </div>
       ),
@@ -79,18 +76,27 @@ function SavedCases({ savedCases, deleteBookmark }) {
       renderCell: params => (
         <div>
           <a
-            style={{ marginLeft: 20, marginRight: 5 }}
             href={`${process.env.REACT_APP_API_URI}/case/${params.value}/download-pdf`}
           >
             PDF
           </a>
           <a
-            style={{ marginLeft: 20, marginRight: 5 }}
+            style={{ marginLeft: 20 }}
             href={`${process.env.REACT_APP_API_URI}/case/${params.value}/download-csv`}
           >
             CSV
           </a>
         </div>
+      ),
+    },
+    {
+      field: 'remove_case',
+      headerName: 'Remove',
+      width: 110,
+      renderCell: params => (
+        <IconButton>
+          <DeleteIcon onClick={() => deleteBookmark(params.value)} />
+        </IconButton>
       ),
     },
   ];
@@ -114,7 +120,7 @@ function SavedCases({ savedCases, deleteBookmark }) {
         className={classes.grid}
         autoHeight={true}
         loading={savedCases ? false : true}
-        // showCellRightBorder={true}
+        showCellRightBorder={true}
       />
     </div>
   );
