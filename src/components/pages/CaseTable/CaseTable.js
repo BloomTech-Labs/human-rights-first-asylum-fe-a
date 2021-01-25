@@ -24,6 +24,7 @@ const useStyles = makeStyles(theme => ({
     margin: 'auto',
     marginTop: 100,
     flexGrow: 1,
+    position: 'relative',
     paddingRight: 30,
   },
   select: {
@@ -55,16 +56,16 @@ export default function CaseTable(props) {
     savedCases,
     setSavedCases,
     authState,
+    setSelectedRows,
+    selectedRows,
     setShowCaseTable,
     showCaseTable,
   } = props;
   const [columnToSearch, setColumnToSearch] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedRows, setSelectedRows] = useState({});
 
   // State for PDF Modal
   const [showPdf, setShowPdf] = useState(false);
-
   const columns = [
     {
       field: 'id',
@@ -137,7 +138,6 @@ export default function CaseTable(props) {
       ),
     },
   ];
-
   const classes = useStyles();
 
   const handleChange = event => {
@@ -156,7 +156,6 @@ export default function CaseTable(props) {
         -1
     );
   };
-
   // the need for idParamName arose from case_id and id being used in different scenarios
   const findRowByID = (rowID, rowData) => {
     for (let i = 0; i < rowData.length; i++) {
@@ -213,6 +212,7 @@ export default function CaseTable(props) {
         }
       }
     }
+    alert('Cases Successfully Saved');
   };
 
   const onCheckboxSelect = selections => {
@@ -248,11 +248,19 @@ export default function CaseTable(props) {
           type="text"
           style={{ width: 950, marginLeft: 20 }}
         />
-
-        <button onClick={() => bookmarkCases(selectedRows.rowIds)}>
-          Bookmark Selected Cases
-        </button>
       </div>
+      <button
+        disabled={
+          Object.keys(selectedRows).length === 0 ||
+          selectedRows.rowIds.length === 0
+            ? true
+            : false
+        }
+        style={saveCaseBtnStyles}
+        onClick={() => bookmarkCases(selectedRows.rowIds)}
+      >
+        Save Cases
+      </button>
       <DataGrid
         rows={columnToSearch ? search(caseData) : caseData}
         columns={columns}
@@ -262,9 +270,15 @@ export default function CaseTable(props) {
         checkboxSelection={true}
         onSelectionChange={onCheckboxSelect}
         showCellRightBorder={true}
-
-        // onRowHover={item => console.log(item.row)}
       />
     </div>
   );
 }
+
+const saveCaseBtnStyles = {
+  position: 'absolute',
+  top: '395px',
+  left: '120px',
+  padding: '5px',
+  zIndex: '1',
+};
