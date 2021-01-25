@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
   colFilter: {
     display: 'flex',
     flexDirection: 'column',
-    width: 200,
+    width: '15%',
   },
   pdfView: {
     width: '100%',
@@ -224,7 +224,7 @@ export default function JudgeTable(props) {
           showCaseTable={showCaseTable}
         ></Tabs>
         <div className={classes.colFilter}>
-          <InputLabel>Search By ...</InputLabel>
+          <InputLabel>Search By...</InputLabel>
           <Select value={columnToSearch} onChange={handleChange}>
             <MenuItem value="name">Name</MenuItem>
             <MenuItem value="judge_county">County</MenuItem>
@@ -237,10 +237,10 @@ export default function JudgeTable(props) {
         </div>
         <TextField
           value={searchQuery}
-          placeholder="Enter Query ..."
+          placeholder="Enter Query..."
           onChange={handleSearchChange}
           type="text"
-          style={{ width: 950, marginLeft: 20 }}
+          style={{ width: '50%', marginLeft: 40 }}
         />
         {/* this button is hardcoded, needs to be adjusted in the future*/}
 

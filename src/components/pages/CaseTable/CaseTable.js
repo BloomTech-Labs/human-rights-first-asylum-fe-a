@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
   colFilter: {
     display: 'flex',
     flexDirection: 'column',
-    width: 200,
+    width: '15%',
   },
   pdfView: {
     width: '100%',
@@ -229,7 +229,7 @@ export default function CaseTable(props) {
           showCaseTable={showCaseTable}
         />
         <div className={classes.colFilter}>
-          <InputLabel>Search By Column...</InputLabel>
+          <InputLabel>Search By...</InputLabel>
           <Select value={columnToSearch} onChange={handleChange}>
             <MenuItem value="id">Case ID</MenuItem>
             <MenuItem value="court_type">Court Type</MenuItem>
@@ -245,10 +245,10 @@ export default function CaseTable(props) {
         </div>
         <TextField
           value={searchQuery}
-          placeholder="Enter Query ..."
+          placeholder="Enter Query..."
           onChange={handleSearchChange}
           type="text"
-          style={{ width: 950, marginLeft: 20 }}
+          style={{ width: '50%', marginLeft: 40 }}
         />
         <SaveButton
           selectedRows={selectedRows}

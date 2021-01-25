@@ -5,9 +5,12 @@ const SaveCasesButton = styled.button`
   padding: 1%;
   background: #bc541e;
   border: 1px solid black;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
   outline: none;
   width: 10%;
   color: white;
+  margin: 0 0 0 5%;
 `;
 
 function SaveCaseBtn({ selectedRows, bookmarkCases, text }) {
