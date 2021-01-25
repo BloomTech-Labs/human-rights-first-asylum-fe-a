@@ -159,9 +159,9 @@ export default function JudgeTable(props) {
   const postJudge = rowToPost => {
     axios
       .post(
-        `http://localhost:8080/profile/${userInfo.sub}/judge/${formatJudgeName(
-          rowToPost.name
-        )}`,
+        `${process.env.REACT_APP_API_URI}/profile/${
+          userInfo.sub
+        }/judge/${formatJudgeName(rowToPost.name)}`,
         rowToPost,
         {
           headers: {

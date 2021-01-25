@@ -123,13 +123,13 @@ export default function CaseTable(props) {
         <div>
           <a
             style={{ marginLeft: 20, marginRight: 5 }}
-            href={`http://localhost:8080/case/${params.value}/download-pdf`}
+            href={`${process.env.REACT_APP_API_URI}/case/${params.value}/download-pdf`}
           >
             PDF
           </a>
           <a
             style={{ marginLeft: 20, marginRight: 5 }}
-            href={`http://localhost:8080/case/${params.value}/download-csv`}
+            href={`${process.env.REACT_APP_API_URI}/case/${params.value}/download-csv`}
           >
             CSV
           </a>
@@ -171,7 +171,7 @@ export default function CaseTable(props) {
   const postBookmark = rowToPost => {
     axios
       .post(
-        `http://localhost:8080/profile/${userInfo.sub}/case/${rowToPost.id}`,
+        `${process.env.REACT_APP_API_URI}/profile/${userInfo.sub}/case/${rowToPost.id}`,
         rowToPost,
         {
           headers: {
