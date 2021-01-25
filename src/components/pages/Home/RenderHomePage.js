@@ -230,9 +230,9 @@ function RenderHomePage(props) {
         </FullscreenOverlay>
       </Route>
 
-      <Route exact path="/uploadcase">
+      {/* <Route exact path="/uploadcase">
         <UploadCase />
-      </Route>
+      </Route> */}
     </div>
   );
 }
