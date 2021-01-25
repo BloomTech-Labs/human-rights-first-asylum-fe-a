@@ -41,7 +41,7 @@ export default function JudgePage(props) {
   useEffect(() => {
     async function fetchJudge() {
       axios
-        .get(`http://localhost:8080/judge/${name}`, {
+        .get(`${process.env.REACT_APP_API_URI}/judge/${name}`, {
           headers: {
             Authorization: 'Bearer ' + authState.idToken,
           },

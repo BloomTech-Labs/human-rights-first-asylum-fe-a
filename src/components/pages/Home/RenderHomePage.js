@@ -2,6 +2,7 @@ import React, { useState, useEffect, componentDidUpdate } from 'react';
 import CaseTable from '../CaseTable/CaseTable';
 import JudgeTable from '../JudgeTable/JudgeTable';
 import Tabs from './Tabs';
+import { UploadCase } from '../Upload/UploadCase';
 import { useLocation } from 'react-router-dom';
 import SideDrawer from '../SideDrawer/SideDrawer';
 import PDFViewer from '../PDFViewer/PDFViewer';
@@ -43,14 +44,15 @@ function RenderHomePage(props) {
   // should move these API calls into a separate index folder at some point
 
   useEffect(() => {
-    trackPromise(
-      // Tracks the axios call and implements spinning loader while executing
-      axios.get('http://localhost:8080/cases/', {
+    // trackPromise(
+    // Tracks the axios call and implements spinning loader while executing
+    axios
+      .get(`${process.env.REACT_APP_API_URI}/cases/`, {
         headers: {
           Authorization: 'Bearer ' + authState.idToken,
         },
       })
-    )
+      // )
       .then(res => {
         setCaseData(res.data);
       })
@@ -62,7 +64,7 @@ function RenderHomePage(props) {
   useEffect(() => {
     trackPromise(
       // Tracks the axios call and implements spinning loader while executing
-      axios.get('http://localhost:8080/judge', {
+      axios.get(`${process.env.REACT_APP_API_URI}/judge`, {
         headers: {
           Authorization: 'Bearer ' + authState.idToken,
         },
@@ -78,7 +80,7 @@ function RenderHomePage(props) {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/profile/${userInfo.sub}`, {
+      .get(`${process.env.REACT_APP_API_URI}/profile/${userInfo.sub}`, {
         headers: {
           Authorization: 'Bearer ' + authState.idToken,
         },
@@ -101,11 +103,14 @@ function RenderHomePage(props) {
   const deleteBookmark = caseID => {
     // only works for cases, judge requires name instead of ID to delete
     axios
-      .delete(`http://localhost:8080/profile/${userInfo.sub}/case/${caseID}`, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken,
-        },
-      })
+      .delete(
+        `${process.env.REACT_APP_API_URI}/profile/${userInfo.sub}/case/${caseID}`,
+        {
+          headers: {
+            Authorization: 'Bearer ' + authState.idToken,
+          },
+        }
+      )
       .then(res => {
         deleteFromStateById(caseID, savedCases, setSavedCases);
       })
@@ -126,9 +131,9 @@ function RenderHomePage(props) {
   const deleteSavedJudge = name => {
     axios
       .delete(
-        `http://localhost:8080/profile/${userInfo.sub}/judge/${formatJudgeName(
-          name
-        )}`,
+        `${process.env.REACT_APP_API_URI}/profile/${
+          userInfo.sub
+        }/judge/${formatJudgeName(name)}`,
         {
           headers: {
             Authorization: 'Bearer ' + authState.idToken,
@@ -223,6 +228,10 @@ function RenderHomePage(props) {
             componentHeight="100%"
           />
         </FullscreenOverlay>
+      </Route>
+
+      <Route exact path="/uploadcase">
+        <UploadCase />
       </Route>
     </div>
   );
