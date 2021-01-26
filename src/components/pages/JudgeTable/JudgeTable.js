@@ -89,6 +89,16 @@ export default function JudgeTable(props) {
     { field: 'appointed_by', headerName: 'Appointed by', width: 160 },
     { field: 'denial_rate', headerName: '% Denial', width: 110 },
     { field: 'approval_rate', headerName: '% Approval', width: 110 },
+    {
+      field: 'positive_keywords, negative_keywords',
+      headerName: 'Keywords',
+      width: 120,
+    },
+    {
+      field: 'social_data, grounds_data',
+      headerName: 'Decision Data',
+      width: 120,
+    },
     // MODAL for PDFs
     {
       field: 'view_pdf',
