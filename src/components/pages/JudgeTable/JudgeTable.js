@@ -83,9 +83,9 @@ export default function JudgeTable(props) {
         </>
       ),
     },
-    { field: 'judge_county', headerName: 'County', width: 110 },
+    { field: 'judge_county', headerName: 'Court Location', width: 160 },
     { field: 'date_appointed', headerName: 'Date Appointed', width: 140 },
-    { field: 'biography', headerName: 'Biography', width: 200 },
+    // { field: 'biography', headerName: 'Biography', width: 200 },
     { field: 'appointed_by', headerName: 'Appointed by', width: 160 },
     { field: 'denial_rate', headerName: '% Denial', width: 110 },
     { field: 'approval_rate', headerName: '% Approval', width: 110 },
