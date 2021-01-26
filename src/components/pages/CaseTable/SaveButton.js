@@ -3,14 +3,16 @@ import styled from 'styled-components';
 
 const SaveCasesButton = styled.button`
   padding: 1%;
-  background: #bc541e;
-  border: 1px solid black;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+  border: none;
+  background: ${props => (props.disabled ? '#7f9bb3' : '#215589')};
+  border-radius: 8px;
   outline: none;
-  width: 10%;
+  width: 15%;
   color: white;
+  font-size: larger;
   margin: 0 0 0 5%;
+  font-weight: bold;
+  cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
 `;
 
 function SaveCaseBtn({ selectedRows, bookmarkCases, text }) {
