@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
-import { Button } from 'antd';
 
 const TabItemLeft = styled.button`
   padding: 0.6em 1em;
