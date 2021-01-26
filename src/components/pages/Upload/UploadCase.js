@@ -4,6 +4,10 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 
+// This form is still missing all functionality
+// Eventually it should upload a PDF and pre-fill the text areas with the relevant case information
+// and the user can then edit as necessary and submit it to the table
+
 const useStyles = makeStyles(theme => ({
   root: {
     '& .MuiTextField-root': {
@@ -23,19 +27,19 @@ export const UploadCase = () => {
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
-    height: '140vh',
+    height: '190vh',
     width: '100%',
   };
 
   const h1Styles = {
     fontSize: '2rem',
     marginBottom: '1.5rem',
+    color: '#215589',
   };
 
   const buttonStyles = {
-    width: '5rem',
-    height: '2rem',
-    color: 'black',
+    color: '#ffffff',
+    backgroundColor: '#BC541E',
   };
 
   const { handleSubmit, errors } = useForm();
@@ -65,6 +69,36 @@ export const UploadCase = () => {
               </Button>
             </label>
           </div>
+          <div className="hearing-date">
+            <label htmlFor="hearing-date">
+              <TextField
+                id="hearing-date"
+                label="Hearing Date"
+                type="date"
+                variant="outlined"
+                defaultValue="2021-01-01"
+                className={classes.textField}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </label>
+          </div>
+          <div className="decision-date">
+            <label htmlFor="decision-date">
+              <TextField
+                id="decision-date"
+                label="Decision Date"
+                type="date"
+                variant="outlined"
+                defaultValue="2021-01-01"
+                className={classes.textField}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </label>
+          </div>
           <div className="court-type">
             <label htmlFor="court-type">
               <TextField
@@ -73,6 +107,17 @@ export const UploadCase = () => {
                 variant="outlined"
                 placeholder="Court Type"
                 name="Court Type"
+              />
+            </label>
+          </div>
+          <div className="hearing-type">
+            <label htmlFor="hearing-type">
+              <TextField
+                multiline={true}
+                type="text"
+                variant="outlined"
+                placeholder="Hearing Type"
+                name="Hearing Type"
               />
             </label>
           </div>
@@ -105,6 +150,28 @@ export const UploadCase = () => {
                 variant="outlined"
                 placeholder="Social Group"
                 name="Social Group"
+              />
+            </label>
+          </div>
+          <div className="location">
+            <label htmlFor="location">
+              <TextField
+                multiline={true}
+                type="text"
+                variant="outlined"
+                placeholder="Location"
+                name="Location"
+              />
+            </label>
+          </div>
+          <div className="refugee-credibility">
+            <label htmlFor="refugee-credibility">
+              <TextField
+                multiline={true}
+                type="text"
+                variant="outlined"
+                placeholder="Refugee Credibility"
+                name="Refugee Credibility"
               />
             </label>
           </div>
@@ -142,7 +209,7 @@ export const UploadCase = () => {
           <div className="submit-button">
             <Button
               className="btn-upload"
-              color="primary"
+              style={buttonStyles}
               variant="contained"
               component="span"
             >
