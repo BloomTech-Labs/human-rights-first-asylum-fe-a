@@ -72,6 +72,7 @@ export default function JudgeTable(props) {
       field: 'name',
       headerName: 'Judge Name',
       width: 170,
+      color: 'navy',
       renderCell: params => (
         <>
           <Link
@@ -261,6 +262,7 @@ export default function JudgeTable(props) {
           Bookmark Selected Rows
         </button>
       </div>
+      <h2>Click on Judge name to view more information</h2>
       <DataGrid
         rows={columnToSearch ? search(judgeData) : judgeData}
         columns={columns}
