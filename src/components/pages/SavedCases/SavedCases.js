@@ -41,13 +41,13 @@ function SavedCases({ savedCases, deleteBookmark }) {
           <span>{params.value}</span>
           <a
             style={{ marginLeft: 20, marginRight: 5 }}
-            href={`http://localhost:8080/case/${params.value}/download-pdf`}
+            href={`${process.env.REACT_APP_API_URI}/case/${params.value}/download-pdf`}
           >
             PDF
           </a>
           <a
             style={{ marginLeft: 20, marginRight: 5 }}
-            href={`http://localhost:8080/case/${params.value}/download-csv`}
+            href={`${process.env.REACT_APP_API_URI}/case/${params.value}/download-csv`}
           >
             CSV
           </a>

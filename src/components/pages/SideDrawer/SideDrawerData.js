@@ -10,11 +10,6 @@ export const SideDrawerData = [
     icon: <AccountIcon />,
   },
   {
-    title: 'Upload Case',
-    path: '/',
-    icon: <PublishIcon />,
-  },
-  {
     title: 'Support',
     path: '/',
     icon: <HelpIcon />,
