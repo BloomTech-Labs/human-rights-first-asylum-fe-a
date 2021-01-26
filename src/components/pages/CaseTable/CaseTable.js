@@ -6,7 +6,9 @@ import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
+// Buttons
 import Tabs from '../Home/Tabs';
+import SaveButton from './SaveButton';
 import SortingArrows from './SortingArrows.png';
 // Imports for PDF Modal
 import PDFViewer from '../PDFViewer/PDFViewer';
@@ -38,7 +40,7 @@ const useStyles = makeStyles(theme => ({
   colFilter: {
     display: 'flex',
     flexDirection: 'column',
-    width: 200,
+    width: '15%',
   },
   pdfView: {
     width: '100%',
@@ -123,13 +125,12 @@ export default function CaseTable(props) {
       renderCell: params => (
         <div>
           <a
-            style={{ marginLeft: 20, marginRight: 5 }}
             href={`${process.env.REACT_APP_API_URI}/case/${params.value}/download-pdf`}
           >
             PDF
           </a>
           <a
-            style={{ marginLeft: 20, marginRight: 5 }}
+            style={{ marginLeft: 20 }}
             href={`${process.env.REACT_APP_API_URI}/case/${params.value}/download-csv`}
           >
             CSV
@@ -225,9 +226,9 @@ export default function CaseTable(props) {
         <Tabs
           setShowCaseTable={setShowCaseTable}
           showCaseTable={showCaseTable}
-        ></Tabs>
+        />
         <div className={classes.colFilter}>
-          <InputLabel>Search By Column...</InputLabel>
+          <InputLabel>Search By...</InputLabel>
           <Select value={columnToSearch} onChange={handleChange}>
             <MenuItem value="id">Case ID</MenuItem>
             <MenuItem value="court_type">Court Type</MenuItem>
@@ -243,24 +244,18 @@ export default function CaseTable(props) {
         </div>
         <TextField
           value={searchQuery}
-          placeholder="Enter Query ..."
+          placeholder="Enter Query..."
           onChange={handleSearchChange}
           type="text"
-          style={{ width: 950, marginLeft: 20 }}
+          style={{ width: '50%', marginLeft: 40 }}
+        />
+        <SaveButton
+          selectedRows={selectedRows}
+          bookmarkCases={bookmarkCases}
+          text={'Save Cases'}
         />
       </div>
-      <button
-        disabled={
-          Object.keys(selectedRows).length === 0 ||
-          selectedRows.rowIds.length === 0
-            ? true
-            : false
-        }
-        style={saveCaseBtnStyles}
-        onClick={() => bookmarkCases(selectedRows.rowIds)}
-      >
-        Save Cases
-      </button>
+
       <DataGrid
         rows={columnToSearch ? search(caseData) : caseData}
         columns={columns}
@@ -274,11 +269,3 @@ export default function CaseTable(props) {
     </div>
   );
 }
-
-const saveCaseBtnStyles = {
-  position: 'absolute',
-  top: '395px',
-  left: '120px',
-  padding: '5px',
-  zIndex: '1',
-};
