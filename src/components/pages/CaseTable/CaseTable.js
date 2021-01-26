@@ -42,6 +42,7 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     width: '15%',
   },
+
   pdfView: {
     width: '100%',
     height: '500px',
@@ -73,37 +74,95 @@ export default function CaseTable(props) {
       field: 'id',
       headerName: 'Case ID',
       width: 200,
+      backgroundColor: '#BC541E',
       options: {
         filter: true,
       },
+
       renderCell: params => (
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <span>{params.value}</span>
         </div>
       ),
     },
-    // {field: 'download', headerName: 'Download', width: 100},
-    { field: 'court_type', headerName: 'Court Type', width: 105 },
-    // { field: 'hearing_type', headerName: 'Hearing Type', width: 120 },
-    { field: 'refugee_origin', headerName: 'Refugee Origin', width: 130 },
-    { field: 'protected_ground', headerName: 'Protected Ground', width: 150 },
-    // { field: 'hearing_location', headerName: 'Location', width: 120 },
-    // { field: 'hearing_date', headerName: 'Hearing Date', width: 120 },
-    // { field: 'decision_date', headerName: 'Decision Date', width: 150 },
-    // {
-    //   field: 'credibility_of_refugee',
-    //   headerName: 'Refugee Credibility',
-    //   width: 160,
-    // },
-    { field: 'social_group_type', headerName: 'Social Group', width: 130 },
-    { field: 'judge_name', headerName: 'Judge Name', width: 120 },
-    { field: 'judge_decision', headerName: 'Decision', width: 90 },
-    { field: 'case_status', headerName: 'Case Status', width: 110 },
+    {
+      field: 'court_type',
+      headerName: 'Court Type',
+      width: 105,
+      className: 'tableHeader',
+    },
+    {
+      field: 'hearing_type',
+      headerName: 'Hearing Type',
+      width: 120,
+      className: 'tableHeader',
+    },
+    {
+      field: 'refugee_origin',
+      headerName: 'Refugee Origin',
+      width: 130,
+      className: 'tableHeader',
+    },
+    {
+      field: 'protected_ground',
+      headerName: 'Protected Ground',
+      width: 150,
+      className: 'tableHeader',
+    },
+    {
+      field: 'social_group_type',
+      headerName: 'Social Group',
+      width: 130,
+      className: 'tableHeader',
+    },
+    {
+      field: 'hearing_location',
+      headerName: 'Location',
+      width: 120,
+      className: 'tableHeader',
+    },
+    {
+      field: 'hearing_date',
+      headerName: 'Hearing Date',
+      width: 120,
+      className: 'tableHeader',
+    },
+    {
+      field: 'decision_date',
+      headerName: 'Decision Date',
+      width: 150,
+      className: 'tableHeader',
+    },
+    {
+      field: 'credibility_of_refugee',
+      headerName: 'Refugee Credibility',
+      width: 160,
+      className: 'tableHeader',
+    },
+    {
+      field: 'judge_name',
+      headerName: 'Judge Name',
+      width: 120,
+      className: 'tableHeader',
+    },
+    {
+      field: 'judge_decision',
+      headerName: 'Decision',
+      width: 90,
+      className: 'tableHeader',
+    },
+    {
+      field: 'case_status',
+      headerName: 'Case Status',
+      width: 110,
+      className: 'tableHeader',
+    },
     // MODAL for PDFs
     {
       field: 'view_pdf',
       headerName: 'View PDF',
       width: 110,
+      className: 'tableHeader',
       renderCell: params => (
         // Hook to control whether or not to show the PDF Modal
         <>
@@ -122,6 +181,7 @@ export default function CaseTable(props) {
       field: 'download',
       headerName: 'Download',
       width: 120,
+      className: 'tableHeader',
       renderCell: params => (
         <div>
           <a
@@ -234,12 +294,13 @@ export default function CaseTable(props) {
             <MenuItem value="court_type">Court Type</MenuItem>
             <MenuItem value="refugee_origin">Refugee Origin</MenuItem>
             <MenuItem value="protected_ground">Protected Ground</MenuItem>
+            <MenuItem value="social_group_type">Social Group</MenuItem>
             <MenuItem value="credibility_of_refugee">
               Refugee Credibility
             </MenuItem>
             <MenuItem value="case_status">Case Status</MenuItem>
-            <MenuItem value="social_group_type">Social Group</MenuItem>
             <MenuItem value="judge_name">Judge Name</MenuItem>
+            <MenuItem value="judge_decision">Decision</MenuItem>
           </Select>
         </div>
         <TextField

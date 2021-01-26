@@ -95,7 +95,7 @@ const useStyles = makeStyles(theme => ({
 export default function SideDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   const itemList = SideDrawerData;
   const {
     logout,
