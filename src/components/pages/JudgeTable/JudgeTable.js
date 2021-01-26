@@ -8,10 +8,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import Tooltip from '@material-ui/core/Tooltip';
 import { Link } from 'react-router-dom';
+// Buttons
 import Tabs from '../Home/Tabs';
+import SaveButton from '../CaseTable/SaveButton';
 // Imports for PDF Modal
 import PDFViewer from '../PDFViewer/PDFViewer';
-import { Button } from 'antd';
+import { Button, Empty } from 'antd';
 import pdf from '../PDFViewer/samplePDF.pdf';
 
 const useStyles = makeStyles(theme => ({
@@ -38,7 +40,7 @@ const useStyles = makeStyles(theme => ({
   colFilter: {
     display: 'flex',
     flexDirection: 'column',
-    width: 200,
+    width: '15%',
   },
   pdfView: {
     width: '100%',
@@ -233,7 +235,7 @@ export default function JudgeTable(props) {
           showCaseTable={showCaseTable}
         ></Tabs>
         <div className={classes.colFilter}>
-          <InputLabel>Search By ...</InputLabel>
+          <InputLabel>Search By...</InputLabel>
           <Select value={columnToSearch} onChange={handleChange}>
             <MenuItem value="name">Name</MenuItem>
             <MenuItem value="judge_county">County</MenuItem>
@@ -246,21 +248,18 @@ export default function JudgeTable(props) {
         </div>
         <TextField
           value={searchQuery}
-          placeholder="Enter Query ..."
+          placeholder="Enter Query..."
           onChange={handleSearchChange}
           type="text"
-          style={{ width: 950, marginLeft: 20 }}
+          style={{ width: '50%', marginLeft: 40 }}
         />
         {/* this button is hardcoded, needs to be adjusted in the future*/}
 
-        <button
-          onClick={() => {
-            bookmarkJudges(selectedRows.rowIds);
-            setSelectedRows({});
-          }}
-        >
-          Bookmark Selected Rows
-        </button>
+        <SaveButton
+          selectedRows={selectedRows}
+          bookmarkCases={Empty}
+          text={'Save Judges'}
+        />
       </div>
       <h2>Click on Judge name to view more information</h2>
       <DataGrid
