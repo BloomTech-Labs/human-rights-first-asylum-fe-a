@@ -88,23 +88,36 @@ export default function CaseTable(props) {
       ),
     },
     {
-      field: 'court_type',
-      headerName: 'Court Type',
-      width: 105,
-      className: 'tableHeader',
-    },
-    {
-      field: 'hearing_type',
-      headerName: 'Hearing Type',
+      field: 'judge_name',
+      headerName: 'Judge Name',
       width: 120,
       className: 'tableHeader',
     },
+    {
+      field: 'hearing_location',
+      headerName: 'Venue',
+      width: 120,
+      className: 'tableHeader',
+    },
+    // {
+    //   field: 'court_type',
+    //   headerName: 'Court Type',
+    //   width: 105,
+    //   className: 'tableHeader',
+    // },
     {
       field: 'refugee_origin',
       headerName: 'Refugee Origin',
       width: 130,
       className: 'tableHeader',
     },
+    // {
+    //   field: 'hearing_type',
+    //   headerName: 'Hearing Type',
+    //   width: 120,
+    //   className: 'tableHeader',
+    // },
+
     {
       field: 'protected_ground',
       headerName: 'Protected Ground',
@@ -113,52 +126,42 @@ export default function CaseTable(props) {
     },
     {
       field: 'social_group_type',
-      headerName: 'Social Group',
+      headerName: 'PSG',
       width: 130,
       className: 'tableHeader',
     },
-    {
-      field: 'hearing_location',
-      headerName: 'Location',
-      width: 120,
-      className: 'tableHeader',
-    },
-    {
-      field: 'hearing_date',
-      headerName: 'Hearing Date',
-      width: 120,
-      className: 'tableHeader',
-    },
-    {
-      field: 'decision_date',
-      headerName: 'Decision Date',
-      width: 150,
-      className: 'tableHeader',
-    },
-    {
-      field: 'credibility_of_refugee',
-      headerName: 'Refugee Credibility',
-      width: 160,
-      className: 'tableHeader',
-    },
-    {
-      field: 'judge_name',
-      headerName: 'Judge Name',
-      width: 120,
-      className: 'tableHeader',
-    },
+
+    // {
+    //   field: 'hearing_date',
+    //   headerName: 'Hearing Date',
+    //   width: 120,
+    //   className: 'tableHeader',
+    // },
+    // {
+    //   field: 'decision_date',
+    //   headerName: 'Decision Date',
+    //   width: 150,
+    //   className: 'tableHeader',
+    // },
+    // {
+    //   field: 'credibility_of_refugee',
+    //   headerName: 'Refugee Credibility',
+    //   width: 160,
+    //   className: 'tableHeader',
+    // },
+
     {
       field: 'judge_decision',
-      headerName: 'Decision',
-      width: 90,
+      headerName: 'Case Outcome',
+      width: 140,
       className: 'tableHeader',
     },
-    {
-      field: 'case_status',
-      headerName: 'Case Status',
-      width: 110,
-      className: 'tableHeader',
-    },
+    // {
+    //   field: 'case_status',
+    //   headerName: 'Case Status',
+    //   width: 110,
+    //   className: 'tableHeader',
+    // },
     // MODAL for PDFs
     {
       field: 'view_pdf',
