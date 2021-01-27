@@ -1,12 +1,13 @@
 import React, { useState, useEffect, componentDidUpdate } from 'react';
 import CaseTable from '../CaseTable/CaseTable';
 import JudgeTable from '../JudgeTable/JudgeTable';
-// import { UploadCase } from '../Upload/UploadCase';
+import { UploadCase } from '../Upload/UploadCase';
 import { useLocation } from 'react-router-dom';
 import SideDrawer from '../SideDrawer/SideDrawer';
 import PDFViewer from '../PDFViewer/PDFViewer';
 // * Remove This
 import JudgePage from '../JudgePage/JudgePage';
+import CaseOverview from '../CaseOverview/CaseOverview';
 import { Route, Switch, useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { useOktaAuth } from '@okta/okta-react';
@@ -33,10 +34,11 @@ const useStyles = makeStyles({
 });
 
 function RenderHomePage(props) {
-  const { userInfo, authService, authState } = props;
+  const { userInfo, authService, authState, uploadCase } = props;
   const [caseData, setCaseData] = useState([]);
   const [judgeData, setJudgeData] = useState([]);
   const [savedCases, setSavedCases] = useState([]);
+  // const [uploadCase, setUploadCase] = useState('');
   const [showCaseTable, setShowCaseTable] = useState(true);
   const [savedJudges, setSavedJudges] = useState([]);
   const [centerPDF, setCenterPDF] = useState(false);
@@ -80,12 +82,13 @@ function RenderHomePage(props) {
   }, []);
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/profile/${userInfo.sub}`, {
+    trackPromise(
+      axios.get(`${process.env.REACT_APP_API_URI}/profile/${userInfo.sub}`, {
         headers: {
           Authorization: 'Bearer ' + authState.idToken,
         },
       })
+    )
       .then(res => {
         setSavedCases(res.data.case_bookmarks);
         setSavedJudges(res.data.judge_bookmarks);
@@ -162,11 +165,16 @@ function RenderHomePage(props) {
       <SideDrawer
         logout={logout}
         userInfo={userInfo}
+        uploadCase={uploadCase}
         savedCases={savedCases}
         savedJudges={savedJudges}
         deleteBookmark={deleteBookmark}
         deleteSavedJudge={deleteSavedJudge}
       />
+
+      <Route exact path="/upload-case">
+        <UploadCase uploadCase={uploadCase} />
+      </Route>
       <Route exact path="/saved-cases">
         <SavedCases savedCases={savedCases} deleteBookmark={deleteBookmark} />
       </Route>
@@ -176,6 +184,9 @@ function RenderHomePage(props) {
           // get request to get details of that judge
           authState={authState}
         />
+      </Route>
+      <Route exact path="/case/:id" authState={authState}>
+        <CaseOverview />
       </Route>
 
       <Route exact path="/">
@@ -234,10 +245,6 @@ function RenderHomePage(props) {
           />
         </FullscreenOverlay>
       </Route>
-
-      {/* <Route exact path="/uploadcase">
-        <UploadCase />
-      </Route> */}
     </div>
   );
 }
