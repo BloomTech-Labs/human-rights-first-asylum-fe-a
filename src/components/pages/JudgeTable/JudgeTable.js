@@ -248,7 +248,7 @@ export default function JudgeTable(props) {
 
         <SaveButton
           selectedRows={selectedRows}
-          bookmarkCases={Empty}
+          bookmarkCases={bookmarkJudges}
           text={'Save Judges'}
         />
       </div>
