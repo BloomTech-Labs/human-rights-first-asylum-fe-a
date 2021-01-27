@@ -36,7 +36,7 @@ function Tabs({ setShowCaseTable, showCaseTable }) {
 
 export default Tabs;
 
-// Old Tabs replaced by ANT.DISIGN
+// Old Tabs replaced by: ant.design
 
 // const TabItemLeft = styled.button`
 //   padding: 0.6em 1em;
