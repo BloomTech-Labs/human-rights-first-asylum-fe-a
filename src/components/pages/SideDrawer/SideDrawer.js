@@ -211,11 +211,13 @@ export default function SideDrawer(props) {
         </List>
         <Divider />
         <List>
-          <ListItem>
+          <ListItem button>
             <ListItemIcon>
               <GavelIcon />
             </ListItemIcon>
-            <ListItemText primary="Saved Judges" />
+            <Link to="/saved-judges">
+              <ListItemText primary="Saved Judges" style={textItemStyles} />
+            </Link>
           </ListItem>
           {savedJudges.map((judge, idx) => (
             <ListItem key={idx}>
