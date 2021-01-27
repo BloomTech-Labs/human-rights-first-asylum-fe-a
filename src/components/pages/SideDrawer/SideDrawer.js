@@ -200,25 +200,27 @@ export default function SideDrawer(props) {
         </List>
         <Divider />
         <List>
-          <ListItem button>
-            <ListItemIcon>
-              <BookmarksIcon />
-            </ListItemIcon>
-            <Link to="/saved-cases">
+          <Link to="/saved-cases">
+            <ListItem button>
+              <ListItemIcon>
+                <BookmarksIcon />
+              </ListItemIcon>
+
               <ListItemText primary="Saved Cases" style={textItemStyles} />
-            </Link>
-          </ListItem>
+            </ListItem>
+          </Link>
         </List>
         <Divider />
         <List>
-          <ListItem button>
-            <ListItemIcon>
-              <GavelIcon />
-            </ListItemIcon>
-            <Link to="/saved-judges">
+          <Link to="/saved-judges">
+            <ListItem button>
+              <ListItemIcon>
+                <GavelIcon />
+              </ListItemIcon>
+
               <ListItemText primary="Saved Judges" style={textItemStyles} />
-            </Link>
-          </ListItem>
+            </ListItem>
+          </Link>
           {savedJudges.map((judge, idx) => (
             <ListItem key={idx}>
               <ListItemIcon>
