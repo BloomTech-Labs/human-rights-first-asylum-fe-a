@@ -8,9 +8,11 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1vw 1vh;
   background-color: #e8eae6;
   margin-top: 20%;
+  font-weight: bold;
+  padding-top: 5%;
+  font-size: 1rem;
 `;
 
 // CASE/JUDGE CONTAINER
@@ -20,9 +22,9 @@ export const CaseSpecs = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10%;
+  padding: 20%;
   background-color: #e8eae6;
-  font-weight: bold;
+  width: 500px;
 `;
 
 // CLIENT CONTAINER
@@ -32,7 +34,7 @@ export const ClientSpecs = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1vw 1vh;
+  padding: 20%;
   background-color: #e8eae6;
 `;
 
@@ -43,7 +45,7 @@ export const Results = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1vw 1vh;
+  padding: 20%;
   background-color: #e8eae6;
 `;
 
@@ -51,4 +53,6 @@ export const KeyParagraph = styled.p`
   font-weight: normal;
 `;
 
-export const ValueParagraph = styled.p``;
+export const ValueParagraph = styled.p`
+  font-weight: normal;
+`;
