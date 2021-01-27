@@ -90,7 +90,7 @@ export default function CaseTable(props) {
     {
       field: 'judge_name',
       headerName: 'Judge Name',
-      width: 120,
+      width: 160,
       className: 'tableHeader',
     },
     {
