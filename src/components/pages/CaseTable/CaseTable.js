@@ -6,6 +6,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 // Buttons
 import Tabs from '../Home/Tabs';
 import SaveButton from './SaveButton';
@@ -74,70 +75,17 @@ export default function CaseTable(props) {
       field: 'id',
       headerName: 'Case ID',
       width: 200,
-      backgroundColor: '#BC541E',
       options: {
         filter: true,
       },
-
+      //link to individual case page
       renderCell: params => (
-        <div style={{ display: 'flex', flexDirection: 'row' }}>
-          <span>{params.value}</span>
-        </div>
+        <>
+          <Link to={`/case/${params.value}`} style={{ color: 'black' }}>
+            <span>{params.value}</span>
+          </Link>
+        </>
       ),
-    },
-    {
-      field: 'court_type',
-      headerName: 'Court Type',
-      width: 105,
-      className: 'tableHeader',
-    },
-    {
-      field: 'hearing_type',
-      headerName: 'Hearing Type',
-      width: 120,
-      className: 'tableHeader',
-    },
-    {
-      field: 'refugee_origin',
-      headerName: 'Refugee Origin',
-      width: 130,
-      className: 'tableHeader',
-    },
-    {
-      field: 'protected_ground',
-      headerName: 'Protected Ground',
-      width: 150,
-      className: 'tableHeader',
-    },
-    {
-      field: 'social_group_type',
-      headerName: 'Social Group',
-      width: 130,
-      className: 'tableHeader',
-    },
-    {
-      field: 'hearing_location',
-      headerName: 'Location',
-      width: 120,
-      className: 'tableHeader',
-    },
-    {
-      field: 'hearing_date',
-      headerName: 'Hearing Date',
-      width: 120,
-      className: 'tableHeader',
-    },
-    {
-      field: 'decision_date',
-      headerName: 'Decision Date',
-      width: 150,
-      className: 'tableHeader',
-    },
-    {
-      field: 'credibility_of_refugee',
-      headerName: 'Refugee Credibility',
-      width: 160,
-      className: 'tableHeader',
     },
     {
       field: 'judge_name',
@@ -146,17 +94,74 @@ export default function CaseTable(props) {
       className: 'tableHeader',
     },
     {
-      field: 'judge_decision',
-      headerName: 'Decision',
-      width: 90,
+      field: 'hearing_location',
+      headerName: 'Venue',
+      width: 120,
+      className: 'tableHeader',
+    },
+    // {
+    //   field: 'court_type',
+    //   headerName: 'Court Type',
+    //   width: 105,
+    //   className: 'tableHeader',
+    // },
+    {
+      field: 'refugee_origin',
+      headerName: 'Refugee Origin',
+      width: 130,
+      className: 'tableHeader',
+    },
+    // {
+    //   field: 'hearing_type',
+    //   headerName: 'Hearing Type',
+    //   width: 120,
+    //   className: 'tableHeader',
+    // },
+
+    {
+      field: 'protected_ground',
+      headerName: 'Protected Ground',
+      width: 150,
       className: 'tableHeader',
     },
     {
-      field: 'case_status',
-      headerName: 'Case Status',
-      width: 110,
+      field: 'social_group_type',
+      headerName: 'PSG',
+      width: 130,
       className: 'tableHeader',
     },
+
+    // {
+    //   field: 'hearing_date',
+    //   headerName: 'Hearing Date',
+    //   width: 120,
+    //   className: 'tableHeader',
+    // },
+    // {
+    //   field: 'decision_date',
+    //   headerName: 'Decision Date',
+    //   width: 150,
+    //   className: 'tableHeader',
+    // },
+    // {
+    //   field: 'credibility_of_refugee',
+    //   headerName: 'Refugee Credibility',
+    //   width: 160,
+    //   className: 'tableHeader',
+    // },
+
+    {
+      field: 'judge_decision',
+      headerName: 'Case Outcome',
+      width: 140,
+      className: 'tableHeader',
+    },
+    // {
+    //   field: 'case_status',
+    //   headerName: 'Case Status',
+    //   width: 110,
+    //   className: 'tableHeader',
+    // },
     // MODAL for PDFs
     {
       field: 'view_pdf',

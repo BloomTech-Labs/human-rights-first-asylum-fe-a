@@ -8,6 +8,7 @@ import SideDrawer from '../SideDrawer/SideDrawer';
 import PDFViewer from '../PDFViewer/PDFViewer';
 // * Remove This
 import JudgePage from '../JudgePage/JudgePage';
+import CaseOverview from '../CaseOverview/CaseOverview';
 import { Route, Switch, useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { useOktaAuth } from '@okta/okta-react';
@@ -184,6 +185,9 @@ function RenderHomePage(props) {
           // get request to get details of that judge
           authState={authState}
         />
+      </Route>
+      <Route exact path="/case/:id" authState={authState}>
+        <CaseOverview />
       </Route>
 
       <Route exact path="/">
