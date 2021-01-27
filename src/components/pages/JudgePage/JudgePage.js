@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import Plot from 'react-plotly.js';
 import { FullPage, FlexDiv, Profile } from './JudgePageStyled';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import { DataGrid } from '@material-ui/data-grid';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -13,7 +14,18 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 100 },
+  {
+    field: 'id',
+    headerName: 'ID',
+    width: 100,
+    renderCell: params => (
+      <>
+        <Link to={`/case/${params.value}`} style={{ color: 'black' }}>
+          <span>{params.value}</span>
+        </Link>
+      </>
+    ),
+  },
   { field: 'court_type', headerName: 'Court Type', width: 105 },
   // { field: 'hearing_type', headerName: 'Hearing Type', width: 120 },
   { field: 'refugee_origin', headerName: 'Refugee Origin', width: 130 },
