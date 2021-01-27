@@ -19,6 +19,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import HRFlogo from './HRFlogo.png';
 /* import BookmarkPanel from '../Bookmarks/BookmarksQuickview'; */
 import BookmarksIcon from '@material-ui/icons/Bookmarks';
+import PublishIcon from '@material-ui/icons/Publish';
 import NoteIcon from '@material-ui/icons/Receipt';
 import GavelIcon from '@material-ui/icons/Gavel';
 import DeleteIcon from '@material-ui/icons/DeleteForever';
@@ -100,6 +101,7 @@ export default function SideDrawer(props) {
   const {
     logout,
     userInfo,
+    updateCases,
     savedCases,
     savedJudges,
     deleteBookmark,
@@ -141,7 +143,9 @@ export default function SideDrawer(props) {
             <MenuIcon />
           </IconButton>
           <Typography>
-            <img src={HRFlogo} alt=" HRF logo" />
+            <a href="/">
+              <img src={HRFlogo} alt=" HRF logo" />
+            </a>
           </Typography>
         </Toolbar>
       </AppBar>
@@ -179,6 +183,14 @@ export default function SideDrawer(props) {
               <ListItemText primary={item.title} />
             </ListItem>
           ))}
+          <ListItem button>
+            <ListItemIcon>
+              <PublishIcon />
+            </ListItemIcon>
+            <Link style={{ color: 'black' }} to="/upload-case">
+              <ListItemText primary="Upload Case" />
+            </Link>
+          </ListItem>
           <ListItem button onClick={logout()}>
             <ListItemIcon>
               <CloseIcon />
