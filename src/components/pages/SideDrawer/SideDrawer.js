@@ -169,30 +169,30 @@ export default function SideDrawer(props) {
         </div>
         <Divider />
         <List>
-          <ListItem button>
-            <ListItemIcon>
-              <HomeIcon />
-            </ListItemIcon>
-            <Link style={{ color: 'black' }} to="/">
-              <ListItemText primary="Home" />
-            </Link>
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <PublishIcon />
-            </ListItemIcon>
-            <Link style={{ color: 'black' }} to="/upload-case">
-              <ListItemText primary="Upload Case" />
-            </Link>
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <BookmarksIcon />
-            </ListItemIcon>
-            <Link to="/saved-cases">
+          <Link to="/">
+            <ListItem button>
+              <ListItemIcon>
+                <HomeIcon />
+              </ListItemIcon>
+              <ListItemText primary="Home" style={textItemStyles} />
+            </ListItem>
+          </Link>
+          <Link to="/upload-case">
+            <ListItem button>
+              <ListItemIcon>
+                <PublishIcon />
+              </ListItemIcon>
+              <ListItemText primary="Upload Case" style={textItemStyles} />
+            </ListItem>
+          </Link>
+          <Link to="/saved-cases">
+            <ListItem button>
+              <ListItemIcon>
+                <BookmarksIcon />
+              </ListItemIcon>
               <ListItemText primary="Saved Cases" style={textItemStyles} />
-            </Link>
-          </ListItem>
+            </ListItem>
+          </Link>
           <ListItem>
             <ListItemIcon>
               <GavelIcon />

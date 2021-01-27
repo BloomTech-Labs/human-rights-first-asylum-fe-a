@@ -6,10 +6,17 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { DataGrid } from '@material-ui/data-grid';
 import { makeStyles } from '@material-ui/core/styles';
+import './JudgePage.css';
 
 const useStyles = makeStyles(theme => ({
   tbl_container: {
-    marginBottom: 200,
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+    margin: 'auto',
+    flexGrow: 1,
+    position: 'relative',
+    paddingRight: 30,
   },
 }));
 
@@ -73,15 +80,13 @@ export default function JudgePage(props) {
     <FullPage>
       {judge && (
         <div>
-          <FlexDiv>
-            <div>
+          <FlexDiv className="header">
+            <div className="imgBox">
+              {/* Judge Picture */}
               <img src="http://via.placeholder.com/300x400" />
-              {
-                // * This will hold the judge profile text
-              }
+              <p>{judge.name} </p>
             </div>
             <Profile>
-              <p>Name: {judge.name} </p>
               <p>Birthdate: {judge.birth_date}</p>
               <p>Appointed: {judge.date_appointed}</p>
               <p>Appointed By: {judge.appointed_by}</p>

@@ -15,6 +15,7 @@ import SortingArrows from './SortingArrows.png';
 import PDFViewer from '../PDFViewer/PDFViewer';
 import { Button } from 'antd';
 import pdf from '../PDFViewer/samplePDF.pdf';
+import './CaseTable.css';
 
 const useStyles = makeStyles(theme => ({
   grid: {

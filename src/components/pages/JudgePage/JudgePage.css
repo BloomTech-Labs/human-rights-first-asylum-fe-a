@@ -1,0 +1,17 @@
+.imgBox {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  width: 15%;
+}
+.imgBox p {
+  margin: 10% 0 0 0;
+  font-size: larger;
+  font-weight: bolder;
+}
+.imgBox img {
+  width: 100%;
+}
+.header p {
+  margin: 10% 0;
+}
