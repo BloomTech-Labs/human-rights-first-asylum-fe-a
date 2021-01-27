@@ -6,6 +6,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 // Buttons
 import Tabs from '../Home/Tabs';
 import SaveButton from './SaveButton';
@@ -74,15 +75,16 @@ export default function CaseTable(props) {
       field: 'id',
       headerName: 'Case ID',
       width: 200,
-      backgroundColor: '#BC541E',
       options: {
         filter: true,
       },
-
+      //link to individual case page
       renderCell: params => (
-        <div style={{ display: 'flex', flexDirection: 'row' }}>
-          <span>{params.value}</span>
-        </div>
+        <>
+          <Link to={`/case/${params.value}`} style={{ color: 'black' }}>
+            <span>{params.value}</span>
+          </Link>
+        </>
       ),
     },
     {

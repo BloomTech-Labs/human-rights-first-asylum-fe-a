@@ -75,6 +75,7 @@ export default function JudgeTable(props) {
       headerName: 'Judge Name',
       width: 170,
       color: 'navy',
+      //Link to individual judge page
       renderCell: params => (
         <>
           <Link
