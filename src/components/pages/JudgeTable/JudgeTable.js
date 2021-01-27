@@ -75,6 +75,7 @@ export default function JudgeTable(props) {
       headerName: 'Judge Name',
       width: 170,
       color: 'navy',
+      //Link to individual judge page
       renderCell: params => (
         <>
           <Link
@@ -88,20 +89,10 @@ export default function JudgeTable(props) {
     },
     { field: 'judge_county', headerName: 'Court Location', width: 160 },
     { field: 'date_appointed', headerName: 'Date Appointed', width: 140 },
-    // { field: 'biography', headerName: 'Biography', width: 200 },
     { field: 'appointed_by', headerName: 'Appointed by', width: 160 },
-    { field: 'denial_rate', headerName: '% Denial', width: 110 },
-    { field: 'approval_rate', headerName: '% Approval', width: 110 },
-    {
-      field: 'positive_keywords, negative_keywords',
-      headerName: 'Keywords',
-      width: 120,
-    },
-    {
-      field: 'social_data, grounds_data',
-      headerName: 'Decision Data',
-      width: 120,
-    },
+    // { field: 'denial_rate', headerName: '% Denial', width: 110 },
+    // { field: 'approval_rate', headerName: '% Approval', width: 110 },
+
     // MODAL for PDFs
     {
       field: 'view_pdf',
