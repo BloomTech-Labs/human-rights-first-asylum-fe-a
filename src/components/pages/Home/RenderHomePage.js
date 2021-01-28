@@ -5,7 +5,6 @@ import Tabs from './Tabs';
 import { UploadCase } from '../Upload/UploadCase';
 import { useLocation } from 'react-router-dom';
 import SideDrawer from '../SideDrawer/SideDrawer';
-import PDFViewer from '../PDFViewer/PDFViewer';
 // * Remove This
 import JudgePage from '../JudgePage/JudgePage';
 import CaseOverview from '../CaseOverview/CaseOverview';
@@ -17,7 +16,6 @@ import IconButton from '@material-ui/core/IconButton';
 
 import axios from 'axios';
 import { hidden } from 'kleur';
-import { FullscreenOverlay } from '../PDFViewer/PDFViewerStyled';
 import useWindowDimensions from '../../../utils/useWindowDimensions';
 import SavedCases from '../SavedCases/SavedCases';
 
@@ -39,10 +37,8 @@ function RenderHomePage(props) {
   const [caseData, setCaseData] = useState([]);
   const [judgeData, setJudgeData] = useState([]);
   const [savedCases, setSavedCases] = useState([]);
-  // const [uploadCase, setUploadCase] = useState('');
   const [showCaseTable, setShowCaseTable] = useState(true);
   const [savedJudges, setSavedJudges] = useState([]);
-  const [centerPDF, setCenterPDF] = useState(false);
   const [selectedRows, setSelectedRows] = useState({});
 
   // should move these API calls into a separate index folder at some point
@@ -221,30 +217,6 @@ function RenderHomePage(props) {
             <Loader promiseTracker={usePromiseTracker} />
           </>
         )}
-
-        {smallPDF && (
-          <PDFViewer
-            setSmallPDF={setSmallPDF}
-            notFullScreen={true}
-            location={location}
-            file={file}
-            pageWidth="700"
-            componentWidth="750px !important"
-          />
-        )}
-      </Route>
-
-      <Route exact path="/pdfviewer/:id">
-        {/* FIXED DIV, 100VH 100VW, OVERLAY BACKGROUND, Z-INDEX 998, PDF VIEWER Z-INDEX 999 */}
-        <FullscreenOverlay>
-          <PDFViewer
-            location={location}
-            file={file}
-            pageHeight={height <= 1023 ? height : '1023'}
-            componentWidth="60%"
-            componentHeight="100%"
-          />
-        </FullscreenOverlay>
       </Route>
     </div>
   );
