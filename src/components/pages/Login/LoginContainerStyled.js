@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import statueOfLiberty from './statueOfLiberty.jpeg';
+import statueOfLiberty from './statueOfLiberty.jpg';
 
 export const StyledLogin = styled.div`
   display: flex;
