@@ -47,7 +47,7 @@ function RenderHomePage(props) {
     // trackPromise(
     // Tracks the axios call and implements spinning loader while executing
     axios
-      .get(`${process.env.REACT_APP_API_URI}/cases/`, {
+      .get(`${process.env.REACT_APP_API_URI}/cases`, {
         headers: {
           Authorization: 'Bearer ' + authState.idToken,
         },

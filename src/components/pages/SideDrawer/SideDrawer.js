@@ -145,7 +145,7 @@ export default function SideDrawer(props) {
           </IconButton>
           <Typography>
             <a href="/">
-              <img src={HRFlogo} alt=" HRF logo" />
+              <img src={HRFlogo} alt=" HRF logo" className="hrflogo" />
             </a>
           </Typography>
         </Toolbar>
