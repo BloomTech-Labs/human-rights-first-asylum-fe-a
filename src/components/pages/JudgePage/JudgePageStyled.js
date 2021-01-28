@@ -3,17 +3,20 @@ import styled from 'styled-components';
 export const FullPage = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
 `;
 
 export const FlexDiv = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: left;
   padding: 2rem;
+  margin: 5% 0 0 0;
 `;
 
 export const Profile = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: top;
+  margin: 0 0 0 3%;
 `;
