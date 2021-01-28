@@ -8,7 +8,7 @@ import PDFViewer from '../PDFViewer/PDFViewer';
 import { Button } from 'antd';
 import pdf from '../PDFViewer/samplePDF.pdf';
 
-function SavedCases({ savedJudges, deleteSavedJudge }) {
+function SavedJudges({ savedJudges, deleteSavedJudge }) {
   const [showPdf, setShowPdf] = useState(false);
   const useStyles = makeStyles(theme => ({
     grid: {
@@ -127,4 +127,4 @@ function SavedCases({ savedJudges, deleteSavedJudge }) {
   );
 }
 
-export default SavedCases;
+export default SavedJudges;
