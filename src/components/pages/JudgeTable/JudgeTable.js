@@ -228,8 +228,11 @@ export default function JudgeTable(props) {
           showCaseTable={showCaseTable}
         ></Tabs>
         <div className={classes.colFilter}>
-          <InputLabel>Search By...</InputLabel>
-          <Select value={columnToSearch} onChange={handleChange}>
+          {/* <InputLabel>Search By...</InputLabel> */}
+          <Select value={columnToSearch} onChange={handleChange} displayEmpty>
+            <MenuItem value="" disabled>
+              Search By...
+            </MenuItem>
             <MenuItem value="name">Name</MenuItem>
             <MenuItem value="judge_county">County</MenuItem>
             <MenuItem value="date_appointed">Date Appointed</MenuItem>
@@ -254,7 +257,7 @@ export default function JudgeTable(props) {
           text={'Save Judges'}
         />
       </div>
-      <h2>Click on Judge name to view more information</h2>
+      {/* <h2>Click on Judge name to view more information</h2> */}
       <DataGrid
         rows={columnToSearch ? search(judgeData) : judgeData}
         columns={columns}

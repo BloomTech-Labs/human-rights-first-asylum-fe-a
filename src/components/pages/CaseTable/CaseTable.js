@@ -15,6 +15,7 @@ import SortingArrows from './SortingArrows.png';
 import PDFViewer from '../PDFViewer/PDFViewer';
 import { Button } from 'antd';
 import pdf from '../PDFViewer/samplePDF.pdf';
+import './CaseTable.css';
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -90,7 +91,7 @@ export default function CaseTable(props) {
     {
       field: 'judge_name',
       headerName: 'Judge Name',
-      width: 120,
+      width: 160,
       className: 'tableHeader',
     },
     {
@@ -293,8 +294,11 @@ export default function CaseTable(props) {
           showCaseTable={showCaseTable}
         />
         <div className={classes.colFilter}>
-          <InputLabel>Search By...</InputLabel>
-          <Select value={columnToSearch} onChange={handleChange}>
+          {/* <InputLabel>Search By...</InputLabel> */}
+          <Select value={columnToSearch} onChange={handleChange} displayEmpty>
+            <MenuItem value="" disabled>
+              Search By...
+            </MenuItem>
             <MenuItem value="id">Case ID</MenuItem>
             <MenuItem value="court_type">Court Type</MenuItem>
             <MenuItem value="refugee_origin">Refugee Origin</MenuItem>
