@@ -29,7 +29,7 @@ import { Link } from 'react-router-dom';
 
 import { SideDrawerData } from './SideDrawerData';
 
-const drawerWidth = 300;
+const drawerWidth = 225;
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -170,28 +170,46 @@ export default function SideDrawer(props) {
         </div>
         <Divider />
         <List>
-          <ListItem button>
+          <Link to="/">
+            <ListItem button>
+              <ListItemIcon>
+                <HomeIcon />
+              </ListItemIcon>
+              <ListItemText primary="Home" style={textItemStyles} />
+            </ListItem>
+          </Link>
+          <Link to="/upload-case">
+            <ListItem button>
+              <ListItemIcon>
+                <PublishIcon />
+              </ListItemIcon>
+              <ListItemText primary="Upload Case" style={textItemStyles} />
+            </ListItem>
+          </Link>
+          <Link to="/saved-cases">
+            <ListItem button>
+              <ListItemIcon>
+                <BookmarksIcon />
+              </ListItemIcon>
+              <ListItemText primary="Saved Cases" style={textItemStyles} />
+            </ListItem>
+          </Link>
+          <ListItem>
             <ListItemIcon>
-              <HomeIcon />
+              <GavelIcon />
             </ListItemIcon>
-            <Link style={{ color: 'black' }} to="/">
-              <ListItemText primary="Home" />
-            </Link>
+            <ListItemText primary="Saved Judges" />
           </ListItem>
+        </List>
+        <Divider />
+        <List>
           {itemList.map((item, index) => (
             <ListItem button key={item.title}>
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.title} />
             </ListItem>
           ))}
-          <ListItem button>
-            <ListItemIcon>
-              <PublishIcon />
-            </ListItemIcon>
-            <Link style={{ color: 'black' }} to="/upload-case">
-              <ListItemText primary="Upload Case" />
-            </Link>
-          </ListItem>
+
           <ListItem button onClick={logout()}>
             <ListItemIcon>
               <CloseIcon />
@@ -199,25 +217,9 @@ export default function SideDrawer(props) {
             <ListItemText primary="Logout" />
           </ListItem>
         </List>
-        <Divider />
-        <List>
-          <ListItem button>
-            <ListItemIcon>
-              <BookmarksIcon />
-            </ListItemIcon>
-            <Link to="/saved-cases">
-              <ListItemText primary="Saved Cases" style={textItemStyles} />
-            </Link>
-          </ListItem>
-        </List>
-        <Divider />
-        <List>
-          <ListItem>
-            <ListItemIcon>
-              <GavelIcon />
-            </ListItemIcon>
-            <ListItemText primary="Saved Judges" />
-          </ListItem>
+
+        {/* <List>
+          
           {savedJudges.map((judge, idx) => (
             <ListItem key={idx}>
               <ListItemIcon>
@@ -229,7 +231,7 @@ export default function SideDrawer(props) {
               </IconButton>
             </ListItem>
           ))}
-        </List>
+        </List> */}
       </Drawer>
       <main
         className={clsx(classes.content, {
