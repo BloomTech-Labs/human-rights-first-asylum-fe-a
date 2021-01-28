@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import statueOfLiberty from './statueOfLiberty.jpeg';
+import statueOfLiberty from './statueOfLiberty.jpg';
 
 export const StyledLogin = styled.div`
   display: flex;
   justify-content: space-between;
 
   .background-image {
-    background-image: url(${statueOfLiberty});
+    background-image: url('./statueOfLiberty.jpg');
     width: 55vw;
     height: 100vh;
     background-position: center;
