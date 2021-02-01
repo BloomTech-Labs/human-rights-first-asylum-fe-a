@@ -48,7 +48,7 @@ function SavedCases({ savedCases, deleteBookmark }) {
       //link to individual case page
       renderCell: params => (
         <>
-          <Link to={`/case/${params.value}`} style={{ color: 'black' }}>
+          <Link to={`/case/${params.value}`} style={{ color: '#215589' }}>
             <span>{params.value}</span>
           </Link>
         </>
@@ -79,12 +79,13 @@ function SavedCases({ savedCases, deleteBookmark }) {
       renderCell: params => (
         <div>
           <a
+            style={{ color: '#215589' }}
             href={`${process.env.REACT_APP_API_URI}/case/${params.value}/download-pdf`}
           >
             PDF
           </a>
           <a
-            style={{ marginLeft: 20 }}
+            style={{ marginLeft: 20, color: '#215589' }}
             href={`${process.env.REACT_APP_API_URI}/case/${params.value}/download-csv`}
           >
             CSV

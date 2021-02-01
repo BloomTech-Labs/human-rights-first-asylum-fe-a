@@ -4,9 +4,10 @@
   /* width:  */
 }
 .MuiDataGrid-colCellTitle {
-  font-weight: bolder;
+  font-weight: bold;
+  font-size: larger;
   color: black;
-  opacity: 100%;
+  opacity: 54%;
 }
 .MuiDataGrid-window {
   color: black;

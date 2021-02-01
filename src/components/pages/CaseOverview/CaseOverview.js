@@ -52,7 +52,7 @@ const CaseOverview = props => {
   return (
     <Container>
       {caseData && (
-        <div>
+        <>
           <CaseSpecs>
             Case Specifics
             <KeyParagraph>Case ID: {id}</KeyParagraph>
@@ -93,7 +93,7 @@ const CaseOverview = props => {
               Judge Decision: {caseData.judge_decision}
             </KeyParagraph>
           </Results>
-        </div>
+        </>
       )}
     </Container>
   );

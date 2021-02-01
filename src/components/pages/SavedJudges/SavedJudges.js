@@ -68,7 +68,7 @@ function SavedJudges({ savedJudges, deleteSavedJudge }) {
         <>
           <Link
             to={`/judge/${params.value.split(' ').join('%20')}`}
-            style={{ color: 'black' }}
+            style={{ color: '#215589' }}
           >
             {params.value}
           </Link>
