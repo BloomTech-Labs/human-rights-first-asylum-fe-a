@@ -157,7 +157,9 @@ export default function JudgeTable(props) {
   };
 
   const formatJudgeName = name => {
-    return name.split(' ').join('%20');
+    if (!name === undefined || name === null) {
+      return name.split(' ').join('%20');
+    }
   };
 
   const postJudge = rowToPost => {
@@ -251,7 +253,7 @@ export default function JudgeTable(props) {
 
         <SaveButton
           selectedRows={selectedRows}
-          bookmarkCases={Empty}
+          bookmarkCases={bookmarkJudges}
           text={'Save Judges'}
         />
       </div>

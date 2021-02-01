@@ -19,6 +19,7 @@ import { hidden } from 'kleur';
 import { FullscreenOverlay } from '../PDFViewer/PDFViewerStyled';
 import useWindowDimensions from '../../../utils/useWindowDimensions';
 import SavedCases from '../SavedCases/SavedCases';
+import SavedJudges from '../SavedJudges/SavedJudges';
 
 // Imports for loading spinner
 import { trackPromise } from 'react-promise-tracker';
@@ -177,6 +178,12 @@ function RenderHomePage(props) {
       </Route>
       <Route exact path="/saved-cases">
         <SavedCases savedCases={savedCases} deleteBookmark={deleteBookmark} />
+      </Route>
+      <Route exact path="/saved-judges">
+        <SavedJudges
+          savedJudges={savedJudges}
+          deleteSavedJudge={deleteSavedJudge}
+        />
       </Route>
       <Route exact path="/judge/:name">
         <JudgePage
