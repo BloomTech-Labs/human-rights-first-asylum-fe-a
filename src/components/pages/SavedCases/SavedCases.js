@@ -45,10 +45,13 @@ function SavedCases({ savedCases, deleteBookmark }) {
       options: {
         filter: true,
       },
+      //link to individual case page
       renderCell: params => (
-        <div style={{ display: 'flex', flexDirection: 'row' }}>
-          <span>{params.value}</span>
-        </div>
+        <>
+          <Link to={`/case/${params.value}`} style={{ color: 'black' }}>
+            <span>{params.value}</span>
+          </Link>
+        </>
       ),
     },
     // {field: 'download', headerName: 'Download', width: 100},
