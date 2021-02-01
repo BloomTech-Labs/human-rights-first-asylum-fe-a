@@ -5,11 +5,12 @@
 }
 .MuiDataGrid-colCellTitle {
   font-weight: bold;
-  font-size: larger;
+  font-size: 14px;
   color: black;
   opacity: 54%;
 }
 .MuiDataGrid-window {
   color: black;
+  font-size: 16px;
   opacity: 87%;
 }
