@@ -188,21 +188,23 @@ export default function CaseTable(props) {
       headerName: 'Download',
       width: 120,
       className: 'tableHeader',
-      renderCell: params => (
-        <div>
-          <a
-            href={`${process.env.REACT_APP_API_URI}/case/${params.value}/download-pdf`}
-          >
-            PDF
-          </a>
-          <a
-            style={{ marginLeft: 20 }}
-            href={`${process.env.REACT_APP_API_URI}/case/${params.value}/download-csv`}
-          >
-            CSV
-          </a>
-        </div>
-      ),
+      renderCell: params => {
+        return (
+          <div>
+            <a
+              href={`${process.env.REACT_APP_API_URI}/case/${params.row.id}/download-pdf`}
+            >
+              PDF
+            </a>
+            <a
+              style={{ marginLeft: 20 }}
+              href={`${process.env.REACT_APP_API_URI}/case/${params.row.id}/download-csv`}
+            >
+              CSV
+            </a>
+          </div>
+        );
+      },
     },
   ];
   const classes = useStyles();
