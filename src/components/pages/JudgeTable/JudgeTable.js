@@ -94,24 +94,24 @@ export default function JudgeTable(props) {
     // { field: 'approval_rate', headerName: '% Approval', width: 110 },
 
     // MODAL for PDFs
-    {
-      field: 'view_pdf',
-      headerName: 'View PDF',
-      width: 110,
-      renderCell: params => (
-        // Hook to control whether or not to show the PDF Modal
-        <>
-          <div className={classes.pdfView}>
-            <PDFViewer
-              pdf={pdf}
-              onCancel={() => setShowPdf(false)}
-              visible={showPdf}
-            />
-            <Button onClick={() => setShowPdf(!showPdf)}>PDF</Button>
-          </div>
-        </>
-      ),
-    },
+    // {
+    //   field: 'view_pdf',
+    //   headerName: 'View PDF',
+    //   width: 110,
+    //   renderCell: params => (
+    //     // Hook to control whether or not to show the PDF Modal
+    //     <>
+    //       <div className={classes.pdfView}>
+    //         <PDFViewer
+    //           pdf={pdf}
+    //           onCancel={() => setShowPdf(false)}
+    //           visible={showPdf}
+    //         />
+    //         <Button onClick={() => setShowPdf(!showPdf)}>PDF</Button>
+    //       </div>
+    //     </>
+    //   ),
+    // },
   ];
 
   judgeData.forEach((item, idx) => {

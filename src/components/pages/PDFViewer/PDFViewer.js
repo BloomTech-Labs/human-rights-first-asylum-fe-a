@@ -73,7 +73,7 @@ const PDFViewer = ({ pdf, onCancel, visible }) => {
       style={{ top: 20 }}
       width={'50%'}
       footer={footer}
-      bodyStyle={{ height: 650, overflowY: 'auto' }}
+      bodyStyle={{ height: 600, overflowY: 'auto' }}
     >
       <PDFWrapper>
         <PDF
