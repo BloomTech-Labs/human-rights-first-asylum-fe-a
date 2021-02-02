@@ -8,17 +8,14 @@ You can find the deployed project at https://a.humanrightsfirstasylum.dev/
 
 ## Contributors
 
-[Ava Wingfield](https://github.com/avawing)<br />
-[<img src="https://ca.slack-edge.com/ESZCHB482-W014G4L7R1P-5e90ae004407-512" width = "150" />](https://github.com/avawing)
-[Linkedin](https://www.linkedin.com/in/avawingfield/)
+[Ava Wingfield](https://github.com/avawing) | [Linkedin](https://www.linkedin.com/in/avawingfield/)<br />
+[<img src="https://ca.slack-edge.com/ESZCHB482-W014G4L7R1P-5e90ae004407-512" width = "200" align="left" />](https://github.com/avawing)
 
-[Tom Bauer](https://github.com/TBau23)<br />
-[<img src="https://ca.slack-edge.com/ESZCHB482-W015P694SUV-84c590ba765c-512" width = "200" />](https://github.com/TBau23)
-[<img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="25">](https://www.linkedin.com/in/tombauer11/)
+[Tom Bauer](https://github.com/TBau23) | [Linkedin](https://www.linkedin.com/in/tombauer11/)<br />
+[<img src="https://ca.slack-edge.com/ESZCHB482-W015P694SUV-84c590ba765c-512" width = "200" align="right" />](https://github.com/TBau23)
 
-[Ryan Lee](https://github.com/SassyFatCat)<br />
+[Ryan Lee](https://github.com/SassyFatCat) | [Linkedin](https://www.linkedin.com/in/sassyfatcat/)<br />
 [<img src="https://ca.slack-edge.com/ESZCHB482-W014G4N2FEV-9b9fece7a4af-512" width = "200" />](https://github.com/SassyFatCat)
-[<img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15">](https://www.linkedin.com/in/sassyfatcat/)
 
 <br />
 
