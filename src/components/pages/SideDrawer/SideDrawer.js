@@ -34,7 +34,7 @@ const drawerWidth = 225;
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
-    zIndex: '0',
+    zIndex: '99999',
   },
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
@@ -116,12 +116,6 @@ export default function SideDrawer(props) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
-  // if (!savedCases ) {
-  //   // surely there is a better way to do this?? idk
-  //   // two weeks later and I have no idea what purpose this served
-  //   return <div></div>;
-  // }
 
   return (
     <div className={classes.root}>

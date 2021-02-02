@@ -38,7 +38,7 @@ const CaseOverview = props => {
   return (
     <Container>
       {caseData && (
-        <div>
+        <>
           <CaseSpecs>
             Case Specifics
             <KeyParagraph>Case ID: {id}</KeyParagraph>
@@ -80,7 +80,7 @@ const CaseOverview = props => {
             </KeyParagraph>
           </Results>
           <Link to={`/case/${caseData.id}/update`}>Update this Case</Link>
-        </div>
+        </>
       )}
     </Container>
   );

@@ -1,20 +1,15 @@
-import React, { useState, useEffect, componentDidUpdate } from 'react';
+import React, { useState, useEffect } from 'react';
 import CaseTable from '../CaseTable/CaseTable';
 import JudgeTable from '../JudgeTable/JudgeTable';
 import { UploadCase } from '../Upload/UploadCase';
 import { useLocation } from 'react-router-dom';
 import SideDrawer from '../SideDrawer/SideDrawer';
-// * Remove This
 import JudgePage from '../JudgePage/JudgePage';
 import CaseOverview from '../CaseOverview/CaseOverview';
-import { Route, Switch, useParams } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import { useOktaAuth } from '@okta/okta-react';
-import SwitchTableIcon from '@material-ui/icons/Autorenew';
-import IconButton from '@material-ui/core/IconButton';
 
 import axios from 'axios';
-import { hidden } from 'kleur';
 import useWindowDimensions from '../../../utils/useWindowDimensions';
 import SavedCases from '../SavedCases/SavedCases';
 import SavedJudges from '../SavedJudges/SavedJudges';

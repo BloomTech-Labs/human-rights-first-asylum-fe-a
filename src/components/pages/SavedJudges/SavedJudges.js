@@ -68,7 +68,7 @@ function SavedJudges({ savedJudges, deleteSavedJudge }) {
         <>
           <Link
             to={`/judge/${params.value.split(' ').join('%20')}`}
-            style={{ color: 'black' }}
+            style={{ color: '#215589' }}
           >
             {params.value}
           </Link>
@@ -78,30 +78,25 @@ function SavedJudges({ savedJudges, deleteSavedJudge }) {
     { field: 'judge_county', headerName: 'Court Location', width: 160 },
     { field: 'date_appointed', headerName: 'Date Appointed', width: 140 },
     { field: 'appointed_by', headerName: 'Appointed by', width: 160 },
-    // { field: 'denial_rate', headerName: '% Denial', width: 110 },
-    // { field: 'approval_rate', headerName: '% Approval', width: 110 },
-
-    // MODAL for PDFs
+    { field: 'denial_rate', headerName: '% Denial', width: 110 },
+    { field: 'approval_rate', headerName: '% Approval', width: 110 },
     {
-      field: 'view_pdf',
-      headerName: 'View PDF',
+      field: 'remove_case',
+      headerName: 'Remove',
       width: 110,
       renderCell: params => (
-        // Hook to control whether or not to show the PDF Modal
-        <>
-          <div className={classes.pdfView}>
-            <PDFViewer
-              pdf={pdf}
-              onCancel={() => setShowPdf(false)}
-              visible={showPdf}
-            />
-            <Button onClick={() => setShowPdf(!showPdf)}>PDF</Button>
-          </div>
-        </>
+        <IconButton>
+          <DeleteIcon onClick={() => deleteSavedJudge(params.value)} />
+        </IconButton>
       ),
     },
   ];
   const classes = useStyles();
+
+  savedJudges.forEach((item, idx) => {
+    item.id = idx;
+  }); // this is VERY hacky, but the table doesn't take data without ids
+  console.log(savedJudges);
   return (
     <div className={classes.tbl_container}>
       {savedJudges.length === 0 ? (
