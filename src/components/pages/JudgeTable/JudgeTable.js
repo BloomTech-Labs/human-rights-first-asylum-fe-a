@@ -128,7 +128,7 @@ export default function JudgeTable(props) {
   };
 
   const formatJudgeName = name => {
-    if (name !== undefined || name !== null) {
+    if (name != undefined || name != null) {
       return name.split(' ').join('%20');
     }
   };
