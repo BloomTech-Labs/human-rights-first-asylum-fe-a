@@ -79,7 +79,7 @@ const CaseOverview = props => {
               Judge Decision: {caseData.judge_decision}
             </KeyParagraph>
             {/* Link to updateCase page, this page is not yet operational
-            backend endpoints need to be built out to allow page to render & update the database */}
+            backend endpoints need to be built out to allow page to render & send updates to the database */}
             <Link to={`/case/${caseData.id}/update`}>Update this Case</Link>
           </Results>
         </>
