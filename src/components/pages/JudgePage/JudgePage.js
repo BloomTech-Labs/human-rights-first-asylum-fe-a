@@ -84,7 +84,10 @@ export default function JudgePage(props) {
           <FlexDiv className="header">
             <div className="imgBox">
               {/* Judge Picture */}
-              <img src="http://via.placeholder.com/300x400" />
+              <img
+                src="http://via.placeholder.com/300x400"
+                alt="judge profile"
+              />
               <p>{judge.name} </p>
             </div>
             <Profile>

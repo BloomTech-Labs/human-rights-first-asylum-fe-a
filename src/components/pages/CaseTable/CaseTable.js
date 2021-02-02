@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { DataGrid } from '@material-ui/data-grid';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
@@ -10,7 +9,6 @@ import { Link } from 'react-router-dom';
 // Buttons
 import Tabs from '../Home/Tabs';
 import SaveButton from './SaveButton';
-import SortingArrows from './SortingArrows.png';
 // Imports for PDF Modal
 import PDFViewer from '../PDFViewer/PDFViewer';
 import { Button } from 'antd';
