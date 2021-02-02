@@ -2,17 +2,3 @@
   height: 400;
   font-family: 'Open Sans', sans-serif;
 }
-/* This is a hacky way of targeting the data grid's header */
-.MuiDataGrid-colCellTitle {
-  /* Bold is not working, the documentation suggests that its bold by default, but its somehow overwriten and isn't letting it become bold now */
-  font-weight: bold;
-  font-size: 14px;
-  color: black;
-  opacity: 54%;
-}
-/* This is a hacky way of targeting the data grid's main items */
-.MuiDataGrid-window {
-  color: black;
-  font-size: 16px;
-  opacity: 87%;
-}
