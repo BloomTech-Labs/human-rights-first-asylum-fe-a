@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React from 'react';
 import { Tabs as TabsY } from 'antd';
 import styled from 'styled-components';
 
@@ -12,6 +12,7 @@ const TabDiv = styled.div`
 
 function Tabs({ setShowCaseTable, showCaseTable }) {
   function cb(key) {
+    // Checks if the tab selected is the case view (1), and sets the state accordingly, ensuring that you are swapped to the view when the tabs change
     if (key === '1') {
       setShowCaseTable(true);
     } else {
@@ -27,61 +28,11 @@ function Tabs({ setShowCaseTable, showCaseTable }) {
         size={'large'}
         tabBarStyle={{ color: '#7f9bb3' }}
       >
-        <TabPane tab="Case View" key="1"></TabPane>
-        <TabPane tab="Judge View" key="2"></TabPane>
+        <TabPane tab="Case View" key="1" />
+        <TabPane tab="Judge View" key="2" />
       </TabsY>
     </TabDiv>
   );
 }
 
 export default Tabs;
-
-// Old Tabs replaced by: ant.design
-
-// const TabItemLeft = styled.button`
-//   padding: 0.6em 1em;
-//   background: ${props => (props.showCaseTable ? '#215589' : '#7f9bb3')};
-//   border: 1px solid black;
-//   border-top-left-radius: 20px;
-//   outline: none;
-//   width: 50%;
-//   color: white;
-//   font-size: 1.1em;
-//   padding: 5%;
-
-//   &:hover {
-//     transform: scaleY(1.1) translateY(-2px);
-//   }
-// `;
-// const TabItemRight = styled.button`
-//   padding: 0.6em 1em;
-//   background: ${props => (props.showCaseTable ? '#215589' : '#7f9bb3')};
-//   border: 1px solid black;
-//   border-top-right-radius: 20px;
-//   outline: none;
-//   width: 50%;
-//   color: white;
-//   font-size: 1.1em;
-//   padding: 5%;
-//   &:hover {
-//     transform: scaleY(1.1) translateY(-2px);
-//   }
-// `;
-// function Tabs({ setShowCaseTable, showCaseTable }) {
-//   return (
-//     <TabDiv>
-//       <TabItemLeft
-//         showCaseTable={showCaseTable}
-//         onClick={() => setShowCaseTable(true)}
-//       >
-//         Case View
-//       </TabItemLeft>
-//       <TabItemRight
-//         showCaseTable={!showCaseTable}
-//         onClick={() => setShowCaseTable(false)}
-//       >
-//         Judge View
-//       </TabItemRight>
-//     </TabDiv>
-//   );
-// }

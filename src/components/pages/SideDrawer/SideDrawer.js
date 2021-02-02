@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -20,10 +20,7 @@ import HRFlogo from './HRFlogo.png';
 /* import BookmarkPanel from '../Bookmarks/BookmarksQuickview'; */
 import BookmarksIcon from '@material-ui/icons/Bookmarks';
 import PublishIcon from '@material-ui/icons/Publish';
-import NoteIcon from '@material-ui/icons/Receipt';
 import GavelIcon from '@material-ui/icons/Gavel';
-import DeleteIcon from '@material-ui/icons/DeleteForever';
-import PersonIcon from '@material-ui/icons/Person';
 import HomeIcon from '@material-ui/icons/Home';
 import { Link } from 'react-router-dom';
 
@@ -99,15 +96,7 @@ export default function SideDrawer(props) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
   const itemList = SideDrawerData;
-  const {
-    logout,
-    userInfo,
-    updateCases,
-    savedCases,
-    savedJudges,
-    deleteBookmark,
-    deleteSavedJudge,
-  } = props;
+  const { logout } = props;
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -164,6 +153,7 @@ export default function SideDrawer(props) {
         </div>
         <Divider />
         <List>
+          {/* Link needs to be wrapped around the whole button to allow the whole button to be used to direct he user */}
           <Link to="/">
             <ListItem button>
               <ListItemIcon>

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import CaseTable from '../CaseTable/CaseTable';
 import JudgeTable from '../JudgeTable/JudgeTable';
 import { UploadCase } from '../Upload/UploadCase';
-import { useLocation } from 'react-router-dom';
 import SideDrawer from '../SideDrawer/SideDrawer';
 import JudgePage from '../JudgePage/JudgePage';
 import CaseOverview from '../CaseOverview/CaseOverview';
@@ -10,7 +9,6 @@ import { Route } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
 import axios from 'axios';
-import useWindowDimensions from '../../../utils/useWindowDimensions';
 import SavedCases from '../SavedCases/SavedCases';
 import SavedJudges from '../SavedJudges/SavedJudges';
 
@@ -18,8 +16,6 @@ import SavedJudges from '../SavedJudges/SavedJudges';
 import { trackPromise } from 'react-promise-tracker';
 import { usePromiseTracker } from 'react-promise-tracker';
 import Loader from 'react-promise-loader';
-
-import * as pdfFile from '../PDFViewer/samplePDF.pdf';
 
 const useStyles = makeStyles({
   container: {
@@ -121,6 +117,7 @@ function RenderHomePage(props) {
   };
 
   const formatJudgeName = name => {
+    // Used in order to format the judge so it can be used in the API call
     return name.split(' ').join('%20');
   };
 
@@ -143,11 +140,6 @@ function RenderHomePage(props) {
         console.log(err);
       });
   };
-
-  const [smallPDF, setSmallPDF] = useState(false);
-  const [file, setFile] = useState(pdfFile);
-  const [location, setLocation] = useState(useLocation());
-  const { height, width } = useWindowDimensions();
 
   const logout = () => authService.logout;
   const classes = useStyles();
@@ -188,6 +180,7 @@ function RenderHomePage(props) {
       </Route>
 
       <Route exact path="/">
+        {/* showCaseTable is a boolean when true will display the Cases Table and when false will dispaly the Judges Table */}
         {showCaseTable && (
           <>
             <CaseTable

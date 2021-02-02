@@ -18,5 +18,5 @@ export const Profile = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: top;
-  margin: 0 0 0 3%;
+  margin: 0 0 0 1%;
 `;
