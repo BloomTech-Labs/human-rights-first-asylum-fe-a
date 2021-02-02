@@ -48,9 +48,10 @@ const CaseUpdate = props => {
   const handleSubmit = event => {
     event.preventDefault();
     axios
-      .put(`${process.env.REACT_APP_API_URI}/case/${id}/update`, newCase)
+      .put(`${process.env.REACT_APP_API_URI}/case/${id}`, newCase)
       .then(res => {
         props.setCaseData([...props.caseData, res.data]);
+        props.fetchCase();
         history.push('/');
       })
       .catch(error => console.log(error));

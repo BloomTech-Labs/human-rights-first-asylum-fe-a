@@ -20,6 +20,7 @@ import { usePromiseTracker } from 'react-promise-tracker';
 import Loader from 'react-promise-loader';
 
 import * as pdfFile from '../PDFViewer/samplePDF.pdf';
+import CaseUpdate from '../CaseOverview/CaseUpdate';
 
 const useStyles = makeStyles({
   container: {
@@ -184,7 +185,14 @@ function RenderHomePage(props) {
         />
       </Route>
       <Route exact path="/case/:id" authState={authState}>
+        {/* clicking on a case name will bring you to a page where more indepth information
+      about the case can be viewed, this page is linked to the cooresponding judge's page
+      this page also links to the update case file which is not operational yet, see notation
+      on CaseUpdate for details */}
         <CaseOverview />
+      </Route>
+      <Route exact path="case/:id/update" authState={authState}>
+        <CaseUpdate />
       </Route>
 
       <Route exact path="/">
