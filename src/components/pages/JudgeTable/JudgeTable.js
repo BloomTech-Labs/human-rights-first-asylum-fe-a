@@ -80,7 +80,7 @@ export default function JudgeTable(props) {
         <>
           <Link
             to={`/judge/${params.value.split(' ').join('%20')}`}
-            style={{ color: 'black' }}
+            style={{ color: '#215589' }}
           >
             {params.value}
           </Link>
@@ -90,8 +90,8 @@ export default function JudgeTable(props) {
     { field: 'judge_county', headerName: 'Court Location', width: 160 },
     { field: 'date_appointed', headerName: 'Date Appointed', width: 140 },
     { field: 'appointed_by', headerName: 'Appointed by', width: 160 },
-    // { field: 'denial_rate', headerName: '% Denial', width: 110 },
-    // { field: 'approval_rate', headerName: '% Approval', width: 110 },
+    { field: 'denial_rate', headerName: '% Denial', width: 110 },
+    { field: 'approval_rate', headerName: '% Approval', width: 110 },
 
     // MODAL for PDFs
     // {
@@ -139,25 +139,26 @@ export default function JudgeTable(props) {
   const findRowByID = (rowID, rowData) => {
     for (let i = 0; i < rowData.length; i++) {
       let currentRow = rowData[i];
-      if (currentRow.id === rowID) {
+      if (currentRow.id == rowID) {
         return currentRow;
       }
     }
-    return 'Row does not exist';
+    // console.log(rowID, rowData);
+    return 'Row does not exist ID';
   };
 
   const findRowByJudgeName = (judgeName, rowData) => {
     for (let i = 0; i < rowData.length; i++) {
       let currentRow = rowData[i];
-      if (currentRow.name === judgeName) {
+      if (currentRow.name == judgeName) {
         return currentRow;
       }
     }
-    return 'Row does not exist';
+    return 'Row does not exist NAME';
   };
 
   const formatJudgeName = name => {
-    if (!name === undefined || name === null) {
+    if (name != undefined || name != null) {
       return name.split(' ').join('%20');
     }
   };
@@ -214,6 +215,7 @@ export default function JudgeTable(props) {
         }
       }
     }
+    alert('Judges Successfully Saved');
   };
 
   const onCheckboxSelect = selections => {

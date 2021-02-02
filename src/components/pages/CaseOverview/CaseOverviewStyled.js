@@ -2,16 +2,11 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   height: ${props => (props.containerHeight ? props.containerHeight : 'auto')};
-  width: 75vw;
-  border-radius: 30px;
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #e8eae6;
-  margin: 10%;
+  flex-flow: row wrap;
+  margin: 5% 4% 0 0;
   font-weight: bold;
-  padding-top: 5%;
   font-size: 1.2rem;
 `;
 
@@ -21,11 +16,11 @@ export const CaseSpecs = styled.div`
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 20%;
+  align-items: left;
+  padding: 5%;
   background-color: #e8eae6;
-  width: 35vw;
-  margin-bottom: 5%;
+  margin: 5%;
+  width: 40%;
 `;
 
 // CLIENT CONTAINER
@@ -34,10 +29,11 @@ export const ClientSpecs = styled.div`
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 20%;
+  align-items: left;
+  padding: 5%;
   background-color: #e8eae6;
-  margin-bottom: 5%;
+  margin: 5%;
+  width: 40%;
 `;
 
 // RESULTS
@@ -46,10 +42,11 @@ export const Results = styled.div`
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 20%;
+  align-items: left;
+  padding: 5%;
   background-color: #e8eae6;
-  margin-bottom: 10%;
+  margin: 5%;
+  width: 40%;
 `;
 
 export const KeyParagraph = styled.p`

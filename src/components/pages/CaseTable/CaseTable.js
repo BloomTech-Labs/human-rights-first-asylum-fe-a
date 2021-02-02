@@ -76,13 +76,14 @@ export default function CaseTable(props) {
       field: 'id',
       headerName: 'Case ID',
       width: 200,
+      className: 'tableHeader',
       options: {
         filter: true,
       },
       //link to individual case page
       renderCell: params => (
         <>
-          <Link to={`/case/${params.value}`} style={{ color: 'black' }}>
+          <Link to={`/case/${params.value}`} style={{ color: '#215589' }}>
             <span>{params.value}</span>
           </Link>
         </>
@@ -192,12 +193,13 @@ export default function CaseTable(props) {
         return (
           <div>
             <a
+              style={{ color: '#215589' }}
               href={`${process.env.REACT_APP_API_URI}/case/${params.row.id}/download-pdf`}
             >
               PDF
             </a>
             <a
-              style={{ marginLeft: 20 }}
+              style={{ marginLeft: 20, color: '#215589' }}
               href={`${process.env.REACT_APP_API_URI}/case/${params.row.id}/download-csv`}
             >
               CSV
