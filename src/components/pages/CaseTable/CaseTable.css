@@ -3,14 +3,3 @@
   font-family: 'Open Sans', sans-serif;
   /* width:  */
 }
-.MuiDataGrid-colCellTitle {
-  font-weight: bold;
-  font-size: 14px;
-  color: black;
-  opacity: 54%;
-}
-.MuiDataGrid-window {
-  color: black;
-  font-size: 16px;
-  opacity: 87%;
-}
