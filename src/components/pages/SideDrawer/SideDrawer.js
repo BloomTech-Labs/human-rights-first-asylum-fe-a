@@ -164,6 +164,7 @@ export default function SideDrawer(props) {
         </div>
         <Divider />
         <List>
+          {/* Link needs to be wrapped around the whole button to allow the whole button to be used to direct he user */}
           <Link to="/">
             <ListItem button>
               <ListItemIcon>

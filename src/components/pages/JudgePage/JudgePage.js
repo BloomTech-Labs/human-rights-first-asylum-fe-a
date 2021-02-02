@@ -27,7 +27,7 @@ const columns = [
     width: 100,
     renderCell: params => (
       <>
-        <Link to={`/case/${params.value}`} style={{ color: 'black' }}>
+        <Link to={`/case/${params.value}`} style={{ color: '#215589' }}>
           <span>{params.value}</span>
         </Link>
       </>
@@ -77,6 +77,7 @@ export default function JudgePage(props) {
   }, [name, authState.idToken]);
 
   return (
+    // Needs a lot of styling work
     <FullPage>
       {judge && (
         <div>

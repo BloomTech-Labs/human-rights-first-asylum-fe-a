@@ -94,6 +94,16 @@ export default function CaseTable(props) {
       headerName: 'Judge Name',
       width: 160,
       className: 'tableHeader',
+      renderCell: params => (
+        <>
+          <Link
+            to={`/judge/${params.value.split(' ').join('%20')}`}
+            style={{ color: '#215589' }}
+          >
+            {params.value}
+          </Link>
+        </>
+      ),
     },
     {
       field: 'hearing_location',
@@ -298,8 +308,8 @@ export default function CaseTable(props) {
           showCaseTable={showCaseTable}
         />
         <div className={classes.colFilter}>
-          {/* <InputLabel>Search By...</InputLabel> */}
           <Select value={columnToSearch} onChange={handleChange} displayEmpty>
+            {/* This puts the search by text inside of the search bar, give it all other components the same height */}
             <MenuItem value="" disabled>
               Search By...
             </MenuItem>
@@ -329,7 +339,6 @@ export default function CaseTable(props) {
           text={'Save Cases'}
         />
       </div>
-
       <DataGrid
         rows={columnToSearch ? search(caseData) : caseData}
         columns={columns}

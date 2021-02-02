@@ -2,19 +2,13 @@ import React, { useState } from 'react';
 import { DataGrid } from '@material-ui/data-grid';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
-import Tooltip from '@material-ui/core/Tooltip';
 import { Link } from 'react-router-dom';
 // Buttons
 import Tabs from '../Home/Tabs';
 import SaveButton from '../CaseTable/SaveButton';
-// Imports for PDF Modal
-import PDFViewer from '../PDFViewer/PDFViewer';
-import { Button, Empty } from 'antd';
-import pdf from '../PDFViewer/samplePDF.pdf';
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -65,9 +59,6 @@ export default function JudgeTable(props) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedRows, setSelectedRows] = useState({});
 
-  // State for PDF Modal
-  const [showPdf, setShowPdf] = useState(false);
-
   const columns = [
     // { field: 'id', headerName: 'id', width: 100 },
     {
@@ -92,26 +83,6 @@ export default function JudgeTable(props) {
     { field: 'appointed_by', headerName: 'Appointed by', width: 160 },
     { field: 'denial_rate', headerName: '% Denial', width: 110 },
     { field: 'approval_rate', headerName: '% Approval', width: 110 },
-
-    // MODAL for PDFs
-    // {
-    //   field: 'view_pdf',
-    //   headerName: 'View PDF',
-    //   width: 110,
-    //   renderCell: params => (
-    //     // Hook to control whether or not to show the PDF Modal
-    //     <>
-    //       <div className={classes.pdfView}>
-    //         <PDFViewer
-    //           pdf={pdf}
-    //           onCancel={() => setShowPdf(false)}
-    //           visible={showPdf}
-    //         />
-    //         <Button onClick={() => setShowPdf(!showPdf)}>PDF</Button>
-    //       </div>
-    //     </>
-    //   ),
-    // },
   ];
 
   judgeData.forEach((item, idx) => {
@@ -143,7 +114,6 @@ export default function JudgeTable(props) {
         return currentRow;
       }
     }
-    // console.log(rowID, rowData);
     return 'Row does not exist ID';
   };
 
@@ -230,7 +200,7 @@ export default function JudgeTable(props) {
           showCaseTable={showCaseTable}
         ></Tabs>
         <div className={classes.colFilter}>
-          {/* <InputLabel>Search By...</InputLabel> */}
+          {/* This puts the search by text inside of the search bar, give it all other components the same height */}
           <Select value={columnToSearch} onChange={handleChange} displayEmpty>
             <MenuItem value="" disabled>
               Search By...
@@ -251,15 +221,12 @@ export default function JudgeTable(props) {
           type="text"
           style={{ width: '50%', marginLeft: 40 }}
         />
-        {/* this button is hardcoded, needs to be adjusted in the future*/}
-
         <SaveButton
           selectedRows={selectedRows}
           bookmarkCases={bookmarkJudges}
           text={'Save Judges'}
         />
       </div>
-      {/* <h2>Click on Judge name to view more information</h2> */}
       <DataGrid
         rows={columnToSearch ? search(judgeData) : judgeData}
         columns={columns}

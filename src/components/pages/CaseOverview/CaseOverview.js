@@ -13,19 +13,6 @@ import {
 } from './CaseOverviewStyled';
 
 const CaseOverview = props => {
-  // DESTRUCTURING PROPS FROM CASE_DATA
-  // const {
-  //   hearing_location,
-  //   hearing_date,
-  //   judge_name,
-  //   court_type,
-  //   refugee_origin,
-  //   social_group_type,
-  //   credibility_of_refugee,
-  //   judge_decision,
-  //   case_status,
-  // } = props.case_data | 'Here is some lorem ipsum';
-
   const { authState } = props;
   const [caseData, setCaseData] = useState();
   const { id } = useParams();
@@ -50,6 +37,7 @@ const CaseOverview = props => {
   }, [id, authState]);
 
   return (
+    // These are just styled components see CaseOverviewStyled.js for editing
     <Container>
       {caseData && (
         <>
@@ -65,27 +53,24 @@ const CaseOverview = props => {
             <KeyParagraph>
               Judge Name:
               <Link to={`/judge/${caseData.judge_name}`}>
-                {' '}
                 {caseData.judge_name}
               </Link>
             </KeyParagraph>
             <KeyParagraph>Court Type: {caseData.court_type}</KeyParagraph>
           </CaseSpecs>
-
           <ClientSpecs>
             Client Specifics
             <ValueParagraph>Origin: {caseData.refugee_origin}</ValueParagraph>
             <ValueParagraph>
-              Social Group: {caseData.social_group_type}{' '}
+              Social Group: {caseData.social_group_type}
             </ValueParagraph>
             <ValueParagraph>
               Protected Grounds: {caseData.protected_ground}
             </ValueParagraph>
             <ValueParagraph>
-              Credibility: {caseData.credibility_of_refugee}{' '}
+              Credibility: {caseData.credibility_of_refugee}
             </ValueParagraph>
           </ClientSpecs>
-
           <Results>
             Results
             <KeyParagraph>Decision Date: {caseData.decision_date}</KeyParagraph>

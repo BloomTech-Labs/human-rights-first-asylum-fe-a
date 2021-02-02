@@ -2,20 +2,17 @@
 
 For steps on how to work with this repository [please see here](https://docs.labs.lambdaschool.com/labs-spa-starter/)
 
-
 # Human Rights First Front End
 
 You can find the deployed project at https://a.humanrightsfirstasylum.dev/
 
 ## Contributors
 
-
-
-|                                                      [Ava Wingfield](https://github.com/avawing)                                                       |                                                       [Tom Bauer](https://github.com/TBau23)                                                        |                                                      [Ryan Lee](https://github.com/SassyFatCat)                                                       |                                                                                                            |
-| :-----------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------: |
-| [<img src="https://ca.slack-edge.com/ESZCHB482-W014G4L7R1P-5e90ae004407-512" width = "200" />](https://github.com/avawing) | [<img src="https://ca.slack-edge.com/ESZCHB482-W015P694SUV-84c590ba765c-512" width = "200" />](https://github.com/TBau23) | [<img src="https://ca.slack-edge.com/ESZCHB482-W014G4N2FEV-9b9fece7a4af-512" width = "200" />](https://github.com/SassyFatCat) |
-|                                [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/avawing)                                |                            [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/TBau23)                             |                          [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/SassyFatCat)                           |
-|                [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/avawingfield/)                |                 [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/tombauer11/)                 |                [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/sassyfatcat/)                |                 
+|                                          [Ava Wingfield](https://github.com/avawing)                                          |                                           [Tom Bauer](https://github.com/TBau23)                                            |                                           [Ryan Lee](https://github.com/SassyFatCat)                                           |     |
+| :---------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: | :-: |
+|  [<img src="https://ca.slack-edge.com/ESZCHB482-W014G4L7R1P-5e90ae004407-512" width = "200" />](https://github.com/avawing)   |  [<img src="https://ca.slack-edge.com/ESZCHB482-W015P694SUV-84c590ba765c-512" width = "200" />](https://github.com/TBau23)  | [<img src="https://ca.slack-edge.com/ESZCHB482-W014G4N2FEV-9b9fece7a4af-512" width = "200" />](https://github.com/SassyFatCat) |
+|                     [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/avawing)                      |                     [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/TBau23)                     |                    [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/SassyFatCat)                    |
+| [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/avawingfield/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/tombauer11/) |  [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/sassyfatcat/)  |
 
 <br>
 <br>
@@ -27,25 +24,30 @@ You can find the deployed project at https://a.humanrightsfirstasylum.dev/
 
 > When using Okta for authentication, the app will need to run locally on port 3000.
 
+### Styling Colors
+
+- Primary Action color: #3f51b5
+- Seconday "Disabled" color: #7f9bb3
+
 ### Key Features and Notes to the Next Group
 
-- Our data science team had issues hooking up their database to our backend, so we never had a populated database. As a result of this all of the Axios requests are made to a locally hosted version of the backend. Thse will obviously all have to be changed once there is a hosted backend with actual data in it. 
+- Other know bugs and not working features can be seen on this [Google Doc](https://docs.google.com/document/d/1MTRA2X88MW4GwFX9NdmO_qqHEDqGHxj20Q0DWplD29E/edit?usp=sharing), feel free to copy it
+
+- Our data science team had issues hooking up their database to our backend, so we never had a populated database. As a result of this all of the Axios requests are made to a locally hosted version of the backend. Thse will obviously all have to be changed once there is a hosted backend with actual data in it.
 
 - Table can be searched by column parameters and sorted by clicking on column headers
 
-- Cases can be bookmarked and saved to a user profile by checking their row's select box and clicking the bookmark button
-    - as of now, all this does is cause them to render in the sidebar
+- Cases and Judges can be saved to a user profile by checking their row's select box and clicking the save button
 
-- PDF viewer is incomplete and not styled in a very compelling way. We intended to hook it up to the table so that when a row was clicked
-  the PDF associated with that row would render.
+  - This will add them to the saved cases or saved judges page
+
+- All Tables should let you go to a specfic page by clicking either case ID or Judge Name
+
+- PDF viewer pops up a model, minor visual bugs may appear
 
 - Clicking on a judge name in the judge table will take you to a page with some expanded info and basic plots
-    -This judge page was created at the end and we did virtually no styling formatting with it
-    -Other than the pie chart, the formulas for the other sample charts are hard coded and will need to be fixed once the database is actually populated beyond test data
-
-- Data on judge and case table can be downloaded using the relevant buttons - however, the results of the PDF downloader are hardcoded for the moment since there is no data on the deployed backend. Regardless of which case PDF you select to download, it will pull the same sample PDF.
-
-- Annoying bug that I ran out of time to fix - if there are any saved judges, as soon as you save a case, the judges no longer render. The issue exists in the SideDrawer component
+  -This judge page needs styling work (JudgePage.js)
+  -Other than the pie chart, the formulas for the other sample charts are hard coded and will need to be fixed once the database is actually populated beyond test data
 
 #### Front end deployed to AWS
 
@@ -53,7 +55,7 @@ You can find the deployed project at https://a.humanrightsfirstasylum.dev/
 
 #### Backend details
 
-Read backend details at https://github.com/Lambda-School-Labs/human-rights-first-asylum-be-a 
+Read backend details at https://github.com/Lambda-School-Labs/human-rights-first-asylum-be-a
 
 # APIs
 
@@ -65,12 +67,9 @@ Authentication done via Okta
 
 See https://docs.labs.lambdaschool.com/labs-spa-starter/
 
-
 ## Other Scripts
 
-    
-  * start - starts the production server after a build is created
-   
+- start - starts the production server after a build is created
 
 # Contributing
 

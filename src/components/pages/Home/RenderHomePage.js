@@ -121,6 +121,7 @@ function RenderHomePage(props) {
   };
 
   const formatJudgeName = name => {
+    // Used in order to format the judge so it can be used in the API call
     return name.split(' ').join('%20');
   };
 
@@ -188,6 +189,7 @@ function RenderHomePage(props) {
       </Route>
 
       <Route exact path="/">
+        {/* showCaseTable is a boolean when true will display the Cases Table and when false will dispaly the Judges Table */}
         {showCaseTable && (
           <>
             <CaseTable
