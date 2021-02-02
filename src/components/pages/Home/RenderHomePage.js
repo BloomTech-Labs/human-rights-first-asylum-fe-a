@@ -188,7 +188,7 @@ function RenderHomePage(props) {
         {/* clicking on a case name will bring you to a page where more indepth information
       about the case can be viewed, this page is linked to the cooresponding judge's page
       this page also links to the update case file which is not operational yet, see notation
-      on CaseUpdate for details */}
+      on CaseOverview & CaseUpdate for details */}
         <CaseOverview />
       </Route>
       <Route exact path="case/:id/update" authState={authState}>
