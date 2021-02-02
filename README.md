@@ -8,11 +8,20 @@ You can find the deployed project at https://a.humanrightsfirstasylum.dev/
 
 ## Contributors
 
-|                                          [Ava Wingfield](https://github.com/avawing)                                          |                                           [Tom Bauer](https://github.com/TBau23)                                            |                                           [Ryan Lee](https://github.com/SassyFatCat)                                           |     |
-| :---------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: | :-: |
-|  [<img src="https://ca.slack-edge.com/ESZCHB482-W014G4L7R1P-5e90ae004407-512" width = "200" />](https://github.com/avawing)   |  [<img src="https://ca.slack-edge.com/ESZCHB482-W015P694SUV-84c590ba765c-512" width = "200" />](https://github.com/TBau23)  | [<img src="https://ca.slack-edge.com/ESZCHB482-W014G4N2FEV-9b9fece7a4af-512" width = "200" />](https://github.com/SassyFatCat) |
-|                     [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/avawing)                      |                     [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/TBau23)                     |                    [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/SassyFatCat)                    |
-| [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/avawingfield/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/tombauer11/) |  [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/sassyfatcat/)  |
+[Ava Wingfield](https://github.com/avawing)
+[<img src="https://ca.slack-edge.com/ESZCHB482-W014G4L7R1P-5e90ae004407-512" width = "200" />](https://github.com/avawing)
+[<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/avawing)
+[<img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15">](https://www.linkedin.com/in/avawingfield/)
+
+[Tom Bauer](https://github.com/TBau23)
+[<img src="https://ca.slack-edge.com/ESZCHB482-W015P694SUV-84c590ba765c-512" width = "200" />](https://github.com/TBau23)
+[<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/TBau23)
+[<img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15">](https://www.linkedin.com/in/tombauer11/)
+
+[Ryan Lee](https://github.com/SassyFatCat)
+[<img src="https://ca.slack-edge.com/ESZCHB482-W014G4N2FEV-9b9fece7a4af-512" width = "200" />](https://github.com/SassyFatCat)
+[<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/SassyFatCat)
+[<img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15">](https://www.linkedin.com/in/sassyfatcat/)
 
 <br>
 <br>
