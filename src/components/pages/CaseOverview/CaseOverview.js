@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-
 import {
   Container,
   CaseSpecs,
@@ -78,6 +77,7 @@ const CaseOverview = props => {
               Judge Decision: {caseData.judge_decision}
             </KeyParagraph>
           </Results>
+          <Link to={`/case/${caseData.id}/update`}>Update this Case</Link>
         </>
       )}
     </Container>
