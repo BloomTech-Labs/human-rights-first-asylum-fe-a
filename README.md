@@ -12,8 +12,8 @@ You can find the deployed project at https://a.humanrightsfirstasylum.dev/
 =========== [Tom Bauer](https://github.com/TBau23) | [Linkedin](https://www.linkedin.com/in/tombauer11/)
 =========== [Ryan Lee](https://github.com/SassyFatCat) | [Linkedin](https://www.linkedin.com/in/sassyfatcat/)
 
-[<img src="https://ca.slack-edge.com/ESZCHB482-W014G4L7R1P-5e90ae004407-512" width = "200" style="margin-right: "20%"/>](https://github.com/avawing)
-[<img src="https://ca.slack-edge.com/ESZCHB482-W015P694SUV-84c590ba765c-512" width = "200" style="margin-right: "20%"/>](https://github.com/TBau23)
+[<img src="https://ca.slack-edge.com/ESZCHB482-W014G4L7R1P-5e90ae004407-512" width = "200" margin-right = "20px"/>](https://github.com/avawing)
+[<img src="https://ca.slack-edge.com/ESZCHB482-W015P694SUV-84c590ba765c-512" width = "200" style="margin-right: "20px"/>](https://github.com/TBau23)
 [<img src="https://ca.slack-edge.com/ESZCHB482-W014G4N2FEV-9b9fece7a4af-512" width = "200" />](https://github.com/SassyFatCat)
 
 <br />
