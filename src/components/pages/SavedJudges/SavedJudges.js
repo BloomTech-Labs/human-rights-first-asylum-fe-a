@@ -1,15 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/DeleteForever';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { DataGrid } from '@material-ui/data-grid';
-import PDFViewer from '../PDFViewer/PDFViewer';
-import { Button } from 'antd';
-import pdf from '../PDFViewer/samplePDF.pdf';
 
 function SavedJudges({ savedJudges, deleteSavedJudge }) {
-  const [showPdf, setShowPdf] = useState(false);
   const useStyles = makeStyles(theme => ({
     grid: {
       marginTop: 15,
@@ -108,6 +104,7 @@ function SavedJudges({ savedJudges, deleteSavedJudge }) {
           </Link>
         </div>
       ) : (
+        // This is so the top part only displays when there are no cases, but also displays the empty table below
         <></>
       )}
       <DataGrid

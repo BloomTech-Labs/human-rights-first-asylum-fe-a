@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
+//Background and Cursor use the disabled state to give a visual of when you can press it or not
 const SaveCasesButton = styled.button`
   padding: 1%;
   border: none;

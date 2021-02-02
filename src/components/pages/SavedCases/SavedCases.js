@@ -116,6 +116,7 @@ function SavedCases({ savedCases, deleteBookmark }) {
           </Link>
         </div>
       ) : (
+        // This is so the top part only displays when there are no cases, but also displays the empty table below
         <></>
       )}
       <DataGrid

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useOktaAuth } from '@okta/okta-react';
-import { makeStyles } from '@material-ui/core/styles';
 
 import RenderHomePage from './RenderHomePage';
 
