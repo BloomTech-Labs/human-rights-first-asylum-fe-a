@@ -47,7 +47,7 @@ table {
 	font-family: 'Oswald', sans-serif;
 }
 .MuiDataGrid-window{
-	opacity: 0;
+	opacity: 1;
 }
 .hrflogo{
 	padding-top: 1.5%;
