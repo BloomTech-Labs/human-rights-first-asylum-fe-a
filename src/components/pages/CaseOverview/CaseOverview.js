@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-
 import {
   Container,
   CaseSpecs,
@@ -13,19 +12,6 @@ import {
 } from './CaseOverviewStyled';
 
 const CaseOverview = props => {
-  // DESTRUCTURING PROPS FROM CASE_DATA
-  // const {
-  //   hearing_location,
-  //   hearing_date,
-  //   judge_name,
-  //   court_type,
-  //   refugee_origin,
-  //   social_group_type,
-  //   credibility_of_refugee,
-  //   judge_decision,
-  //   case_status,
-  // } = props.case_data | 'Here is some lorem ipsum';
-
   const { authState } = props;
   const [caseData, setCaseData] = useState();
   const { id } = useParams();
@@ -93,6 +79,7 @@ const CaseOverview = props => {
               Judge Decision: {caseData.judge_decision}
             </KeyParagraph>
           </Results>
+          <Link to={`/case/${caseData.id}/update`}>Update this Case</Link>
         </>
       )}
     </Container>

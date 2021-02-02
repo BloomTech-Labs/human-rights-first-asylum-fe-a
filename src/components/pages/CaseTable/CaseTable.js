@@ -101,24 +101,13 @@ export default function CaseTable(props) {
       width: 120,
       className: 'tableHeader',
     },
-    // {
-    //   field: 'court_type',
-    //   headerName: 'Court Type',
-    //   width: 105,
-    //   className: 'tableHeader',
-    // },
+
     {
       field: 'refugee_origin',
       headerName: 'Refugee Origin',
       width: 130,
       className: 'tableHeader',
     },
-    // {
-    //   field: 'hearing_type',
-    //   headerName: 'Hearing Type',
-    //   width: 120,
-    //   className: 'tableHeader',
-    // },
 
     {
       field: 'protected_ground',
@@ -133,37 +122,13 @@ export default function CaseTable(props) {
       className: 'tableHeader',
     },
 
-    // {
-    //   field: 'hearing_date',
-    //   headerName: 'Hearing Date',
-    //   width: 120,
-    //   className: 'tableHeader',
-    // },
-    // {
-    //   field: 'decision_date',
-    //   headerName: 'Decision Date',
-    //   width: 150,
-    //   className: 'tableHeader',
-    // },
-    // {
-    //   field: 'credibility_of_refugee',
-    //   headerName: 'Refugee Credibility',
-    //   width: 160,
-    //   className: 'tableHeader',
-    // },
-
     {
       field: 'judge_decision',
       headerName: 'Case Outcome',
       width: 140,
       className: 'tableHeader',
     },
-    // {
-    //   field: 'case_status',
-    //   headerName: 'Case Status',
-    //   width: 110,
-    //   className: 'tableHeader',
-    // },
+
     // MODAL for PDFs
     {
       field: 'view_pdf',
