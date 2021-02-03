@@ -84,7 +84,6 @@ function SavedJudges({ savedJudges, deleteSavedJudge }) {
         <IconButton>
           <DeleteIcon
             onClick={() => {
-              console.log(params.row.name);
               deleteSavedJudge(params.row.name);
             }}
           />
