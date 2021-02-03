@@ -99,7 +99,11 @@ function SavedCases({ savedCases, deleteBookmark }) {
       width: 110,
       renderCell: params => (
         <IconButton>
-          <DeleteIcon onClick={() => deleteBookmark(params.value)} />
+          <DeleteIcon
+            onClick={() => {
+              deleteBookmark(params.row.id);
+            }}
+          />
         </IconButton>
       ),
     },
