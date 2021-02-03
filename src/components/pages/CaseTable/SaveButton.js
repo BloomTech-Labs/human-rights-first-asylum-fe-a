@@ -26,7 +26,9 @@ function SaveCaseBtn({ selectedRows, bookmarkCases, text }) {
             ? true
             : false
         }
-        onClick={() => bookmarkCases(selectedRows.rowIds)}
+        onClick={() => {
+          bookmarkCases(selectedRows.rowIds);
+        }}
       >
         {text}
       </SaveCasesButton>

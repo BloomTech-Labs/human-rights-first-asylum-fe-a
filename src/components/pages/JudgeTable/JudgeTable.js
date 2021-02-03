@@ -110,7 +110,8 @@ export default function JudgeTable(props) {
   const findRowByID = (rowID, rowData) => {
     for (let i = 0; i < rowData.length; i++) {
       let currentRow = rowData[i];
-      if (currentRow.id === rowID) {
+      // eslint-disable-next-line
+      if (currentRow.id == rowID) {
         return currentRow;
       }
     }
@@ -128,6 +129,7 @@ export default function JudgeTable(props) {
   };
 
   const formatJudgeName = name => {
+    // eslint-disable-next-line
     if (name != undefined || name != null) {
       return name.split(' ').join('%20');
     }
