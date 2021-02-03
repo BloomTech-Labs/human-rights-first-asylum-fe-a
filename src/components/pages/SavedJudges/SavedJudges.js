@@ -77,12 +77,17 @@ function SavedJudges({ savedJudges, deleteSavedJudge }) {
     { field: 'denial_rate', headerName: '% Denial', width: 110 },
     { field: 'approval_rate', headerName: '% Approval', width: 110 },
     {
-      field: 'remove_case',
+      field: 'remove_judge',
       headerName: 'Remove',
       width: 110,
       renderCell: params => (
         <IconButton>
-          <DeleteIcon onClick={() => deleteSavedJudge(params.value)} />
+          <DeleteIcon
+            onClick={() => {
+              console.log(params.row.name);
+              deleteSavedJudge(params.row.name);
+            }}
+          />
         </IconButton>
       ),
     },
