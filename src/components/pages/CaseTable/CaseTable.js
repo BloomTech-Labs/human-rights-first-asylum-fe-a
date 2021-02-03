@@ -277,16 +277,12 @@ export default function CaseTable(props) {
               Search By...
             </MenuItem>
             <MenuItem value="id">Case ID</MenuItem>
-            <MenuItem value="court_type">Court Type</MenuItem>
+            <MenuItem value="judge_name">Judge Name</MenuItem>
+            <MenuItem value="hearing_location">Venue</MenuItem>
             <MenuItem value="refugee_origin">Refugee Origin</MenuItem>
             <MenuItem value="protected_ground">Protected Ground</MenuItem>
-            <MenuItem value="social_group_type">Social Group</MenuItem>
-            <MenuItem value="credibility_of_refugee">
-              Refugee Credibility
-            </MenuItem>
-            <MenuItem value="case_status">Case Status</MenuItem>
-            <MenuItem value="judge_name">Judge Name</MenuItem>
-            <MenuItem value="judge_decision">Decision</MenuItem>
+            <MenuItem value="social_group_type">PSG</MenuItem>
+            <MenuItem value="judge_decision">Case Outcome</MenuItem>
           </Select>
         </div>
         <TextField
