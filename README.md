@@ -1,10 +1,45 @@
-# Basic SPA
+# Human Rights First - Asylum - Front End
 
-For steps on how to work with this repository [please see here](https://docs.labs.lambdaschool.com/labs-spa-starter/)
+- This project is built with the Basic SPA Scaffold. To get started with the project, go [here](https://docs.labs.lambdaschool.com/labs-spa-starter/) and follow the instructions. Be sure to read the instructions carefully. 
+- [Project deployed here](https://a.humanrightsfirstasylum.dev/), using AWS Amplify. </br>
+*In order for the website to work properly, please enable 3rd-party cookies in your browser settings!*
+- [Corresponding Back-end repository](https://github.com/Lambda-School-Labs/human-rights-first-asylum-be-a)
+- [Back-end deployment](https://asylum-a-api.herokuapp.com/), using Heroku Postgres.
+- [Back-end endpoints documentation](https://asylum-a-api.herokuapp.com/api-docs/), using Swagger.
 
-# Human Rights First Front End
+### To get started:
+- Clone the repo locally to your machine.
+- Create an .env file on the top level of the repo, with the provided credentials.
+- run: `npm install` to download all dependencies.
+- run: `npm start` to start your local development server.
 
-You can find the deployed project at https://a.humanrightsfirstasylum.dev/
+### Styling Colors
+
+- Primary Action color: #3f51b5
+- Seconday "Disabled" color: #7f9bb3
+
+### Key Features and Notes to the Next Group
+- Table can be searched by column parameters and sorted by clicking on column headers
+
+- Cases and Judges can be saved to a user profile by checking their row's select box and clicking the save button
+
+  - This will add them to the saved cases or saved judges page
+
+- All Tables should let you go to a specfic page by clicking either case ID or Judge Name
+
+- PDF viewer pops up a model, minor visual bugs may appear
+
+- Clicking on a judge name in the judge table will take you to a page with some expanded info and basic plots
+  -This judge page needs styling work (JudgePage.js)
+  -Other than the pie chart, the formulas for the other sample charts are hard coded and will need to be fixed once the database is actually populated beyond test data
+  
+- Case Overview feature - When you click on a case, we currently have it redirected to a separate "Case info" page.  However, unbeknownst to us, Labs29 created a feature to make Case info to appear as a bar on the right side.  You can decide which feature to implement.
+  
+## Bugs
+- Possible major bug - Sometimes website (local and deployed) gets stuck on “Fetching user profile”.  The current workaround is to clear localStorage.  Possible fix: User must enable 3rd-party cookies in their browser settings.
+
+- Other know bugs and broken features can be seen on this [Google Doc](https://docs.google.com/document/d/1MTRA2X88MW4GwFX9NdmO_qqHEDqGHxj20Q0DWplD29E/edit?usp=sharing), feel free to copy it
+
 
 ## Contributors
 
@@ -29,92 +64,3 @@ You can find the deployed project at https://a.humanrightsfirstasylum.dev/
 | [<img src="https://avatars.githubusercontent.com/u/66019108?s=460&u=b98ac38b13155691c2189b10914cff7a092ab5a5&v=4" width = "200" align="center"/>](https://github.com/avawing) | [<img src="https://avatars.githubusercontent.com/u/67204638?s=460&u=57c9c3585fd3326f80ce34c02cbb7939a3ddc0fa&v=4" width = "200" align="center"/>](https://github.com/TBau23) | [<img src="https://avatars.githubusercontent.com/u/64440403?s=460&u=ebd52037cfa31421477942f041a43a6ef88267ca&v=4" width = "200" align="center"/>](https://github.com/SassyFatCat) |
 |                                                             [Linkedin](https://www.linkedin.com/in/aelise17264/)                                                              |                                                            [Linkedin](https://www.linkedin.com/in/mayciemorris/)                                                             |                                                         [Linkedin](https://www.linkedin.com/in/lynda-santiago-7b58221b4/)                                                         |
 
-- Fork and clone the repo to install it as your own remote.
-  - **note** please [be sure to set your remote](https://help.github.jp/enterprise/2.11/user/articles/changing-a-remote-s-url/) for this repo to point to your Labs Team Front End Repository.
-- run: `npm install` to download all dependencies.
-- run: `npm start` to start your local development server.
-
-> When using Okta for authentication, the app will need to run locally on port 3000.
-
-### Styling Colors
-
-- Primary Action color: #3f51b5
-- Seconday "Disabled" color: #7f9bb3
-
-### Key Features and Notes to the Next Group
-
-- Other know bugs and not working features can be seen on this [Google Doc](https://docs.google.com/document/d/1MTRA2X88MW4GwFX9NdmO_qqHEDqGHxj20Q0DWplD29E/edit?usp=sharing), feel free to copy it
-
-- Our data science team had issues hooking up their database to our backend, so we never had a populated database. As a result of this all of the Axios requests are made to a locally hosted version of the backend. Thse will obviously all have to be changed once there is a hosted backend with actual data in it.
-
-- Table can be searched by column parameters and sorted by clicking on column headers
-
-- Cases and Judges can be saved to a user profile by checking their row's select box and clicking the save button
-
-  - This will add them to the saved cases or saved judges page
-
-- All Tables should let you go to a specfic page by clicking either case ID or Judge Name
-
-- PDF viewer pops up a model, minor visual bugs may appear
-
-- Clicking on a judge name in the judge table will take you to a page with some expanded info and basic plots
-  -This judge page needs styling work (JudgePage.js)
-  -Other than the pie chart, the formulas for the other sample charts are hard coded and will need to be fixed once the database is actually populated beyond test data
-
-#### Front end deployed to AWS
-
-#### [Back end](https://github.com/Lambda-School-Labs/human-rights-first-asylum-be-a) built using: AWS
-
-#### Backend details
-
-Read backend details at https://github.com/Lambda-School-Labs/human-rights-first-asylum-be-a
-
-# APIs
-
-## Authentication API here
-
-Authentication done via Okta
-
-# Installation Instructions
-
-See https://docs.labs.lambdaschool.com/labs-spa-starter/
-
-## Other Scripts
-
-- start - starts the production server after a build is created
-
-# Contributing
-
-When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.
-
-Please note we have a [code of conduct](./CODE_OF_CONDUCT.md). Please follow it in all your interactions with the project.
-
-## Issue/Bug Request
-
-**If you are having an issue with the existing project code, please submit a bug report under the following guidelines:**
-
-- Check first to see if your issue has already been reported.
-- Check to see if the issue has recently been fixed by attempting to reproduce the issue using the latest master branch in the repository.
-- Create a live example of the problem.
-- Submit a detailed bug report including your environment & browser, steps to reproduce the issue, actual and expected outcomes, where you believe the issue is originating from, and any potential solutions you have considered.
-
-### Feature Requests
-
-We would love to hear from you about new features which would improve this app and further the aims of our project. Please provide as much detail and information as possible to show us why you think your new feature should be implemented.
-
-### Pull Requests
-
-If you have developed a patch, bug fix, or new feature that would improve this app, please submit a pull request. It is best to communicate your ideas with the developers first before investing a great deal of time into a pull request to ensure that it will mesh smoothly with the project.
-
-Remember that this project is licensed under the MIT license, and by submitting a pull request, you agree that your work will be, too.
-
-#### Pull Request Guidelines
-
-- Update the README.md with details of changes to the interface, including new plist variables, exposed ports, useful file locations and container parameters.
-- Ensure that your code conforms to our existing code conventions and test coverage.
-- Include the relevant issue number, if applicable.
-- You may merge the Pull Request in once you have the sign-off of two other developers, or if you do not have permission to do that, you may request the second reviewer to merge it for you.
-
-## Documentation
-
-See [Backend Documentation](🚫*link to your backend API SWAGGER DOCS here*) for details on the backend of our project.
