@@ -12,7 +12,7 @@ export const Container = styled.div`
 
 // CASE/JUDGE CONTAINER
 export const CaseSpecs = styled.div`
-  border-radius: 30px;
+  border-radius: 2px;
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
@@ -25,7 +25,7 @@ export const CaseSpecs = styled.div`
 
 // CLIENT CONTAINER
 export const ClientSpecs = styled.div`
-  border-radius: 30px;
+  border-radius: 2px;
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
@@ -38,7 +38,7 @@ export const ClientSpecs = styled.div`
 
 // RESULTS
 export const Results = styled.div`
-  border-radius: 30px;
+  border-radius: 2px;
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;

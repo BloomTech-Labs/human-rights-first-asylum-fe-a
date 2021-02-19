@@ -12,7 +12,7 @@ import SaveButton from './SaveButton';
 // Imports for PDF Modal
 import PDFViewer from '../PDFViewer/PDFViewer';
 import { Button } from 'antd';
-import pdf from '../PDFViewer/samplePDF.pdf';
+import pdf from '../PDFViewer/samplePDF 2.pdf';
 import './CaseTable.css';
 
 const useStyles = makeStyles(theme => ({
@@ -71,6 +71,12 @@ export default function CaseTable(props) {
   const [showPdf, setShowPdf] = useState(false);
   const columns = [
     {
+      field: 'hearing_date',
+      headerName: 'Hearing Date',
+      width: 150,
+      className: 'tableHeader',
+    },
+    {
       field: 'id',
       headerName: 'Case ID',
       width: 200,
@@ -79,6 +85,7 @@ export default function CaseTable(props) {
         filter: true,
       },
       //link to individual case page
+
       renderCell: params => (
         <>
           <Link to={`/case/${params.value}`} style={{ color: '#215589' }}>
@@ -148,11 +155,11 @@ export default function CaseTable(props) {
         <>
           <div className={classes.pdfView}>
             <PDFViewer
-              pdf={pdf}
+              pdf={pdf} // this will be set to viewPdf when endpoint is available
               onCancel={() => setShowPdf(false)}
               visible={showPdf}
             />
-            <Button onClick={() => setShowPdf(!showPdf)}>PDF</Button>
+            <Button onClick={viewPdf}>PDF</Button>
           </div>
         </>
       ),
@@ -182,6 +189,22 @@ export default function CaseTable(props) {
       },
     },
   ];
+
+  // function to show pdf data from backend endpoint in pdf viewer
+  // depending on what case is selected
+  const viewPdf = () => {
+    setShowPdf(!showPdf);
+    axios
+      .get('http://localhost:3000/') // dummy data for now. No endpoints exist
+      .then(res => {
+        console.log(res);
+        if (!res) {
+          console.log(
+            'This case does not have a pdf. It was uploded using CSV'
+          );
+        }
+      });
+  };
   const classes = useStyles();
 
   const handleChange = event => {
@@ -276,6 +299,7 @@ export default function CaseTable(props) {
             <MenuItem value="" disabled>
               Search By...
             </MenuItem>
+            <MenuItem value="hearing_date">Hearing Date</MenuItem>
             <MenuItem value="id">Case ID</MenuItem>
             <MenuItem value="judge_name">Judge Name</MenuItem>
             <MenuItem value="hearing_location">Venue</MenuItem>
