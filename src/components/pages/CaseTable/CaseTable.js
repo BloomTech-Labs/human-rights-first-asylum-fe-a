@@ -129,6 +129,12 @@ export default function CaseTable(props) {
       width: 130,
       className: 'tableHeader',
     },
+    {
+      field: 'credibility_of_refugee',
+      headerName: 'Refugee Credibility',
+      width: 130,
+      className: 'tableHeader',
+    },
 
     {
       field: 'judge_decision',
