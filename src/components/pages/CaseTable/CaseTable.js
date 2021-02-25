@@ -77,15 +77,13 @@ export default function CaseTable(props) {
     setShowCaseTable,
     showCaseTable,
   } = props;
-  const [columnToSearch, setColumnToSearch] = useState('');
-  const [searchQuery, setSearchQuery] = useState('');
 
   const searchOptions = [
     { id: 'id', label: 'Case ID' },
     { id: 'judge_name', label: 'Judge Name' },
     { id: 'protected_ground', label: 'Protected Ground' },
     { id: 'hearing_location', label: 'Venue' },
-    { id: 'psg', label: 'PSG' },
+    { id: 'social_group_type', label: 'PSG' },
     { id: 'judge_decision', label: 'Case Outcome' },
     { id: 'refugee_origin', label: 'Refugee Origin' },
   ];
@@ -278,7 +276,7 @@ export default function CaseTable(props) {
     hearing_location: '',
     refugee_origin: '',
     protected_ground: '',
-    psg: '',
+    social_group_type: '',
     judge_decision: '',
   });
   const filter = rows => {
