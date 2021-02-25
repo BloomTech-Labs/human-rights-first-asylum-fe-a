@@ -16,6 +16,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import Draggable from 'react-draggable';
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -337,26 +338,28 @@ export default function CaseTable(props) {
           />
         </div>
         {checkedValues.length > 0 ? (
-          <div className={classes.queryFields}>
-            <p style={{ marginLeft: 10, marginTop: 10 }}>
-              enter query values below:
-            </p>
-            {checkedValues.map(value => {
-              return (
-                <TextField
-                  placeholder={`${value.label}`}
-                  onChange={e => {
-                    setQueryValues({
-                      ...queryValues,
-                      [value.id]: e.target.value,
-                    });
-                  }}
-                  type="text"
-                  style={{ padding: '5px', marginLeft: 10, marginTop: 10 }}
-                />
-              );
-            })}
-          </div>
+          <Draggable>
+            <div className={classes.queryFields}>
+              <p style={{ marginLeft: 10, marginTop: 10 }}>
+                enter query values below:
+              </p>
+              {checkedValues.map(value => {
+                return (
+                  <TextField
+                    placeholder={`${value.label}`}
+                    onChange={e => {
+                      setQueryValues({
+                        ...queryValues,
+                        [value.id]: e.target.value,
+                      });
+                    }}
+                    type="text"
+                    style={{ padding: '5px', marginLeft: 10, marginTop: 10 }}
+                  />
+                );
+              })}
+            </div>
+          </Draggable>
         ) : (
           <div></div>
         )}
