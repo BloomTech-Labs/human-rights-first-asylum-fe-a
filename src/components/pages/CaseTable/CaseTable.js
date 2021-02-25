@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { DataGrid } from '@material-ui/data-grid';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
@@ -15,7 +13,6 @@ import { Button } from 'antd';
 import pdf from '../PDFViewer/samplePDF.pdf';
 import './CaseTable.css';
 import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
@@ -209,26 +206,6 @@ export default function CaseTable(props) {
   ];
   const classes = useStyles();
 
-  const handleChange = event => {
-    setColumnToSearch(event.target.value);
-    setSearchQuery('');
-  };
-
-  const handleSearchChange = event => {
-    setSearchQuery(event.target.value);
-  };
-
-  const search = rows => {
-    if (rows.length > 0) {
-      return rows.filter(
-        row =>
-          row[columnToSearch].toLowerCase().indexOf(searchQuery.toLowerCase()) >
-          -1
-      );
-    } else {
-      return rows;
-    }
-  };
   // the need for idParamName arose from case_id and id being used in different scenarios
   const findRowByID = (rowID, rowData) => {
     for (let i = 0; i < rowData.length; i++) {
@@ -314,16 +291,11 @@ export default function CaseTable(props) {
         filtered.forEach(key => {
           const keyValue = element[key];
           if (keyValue.includes(queryValues[key])) {
-            // returnedRows.push(element);
             counter++;
           }
           if (counter === filtered.length) {
             returnedRows.push(element);
           }
-          // } else if (element in returnedRows) {
-          //   const index = returnedRows.indexOf(element);
-          //   returnedRows.splice(index, 1);
-          // }
         });
       });
       return returnedRows;
@@ -366,7 +338,6 @@ export default function CaseTable(props) {
             )}
           />
         </div>
-        {/* Write a function that renders a text field for each item in the selected array*/}
         {checkedValues.length > 0 ? (
           <div className={classes.queryFields}>
             <p style={{ marginLeft: 10, marginTop: 10 }}>
@@ -391,23 +362,6 @@ export default function CaseTable(props) {
         ) : (
           <div></div>
         )}
-        {/* <div className={classes.queryFields}>
-          {checkedValues.map(value => {
-            return (
-              <TextField
-                placeholder={`${value.label}`}
-                onChange={e => {
-                  setQueryValues({
-                    ...queryValues,
-                    [value.id]: e.target.value,
-                  });
-                }}
-                type="text"
-                style={{ padding: '5px', marginLeft: 10, marginTop: 10 }}
-              />
-            );
-          })}
-        </div> */}
         <SaveButton
           selectedRows={selectedRows}
           bookmarkCases={bookmarkCases}
