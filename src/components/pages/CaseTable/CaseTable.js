@@ -40,12 +40,12 @@ const useStyles = makeStyles(theme => ({
   },
   search_container: {
     display: 'flex',
+    justifyContent: 'space-between',
     alignItems: 'flex-end',
   },
   colFilter: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '15%',
+    // flexDirection: 'column',
+    marginLeft: '10%',
   },
 
   pdfView: {
@@ -58,7 +58,13 @@ const useStyles = makeStyles(theme => ({
   queryFields: {
     display: 'flex',
     flexDirection: 'column',
-    marginRight: 180,
+    position: 'fixed',
+    border: '1px solid grey',
+    top: '220px',
+    right: 95,
+    background: 'white',
+    zIndex: 100,
+    borderRadius: '10px',
   },
 }));
 
@@ -81,8 +87,9 @@ export default function CaseTable(props) {
     { id: 'id', label: 'Case ID' },
     { id: 'judge_name', label: 'Judge Name' },
     { id: 'protected_ground', label: 'Protected Ground' },
+    { id: 'hearing_location', label: 'Venue' },
     { id: 'psg', label: 'PSG' },
-    { id: 'caseOutcome', label: 'Case OutCome' },
+    { id: 'judge_decision', label: 'Case Outcome' },
     { id: 'refugee_origin', label: 'Refugee Origin' },
   ];
   // State for PDF Modal
@@ -291,26 +298,32 @@ export default function CaseTable(props) {
   const [queryValues, setQueryValues] = useState({
     id: '',
     judge_name: '',
+    hearing_location: '',
     refugee_origin: '',
     protected_ground: '',
     psg: '',
-    caseOutcome: '',
+    judge_decision: '',
   });
   const filter = rows => {
     const returnedRows = [];
     const keysArray = Object.keys(queryValues);
     const filtered = keysArray.filter(key => queryValues[key] !== '');
     if (filtered.length > 0) {
-      console.log(filtered);
       rows.forEach(element => {
+        let counter = 0;
         filtered.forEach(key => {
           const keyValue = element[key];
           if (keyValue.includes(queryValues[key])) {
-            returnedRows.push(element);
-          } else if (element in returnedRows) {
-            const index = returnedRows.indexOf(element);
-            returnedRows.splice(index, 1);
+            // returnedRows.push(element);
+            counter++;
           }
+          if (counter === filtered.length) {
+            returnedRows.push(element);
+          }
+          // } else if (element in returnedRows) {
+          //   const index = returnedRows.indexOf(element);
+          //   returnedRows.splice(index, 1);
+          // }
         });
       });
       return returnedRows;
@@ -342,67 +355,59 @@ export default function CaseTable(props) {
                 {option.label}
               </React.Fragment>
             )}
-            style={{ width: 160 }}
+            style={{ width: 400 }}
             renderInput={params => (
               <TextField
                 {...params}
                 variant="outlined"
-                label="Search By..."
-                placeholder="Search By..."
+                label="Filter by..."
+                placeholder="Filter by..."
               />
             )}
           />
-          {/* <Select value={columnToSearch} onChange={handleChange} displayEmpty> */}
-          {/* This puts the search by text inside of the search bar, give it all other components the same height */}
-          {/* <MenuItem value="" disabled>
-              Search By...
-            </MenuItem> */}
-          {/* <MenuItem value="judge_name">Judge Name</MenuItem>
-            <MenuItem value="hearing_location">Venue</MenuItem>
-            <MenuItem value="refugee_origin">Refugee Origin</MenuItem>
-            <MenuItem value="protected_ground">Protected Ground</MenuItem>
-            <MenuItem value="social_group_type">PSG</MenuItem>
-            <MenuItem value="judge_decision">Case Outcome</MenuItem> */}
-          {/* </Select> */}
         </div>
         {/* Write a function that renders a text field for each item in the selected array*/}
-        {checkedValues && (
+        {checkedValues.length > 0 ? (
           <div className={classes.queryFields}>
+            <p style={{ marginLeft: 10, marginTop: 10 }}>
+              enter query values below:
+            </p>
             {checkedValues.map(value => {
               return (
                 <TextField
-                  placeholder={`Query for ${value.label}`}
+                  placeholder={`${value.label}`}
                   onChange={e => {
-                    console.log(caseData);
                     setQueryValues({
                       ...queryValues,
                       [value.id]: e.target.value,
                     });
                   }}
                   type="text"
-                  style={{ marginLeft: 10, marginTop: 10 }}
-                  fullWidth
+                  style={{ padding: '5px', marginLeft: 10, marginTop: 10 }}
                 />
               );
             })}
           </div>
+        ) : (
+          <div></div>
         )}
-        {checkedValues === [] && (
-          <TextField
-            placeholder="Enter Query..."
-            type="text"
-            disabled={true}
-            style={{ width: '50%', marginLeft: 40 }}
-            helperText="select values to filter the cases"
-          />
-        )}
-        {/* <TextField
-          value={searchQuery}
-          placeholder="Enter Query..."
-          onChange={handleSearchChange}
-          type="text"
-          style={{ width: '50%', marginLeft: 40 }}
-        /> */}
+        {/* <div className={classes.queryFields}>
+          {checkedValues.map(value => {
+            return (
+              <TextField
+                placeholder={`${value.label}`}
+                onChange={e => {
+                  setQueryValues({
+                    ...queryValues,
+                    [value.id]: e.target.value,
+                  });
+                }}
+                type="text"
+                style={{ padding: '5px', marginLeft: 10, marginTop: 10 }}
+              />
+            );
+          })}
+        </div> */}
         <SaveButton
           selectedRows={selectedRows}
           bookmarkCases={bookmarkCases}
