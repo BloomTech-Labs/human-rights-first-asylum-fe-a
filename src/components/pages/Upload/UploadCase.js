@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -20,6 +20,8 @@ const useStyles = makeStyles(theme => ({
 
 export const UploadCase = () => {
   const classes = useStyles();
+
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const divStyles = {
     display: 'flex',
@@ -44,6 +46,14 @@ export const UploadCase = () => {
 
   const { handleSubmit, errors } = useForm();
   const onSubmit = data => console.log(data);
+
+  // const handleAdminTasks = () => {
+  //   this.setState({isAdmin: true});
+  // };
+
+  // const handleUserTasks = () => {
+  //   this.setState({isAdmin: false});
+  // };
 
   return (
     <div style={divStyles}>
@@ -206,6 +216,7 @@ export const UploadCase = () => {
               />
             </label>
           </div>
+
           <div className="submit-button">
             <Button
               className="btn-upload"
@@ -213,9 +224,36 @@ export const UploadCase = () => {
               variant="contained"
               component="span"
             >
-              Upload
+              Submit
             </Button>
           </div>
+          <br />
+
+          {isAdmin && (
+            <>
+              <div className="approve-button">
+                <Button
+                  className="btn-upload"
+                  style={buttonStyles}
+                  variant="contained"
+                  component="span"
+                >
+                  Approve
+                </Button>
+              </div>
+              <br />
+              <div className="reject-button">
+                <Button
+                  className="btn-upload"
+                  style={buttonStyles}
+                  variant="contained"
+                  component="span"
+                >
+                  Reject
+                </Button>
+              </div>
+            </>
+          )}
         </form>
       </div>
     </div>

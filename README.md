@@ -1,6 +1,6 @@
 # Human Rights First - Asylum - Front End
 
-- This project is built with the Basic SPA Scaffold. To get started with the project, go [here](https://docs.labs.lambdaschool.com/labs-spa-starter/) and follow the instructions. Be sure to read the instructions carefully. 
+- This project is built with the Basic SPA Scaffold. To get started with the project, go [here](https://docs.labs.lambdaschool.com/labs-spa-starter/) and follow the instructions. Be sure to read the instructions carefully.
 - [Project deployed here](https://a.humanrightsfirstasylum.dev/), using AWS Amplify. </br>
 *In order for the website to work properly, please enable 3rd-party cookies in your browser settings!*
 - [Corresponding Back-end repository](https://github.com/Lambda-School-Labs/human-rights-first-asylum-be-a)
@@ -32,9 +32,9 @@
 - Clicking on a judge name in the judge table will take you to a page with some expanded info and basic plots
   -This judge page needs styling work (JudgePage.js)
   -Other than the pie chart, the formulas for the other sample charts are hard coded and will need to be fixed once the database is actually populated beyond test data
-  
+
 - Case Overview feature - When you click on a case, we currently have it redirected to a separate "Case info" page.  However, unbeknownst to us, Labs29 created a feature to make Case info to appear as a bar on the right side.  You can decide which feature to implement.
-  
+
 ## Bugs
 - Possible major bug - Sometimes website (local and deployed) gets stuck on “Fetching user profile”.  The current workaround is to clear localStorage.  Possible fix: User must enable 3rd-party cookies in their browser settings.
 
@@ -63,4 +63,3 @@
 |                                                                [Anna Brander](https://github.com/aelise17264)                                                                 |                                                              [Maycie Morris](https://github.com/maycie-morris)                                                               |                                                                   [Lynda Santiago](https://github.com/lyntechi)                                                                   |
 | [<img src="https://avatars.githubusercontent.com/u/66019108?s=460&u=b98ac38b13155691c2189b10914cff7a092ab5a5&v=4" width = "200" align="center"/>](https://github.com/avawing) | [<img src="https://avatars.githubusercontent.com/u/67204638?s=460&u=57c9c3585fd3326f80ce34c02cbb7939a3ddc0fa&v=4" width = "200" align="center"/>](https://github.com/TBau23) | [<img src="https://avatars.githubusercontent.com/u/64440403?s=460&u=ebd52037cfa31421477942f041a43a6ef88267ca&v=4" width = "200" align="center"/>](https://github.com/SassyFatCat) |
 |                                                             [Linkedin](https://www.linkedin.com/in/aelise17264/)                                                              |                                                            [Linkedin](https://www.linkedin.com/in/mayciemorris/)                                                             |                                                         [Linkedin](https://www.linkedin.com/in/lynda-santiago-7b58221b4/)                                                         |
-

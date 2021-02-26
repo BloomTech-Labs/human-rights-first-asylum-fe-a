@@ -5,7 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 // Buttons
 import Tabs from '../Home/Tabs';
 import SaveButton from './SaveButton';
@@ -66,6 +66,7 @@ export default function CaseTable(props) {
   } = props;
   const [columnToSearch, setColumnToSearch] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+  const { id } = useParams();
 
   // State for PDF Modal
   const [showPdf, setShowPdf] = useState(false);
@@ -155,7 +156,7 @@ export default function CaseTable(props) {
         <>
           <div className={classes.pdfView}>
             <PDFViewer
-              pdf={pdf} // this will be set to viewPdf when endpoint is available
+              pdf={viewPdf} // this will be set to viewPdf when endpoint is available
               onCancel={() => setShowPdf(false)}
               visible={showPdf}
             />
@@ -195,7 +196,7 @@ export default function CaseTable(props) {
   const viewPdf = () => {
     setShowPdf(!showPdf);
     axios
-      .get('http://localhost:3000/') // dummy data for now. No endpoints exist
+      .get(`${process.env.REACT_APP_API_URI}/case/${id}/pdf`) // dummy data for now. No endpoints exist
       .then(res => {
         console.log(res);
         if (!res) {

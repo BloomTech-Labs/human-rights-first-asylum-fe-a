@@ -3,6 +3,9 @@ import styled from 'styled-components';
 export const Container = styled.div`
   height: ${props => (props.containerHeight ? props.containerHeight : 'auto')};
   width: 100%;
+  border-radius: 2px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+  background-color: #e8eae6;
   display: flex;
   flex-flow: row wrap;
   margin: 5% 4% 0 0;
@@ -10,43 +13,39 @@ export const Container = styled.div`
   font-size: 1.2rem;
 `;
 
-// CASE/JUDGE CONTAINER
 export const CaseSpecs = styled.div`
-  border-radius: 2px;
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
   align-items: left;
   padding: 5%;
-  background-color: #e8eae6;
+  padding-bottom: 0%;
   margin: 5%;
-  width: 40%;
+  margin-bottom: 0%;
+  width: 100%;
 `;
 
-// CLIENT CONTAINER
 export const ClientSpecs = styled.div`
-  border-radius: 2px;
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
   align-items: left;
   padding: 5%;
-  background-color: #e8eae6;
+  padding-top: 1%;
+  padding-bottom: 1%;
   margin: 5%;
-  width: 40%;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  width: 100%;
 `;
 
-// RESULTS
 export const Results = styled.div`
-  border-radius: 2px;
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
   align-items: left;
   padding: 5%;
-  background-color: #e8eae6;
+  padding-top: 0%;
   margin: 5%;
-  width: 40%;
+  margin-top: 0%;
+  width: 100%;
 `;
 
 export const KeyParagraph = styled.p`
