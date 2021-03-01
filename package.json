@@ -21,6 +21,7 @@
     "axios": "^0.21.1",
     "craco-less": "^1.17.0",
     "date-fns": "^2.16.1",
+    "dotenv": "^8.2.0",
     "mui-datatables": "^3.7.1",
     "plotly.js": "^1.54.6",
     "react": "^16.13.1",
@@ -37,6 +38,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "redux": "^4.0.5",
+    "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "semantic-ui-react": "^2.0.3",
     "styled-components": "^5.2.1"
@@ -49,7 +51,7 @@
     "prettier": "prettier --write \"**/*.+(js|jsx|json|css|md)\"",
     "coverage": "npm test -- --coverage --watchAll=false",
     "lint": "eslint 'src/**/*.{js,jsx}' --fix",
-    "format": "prettier --write 'src/**/*.{js,jsx,css,scss}'",
+    "format": "npx prettier --write 'src/**/*.{js,jsx,css,scss}'",
     "storybook": "start-storybook",
     "deploy-storybook": "storybook-to-ghpages"
   },

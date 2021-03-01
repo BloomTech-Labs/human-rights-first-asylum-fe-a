@@ -6,6 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
+import fetchPdf from '../../../state/actions/index';
 // Buttons
 import Tabs from '../Home/Tabs';
 import SaveButton from './SaveButton';
@@ -137,6 +138,12 @@ export default function CaseTable(props) {
       width: 130,
       className: 'tableHeader',
     },
+    {
+      field: 'credibility_of_refugee',
+      headerName: 'Refugee Credibility',
+      width: 130,
+      className: 'tableHeader',
+    },
 
     {
       field: 'judge_decision',
@@ -156,11 +163,11 @@ export default function CaseTable(props) {
         <>
           <div className={classes.pdfView}>
             <PDFViewer
-              pdf={viewPdf} // this will be set to viewPdf when endpoint is available
+              pdf={fetchPdf} // this will be set to viewPdf when endpoint is available
               onCancel={() => setShowPdf(false)}
               visible={showPdf}
             />
-            <Button onClick={viewPdf}>PDF</Button>
+            <Button onClick={fetchPdf}>PDF</Button>
           </div>
         </>
       ),
@@ -191,21 +198,6 @@ export default function CaseTable(props) {
     },
   ];
 
-  // function to show pdf data from backend endpoint in pdf viewer
-  // depending on what case is selected
-  const viewPdf = () => {
-    setShowPdf(!showPdf);
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/case/${id}/pdf`) // dummy data for now. No endpoints exist
-      .then(res => {
-        console.log(res);
-        if (!res) {
-          console.log(
-            'This case does not have a pdf. It was uploded using CSV'
-          );
-        }
-      });
-  };
   const classes = useStyles();
 
   const handleChange = event => {

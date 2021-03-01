@@ -3,10 +3,8 @@ import { useForm } from 'react-hook-form';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-
-// This form is still missing all functionality
-// Eventually it should upload a PDF and pre-fill the text areas with the relevant case information
-// and the user can then edit as necessary and submit it to the table
+import { sendPdf, getData } from '../.././../state/actions/index';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -18,7 +16,24 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export const UploadCase = () => {
+const initialFormValues = {
+  case_url: '',
+  court_type: '',
+  hearing_type: '',
+  refugee_origin: '',
+  hearing_location: '',
+  hearing_date: '',
+  decision_date: '',
+  credibility_of_refugee: '',
+  case_status: '',
+  judge_decision: '',
+  judge_name: '',
+  protected_ground: [],
+  social_group_type: [],
+};
+
+const UploadCase = props => {
+  const [formValues, setFormValues] = useState(initialFormValues);
   const classes = useStyles();
 
   const [isAdmin, setIsAdmin] = useState(false);
@@ -45,7 +60,21 @@ export const UploadCase = () => {
   };
 
   const { handleSubmit, errors } = useForm();
-  const onSubmit = data => console.log(data);
+  // const onSubmit = data => console.log(data);
+
+  // useEffect(()=>{
+  //   props.getData();
+  // },[])
+  const onSubmit = () => {};
+  const onFileChange = e => {
+    // const file = e.target.files[0];
+    // props.sendPdf(file)
+    // props.getData()
+  };
+  const onInputChange = e => {
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
+  };
 
   // const handleAdminTasks = () => {
   //   this.setState({isAdmin: true});
@@ -69,6 +98,7 @@ export const UploadCase = () => {
                 name="btn-upload"
                 style={{ display: 'none' }}
                 type="file"
+                onChange={onFileChange}
               />
               <Button
                 className="btn-choose"
@@ -111,12 +141,14 @@ export const UploadCase = () => {
           </div>
           <div className="court-type">
             <label htmlFor="court-type">
+              {formValues.course_type}
               <TextField
                 multiline={true}
                 type="text"
                 variant="outlined"
                 placeholder="Court Type"
                 name="Court Type"
+                onChange={onInputChange}
               />
             </label>
           </div>
@@ -128,6 +160,7 @@ export const UploadCase = () => {
                 variant="outlined"
                 placeholder="Hearing Type"
                 name="Hearing Type"
+                onChange={onInputChange}
               />
             </label>
           </div>
@@ -139,6 +172,7 @@ export const UploadCase = () => {
                 variant="outlined"
                 placeholder="Refugee Origin"
                 name="Refugee Origin"
+                onChange={onInputChange}
               />
             </label>
           </div>
@@ -149,6 +183,7 @@ export const UploadCase = () => {
                 variant="outlined"
                 name="Protected Ground"
                 placeholder="Protected Ground"
+                onChange={onInputChange}
               />
             </label>
           </div>
@@ -160,6 +195,7 @@ export const UploadCase = () => {
                 variant="outlined"
                 placeholder="Social Group"
                 name="Social Group"
+                onChange={onInputChange}
               />
             </label>
           </div>
@@ -171,6 +207,7 @@ export const UploadCase = () => {
                 variant="outlined"
                 placeholder="Location"
                 name="Location"
+                onChange={onInputChange}
               />
             </label>
           </div>
@@ -182,6 +219,7 @@ export const UploadCase = () => {
                 variant="outlined"
                 placeholder="Refugee Credibility"
                 name="Refugee Credibility"
+                onChange={onInputChange}
               />
             </label>
           </div>
@@ -193,6 +231,7 @@ export const UploadCase = () => {
                 variant="outlined"
                 placeholder="Judge Name"
                 name="Judge Name"
+                onChange={onInputChange}
               />
             </label>
           </div>
@@ -203,6 +242,7 @@ export const UploadCase = () => {
                 variant="outlined"
                 placeholder="Decision"
                 name="Decision"
+                onChange={onInputChange}
               />
             </label>
           </div>
@@ -213,6 +253,7 @@ export const UploadCase = () => {
                 variant="outlined"
                 placeholder="Case Status"
                 name="Case Status"
+                onChange={onInputChange}
               />
             </label>
           </div>
@@ -259,3 +300,12 @@ export const UploadCase = () => {
     </div>
   );
 };
+const mapStateToProps = state => {
+  console.log(state);
+  return {
+    isLoading: state.isLoading,
+    pdfData: state.pdfData,
+  };
+};
+
+export default connect(mapStateToProps, { getData, sendPdf })(UploadCase);
