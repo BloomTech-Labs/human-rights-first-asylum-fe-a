@@ -2,13 +2,12 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   height: ${props => (props.containerHeight ? props.containerHeight : 'auto')};
-  width: 100%;
+  width: 40%;
   border-radius: 2px;
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
-  background-color: #e8eae6;
+  background-color: white;
   display: flex;
   flex-flow: row wrap;
-  margin: 5% 4% 0 0;
+  margin: 50% 15% 0 0;
   font-weight: bold;
   font-size: 1.2rem;
 `;
