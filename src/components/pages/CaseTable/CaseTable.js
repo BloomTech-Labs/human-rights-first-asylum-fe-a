@@ -6,7 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
-// import FETCH_PDF_DATA from '../../../state/actions/index';
+import fetchPdf from '../../../state/actions/index';
 // Buttons
 import Tabs from '../Home/Tabs';
 import SaveButton from './SaveButton';
@@ -163,7 +163,7 @@ export default function CaseTable(props) {
         <>
           <div className={classes.pdfView}>
             <PDFViewer
-              pdf={pdf} // this will be set to viewPdf when endpoint is available
+              pdf={fetchPdf} // this will be set to viewPdf when endpoint is available
               onCancel={() => setShowPdf(false)}
               visible={showPdf}
             />

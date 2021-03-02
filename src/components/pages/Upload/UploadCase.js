@@ -105,7 +105,7 @@ const UploadCase = props => {
                 variant="outlined"
                 component="span"
               >
-                Choose Files
+                Upload a case
               </Button>
             </label>
           </div>
