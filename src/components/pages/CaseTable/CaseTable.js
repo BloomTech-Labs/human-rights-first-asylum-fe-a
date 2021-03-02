@@ -17,6 +17,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import Draggable from 'react-draggable';
+import { Drawer } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -63,6 +64,20 @@ const useStyles = makeStyles(theme => ({
     background: 'white',
     zIndex: 100,
     borderRadius: '10px',
+  },
+  filterButton: {
+    marginLeft: '45%',
+    background: '#215589',
+    width: '15%',
+    padding: '1%',
+    color: 'white',
+    borderRadius: '8px',
+    fontWeight: 'bold',
+    fontSize: 'larger',
+    border: 'none',
+  },
+  drawer: {
+    width: 240,
   },
 }));
 
@@ -280,6 +295,11 @@ export default function CaseTable(props) {
     social_group_type: '',
     judge_decision: '',
   });
+
+  const [search, setSearch] = useState(false);
+  const toggleSearch = () => {
+    setSearch(!search);
+  };
   const filter = rows => {
     const returnedRows = [];
     const keysArray = Object.keys(queryValues);
@@ -301,6 +321,27 @@ export default function CaseTable(props) {
     }
     return rows;
   };
+  const drawerContent = () => {
+    return (
+      <div className={classes.drawer}>
+        {searchOptions.map(value => {
+          return (
+            <TextField
+              placeholder={`${value.label}`}
+              onChange={e => {
+                setQueryValues({
+                  ...queryValues,
+                  [value.id]: e.target.value,
+                });
+              }}
+              type="text"
+              style={{ padding: '5px', marginLeft: 10, marginTop: 10 }}
+            />
+          );
+        })}
+      </div>
+    );
+  };
   return (
     <div className={classes.tbl_container}>
       <div className={classes.search_container}>
@@ -308,7 +349,7 @@ export default function CaseTable(props) {
           setShowCaseTable={setShowCaseTable}
           showCaseTable={showCaseTable}
         />
-        <div className={classes.colFilter}>
+        {/* <div className={classes.colFilter}>
           <Autocomplete
             multiple
             id="options-checkboxes"
@@ -336,8 +377,8 @@ export default function CaseTable(props) {
               />
             )}
           />
-        </div>
-        {checkedValues.length > 0 ? (
+        </div> */}
+        {/* {checkedValues.length > 0 ? (
           <Draggable>
             <div className={classes.queryFields}>
               <p style={{ marginLeft: 10, marginTop: 10 }}>
@@ -362,12 +403,18 @@ export default function CaseTable(props) {
           </Draggable>
         ) : (
           <div></div>
-        )}
+        )} */}
+        <button onClick={toggleSearch} className={classes.filterButton}>
+          Filter Cases
+        </button>
         <SaveButton
           selectedRows={selectedRows}
           bookmarkCases={bookmarkCases}
           text={'Save Cases'}
         />
+        <Drawer anchor="right" open={search} onClose={toggleSearch}>
+          {drawerContent()}
+        </Drawer>
       </div>
       <DataGrid
         rows={checkedValues.length > 0 ? filter(caseData) : caseData}
