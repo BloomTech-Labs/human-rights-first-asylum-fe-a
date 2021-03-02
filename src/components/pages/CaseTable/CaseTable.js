@@ -68,10 +68,9 @@ const useStyles = makeStyles(theme => ({
     borderRadius: '10px',
   },
   filterButton: {
-    marginLeft: '45%',
     background: '#215589',
-    width: '15%',
-    padding: '1%',
+    padding: '3%',
+    width: '100%',
     color: 'white',
     borderRadius: '8px',
     fontWeight: 'bold',
@@ -87,6 +86,10 @@ const useStyles = makeStyles(theme => ({
   },
   chips: {
     display: 'flex',
+  },
+  buttons: {
+    display: 'flex',
+    width: '30%',
   },
 }));
 
@@ -463,19 +466,21 @@ export default function CaseTable(props) {
         ) : (
           <div></div>
         )} */}
-        <button
-          onClick={() => {
-            toggleSearch();
-          }}
-          className={classes.filterButton}
-        >
-          Filter Cases
-        </button>
-        <SaveButton
-          selectedRows={selectedRows}
-          bookmarkCases={bookmarkCases}
-          text={'Save Cases'}
-        />
+        <div className={classes.buttons}>
+          <button
+            onClick={() => {
+              toggleSearch();
+            }}
+            className={classes.filterButton}
+          >
+            Filter Cases
+          </button>
+          <SaveButton
+            selectedRows={selectedRows}
+            bookmarkCases={bookmarkCases}
+            text={'Save Cases'}
+          />
+        </div>
         <Drawer anchor="right" open={search} onClose={toggleSearch}>
           {drawerContent()}
         </Drawer>
