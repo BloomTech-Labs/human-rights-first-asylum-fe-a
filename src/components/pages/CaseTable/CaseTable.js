@@ -155,7 +155,7 @@ export default function CaseTable(props) {
         <>
           <div className={classes.pdfView}>
             <PDFViewer
-              pdf={pdf} // this will be set to viewPdf when endpoint is available
+              pdf={`${process.env.REACT_APP_API_URI}/case/${params.row.id}/view-pdf`} // this will be set to viewPdf when endpoint is available
               onCancel={() => setShowPdf(false)}
               visible={showPdf}
             />
