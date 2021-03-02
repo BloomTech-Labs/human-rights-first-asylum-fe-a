@@ -18,6 +18,8 @@ import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import Draggable from 'react-draggable';
 import { Drawer } from '@material-ui/core';
+import Search from 'antd/lib/input/Search';
+import Chip from '@material-ui/core/Chip';
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -78,6 +80,13 @@ const useStyles = makeStyles(theme => ({
   },
   drawer: {
     width: 240,
+    marginTop: '40%',
+  },
+  tabs: {
+    width: '30%',
+  },
+  chips: {
+    display: 'flex',
   },
 }));
 
@@ -300,6 +309,7 @@ export default function CaseTable(props) {
   const toggleSearch = () => {
     setSearch(!search);
   };
+  const [searching, setSearching] = useState(false);
   const filter = rows => {
     const returnedRows = [];
     const keysArray = Object.keys(queryValues);
@@ -324,21 +334,50 @@ export default function CaseTable(props) {
   const drawerContent = () => {
     return (
       <div className={classes.drawer}>
+        <h6
+          style={{
+            fontSize: 'larger',
+            fontWeight: 'bold',
+            paddingBottom: '1%',
+            marginLeft: 10,
+          }}
+        >
+          Advanced search
+        </h6>
+        <p style={{ paddingBottom: '5%', marginLeft: 10 }}>
+          Search by 1 or more data fields. Multiple Search terms will be
+          combined with AND logic.
+        </p>
         {searchOptions.map(value => {
           return (
-            <TextField
-              placeholder={`${value.label}`}
-              onChange={e => {
-                setQueryValues({
-                  ...queryValues,
-                  [value.id]: e.target.value,
-                });
-              }}
-              type="text"
-              style={{ padding: '5px', marginLeft: 10, marginTop: 10 }}
-            />
+            <div className={classes.querydiv}>
+              <p style={{ marginLeft: 10 }}>{value.label}</p>
+              <TextField
+                placeholder={'search query'}
+                variant="outlined"
+                size="small"
+                value={queryValues[value.id]}
+                onChange={e => {
+                  setQueryValues({
+                    ...queryValues,
+                    [value.id]: e.target.value,
+                  });
+                }}
+                type="text"
+                style={{ marginLeft: 10, marginBottom: 10 }}
+              />
+            </div>
           );
         })}
+        <button
+          onClick={() => {
+            toggleSearch();
+            setSearching(true);
+          }}
+          style={{ width: '30%', margin: 'auto', display: 'block' }}
+        >
+          search
+        </button>
       </div>
     );
   };
@@ -349,6 +388,26 @@ export default function CaseTable(props) {
           setShowCaseTable={setShowCaseTable}
           showCaseTable={showCaseTable}
         />
+        {searching && (
+          <div className={classes.chips}>
+            {searchOptions.map(option => {
+              if (queryValues[option.id] !== '') {
+                return (
+                  <Chip
+                    label={`${option.label}: ${queryValues[option.id]}`}
+                    onDelete={() => {
+                      setQueryValues({
+                        ...queryValues,
+                        [option.id]: '',
+                      });
+                    }}
+                    style={{ marginRight: 5 }}
+                  />
+                );
+              }
+            })}
+          </div>
+        )}
         {/* <div className={classes.colFilter}>
           <Autocomplete
             multiple
@@ -404,7 +463,12 @@ export default function CaseTable(props) {
         ) : (
           <div></div>
         )} */}
-        <button onClick={toggleSearch} className={classes.filterButton}>
+        <button
+          onClick={() => {
+            toggleSearch();
+          }}
+          className={classes.filterButton}
+        >
           Filter Cases
         </button>
         <SaveButton
@@ -417,7 +481,7 @@ export default function CaseTable(props) {
         </Drawer>
       </div>
       <DataGrid
-        rows={checkedValues.length > 0 ? filter(caseData) : caseData}
+        rows={searching ? filter(caseData) : caseData}
         columns={columns}
         className={classes.grid}
         autoHeight={true}
