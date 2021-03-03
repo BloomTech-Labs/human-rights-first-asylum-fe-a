@@ -6,14 +6,12 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
-import fetchPdf from '../../../state/actions/index';
 // Buttons
 import Tabs from '../Home/Tabs';
 import SaveButton from './SaveButton';
 // Imports for PDF Modal
 import PDFViewer from '../PDFViewer/PDFViewer';
 import { Button } from 'antd';
-import pdf from '../PDFViewer/samplePDF.pdf';
 import './CaseTable.css';
 
 const useStyles = makeStyles(theme => ({
@@ -74,7 +72,7 @@ export default function CaseTable(props) {
 
   const pdfData = () => {
     axios
-      .get(`${process.env.REACT_APP_API_URI}/case/${id}/pdf`)
+      .get(`${process.env.REACT_APP_API_URI}/case/${id}`)
       .then(res => {
         console.log(res.data);
         setShowPdf(res.data);
