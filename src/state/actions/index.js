@@ -19,11 +19,11 @@ export const sendPdf = pdfFile => {
   };
 };
 
-export const fetchPdf = () => {
+export const fetchPdf = id => {
   return dispatch => {
     dispatch({ type: FETCH_PDF_DATA });
     axios
-      .get(`${process.env.REACT_APP_API_URI}/case`)
+      .get(`${process.env.REACT_APP_API_URI}/case/${id}`)
       .then(res => {
         dispatch({ type: FETCH_PDF_SUCCESS, payload: res.data });
       })

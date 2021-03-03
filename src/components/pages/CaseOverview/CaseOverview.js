@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
+import { Button } from 'antd';
 import {
   Container,
   CaseSpecs,
   ClientSpecs,
   Results,
+  KeyParagraphBold,
   KeyParagraph,
   ValueParagraph,
 } from './CaseOverviewStyled';
@@ -44,11 +45,16 @@ const CaseOverview = props => {
           <CaseSpecs>
             {/* Link to updateCase page, this page is not yet operational
             backend endpoints need to be built out to allow page to render & send updates to the database */}
-            <Button onclick={`/case/${caseData.id}/update`}>
+            <Button
+              type="primary"
+              size="small"
+              padding="15px"
+              onclick={`/case/${caseData.id}/update`}
+            >
               Update this Case
             </Button>
+            <KeyParagraphBold>Case ID: {id}</KeyParagraphBold>
             Case Specifics
-            <KeyParagraph>Case ID: {id}</KeyParagraph>
             <KeyParagraph>Case Status: {caseData.case_status}</KeyParagraph>
             <KeyParagraph>Date: {caseData.hearing_date}</KeyParagraph>
             <KeyParagraph>Location: {caseData.hearing_location}</KeyParagraph>

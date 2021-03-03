@@ -2,12 +2,12 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   height: ${props => (props.containerHeight ? props.containerHeight : 'auto')};
-  width: 40%;
+  width: 30%;
   border-radius: 2px;
   background-color: white;
   display: flex;
   flex-flow: row wrap;
-  margin: 50% 15% 0 0;
+  margin: 10% 15% 0% 22%;
   font-weight: bold;
   font-size: 1.2rem;
 `;
@@ -49,6 +49,11 @@ export const Results = styled.div`
 
 export const KeyParagraph = styled.p`
   font-weight: normal;
+  padding: 2%;
+`;
+
+export const KeyParagraphBold = styled.p`
+  font-weight: bolder;
   padding: 2%;
 `;
 

@@ -13,7 +13,7 @@ import SaveButton from './SaveButton';
 // Imports for PDF Modal
 import PDFViewer from '../PDFViewer/PDFViewer';
 import { Button } from 'antd';
-import pdf from '../PDFViewer/samplePDF 2.pdf';
+import pdf from '../PDFViewer/samplePDF.pdf';
 import './CaseTable.css';
 
 const useStyles = makeStyles(theme => ({
@@ -71,6 +71,19 @@ export default function CaseTable(props) {
 
   // State for PDF Modal
   const [showPdf, setShowPdf] = useState(false);
+
+  const pdfData = () => {
+    axios
+      .get(`${process.env.REACT_APP_API_URI}/case/${id}/pdf`)
+      .then(res => {
+        console.log(res.data);
+        setShowPdf(res.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   const columns = [
     {
       field: 'hearing_date',
@@ -153,6 +166,7 @@ export default function CaseTable(props) {
     },
 
     // MODAL for PDFs
+
     {
       field: 'view_pdf',
       headerName: 'View PDF',
@@ -163,11 +177,11 @@ export default function CaseTable(props) {
         <>
           <div className={classes.pdfView}>
             <PDFViewer
-              pdf={fetchPdf} // this will be set to viewPdf when endpoint is available
+              pdf={pdfData} // this will be set to viewPdf when endpoint is available
               onCancel={() => setShowPdf(false)}
               visible={showPdf}
             />
-            <Button onClick={showPdf}>PDF</Button>
+            <Button onClick={setShowPdf}>PDF</Button>
           </div>
         </>
       ),
