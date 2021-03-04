@@ -12,13 +12,7 @@ import PDFViewer from '../PDFViewer/PDFViewer';
 import { Button } from 'antd';
 import pdf from '../PDFViewer/samplePDF.pdf';
 import './CaseTable.css';
-import Checkbox from '@material-ui/core/Checkbox';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
-import Draggable from 'react-draggable';
 import { Drawer } from '@material-ui/core';
-import Search from 'antd/lib/input/Search';
 import Chip from '@material-ui/core/Chip';
 
 const useStyles = makeStyles(theme => ({
@@ -106,15 +100,6 @@ export default function CaseTable(props) {
     showCaseTable,
   } = props;
 
-  const searchOptions = [
-    { id: 'id', label: 'Case ID' },
-    { id: 'judge_name', label: 'Judge Name' },
-    { id: 'protected_ground', label: 'Protected Ground' },
-    { id: 'hearing_location', label: 'Venue' },
-    { id: 'social_group_type', label: 'PSG' },
-    { id: 'judge_decision', label: 'Case Outcome' },
-    { id: 'refugee_origin', label: 'Refugee Origin' },
-  ];
   // State for PDF Modal
   const [showPdf, setShowPdf] = useState(false);
   const columns = [
@@ -184,7 +169,36 @@ export default function CaseTable(props) {
       width: 140,
       className: 'tableHeader',
     },
-
+    {
+      field: 'is_applicant_indigenous',
+      headerName: 'Indigenous aplicant',
+      width: 160,
+      className: 'tableHeader',
+    },
+    {
+      field: 'applicant_language',
+      headerName: 'Applicant Language',
+      width: 160,
+      className: 'tableHeader',
+    },
+    {
+      field: 'applicant_access_to_interpreter',
+      headerName: 'Access to Intepreter',
+      width: 160,
+      className: 'tableHeader',
+    },
+    {
+      field: 'one_year_guideline',
+      headerName: 'One Year Guideline',
+      width: 160,
+      className: 'tableHeader',
+    },
+    {
+      field: 'determined_applicant_credibility',
+      headerName: 'Refugee Credibility',
+      width: 160,
+      className: 'tableHeader',
+    },
     // MODAL for PDFs
     {
       field: 'view_pdf',
@@ -294,10 +308,6 @@ export default function CaseTable(props) {
   const onCheckboxSelect = selections => {
     setSelectedRows(selections);
   };
-
-  const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-  const checkedIcon = <CheckBoxIcon fontSize="small" />;
-  const [checkedValues, setCheckedValues] = useState([]);
   const [queryValues, setQueryValues] = useState({
     id: '',
     judge_name: '',
@@ -306,6 +316,11 @@ export default function CaseTable(props) {
     protected_ground: '',
     social_group_type: '',
     judge_decision: '',
+    applicant_access_to_interpreter: '',
+    applicant_language: '',
+    determined_applicant_credibility: '',
+    is_applicant_indigenous: '',
+    one_year_guideline: '',
   });
 
   const [search, setSearch] = useState(false);
@@ -321,8 +336,8 @@ export default function CaseTable(props) {
       rows.forEach(element => {
         let counter = 0;
         filtered.forEach(key => {
-          const keyValue = element[key];
-          if (keyValue.includes(queryValues[key])) {
+          const keyValue = element[key].toString();
+          if (keyValue.includes(queryValues[key].toString())) {
             counter++;
           }
           if (counter === filtered.length) {
@@ -334,6 +349,20 @@ export default function CaseTable(props) {
     }
     return rows;
   };
+  const searchOptions = [
+    { id: 'id', label: 'Case ID' },
+    { id: 'judge_name', label: 'Judge Name' },
+    { id: 'protected_ground', label: 'Protected Ground' },
+    { id: 'hearing_location', label: 'Venue' },
+    { id: 'social_group_type', label: 'PSG' },
+    { id: 'judge_decision', label: 'Case Outcome' },
+    { id: 'refugee_origin', label: 'Refugee Origin' },
+    { id: 'is_applicant_indigenous', label: 'Indigenous Applicant' },
+    { id: 'applicant_language', label: 'Applicant Language' },
+    { id: 'applicant_access_to_interpreter', label: 'Access to Intepreter' },
+    { id: 'one_year_guideline', label: 'One Year Guideline' },
+    { id: 'determined_applicant_credibility', label: 'Refugee Credibility' },
+  ];
   const drawerContent = () => {
     return (
       <div className={classes.drawer}>
@@ -377,7 +406,12 @@ export default function CaseTable(props) {
             toggleSearch();
             setSearching(true);
           }}
-          style={{ width: '30%', margin: 'auto', display: 'block' }}
+          style={{
+            width: '30%',
+            margin: 'auto',
+            display: 'block',
+            marginBottom: 10,
+          }}
         >
           search
         </button>
@@ -397,7 +431,7 @@ export default function CaseTable(props) {
               if (queryValues[option.id] !== '') {
                 return (
                   <Chip
-                    label={`${option.label}: ${queryValues[option.id]}`}
+                    label={`${option.label}: "${queryValues[option.id]}"`}
                     onDelete={() => {
                       setQueryValues({
                         ...queryValues,
@@ -411,61 +445,6 @@ export default function CaseTable(props) {
             })}
           </div>
         )}
-        {/* <div className={classes.colFilter}>
-          <Autocomplete
-            multiple
-            id="options-checkboxes"
-            options={searchOptions}
-            onChange={(event, value) => setCheckedValues(value)}
-            disableCloseOnSelect
-            getOptionLabel={option => option.label}
-            renderOption={(option, { selected }) => (
-              <React.Fragment>
-                <Checkbox
-                  icon={icon}
-                  checkedIcon={checkedIcon}
-                  checked={selected}
-                />
-                {option.label}
-              </React.Fragment>
-            )}
-            style={{ width: 400 }}
-            renderInput={params => (
-              <TextField
-                {...params}
-                variant="outlined"
-                label="Filter by..."
-                placeholder="Filter by..."
-              />
-            )}
-          />
-        </div> */}
-        {/* {checkedValues.length > 0 ? (
-          <Draggable>
-            <div className={classes.queryFields}>
-              <p style={{ marginLeft: 10, marginTop: 10 }}>
-                enter query values below:
-              </p>
-              {checkedValues.map(value => {
-                return (
-                  <TextField
-                    placeholder={`${value.label}`}
-                    onChange={e => {
-                      setQueryValues({
-                        ...queryValues,
-                        [value.id]: e.target.value,
-                      });
-                    }}
-                    type="text"
-                    style={{ padding: '5px', marginLeft: 10, marginTop: 10 }}
-                  />
-                );
-              })}
-            </div>
-          </Draggable>
-        ) : (
-          <div></div>
-        )} */}
         <div className={classes.buttons}>
           <button
             onClick={() => {
