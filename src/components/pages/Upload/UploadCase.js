@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -37,6 +39,32 @@ const UploadCase = props => {
   const classes = useStyles();
 
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isUser, setIsUser] = useState(true);
+  const { id } = useParams();
+
+  const adminData = () => {
+    axios
+      .get(`${process.env.REACT_APP_API_URI}/profile/${id}`)
+      .then(res => {
+        console.log(res.data);
+        setIsAdmin(res.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  const userData = () => {
+    axios
+      .get(`${process.env.REACT_APP_API_URI}/profile/${id}`)
+      .then(res => {
+        console.log(res.data);
+        setIsUser(res.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
 
   const divStyles = {
     display: 'flex',
@@ -257,20 +285,23 @@ const UploadCase = props => {
               />
             </label>
           </div>
-
-          <div className="submit-button">
-            <Button
-              className="btn-upload"
-              style={buttonStyles}
-              variant="contained"
-              component="span"
-            >
-              Submit
-            </Button>
-          </div>
+          {userData && (
+            <>
+              <div className="submit-button">
+                <Button
+                  className="btn-upload"
+                  style={buttonStyles}
+                  variant="contained"
+                  component="span"
+                >
+                  Submit
+                </Button>
+              </div>
+            </>
+          )}
           <br />
 
-          {isAdmin && (
+          {adminData && (
             <>
               <div className="approve-button">
                 <Button
