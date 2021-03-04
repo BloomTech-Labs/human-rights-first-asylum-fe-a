@@ -40,6 +40,9 @@ const UploadCase = props => {
 
   const [isAdmin, setIsAdmin] = useState(false);
   const [isUser, setIsUser] = useState(true);
+  const [isApproved, setIsApproved] = useState(false);
+  const [isDenied, setIsDenied] = useState(false);
+  const [approvedQueue, setApprovedQueue] = useState([]);
   const { id } = useParams();
 
   const adminData = () => {
@@ -60,6 +63,41 @@ const UploadCase = props => {
       .then(res => {
         console.log(res.data);
         setIsUser(res.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  const approvedCases = () => {
+    axios
+      .get(`${process.env.REACT_APP_API_URI}/manage/all`)
+      .then(res => {
+        console.log(res.data);
+        setApprovedQueue(res.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  const acceptCase = () => {
+    axios
+      .post(`${process.env.REACT_APP_API_URI}/manage/approve`)
+      .then(res => {
+        console.log(res.data);
+        setIsApproved(res.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  const rejectCase = () => {
+    axios
+      .delete(`${process.env.REACT_APP_API_URI}/manage/reject`)
+      .then(res => {
+        console.log(res.data);
       })
       .catch(error => {
         console.log(error);
@@ -305,6 +343,7 @@ const UploadCase = props => {
             <>
               <div className="approve-button">
                 <Button
+                  onClick={acceptCase}
                   className="btn-upload"
                   style={buttonStyles}
                   variant="contained"
@@ -316,6 +355,7 @@ const UploadCase = props => {
               <br />
               <div className="reject-button">
                 <Button
+                  onClick={rejectCase}
                   className="btn-upload"
                   style={buttonStyles}
                   variant="contained"
