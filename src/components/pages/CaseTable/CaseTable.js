@@ -92,7 +92,7 @@ export default function CaseTable(props) {
     {
       field: 'id',
       headerName: 'Case ID',
-      width: 200,
+      width: 130,
       className: 'tableHeader',
       options: {
         filter: true,
@@ -145,14 +145,14 @@ export default function CaseTable(props) {
     },
     {
       field: 'social_group_type',
-      headerName: 'PSG',
+      headerName: 'Social Group',
       width: 130,
       className: 'tableHeader',
     },
     {
-      field: 'credibility_of_refugee',
-      headerName: 'Refugee Credibility',
-      width: 130,
+      field: 'credibility_of_determination',
+      headerName: 'Credibility Determined',
+      width: 160,
       className: 'tableHeader',
     },
 
