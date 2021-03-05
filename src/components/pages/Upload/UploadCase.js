@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -35,6 +37,72 @@ const initialFormValues = {
 const UploadCase = props => {
   const [formValues, setFormValues] = useState(initialFormValues);
   const classes = useStyles();
+
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isUser, setIsUser] = useState(true);
+  const [isApproved, setIsApproved] = useState(false);
+  const [isDenied, setIsDenied] = useState(false);
+  const [approvedQueue, setApprovedQueue] = useState([]);
+  const { id } = useParams();
+
+  const adminData = () => {
+    axios
+      .get(`${process.env.REACT_APP_API_URI}/profile/${id}`)
+      .then(res => {
+        console.log(res.data);
+        setIsAdmin(res.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  const userData = () => {
+    axios
+      .get(`${process.env.REACT_APP_API_URI}/profile/${id}`)
+      .then(res => {
+        console.log(res.data);
+        setIsUser(res.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  const approvedCases = () => {
+    axios
+      .get(`${process.env.REACT_APP_API_URI}/manage/all`)
+      .then(res => {
+        console.log(res.data);
+        setApprovedQueue(res.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  const acceptCase = () => {
+    axios
+      .post(`${process.env.REACT_APP_API_URI}/manage/approve`)
+      .then(res => {
+        console.log(res.data);
+        setIsApproved(res.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  const rejectCase = () => {
+    axios
+      .delete(`${process.env.REACT_APP_API_URI}/manage/reject`)
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
 
   const divStyles = {
     display: 'flex',
@@ -74,6 +142,14 @@ const UploadCase = props => {
     setFormValues({ ...formValues, [name]: value });
   };
 
+  // const handleAdminTasks = () => {
+  //   this.setState({isAdmin: true});
+  // };
+
+  // const handleUserTasks = () => {
+  //   this.setState({isAdmin: false});
+  // };
+
   return (
     <div style={divStyles}>
       <div className={classes.root}>
@@ -95,7 +171,7 @@ const UploadCase = props => {
                 variant="outlined"
                 component="span"
               >
-                Choose Files
+                Upload a case
               </Button>
             </label>
           </div>
@@ -247,16 +323,49 @@ const UploadCase = props => {
               />
             </label>
           </div>
-          <div className="submit-button">
-            <Button
-              className="btn-upload"
-              style={buttonStyles}
-              variant="contained"
-              component="span"
-            >
-              Upload
-            </Button>
-          </div>
+          {userData && (
+            <>
+              <div className="submit-button">
+                <Button
+                  className="btn-upload"
+                  style={buttonStyles}
+                  variant="contained"
+                  component="span"
+                >
+                  Submit
+                </Button>
+              </div>
+            </>
+          )}
+          <br />
+
+          {adminData && (
+            <>
+              <div className="approve-button">
+                <Button
+                  onClick={acceptCase}
+                  className="btn-upload"
+                  style={buttonStyles}
+                  variant="contained"
+                  component="span"
+                >
+                  Approve
+                </Button>
+              </div>
+              <br />
+              <div className="reject-button">
+                <Button
+                  onClick={rejectCase}
+                  className="btn-upload"
+                  style={buttonStyles}
+                  variant="contained"
+                  component="span"
+                >
+                  Reject
+                </Button>
+              </div>
+            </>
+          )}
         </form>
       </div>
     </div>

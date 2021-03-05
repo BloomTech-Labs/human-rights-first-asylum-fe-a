@@ -1,22 +1,18 @@
 import React, { useState } from 'react';
 import { DataGrid } from '@material-ui/data-grid';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 // Buttons
 import Tabs from '../Home/Tabs';
 import SaveButton from './SaveButton';
 // Imports for PDF Modal
 import PDFViewer from '../PDFViewer/PDFViewer';
 import { Button } from 'antd';
-import pdf from '../PDFViewer/samplePDF.pdf';
 import './CaseTable.css';
-import Checkbox from '@material-ui/core/Checkbox';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
-import Draggable from 'react-draggable';
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -38,12 +34,12 @@ const useStyles = makeStyles(theme => ({
   },
   search_container: {
     display: 'flex',
-    justifyContent: 'space-between',
     alignItems: 'flex-end',
   },
   colFilter: {
-    // flexDirection: 'column',
-    marginLeft: '10%',
+    display: 'flex',
+    flexDirection: 'column',
+    width: '15%',
   },
 
   pdfView: {
@@ -52,17 +48,6 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  queryFields: {
-    display: 'flex',
-    flexDirection: 'column',
-    position: 'fixed',
-    border: '1px solid grey',
-    top: '220px',
-    right: 95,
-    background: 'white',
-    zIndex: 100,
-    borderRadius: '10px',
   },
 }));
 
@@ -78,19 +63,32 @@ export default function CaseTable(props) {
     setShowCaseTable,
     showCaseTable,
   } = props;
+  const [columnToSearch, setColumnToSearch] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const { id } = useParams();
 
-  const searchOptions = [
-    { id: 'id', label: 'Case ID' },
-    { id: 'judge_name', label: 'Judge Name' },
-    { id: 'protected_ground', label: 'Protected Ground' },
-    { id: 'hearing_location', label: 'Venue' },
-    { id: 'social_group_type', label: 'PSG' },
-    { id: 'judge_decision', label: 'Case Outcome' },
-    { id: 'refugee_origin', label: 'Refugee Origin' },
-  ];
   // State for PDF Modal
   const [showPdf, setShowPdf] = useState(false);
+
+  const pdfData = () => {
+    axios
+      .get(`${process.env.REACT_APP_API_URI}/case/${id}`)
+      .then(res => {
+        console.log(res.data);
+        setShowPdf(res.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   const columns = [
+    {
+      field: 'hearing_date',
+      headerName: 'Hearing Date',
+      width: 150,
+      className: 'tableHeader',
+    },
     {
       field: 'id',
       headerName: 'Case ID',
@@ -100,6 +98,7 @@ export default function CaseTable(props) {
         filter: true,
       },
       //link to individual case page
+
       renderCell: params => (
         <>
           <Link to={`/case/${params.value}`} style={{ color: '#215589' }}>
@@ -165,6 +164,7 @@ export default function CaseTable(props) {
     },
 
     // MODAL for PDFs
+
     {
       field: 'view_pdf',
       headerName: 'View PDF',
@@ -175,11 +175,11 @@ export default function CaseTable(props) {
         <>
           <div className={classes.pdfView}>
             <PDFViewer
-              pdf={pdf}
+              pdf={pdfData} // this will be set to viewPdf when endpoint is available
               onCancel={() => setShowPdf(false)}
               visible={showPdf}
             />
-            <Button onClick={() => setShowPdf(!showPdf)}>PDF</Button>
+            <Button onClick={setShowPdf}>PDF</Button>
           </div>
         </>
       ),
@@ -209,8 +209,25 @@ export default function CaseTable(props) {
       },
     },
   ];
+
   const classes = useStyles();
 
+  const handleChange = event => {
+    setColumnToSearch(event.target.value);
+    setSearchQuery('');
+  };
+
+  const handleSearchChange = event => {
+    setSearchQuery(event.target.value);
+  };
+
+  const search = rows => {
+    return rows.filter(
+      row =>
+        row[columnToSearch].toLowerCase().indexOf(searchQuery.toLowerCase()) >
+        -1
+    );
+  };
   // the need for idParamName arose from case_id and id being used in different scenarios
   const findRowByID = (rowID, rowData) => {
     for (let i = 0; i < rowData.length; i++) {
@@ -274,39 +291,6 @@ export default function CaseTable(props) {
     setSelectedRows(selections);
   };
 
-  const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-  const checkedIcon = <CheckBoxIcon fontSize="small" />;
-  const [checkedValues, setCheckedValues] = useState([]);
-  const [queryValues, setQueryValues] = useState({
-    id: '',
-    judge_name: '',
-    hearing_location: '',
-    refugee_origin: '',
-    protected_ground: '',
-    social_group_type: '',
-    judge_decision: '',
-  });
-  const filter = rows => {
-    const returnedRows = [];
-    const keysArray = Object.keys(queryValues);
-    const filtered = keysArray.filter(key => queryValues[key] !== '');
-    if (filtered.length > 0) {
-      rows.forEach(element => {
-        let counter = 0;
-        filtered.forEach(key => {
-          const keyValue = element[key];
-          if (keyValue.includes(queryValues[key])) {
-            counter++;
-          }
-          if (counter === filtered.length) {
-            returnedRows.push(element);
-          }
-        });
-      });
-      return returnedRows;
-    }
-    return rows;
-  };
   return (
     <div className={classes.tbl_container}>
       <div className={classes.search_container}>
@@ -315,60 +299,28 @@ export default function CaseTable(props) {
           showCaseTable={showCaseTable}
         />
         <div className={classes.colFilter}>
-          <Autocomplete
-            multiple
-            id="options-checkboxes"
-            options={searchOptions}
-            onChange={(event, value) => setCheckedValues(value)}
-            disableCloseOnSelect
-            getOptionLabel={option => option.label}
-            renderOption={(option, { selected }) => (
-              <React.Fragment>
-                <Checkbox
-                  icon={icon}
-                  checkedIcon={checkedIcon}
-                  checked={selected}
-                />
-                {option.label}
-              </React.Fragment>
-            )}
-            style={{ width: 400 }}
-            renderInput={params => (
-              <TextField
-                {...params}
-                variant="outlined"
-                label="Filter by..."
-                placeholder="Filter by..."
-              />
-            )}
-          />
+          <Select value={columnToSearch} onChange={handleChange} displayEmpty>
+            {/* This puts the search by text inside of the search bar, give it all other components the same height */}
+            <MenuItem value="" disabled>
+              Search By...
+            </MenuItem>
+            <MenuItem value="hearing_date">Hearing Date</MenuItem>
+            <MenuItem value="id">Case ID</MenuItem>
+            <MenuItem value="judge_name">Judge Name</MenuItem>
+            <MenuItem value="hearing_location">Venue</MenuItem>
+            <MenuItem value="refugee_origin">Refugee Origin</MenuItem>
+            <MenuItem value="protected_ground">Protected Ground</MenuItem>
+            <MenuItem value="social_group_type">PSG</MenuItem>
+            <MenuItem value="judge_decision">Case Outcome</MenuItem>
+          </Select>
         </div>
-        {checkedValues.length > 0 ? (
-          <Draggable>
-            <div className={classes.queryFields}>
-              <p style={{ marginLeft: 10, marginTop: 10 }}>
-                enter query values below:
-              </p>
-              {checkedValues.map(value => {
-                return (
-                  <TextField
-                    placeholder={`${value.label}`}
-                    onChange={e => {
-                      setQueryValues({
-                        ...queryValues,
-                        [value.id]: e.target.value,
-                      });
-                    }}
-                    type="text"
-                    style={{ padding: '5px', marginLeft: 10, marginTop: 10 }}
-                  />
-                );
-              })}
-            </div>
-          </Draggable>
-        ) : (
-          <div></div>
-        )}
+        <TextField
+          value={searchQuery}
+          placeholder="Enter Query..."
+          onChange={handleSearchChange}
+          type="text"
+          style={{ width: '50%', marginLeft: 40 }}
+        />
         <SaveButton
           selectedRows={selectedRows}
           bookmarkCases={bookmarkCases}
@@ -376,7 +328,7 @@ export default function CaseTable(props) {
         />
       </div>
       <DataGrid
-        rows={checkedValues.length > 0 ? filter(caseData) : caseData}
+        rows={columnToSearch ? search(caseData) : caseData}
         columns={columns}
         className={classes.grid}
         autoHeight={true}

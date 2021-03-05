@@ -19,11 +19,11 @@ export const sendPdf = pdfFile => {
   };
 };
 
-export const fetchPdf = () => {
+export const fetchPdf = id => {
   return dispatch => {
     dispatch({ type: FETCH_PDF_DATA });
     axios
-      .get('#')
+      .get(`${process.env.REACT_APP_API_URI}/case/${id}`)
       .then(res => {
         dispatch({ type: FETCH_PDF_SUCCESS, payload: res.data });
       })
@@ -45,4 +45,10 @@ export const getData = () => {
         dispatch({ type: GET_DATA_FAIL, payload: err.message });
       });
   };
+};
+
+export default {
+  sendPdf,
+  fetchPdf,
+  getData,
 };
