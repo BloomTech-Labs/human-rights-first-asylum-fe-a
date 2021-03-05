@@ -19,7 +19,7 @@
 - Seconday "Disabled" color: #7f9bb3
 
 ### Key Features and Notes to the Next Group
-- Table can be searched by column parameters and sorted by clicking on column headers
+- Table can be searched by column parameters and sorted by clicking on column headers. There is advanced searchability to search for one or more key terms to filter out unwanted case information
 
 - Cases and Judges can be saved to a user profile by checking their row's select box and clicking the save button
 
@@ -27,16 +27,18 @@
 
 - All Tables should let you go to a specfic page by clicking either case ID or Judge Name
 
-- PDF viewer pops up a model, minor visual bugs may appear
+- PDF viewer pops up a modal, minor visual bugs may appear. The functionality should work for this feature but due to issues with Heroku, data may not be returned.
 
 - Clicking on a judge name in the judge table will take you to a page with some expanded info and basic plots
   -This judge page needs styling work (JudgePage.js)
   -Other than the pie chart, the formulas for the other sample charts are hard coded and will need to be fixed once the database is actually populated beyond test data
 
-- Case Overview feature - When you click on a case, we currently have it redirected to a separate "Case info" page.  However, unbeknownst to us, Labs29 created a feature to make Case info to appear as a bar on the right side.  You can decide which feature to implement.
+- Case Overview feature - When you click on a case, we currently have it redirected to a separate "Case info" page. The case info page has been restyled and follows the design flow of the rest of the app.
+
+- Case File Review Queue - This feature needs to be created so that when users submit a new case file, it is sent to the review queue for admin users to approve and send them to the list of all cases or reject and delete them from the database.
 
 ## Bugs
-- Possible major bug - Sometimes website (local and deployed) gets stuck on “Fetching user profile”.  The current workaround is to clear localStorage.  Possible fix: User must enable 3rd-party cookies in their browser settings.
+The adminData and userData functions do not work currently as there are no endpoints for distinguishing between user types and the components do not exist.
 
 - Other know bugs and broken features can be seen on this [Google Doc](https://docs.google.com/document/d/1MTRA2X88MW4GwFX9NdmO_qqHEDqGHxj20Q0DWplD29E/edit?usp=sharing), feel free to copy it
 
@@ -63,3 +65,7 @@
 |                                                                [Anna Brander](https://github.com/aelise17264)                                                                 |                                                              [Maycie Morris](https://github.com/maycie-morris)                                                               |                                                                   [Lynda Santiago](https://github.com/lyntechi)                                                                   |
 | [<img src="https://avatars.githubusercontent.com/u/66019108?s=460&u=b98ac38b13155691c2189b10914cff7a092ab5a5&v=4" width = "200" align="center"/>](https://github.com/avawing) | [<img src="https://avatars.githubusercontent.com/u/67204638?s=460&u=57c9c3585fd3326f80ce34c02cbb7939a3ddc0fa&v=4" width = "200" align="center"/>](https://github.com/TBau23) | [<img src="https://avatars.githubusercontent.com/u/64440403?s=460&u=ebd52037cfa31421477942f041a43a6ef88267ca&v=4" width = "200" align="center"/>](https://github.com/SassyFatCat) |
 |                                                             [Linkedin](https://www.linkedin.com/in/aelise17264/)                                                              |                                                            [Linkedin](https://www.linkedin.com/in/mayciemorris/)                                                             |                                                         [Linkedin](https://www.linkedin.com/in/lynda-santiago-7b58221b4/)                                                         |
+
+### labs31 - Team A
+
+[Brian Abeyta-Pratt](https://github.com/babeytapratt),[LinkedIn](https://www.linkedin.com/in/brian-abeyta-pratt-9758991ba/)
