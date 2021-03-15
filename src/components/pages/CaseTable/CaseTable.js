@@ -16,7 +16,6 @@ import './CaseTable.css';
 import { Drawer } from '@material-ui/core';
 import Chip from '@material-ui/core/Chip';
 
-
 const useStyles = makeStyles(theme => ({
   grid: {
     marginTop: 15,
@@ -88,7 +87,6 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     width: '30%',
   },
-
 }));
 
 export default function CaseTable(props) {
@@ -375,9 +373,9 @@ export default function CaseTable(props) {
     one_year_guideline: '',
   });
 
-  const [search, setSearch] = useState(false);
+  const [new_search, setSearch] = useState(false);
   const toggleSearch = () => {
-    setSearch(!search);
+    setSearch(!new_search);
   };
   const [searching, setSearching] = useState(false);
   const filter = rows => {
@@ -514,7 +512,7 @@ export default function CaseTable(props) {
             text={'Save Cases'}
           />
         </div>
-        <Drawer anchor="right" open={search} onClose={toggleSearch}>
+        <Drawer anchor="right" open={new_search} onClose={toggleSearch}>
           {drawerContent()}
         </Drawer>
       </div>
