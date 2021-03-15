@@ -8,7 +8,7 @@ const SaveCasesButton = styled.button`
   background: ${props => (props.disabled ? '#7f9bb3' : '#215589')};
   border-radius: 8px;
   outline: none;
-  width: 15%;
+  width: 100%;
   color: white;
   font-size: larger;
   margin: 0 0 0 5%;

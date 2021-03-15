@@ -13,6 +13,9 @@ import SaveButton from './SaveButton';
 import PDFViewer from '../PDFViewer/PDFViewer';
 import { Button } from 'antd';
 import './CaseTable.css';
+import { Drawer } from '@material-ui/core';
+import Chip from '@material-ui/core/Chip';
+
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -49,6 +52,43 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     justifyContent: 'center',
   },
+
+  queryFields: {
+    display: 'flex',
+    flexDirection: 'column',
+    position: 'fixed',
+    border: '1px solid grey',
+    top: '220px',
+    right: 95,
+    background: 'white',
+    zIndex: 100,
+    borderRadius: '10px',
+  },
+  filterButton: {
+    background: '#215589',
+    padding: '3%',
+    width: '100%',
+    color: 'white',
+    borderRadius: '8px',
+    fontWeight: 'bold',
+    fontSize: 'larger',
+    border: 'none',
+  },
+  drawer: {
+    width: 240,
+    marginTop: '40%',
+  },
+  tabs: {
+    width: '30%',
+  },
+  chips: {
+    display: 'flex',
+  },
+  buttons: {
+    display: 'flex',
+    width: '30%',
+  },
+
 }));
 
 export default function CaseTable(props) {
@@ -162,7 +202,36 @@ export default function CaseTable(props) {
       width: 140,
       className: 'tableHeader',
     },
-
+    {
+      field: 'is_applicant_indigenous',
+      headerName: 'Indigenous aplicant',
+      width: 160,
+      className: 'tableHeader',
+    },
+    {
+      field: 'applicant_language',
+      headerName: 'Applicant Language',
+      width: 160,
+      className: 'tableHeader',
+    },
+    {
+      field: 'applicant_access_to_interpreter',
+      headerName: 'Access to Intepreter',
+      width: 160,
+      className: 'tableHeader',
+    },
+    {
+      field: 'one_year_guideline',
+      headerName: 'One Year Guideline',
+      width: 160,
+      className: 'tableHeader',
+    },
+    {
+      field: 'determined_applicant_credibility',
+      headerName: 'Refugee Credibility',
+      width: 160,
+      className: 'tableHeader',
+    },
     // MODAL for PDFs
 
     {
@@ -291,6 +360,117 @@ export default function CaseTable(props) {
     setSelectedRows(selections);
   };
 
+  const [queryValues, setQueryValues] = useState({
+    id: '',
+    judge_name: '',
+    hearing_location: '',
+    refugee_origin: '',
+    protected_ground: '',
+    social_group_type: '',
+    judge_decision: '',
+    applicant_access_to_interpreter: '',
+    applicant_language: '',
+    determined_applicant_credibility: '',
+    is_applicant_indigenous: '',
+    one_year_guideline: '',
+  });
+
+  const [search, setSearch] = useState(false);
+  const toggleSearch = () => {
+    setSearch(!search);
+  };
+  const [searching, setSearching] = useState(false);
+  const filter = rows => {
+    const returnedRows = [];
+    const keysArray = Object.keys(queryValues);
+    const filtered = keysArray.filter(key => queryValues[key] !== '');
+    if (filtered.length > 0) {
+      rows.forEach(element => {
+        let counter = 0;
+        filtered.forEach(key => {
+          const keyValue = element[key].toString();
+          if (keyValue.includes(queryValues[key].toString())) {
+            counter++;
+          }
+          if (counter === filtered.length) {
+            returnedRows.push(element);
+          }
+        });
+      });
+      return returnedRows;
+    }
+    return rows;
+  };
+  const searchOptions = [
+    { id: 'id', label: 'Case ID' },
+    { id: 'judge_name', label: 'Judge Name' },
+    { id: 'protected_ground', label: 'Protected Ground' },
+    { id: 'hearing_location', label: 'Venue' },
+    { id: 'social_group_type', label: 'PSG' },
+    { id: 'judge_decision', label: 'Case Outcome' },
+    { id: 'refugee_origin', label: 'Refugee Origin' },
+    { id: 'is_applicant_indigenous', label: 'Indigenous Applicant' },
+    { id: 'applicant_language', label: 'Applicant Language' },
+    { id: 'applicant_access_to_interpreter', label: 'Access to Intepreter' },
+    { id: 'one_year_guideline', label: 'One Year Guideline' },
+    { id: 'determined_applicant_credibility', label: 'Refugee Credibility' },
+  ];
+  const drawerContent = () => {
+    return (
+      <div className={classes.drawer}>
+        <h6
+          style={{
+            fontSize: 'larger',
+            fontWeight: 'bold',
+            paddingBottom: '1%',
+            marginLeft: 10,
+          }}
+        >
+          Advanced search
+        </h6>
+        <p style={{ paddingBottom: '5%', marginLeft: 10 }}>
+          Search by 1 or more data fields. Multiple Search terms will be
+          combined with AND logic.
+        </p>
+        {searchOptions.map(value => {
+          return (
+            <div className={classes.querydiv}>
+              <p style={{ marginLeft: 10 }}>{value.label}</p>
+              <TextField
+                placeholder={'search query'}
+                variant="outlined"
+                size="small"
+                value={queryValues[value.id]}
+                onChange={e => {
+                  setQueryValues({
+                    ...queryValues,
+                    [value.id]: e.target.value,
+                  });
+                }}
+                type="text"
+                style={{ marginLeft: 10, marginBottom: 10 }}
+              />
+            </div>
+          );
+        })}
+        <button
+          onClick={() => {
+            toggleSearch();
+            setSearching(true);
+          }}
+          style={{
+            width: '30%',
+            margin: 'auto',
+            display: 'block',
+            marginBottom: 10,
+          }}
+        >
+          search
+        </button>
+      </div>
+    );
+  };
+
   return (
     <div className={classes.tbl_container}>
       <div className={classes.search_container}>
@@ -298,37 +478,48 @@ export default function CaseTable(props) {
           setShowCaseTable={setShowCaseTable}
           showCaseTable={showCaseTable}
         />
-        <div className={classes.colFilter}>
-          <Select value={columnToSearch} onChange={handleChange} displayEmpty>
-            {/* This puts the search by text inside of the search bar, give it all other components the same height */}
-            <MenuItem value="" disabled>
-              Search By...
-            </MenuItem>
-            <MenuItem value="hearing_date">Hearing Date</MenuItem>
-            <MenuItem value="id">Case ID</MenuItem>
-            <MenuItem value="judge_name">Judge Name</MenuItem>
-            <MenuItem value="hearing_location">Venue</MenuItem>
-            <MenuItem value="refugee_origin">Refugee Origin</MenuItem>
-            <MenuItem value="protected_ground">Protected Ground</MenuItem>
-            <MenuItem value="social_group_type">PSG</MenuItem>
-            <MenuItem value="judge_decision">Case Outcome</MenuItem>
-          </Select>
+
+        {searching && (
+          <div className={classes.chips}>
+            {searchOptions.map(option => {
+              if (queryValues[option.id] !== '') {
+                return (
+                  <Chip
+                    label={`${option.label}: "${queryValues[option.id]}"`}
+                    onDelete={() => {
+                      setQueryValues({
+                        ...queryValues,
+                        [option.id]: '',
+                      });
+                    }}
+                    style={{ marginRight: 5 }}
+                  />
+                );
+              }
+            })}
+          </div>
+        )}
+        <div className={classes.buttons}>
+          <button
+            onClick={() => {
+              toggleSearch();
+            }}
+            className={classes.filterButton}
+          >
+            Filter Cases
+          </button>
+          <SaveButton
+            selectedRows={selectedRows}
+            bookmarkCases={bookmarkCases}
+            text={'Save Cases'}
+          />
         </div>
-        <TextField
-          value={searchQuery}
-          placeholder="Enter Query..."
-          onChange={handleSearchChange}
-          type="text"
-          style={{ width: '50%', marginLeft: 40 }}
-        />
-        <SaveButton
-          selectedRows={selectedRows}
-          bookmarkCases={bookmarkCases}
-          text={'Save Cases'}
-        />
+        <Drawer anchor="right" open={search} onClose={toggleSearch}>
+          {drawerContent()}
+        </Drawer>
       </div>
       <DataGrid
-        rows={columnToSearch ? search(caseData) : caseData}
+        rows={searching ? filter(caseData) : caseData}
         columns={columns}
         className={classes.grid}
         autoHeight={true}
