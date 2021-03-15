@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
 import { DataGrid } from '@material-ui/data-grid';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 // Buttons
 import Tabs from '../Home/Tabs';
 import SaveButton from './SaveButton';
 // Imports for PDF Modal
 import PDFViewer from '../PDFViewer/PDFViewer';
 import { Button } from 'antd';
-import pdf from '../PDFViewer/samplePDF.pdf';
 import './CaseTable.css';
 import { Drawer } from '@material-ui/core';
 import Chip from '@material-ui/core/Chip';
+
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -35,12 +37,12 @@ const useStyles = makeStyles(theme => ({
   },
   search_container: {
     display: 'flex',
-    justifyContent: 'space-between',
     alignItems: 'flex-end',
   },
   colFilter: {
-    // flexDirection: 'column',
-    marginLeft: '10%',
+    display: 'flex',
+    flexDirection: 'column',
+    width: '15%',
   },
 
   pdfView: {
@@ -50,6 +52,7 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     justifyContent: 'center',
   },
+
   queryFields: {
     display: 'flex',
     flexDirection: 'column',
@@ -85,6 +88,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     width: '30%',
   },
+
 }));
 
 export default function CaseTable(props) {
@@ -99,19 +103,42 @@ export default function CaseTable(props) {
     setShowCaseTable,
     showCaseTable,
   } = props;
+  const [columnToSearch, setColumnToSearch] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const { id } = useParams();
 
   // State for PDF Modal
   const [showPdf, setShowPdf] = useState(false);
+
+  const pdfData = () => {
+    axios
+      .get(`${process.env.REACT_APP_API_URI}/case/${id}`)
+      .then(res => {
+        console.log(res.data);
+        setShowPdf(res.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   const columns = [
+    {
+      field: 'hearing_date',
+      headerName: 'Hearing Date',
+      width: 150,
+      className: 'tableHeader',
+    },
     {
       field: 'id',
       headerName: 'Case ID',
-      width: 200,
+      width: 130,
       className: 'tableHeader',
       options: {
         filter: true,
       },
       //link to individual case page
+
       renderCell: params => (
         <>
           <Link to={`/case/${params.value}`} style={{ color: '#215589' }}>
@@ -158,8 +185,14 @@ export default function CaseTable(props) {
     },
     {
       field: 'social_group_type',
-      headerName: 'PSG',
+      headerName: 'Social Group',
       width: 130,
+      className: 'tableHeader',
+    },
+    {
+      field: 'credibility_of_determination',
+      headerName: 'Credibility Determined',
+      width: 160,
       className: 'tableHeader',
     },
 
@@ -200,6 +233,7 @@ export default function CaseTable(props) {
       className: 'tableHeader',
     },
     // MODAL for PDFs
+
     {
       field: 'view_pdf',
       headerName: 'View PDF',
@@ -210,11 +244,11 @@ export default function CaseTable(props) {
         <>
           <div className={classes.pdfView}>
             <PDFViewer
-              pdf={pdf}
+              pdf={pdfData} // this will be set to viewPdf when endpoint is available
               onCancel={() => setShowPdf(false)}
               visible={showPdf}
             />
-            <Button onClick={() => setShowPdf(!showPdf)}>PDF</Button>
+            <Button onClick={setShowPdf}>PDF</Button>
           </div>
         </>
       ),
@@ -244,8 +278,25 @@ export default function CaseTable(props) {
       },
     },
   ];
+
   const classes = useStyles();
 
+  const handleChange = event => {
+    setColumnToSearch(event.target.value);
+    setSearchQuery('');
+  };
+
+  const handleSearchChange = event => {
+    setSearchQuery(event.target.value);
+  };
+
+  const search = rows => {
+    return rows.filter(
+      row =>
+        row[columnToSearch].toLowerCase().indexOf(searchQuery.toLowerCase()) >
+        -1
+    );
+  };
   // the need for idParamName arose from case_id and id being used in different scenarios
   const findRowByID = (rowID, rowData) => {
     for (let i = 0; i < rowData.length; i++) {
@@ -308,6 +359,7 @@ export default function CaseTable(props) {
   const onCheckboxSelect = selections => {
     setSelectedRows(selections);
   };
+
   const [queryValues, setQueryValues] = useState({
     id: '',
     judge_name: '',
@@ -418,6 +470,7 @@ export default function CaseTable(props) {
       </div>
     );
   };
+
   return (
     <div className={classes.tbl_container}>
       <div className={classes.search_container}>
@@ -425,6 +478,7 @@ export default function CaseTable(props) {
           setShowCaseTable={setShowCaseTable}
           showCaseTable={showCaseTable}
         />
+
         {searching && (
           <div className={classes.chips}>
             {searchOptions.map(option => {

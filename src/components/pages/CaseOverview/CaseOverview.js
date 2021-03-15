@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { Button } from 'antd';
 import {
   Container,
   CaseSpecs,
   ClientSpecs,
   Results,
+  KeyParagraphBold,
   KeyParagraph,
   ValueParagraph,
 } from './CaseOverviewStyled';
@@ -41,8 +43,18 @@ const CaseOverview = props => {
       {caseData && (
         <>
           <CaseSpecs>
+            {/* Link to updateCase page, this page is not yet operational
+            backend endpoints need to be built out to allow page to render & send updates to the database */}
+            <Button
+              type="primary"
+              size="small"
+              padding="15px"
+              onclick={`/case/${caseData.id}/update`}
+            >
+              Update this Case
+            </Button>
+            <KeyParagraphBold>Case ID: {id}</KeyParagraphBold>
             Case Specifics
-            <KeyParagraph>Case ID: {id}</KeyParagraph>
             <KeyParagraph>Case Status: {caseData.case_status}</KeyParagraph>
             <KeyParagraph>Date: {caseData.hearing_date}</KeyParagraph>
             <KeyParagraph>Location: {caseData.hearing_location}</KeyParagraph>
@@ -76,9 +88,6 @@ const CaseOverview = props => {
             <KeyParagraph>
               Judge Decision: {caseData.judge_decision}
             </KeyParagraph>
-            {/* Link to updateCase page, this page is not yet operational
-            backend endpoints need to be built out to allow page to render & send updates to the database */}
-            <Link to={`/case/${caseData.id}/update`}>Update this Case</Link>
           </Results>
         </>
       )}
