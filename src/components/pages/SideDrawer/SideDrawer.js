@@ -196,7 +196,7 @@ export default function SideDrawer(props) {
             </ListItem>
           ))}
 
-          <ListItem button onClick={logout()}>
+          <ListItem button onClick={logout}>
             <ListItemIcon>
               <CloseIcon />
             </ListItemIcon>
