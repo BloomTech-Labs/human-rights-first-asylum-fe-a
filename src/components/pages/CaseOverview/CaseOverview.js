@@ -57,12 +57,12 @@ const CaseOverview = props => {
             Case Specifics
             <KeyParagraph>Case Status: {caseData.case_status}</KeyParagraph>
             <KeyParagraph>Date: {caseData.hearing_date}</KeyParagraph>
-            <KeyParagraph>Location: {caseData.hearing_location}</KeyParagraph>
+            <KeyParagraph>Location: {caseData.case_origin}</KeyParagraph>
             <KeyParagraph>
               Type of Hearing: {caseData.hearing_type}
             </KeyParagraph>
             <KeyParagraph>
-              Judge Name:
+              Judge:
               <Link to={`/judge/${caseData.judge_name}`}>
                 {caseData.judge_name}
               </Link>
@@ -71,9 +71,9 @@ const CaseOverview = props => {
           </CaseSpecs>
           <ClientSpecs>
             Client Specifics
-            <ValueParagraph>Origin: {caseData.refugee_origin}</ValueParagraph>
+            <ValueParagraph>Origin: {caseData.nation_of_origin}</ValueParagraph>
             <ValueParagraph>
-              Social Group: {caseData.social_group_type}
+              Application Type : {caseData.application_type }
             </ValueParagraph>
             <ValueParagraph>
               Protected Grounds: {caseData.protected_ground}
@@ -86,7 +86,7 @@ const CaseOverview = props => {
             Results
             <KeyParagraph>Decision Date: {caseData.decision_date}</KeyParagraph>
             <KeyParagraph>
-              Judge Decision: {caseData.judge_decision}
+              Case Outcome: {caseData.case_outcome}
             </KeyParagraph>
           </Results>
         </>

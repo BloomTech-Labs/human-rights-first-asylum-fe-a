@@ -56,7 +56,7 @@ function SavedJudges({ savedJudges, deleteSavedJudge }) {
     // { field: 'id', headerName: 'id', width: 100 },
     {
       field: 'name',
-      headerName: 'Judge Name',
+      headerName: 'Judge',
       width: 170,
       color: 'navy',
       //Link to individual judge page

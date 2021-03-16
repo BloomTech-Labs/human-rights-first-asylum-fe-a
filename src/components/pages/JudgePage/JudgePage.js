@@ -35,19 +35,19 @@ const columns = [
   },
   { field: 'court_type', headerName: 'Court Type', width: 105 },
   // { field: 'hearing_type', headerName: 'Hearing Type', width: 120 },
-  { field: 'refugee_origin', headerName: 'Refugee Origin', width: 130 },
+  { field: 'nation_of_origin', headerName: 'Nation of Origin', width: 130 },
   { field: 'protected_ground', headerName: 'Protected Ground', width: 150 },
-  // { field: 'hearing_location', headerName: 'Location', width: 120 },
+  // { field: 'case_origin', headerName: 'Location', width: 120 },
   // { field: 'hearing_date', headerName: 'Hearing Date', width: 120 },
   // { field: 'decision_date', headerName: 'Decision Date', width: 150 },
   // {
   //   field: 'credibility_of_refugee',
-  //   headerName: 'Refugee Credibility',
+  //   headerName: 'Applicant Perceived Credibility',
   //   width: 160,
   // },
-  { field: 'social_group_type', headerName: 'Social Group', width: 130 },
-  // { field: 'judge_name', headerName: 'Judge Name', width: 120 },
-  { field: 'judge_decision', headerName: 'Decision', width: 105 },
+  { field: 'application_type ', headerName: 'Application Type ', width: 130 },
+  // { field: 'judge_name', headerName: 'Judge', width: 120 },
+  { field: 'case_outcome', headerName: 'Decision', width: 105 },
   { field: 'case_status', headerName: 'Case Status', width: 120 },
 ];
 
@@ -176,7 +176,7 @@ export default function JudgePage(props) {
             </FlexDiv>
             <FlexDiv>
               {
-                //* x = country_origin/social_group_type/protected_ground, y = granted: value / denial:value / other value
+                //* x = country_origin/application_type /protected_ground, y = granted: value / denial:value / other value
               }
               <Plot
                 data={[
@@ -258,7 +258,7 @@ export default function JudgePage(props) {
                   barmode: 'stack',
                   width: 320,
                   height: 240,
-                  title: 'Decision By Social Group',
+                  title: 'Decision By Application Type ',
                 }}
               />
               <Plot
