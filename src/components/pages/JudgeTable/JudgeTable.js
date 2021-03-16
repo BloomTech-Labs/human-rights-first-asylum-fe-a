@@ -63,7 +63,7 @@ export default function JudgeTable(props) {
     // { field: 'id', headerName: 'id', width: 100 },
     {
       field: 'name',
-      headerName: 'Judge Name',
+      headerName: 'Judge',
       width: 170,
       color: 'navy',
       //Link to individual judge page
@@ -78,7 +78,7 @@ export default function JudgeTable(props) {
         </>
       ),
     },
-    { field: 'judge_county', headerName: 'Venue', width: 160 },
+    { field: 'judge_county', headerName: 'Case Origin', width: 160 },
     { field: 'date_appointed', headerName: 'Date Appointed', width: 140 },
     { field: 'appointed_by', headerName: 'Appointed by', width: 160 },
     { field: 'denial_rate', headerName: '% Denial', width: 110 },
@@ -208,7 +208,7 @@ export default function JudgeTable(props) {
               Search By...
             </MenuItem>
             <MenuItem value="name">Judge</MenuItem>
-            <MenuItem value="judge_county">Venue</MenuItem>
+            <MenuItem value="judge_county">Case Origin</MenuItem>
             <MenuItem value="date_appointed">Date Appointed</MenuItem>
             <MenuItem value="appointed_by">Appointed By</MenuItem>
             <MenuItem value="denial_rate">Denial Rate</MenuItem>

@@ -25,11 +25,11 @@
 
   - This will add them to the saved cases or saved judges page
 
-- All Tables should let you go to a specfic page by clicking either case ID or Judge Name
+- All Tables should let you go to a specfic page by clicking either case ID or Judge
 
 - PDF viewer pops up a modal, minor visual bugs may appear. The functionality should work for this feature but due to issues with Heroku, data may not be returned.
 
-- Clicking on a judge name in the judge table will take you to a page with some expanded info and basic plots
+- Clicking on a Judge in the judge table will take you to a page with some expanded info and basic plots
   -This judge page needs styling work (JudgePage.js)
   -Other than the pie chart, the formulas for the other sample charts are hard coded and will need to be fixed once the database is actually populated beyond test data
 

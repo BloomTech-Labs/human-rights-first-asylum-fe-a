@@ -122,13 +122,7 @@ export default function CaseTable(props) {
 
   const columns = [
     {
-      field: 'hearing_date',
-      headerName: 'Hearing Date',
-      width: 150,
-      className: 'tableHeader',
-    },
-    {
-      field: 'id',
+      field: 'id', //difficult, do last
       headerName: 'Case ID',
       width: 130,
       className: 'tableHeader',
@@ -136,7 +130,7 @@ export default function CaseTable(props) {
         filter: true,
       },
       //link to individual case page
-
+      
       renderCell: params => (
         <>
           <Link to={`/case/${params.value}`} style={{ color: '#215589' }}>
@@ -146,8 +140,14 @@ export default function CaseTable(props) {
       ),
     },
     {
-      field: 'judge_name',
-      headerName: 'Judge Name',
+      field: 'hearing_date',
+      headerName: 'Hearing Date',
+      width: 150,
+      className: 'tableHeader',
+    },
+    {
+      field: 'judge_name', //difficult, do next to last
+      headerName: 'Judge',
       width: 160,
       className: 'tableHeader',
       renderCell: params => (
@@ -161,48 +161,77 @@ export default function CaseTable(props) {
         </>
       ),
     },
+
+//to be added
     {
-      field: 'hearing_location',
-      headerName: 'Venue',
+      field: 'initial_or_appellate',
+      headerName: 'Initial or Appellate',
+      width: 120,
+      className: 'tableHeader',
+    },
+//^
+
+    {
+      field: 'case_origin',
+      headerName: 'Case Origin',
       width: 120,
       className: 'tableHeader',
     },
 
     {
-      field: 'refugee_origin',
-      headerName: 'Refugee Origin',
-      width: 130,
+      field: 'case_filed_within_one_year',
+      headerName: 'Case Filed Within One Year',
+      width: 160,
       className: 'tableHeader',
     },
 
+    {
+      field: 'application_type ',
+      headerName: 'Application Type ',
+      width: 130,
+      className: 'tableHeader',
+    },
+    
     {
       field: 'protected_ground',
       headerName: 'Protected Ground',
       width: 150,
       className: 'tableHeader',
     },
-    {
-      field: 'social_group_type',
-      headerName: 'Social Group',
-      width: 130,
-      className: 'tableHeader',
-    },
-    {
-      field: 'credibility_of_determination',
-      headerName: 'Credibility Determined',
-      width: 160,
-      className: 'tableHeader',
-    },
 
     {
-      field: 'judge_decision',
+      field: 'case_outcome',
       headerName: 'Case Outcome',
       width: 140,
       className: 'tableHeader',
     },
+
     {
-      field: 'is_applicant_indigenous',
-      headerName: 'Indigenous aplicant',
+      field: 'nation_of_origin',
+      headerName: 'Nation of Origin',
+      width: 130,
+      className: 'tableHeader',
+    },
+
+    //to add?
+    {
+      field: 'applicant_sex',
+      headerName: 'Applicant Sex',
+      width: 130,
+      className: 'tableHeader',
+    },
+    //^
+    //to add?
+    {
+      field: 'type_of_violence_experienced',
+      headerName: 'Type of Violence Experienced',
+      width: 130,
+      className: 'tableHeader',
+    },
+    //^
+    {
+      field: 'applicant_indigenous_group',
+      headerName: 'Applicant Indigenous Group',
       width: 160,
       className: 'tableHeader',
     },
@@ -218,19 +247,14 @@ export default function CaseTable(props) {
       width: 160,
       className: 'tableHeader',
     },
+
     {
-      field: 'one_year_guideline',
-      headerName: 'One Year Guideline',
+      field: 'applicant_perceived_credibility',
+      headerName: 'Applicant Perceived Credibility',
       width: 160,
       className: 'tableHeader',
     },
-    {
-      field: 'determined_applicant_credibility',
-      headerName: 'Refugee Credibility',
-      width: 160,
-      className: 'tableHeader',
-    },
-    // MODAL for PDFs
+    // MODAL for PDFs / to be removed?
 
     {
       field: 'view_pdf',
@@ -361,16 +385,16 @@ export default function CaseTable(props) {
   const [queryValues, setQueryValues] = useState({
     id: '',
     judge_name: '',
-    hearing_location: '',
-    refugee_origin: '',
+    case_origin: '',
+    nation_of_origin: '',
     protected_ground: '',
-    social_group_type: '',
-    judge_decision: '',
+    application_type : '',
+    case_outcome: '',
     applicant_access_to_interpreter: '',
     applicant_language: '',
-    determined_applicant_credibility: '',
-    is_applicant_indigenous: '',
-    one_year_guideline: '',
+    applicant_perceived_credibility: '',
+    applicant_indigenous_group: '',
+    case_filed_within_one_year: '',
   });
 
   const [new_search, setSearch] = useState(false);
@@ -401,17 +425,17 @@ export default function CaseTable(props) {
   };
   const searchOptions = [
     { id: 'id', label: 'Case ID' },
-    { id: 'judge_name', label: 'Judge Name' },
+    { id: 'judge_name', label: 'Judge' },
     { id: 'protected_ground', label: 'Protected Ground' },
-    { id: 'hearing_location', label: 'Venue' },
-    { id: 'social_group_type', label: 'PSG' },
-    { id: 'judge_decision', label: 'Case Outcome' },
-    { id: 'refugee_origin', label: 'Refugee Origin' },
-    { id: 'is_applicant_indigenous', label: 'Indigenous Applicant' },
+    { id: 'case_origin', label: 'Case Origin' },
+    { id: 'application_type ', label: 'PSG' },
+    { id: 'case_outcome', label: 'Case Outcome' },
+    { id: 'nation_of_origin', label: 'Nation of Origin' },
+    { id: 'applicant_indigenous_group', label: 'Indigenous Applicant' },
     { id: 'applicant_language', label: 'Applicant Language' },
     { id: 'applicant_access_to_interpreter', label: 'Access to Intepreter' },
-    { id: 'one_year_guideline', label: 'One Year Guideline' },
-    { id: 'determined_applicant_credibility', label: 'Refugee Credibility' },
+    { id: 'case_filed_within_one_year', label: 'Case Filed Within One Year' },
+    { id: 'applicant_perceived_credibility', label: 'Applicant Perceived Credibility' },
   ];
   const drawerContent = () => {
     return (

@@ -22,16 +22,16 @@ const initialFormValues = {
   case_url: '',
   court_type: '',
   hearing_type: '',
-  refugee_origin: '',
-  hearing_location: '',
+  nation_of_origin: '',
+  case_origin: '',
   hearing_date: '',
   decision_date: '',
   credibility_of_refugee: '',
   case_status: '',
-  judge_decision: '',
+  case_outcome: '',
   judge_name: '',
   protected_ground: [],
-  social_group_type: [],
+  application_type : [],
 };
 
 const UploadCase = props => {
@@ -236,8 +236,8 @@ const UploadCase = props => {
                 multiline={true}
                 type="text"
                 variant="outlined"
-                placeholder="Refugee Origin"
-                name="Refugee Origin"
+                placeholder="Nation of Origin"
+                name="Nation of Origin"
                 onChange={onInputChange}
               />
             </label>
@@ -259,8 +259,8 @@ const UploadCase = props => {
                 multiline={true}
                 type="text"
                 variant="outlined"
-                placeholder="Social Group"
-                name="Social Group"
+                placeholder="Application Type "
+                name="Application Type "
                 onChange={onInputChange}
               />
             </label>
@@ -283,8 +283,8 @@ const UploadCase = props => {
                 multiline={true}
                 type="text"
                 variant="outlined"
-                placeholder="Refugee Credibility"
-                name="Refugee Credibility"
+                placeholder="Applicant Perceived Credibility"
+                name="Applicant Perceived Credibility"
                 onChange={onInputChange}
               />
             </label>
@@ -295,8 +295,8 @@ const UploadCase = props => {
                 multiline={true}
                 type="text"
                 variant="outlined"
-                placeholder="Judge Name"
-                name="Judge Name"
+                placeholder="Judge"
+                name="Judge"
                 onChange={onInputChange}
               />
             </label>

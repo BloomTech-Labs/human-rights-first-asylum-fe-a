@@ -6,13 +6,13 @@ import { Container } from './CaseOverviewStyled';
 const initialInfo = {
   case_status: '',
   hearing_date: '',
-  hearing_location: '',
+  case_origin: '',
   hearing_type: '',
   judge_name: '',
-  judge_decision: '',
+  case_outcome: '',
   court_type: '',
-  refugee_origin: '',
-  social_group_type: '',
+  nation_of_origin: '',
+  application_type : '',
   protected_ground: '',
   credibility_of_refugee: '',
   decision_date: '',
@@ -86,9 +86,9 @@ const CaseUpdate = props => {
               Location
               <input
                 type="text"
-                name="hearing_location"
+                name="case_origin"
                 onChange={handleChange}
-                value={caseData.hearing_location}
+                value={caseData.case_origin}
               />
             </label>
             <label>
@@ -101,7 +101,7 @@ const CaseUpdate = props => {
               />
             </label>
             <label>
-              Judge Name
+              Judge
               <input
                 type="text"
                 name="judge_name"
@@ -122,18 +122,18 @@ const CaseUpdate = props => {
               Client Origin
               <input
                 type="text"
-                name="refugee_origin"
+                name="nation_of_origin"
                 onChange={handleChange}
-                value={caseData.refugee_origin}
+                value={caseData.nation_of_origin}
               />
             </label>
             <label>
-              Social Group
+              Application Type 
               <input
                 type="text"
                 name="social_group"
                 onChange={handleChange}
-                value={caseData.social_group_type}
+                value={caseData.application_type }
               />
             </label>
             <label>
@@ -164,12 +164,12 @@ const CaseUpdate = props => {
               />
             </label>
             <label>
-              Judge Decision
+              Case Outcome
               <input
                 type="text"
-                name="judge_decision"
+                name="case_outcome"
                 onChange={handleChange}
-                value={caseData.judge_decision}
+                value={caseData.case_outcome}
               />
             </label>
           </form>
