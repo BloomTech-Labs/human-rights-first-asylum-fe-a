@@ -25,7 +25,7 @@ const useStyles = makeStyles({
 });
 
 function RenderHomePage(props) {
-  const { userInfo, authService, authState, uploadCase } = props;
+  const { userInfo, oktaAuth, authState, uploadCase } = props;
   const [caseData, setCaseData] = useState([]);
   const [judgeData, setJudgeData] = useState([]);
   const [savedCases, setSavedCases] = useState([]);
@@ -41,7 +41,7 @@ function RenderHomePage(props) {
     axios
       .get(`${process.env.REACT_APP_API_URI}/cases`, {
         headers: {
-          Authorization: 'Bearer ' + authState.idToken,
+          Authorization: 'Bearer ' + authState.idToken.idToken,
         },
       })
       // )
@@ -58,7 +58,7 @@ function RenderHomePage(props) {
       // Tracks the axios call and implements spinning loader while executing
       axios.get(`${process.env.REACT_APP_API_URI}/judge`, {
         headers: {
-          Authorization: 'Bearer ' + authState.idToken,
+          Authorization: 'Bearer ' + authState.idToken.idToken,
         },
       })
     )
@@ -74,7 +74,7 @@ function RenderHomePage(props) {
     trackPromise(
       axios.get(`${process.env.REACT_APP_API_URI}/profile/${userInfo.sub}`, {
         headers: {
-          Authorization: 'Bearer ' + authState.idToken,
+          Authorization: 'Bearer ' + authState.idToken.idToken,
         },
       })
     )
@@ -85,7 +85,12 @@ function RenderHomePage(props) {
       .catch(err => {
         console.log(err);
       });
-  }, [authState.idToken, userInfo.sub, savedCases.length, savedJudges.length]);
+  }, [
+    authState.idToken.idToken,
+    userInfo.sub,
+    savedCases.length,
+    savedJudges.length,
+  ]);
 
   const deleteFromStateById = (id, state, setState) => {
     // i made this function non case specific but now I'm remembering that cases get deleted by name
@@ -100,7 +105,7 @@ function RenderHomePage(props) {
         `${process.env.REACT_APP_API_URI}/profile/${userInfo.sub}/case/${caseID}`,
         {
           headers: {
-            Authorization: 'Bearer ' + authState.idToken,
+            Authorization: 'Bearer ' + authState.idToken.idToken,
           },
         }
       )
@@ -130,7 +135,7 @@ function RenderHomePage(props) {
         }/judge/${formatJudgeName(name)}`,
         {
           headers: {
-            Authorization: 'Bearer ' + authState.idToken,
+            Authorization: 'Bearer ' + authState.idToken.idToken,
           },
         }
       )
@@ -142,7 +147,7 @@ function RenderHomePage(props) {
       });
   };
 
-  const logout = () => authService.logout;
+  const logout = () => oktaAuth.signOut();
   const classes = useStyles();
 
   return (
