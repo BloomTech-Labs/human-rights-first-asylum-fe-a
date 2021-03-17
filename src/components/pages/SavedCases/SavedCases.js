@@ -68,7 +68,7 @@ function SavedCases({ savedCases, deleteBookmark }) {
     //   width: 160,
     // },
     { field: 'application_type ', headerName: 'Application Type ', width: 130 },
-    { field: 'judge_name', headerName: 'Judge', width: 120 },
+    { field: 'judge', headerName: 'Judge', width: 120 },
     { field: 'case_outcome', headerName: 'Decision', width: 90 },
     { field: 'case_status', headerName: 'Case Status', width: 110 },
 

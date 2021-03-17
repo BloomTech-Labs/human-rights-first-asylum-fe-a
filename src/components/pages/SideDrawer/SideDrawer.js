@@ -211,8 +211,8 @@ export default function SideDrawer(props) {
               <ListItemIcon>
                 <PersonIcon />
               </ListItemIcon>
-              <ListItemText primary={judge.judge_name} />
-              <IconButton onClick={() => deleteSavedJudge(judge.judge_name)}>
+              <ListItemText primary={judge.judge} />
+              <IconButton onClick={() => deleteSavedJudge(judge.judge)}>
                 <DeleteIcon />
               </IconButton>
             </ListItem>

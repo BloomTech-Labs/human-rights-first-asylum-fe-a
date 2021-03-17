@@ -130,7 +130,7 @@ export default function CaseTable(props) {
         filter: true,
       },
       //link to individual case page
-      
+
       renderCell: params => (
         <>
           <Link to={`/case/${params.value}`} style={{ color: '#215589' }}>
@@ -146,7 +146,7 @@ export default function CaseTable(props) {
       className: 'tableHeader',
     },
     {
-      field: 'judge_name', //difficult, do next to last
+      field: 'judge', //difficult, do next to last
       headerName: 'Judge',
       width: 160,
       className: 'tableHeader',
@@ -162,14 +162,14 @@ export default function CaseTable(props) {
       ),
     },
 
-//to be added
+    //to be added
     {
       field: 'initial_or_appellate',
       headerName: 'Initial or Appellate',
       width: 120,
       className: 'tableHeader',
     },
-//^
+    //^
 
     {
       field: 'case_origin',
@@ -191,7 +191,7 @@ export default function CaseTable(props) {
       width: 130,
       className: 'tableHeader',
     },
-    
+
     {
       field: 'protected_ground',
       headerName: 'Protected Ground',
@@ -384,11 +384,11 @@ export default function CaseTable(props) {
 
   const [queryValues, setQueryValues] = useState({
     id: '',
-    judge_name: '',
+    judge: '',
     case_origin: '',
     nation_of_origin: '',
     protected_ground: '',
-    application_type : '',
+    application_type: '',
     case_outcome: '',
     applicant_access_to_interpreter: '',
     applicant_language: '',
@@ -425,7 +425,7 @@ export default function CaseTable(props) {
   };
   const searchOptions = [
     { id: 'id', label: 'Case ID' },
-    { id: 'judge_name', label: 'Judge' },
+    { id: 'judge', label: 'Judge' },
     { id: 'protected_ground', label: 'Protected Ground' },
     { id: 'case_origin', label: 'Case Origin' },
     { id: 'application_type ', label: 'PSG' },
@@ -435,7 +435,10 @@ export default function CaseTable(props) {
     { id: 'applicant_language', label: 'Applicant Language' },
     { id: 'applicant_access_to_interpreter', label: 'Access to Intepreter' },
     { id: 'case_filed_within_one_year', label: 'Case Filed Within One Year' },
-    { id: 'applicant_perceived_credibility', label: 'Applicant Perceived Credibility' },
+    {
+      id: 'applicant_perceived_credibility',
+      label: 'Applicant Perceived Credibility',
+    },
   ];
   const drawerContent = () => {
     return (

@@ -8,11 +8,11 @@ const initialInfo = {
   hearing_date: '',
   case_origin: '',
   hearing_type: '',
-  judge_name: '',
+  judge: '',
   case_outcome: '',
   court_type: '',
   nation_of_origin: '',
-  application_type : '',
+  application_type: '',
   protected_ground: '',
   credibility_of_refugee: '',
   decision_date: '',
@@ -104,9 +104,9 @@ const CaseUpdate = props => {
               Judge
               <input
                 type="text"
-                name="judge_name"
+                name="judge"
                 onChange={handleChange}
-                value={caseData.judge_name}
+                value={caseData.judge}
               />
             </label>
             <label>
@@ -128,12 +128,12 @@ const CaseUpdate = props => {
               />
             </label>
             <label>
-              Application Type 
+              Application Type
               <input
                 type="text"
                 name="social_group"
                 onChange={handleChange}
-                value={caseData.application_type }
+                value={caseData.application_type}
               />
             </label>
             <label>

@@ -63,9 +63,7 @@ const CaseOverview = props => {
             </KeyParagraph>
             <KeyParagraph>
               Judge:
-              <Link to={`/judge/${caseData.judge_name}`}>
-                {caseData.judge_name}
-              </Link>
+              <Link to={`/judge/${caseData.judge}`}>{caseData.judge}</Link>
             </KeyParagraph>
             <KeyParagraph>Court Type: {caseData.court_type}</KeyParagraph>
           </CaseSpecs>
@@ -73,7 +71,7 @@ const CaseOverview = props => {
             Client Specifics
             <ValueParagraph>Origin: {caseData.nation_of_origin}</ValueParagraph>
             <ValueParagraph>
-              Application Type : {caseData.application_type }
+              Application Type : {caseData.application_type}
             </ValueParagraph>
             <ValueParagraph>
               Protected Grounds: {caseData.protected_ground}
@@ -85,9 +83,7 @@ const CaseOverview = props => {
           <Results>
             Results
             <KeyParagraph>Decision Date: {caseData.decision_date}</KeyParagraph>
-            <KeyParagraph>
-              Case Outcome: {caseData.case_outcome}
-            </KeyParagraph>
+            <KeyParagraph>Case Outcome: {caseData.case_outcome}</KeyParagraph>
           </Results>
         </>
       )}
