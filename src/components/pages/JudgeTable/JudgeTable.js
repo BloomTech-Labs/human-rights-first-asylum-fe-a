@@ -60,7 +60,6 @@ export default function JudgeTable(props) {
   const [selectedRows, setSelectedRows] = useState({});
 
   const columns = [
-    // { field: 'id', headerName: 'id', width: 100 },
     {
       field: 'name',
       headerName: 'Judge',

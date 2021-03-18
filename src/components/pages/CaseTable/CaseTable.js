@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { DataGrid } from '@material-ui/data-grid';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
@@ -101,8 +99,7 @@ export default function CaseTable(props) {
     setShowCaseTable,
     showCaseTable,
   } = props;
-  const [columnToSearch, setColumnToSearch] = useState('');
-  const [searchQuery, setSearchQuery] = useState('');
+
   const { id } = useParams();
 
   // State for PDF Modal
@@ -130,7 +127,7 @@ export default function CaseTable(props) {
         filter: true,
       },
       //link to individual case page
-      
+
       renderCell: params => (
         <>
           <Link to={`/case/${params.value}`} style={{ color: '#215589' }}>
@@ -162,14 +159,14 @@ export default function CaseTable(props) {
       ),
     },
 
-//to be added
+    //to be added
     {
       field: 'initial_or_appellate',
       headerName: 'Initial or Appellate',
       width: 120,
       className: 'tableHeader',
     },
-//^
+    //^
 
     {
       field: 'case_origin',
@@ -191,7 +188,7 @@ export default function CaseTable(props) {
       width: 130,
       className: 'tableHeader',
     },
-    
+
     {
       field: 'protected_ground',
       headerName: 'Protected Ground',
@@ -303,22 +300,6 @@ export default function CaseTable(props) {
 
   const classes = useStyles();
 
-  const handleChange = event => {
-    setColumnToSearch(event.target.value);
-    setSearchQuery('');
-  };
-
-  const handleSearchChange = event => {
-    setSearchQuery(event.target.value);
-  };
-
-  const search = rows => {
-    return rows.filter(
-      row =>
-        row[columnToSearch].toLowerCase().indexOf(searchQuery.toLowerCase()) >
-        -1
-    );
-  };
   // the need for idParamName arose from case_id and id being used in different scenarios
   const findRowByID = (rowID, rowData) => {
     for (let i = 0; i < rowData.length; i++) {
@@ -388,7 +369,7 @@ export default function CaseTable(props) {
     case_origin: '',
     nation_of_origin: '',
     protected_ground: '',
-    application_type : '',
+    application_type: '',
     case_outcome: '',
     applicant_access_to_interpreter: '',
     applicant_language: '',
@@ -435,7 +416,10 @@ export default function CaseTable(props) {
     { id: 'applicant_language', label: 'Applicant Language' },
     { id: 'applicant_access_to_interpreter', label: 'Access to Intepreter' },
     { id: 'case_filed_within_one_year', label: 'Case Filed Within One Year' },
-    { id: 'applicant_perceived_credibility', label: 'Applicant Perceived Credibility' },
+    {
+      id: 'applicant_perceived_credibility',
+      label: 'Applicant Perceived Credibility',
+    },
   ];
   const drawerContent = () => {
     return (
@@ -456,7 +440,7 @@ export default function CaseTable(props) {
         </p>
         {searchOptions.map(value => {
           return (
-            <div className={classes.querydiv}>
+            <div className={classes.querydiv} key={value.id}>
               <p style={{ marginLeft: 10 }}>{value.label}</p>
               <TextField
                 placeholder={'search query'}
@@ -507,6 +491,7 @@ export default function CaseTable(props) {
               if (queryValues[option.id] !== '') {
                 return (
                   <Chip
+                    key={option.id}
                     label={`${option.label}: "${queryValues[option.id]}"`}
                     onDelete={() => {
                       setQueryValues({
@@ -517,6 +502,8 @@ export default function CaseTable(props) {
                     style={{ marginRight: 5 }}
                   />
                 );
+              } else {
+                return null;
               }
             })}
           </div>

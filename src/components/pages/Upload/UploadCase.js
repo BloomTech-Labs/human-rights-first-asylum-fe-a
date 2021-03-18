@@ -5,8 +5,6 @@ import { useForm } from 'react-hook-form';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-import { sendPdf, getData } from '../.././../state/actions/index';
-import { connect } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -31,7 +29,7 @@ const initialFormValues = {
   case_outcome: '',
   judge_name: '',
   protected_ground: [],
-  application_type : [],
+  application_type: [],
 };
 
 const UploadCase = props => {
@@ -98,6 +96,7 @@ const UploadCase = props => {
       .delete(`${process.env.REACT_APP_API_URI}/manage/reject`)
       .then(res => {
         console.log(res.data);
+        setIsDenied(res.data);
       })
       .catch(error => {
         console.log(error);
@@ -126,29 +125,26 @@ const UploadCase = props => {
   };
 
   const { handleSubmit, errors } = useForm();
-  // const onSubmit = data => console.log(data);
-
-  // useEffect(()=>{
-  //   props.getData();
-  // },[])
   const onSubmit = () => {};
   const onFileChange = e => {
-    // const file = e.target.files[0];
-    // props.sendPdf(file)
-    // props.getData()
+    //const file = e.target.files[0];
+    //implement endpoint to send file to backend
   };
   const onInputChange = e => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
   };
 
-  // const handleAdminTasks = () => {
-  //   this.setState({isAdmin: true});
-  // };
-
-  // const handleUserTasks = () => {
-  //   this.setState({isAdmin: false});
-  // };
+  // !!!!!! This is meant to settle warnings for unimplemented features !!!!!!
+  console.log(
+    isAdmin,
+    isUser,
+    isApproved,
+    isDenied,
+    approvedQueue,
+    approvedCases,
+    errors
+  );
 
   return (
     <div style={divStyles}>
@@ -371,12 +367,5 @@ const UploadCase = props => {
     </div>
   );
 };
-const mapStateToProps = state => {
-  console.log(state);
-  return {
-    isLoading: state.isLoading,
-    pdfData: state.pdfData,
-  };
-};
 
-export default connect(mapStateToProps, { getData, sendPdf })(UploadCase);
+export default UploadCase;
