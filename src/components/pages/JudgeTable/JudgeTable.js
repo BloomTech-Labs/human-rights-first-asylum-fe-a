@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { DataGrid } from '@material-ui/data-grid';
+import { DataGrid, GridToolbar } from '@material-ui/data-grid';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
@@ -236,6 +236,7 @@ export default function JudgeTable(props) {
         checkboxSelection={true}
         onSelectionChange={onCheckboxSelect}
         showCellRightBorder={true}
+        components={{ Toolbar: GridToolbar }}
       />
     </div>
   );
