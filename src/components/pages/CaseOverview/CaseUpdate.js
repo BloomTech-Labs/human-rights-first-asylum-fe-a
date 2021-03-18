@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import { Container } from './CaseOverviewStyled';
 const initialInfo = {
   case_status: '',
@@ -12,7 +11,7 @@ const initialInfo = {
   case_outcome: '',
   court_type: '',
   nation_of_origin: '',
-  application_type : '',
+  application_type: '',
   protected_ground: '',
   credibility_of_refugee: '',
   decision_date: '',
@@ -128,12 +127,12 @@ const CaseUpdate = props => {
               />
             </label>
             <label>
-              Application Type 
+              Application Type
               <input
                 type="text"
                 name="social_group"
                 onChange={handleChange}
-                value={caseData.application_type }
+                value={caseData.application_type}
               />
             </label>
             <label>
