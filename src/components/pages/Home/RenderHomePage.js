@@ -51,7 +51,7 @@ function RenderHomePage(props) {
       .catch(err => {
         console.log(err);
       });
-  }, []);
+  }, [authState.idToken.idToken]);
 
   useEffect(() => {
     trackPromise(
@@ -68,7 +68,7 @@ function RenderHomePage(props) {
       .catch(err => {
         console.log(err);
       });
-  }, []);
+  }, [authState.idToken.idToken]);
 
   useEffect(() => {
     trackPromise(

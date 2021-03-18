@@ -17,7 +17,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import CloseIcon from '@material-ui/icons/Close';
 import HRFlogo from './HRFlogo.png';
-/* import BookmarkPanel from '../Bookmarks/BookmarksQuickview'; */
 import BookmarksIcon from '@material-ui/icons/Bookmarks';
 import PublishIcon from '@material-ui/icons/Publish';
 import GavelIcon from '@material-ui/icons/Gavel';
@@ -122,7 +121,6 @@ export default function SideDrawer(props) {
             onClick={handleDrawerOpen}
             edge="start"
             className={clsx(classes.menuButton, open && classes.hide)}
-            redundant
           >
             <MenuIcon />
           </IconButton>
@@ -203,21 +201,6 @@ export default function SideDrawer(props) {
             <ListItemText primary="Logout" />
           </ListItem>
         </List>
-
-        {/* <List>
-          
-          {savedJudges.map((judge, idx) => (
-            <ListItem key={idx}>
-              <ListItemIcon>
-                <PersonIcon />
-              </ListItemIcon>
-              <ListItemText primary={judge.judge} />
-              <IconButton onClick={() => deleteSavedJudge(judge.judge)}>
-                <DeleteIcon />
-              </IconButton>
-            </ListItem>
-          ))}
-        </List> */}
       </Drawer>
       <main
         className={clsx(classes.content, {

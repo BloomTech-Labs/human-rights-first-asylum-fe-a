@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { DataGrid } from '@material-ui/data-grid';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
+import { DataGrid, GridToolbar } from '@material-ui/data-grid';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
@@ -101,8 +99,7 @@ export default function CaseTable(props) {
     setShowCaseTable,
     showCaseTable,
   } = props;
-  const [columnToSearch, setColumnToSearch] = useState('');
-  const [searchQuery, setSearchQuery] = useState('');
+
   const { id } = useParams();
 
   // State for PDF Modal
@@ -142,7 +139,7 @@ export default function CaseTable(props) {
     {
       field: 'hearing_date',
       headerName: 'Hearing Date',
-      width: 150,
+      width: 115,
       className: 'tableHeader',
     },
     {
@@ -166,7 +163,7 @@ export default function CaseTable(props) {
     {
       field: 'initial_or_appellate',
       headerName: 'Initial or Appellate',
-      width: 120,
+      width: 80,
       className: 'tableHeader',
     },
     //^
@@ -174,14 +171,14 @@ export default function CaseTable(props) {
     {
       field: 'case_origin',
       headerName: 'Case Origin',
-      width: 120,
+      width: 150,
       className: 'tableHeader',
     },
 
     {
       field: 'case_filed_within_one_year',
       headerName: 'Case Filed Within One Year',
-      width: 160,
+      width: 80,
       className: 'tableHeader',
     },
 
@@ -190,6 +187,7 @@ export default function CaseTable(props) {
       headerName: 'Application Type ',
       width: 130,
       className: 'tableHeader',
+      hide: true,
     },
 
     {
@@ -197,12 +195,13 @@ export default function CaseTable(props) {
       headerName: 'Protected Ground',
       width: 150,
       className: 'tableHeader',
+      hide: true,
     },
 
     {
       field: 'case_outcome',
       headerName: 'Case Outcome',
-      width: 140,
+      width: 120,
       className: 'tableHeader',
     },
 
@@ -234,17 +233,18 @@ export default function CaseTable(props) {
       headerName: 'Applicant Indigenous Group',
       width: 160,
       className: 'tableHeader',
+      hide: true,
     },
     {
       field: 'applicant_language',
       headerName: 'Applicant Language',
-      width: 160,
+      width: 110,
       className: 'tableHeader',
     },
     {
       field: 'applicant_access_to_interpreter',
-      headerName: 'Access to Intepreter',
-      width: 160,
+      headerName: 'Access to Interpreter',
+      width: 80,
       className: 'tableHeader',
     },
 
@@ -253,6 +253,7 @@ export default function CaseTable(props) {
       headerName: 'Applicant Perceived Credibility',
       width: 160,
       className: 'tableHeader',
+      hide: true,
     },
     // MODAL for PDFs / to be removed?
 
@@ -280,6 +281,7 @@ export default function CaseTable(props) {
       headerName: 'Download',
       width: 120,
       className: 'tableHeader',
+      hide: true,
       renderCell: params => {
         return (
           <div>
@@ -303,22 +305,6 @@ export default function CaseTable(props) {
 
   const classes = useStyles();
 
-  const handleChange = event => {
-    setColumnToSearch(event.target.value);
-    setSearchQuery('');
-  };
-
-  const handleSearchChange = event => {
-    setSearchQuery(event.target.value);
-  };
-
-  const search = rows => {
-    return rows.filter(
-      row =>
-        row[columnToSearch].toLowerCase().indexOf(searchQuery.toLowerCase()) >
-        -1
-    );
-  };
   // the need for idParamName arose from case_id and id being used in different scenarios
   const findRowByID = (rowID, rowData) => {
     for (let i = 0; i < rowData.length; i++) {
@@ -428,12 +414,12 @@ export default function CaseTable(props) {
     { id: 'judge', label: 'Judge' },
     { id: 'protected_ground', label: 'Protected Ground' },
     { id: 'case_origin', label: 'Case Origin' },
-    { id: 'application_type ', label: 'PSG' },
+    { id: 'application_type ', label: 'Application Type' },
     { id: 'case_outcome', label: 'Case Outcome' },
     { id: 'nation_of_origin', label: 'Nation of Origin' },
     { id: 'applicant_indigenous_group', label: 'Indigenous Applicant' },
     { id: 'applicant_language', label: 'Applicant Language' },
-    { id: 'applicant_access_to_interpreter', label: 'Access to Intepreter' },
+    { id: 'applicant_access_to_interpreter', label: 'Access to Interpreter' },
     { id: 'case_filed_within_one_year', label: 'Case Filed Within One Year' },
     {
       id: 'applicant_perceived_credibility',
@@ -459,7 +445,7 @@ export default function CaseTable(props) {
         </p>
         {searchOptions.map(value => {
           return (
-            <div className={classes.querydiv}>
+            <div className={classes.querydiv} key={value.id}>
               <p style={{ marginLeft: 10 }}>{value.label}</p>
               <TextField
                 placeholder={'search query'}
@@ -471,6 +457,7 @@ export default function CaseTable(props) {
                     ...queryValues,
                     [value.id]: e.target.value,
                   });
+                  setSearching(true);
                 }}
                 type="text"
                 style={{ marginLeft: 10, marginBottom: 10 }}
@@ -510,6 +497,7 @@ export default function CaseTable(props) {
               if (queryValues[option.id] !== '') {
                 return (
                   <Chip
+                    key={option.id}
                     label={`${option.label}: "${queryValues[option.id]}"`}
                     onDelete={() => {
                       setQueryValues({
@@ -520,6 +508,8 @@ export default function CaseTable(props) {
                     style={{ marginRight: 5 }}
                   />
                 );
+              } else {
+                return null;
               }
             })}
           </div>
@@ -552,6 +542,7 @@ export default function CaseTable(props) {
         checkboxSelection={true}
         onSelectionChange={onCheckboxSelect}
         showCellRightBorder={true}
+        components={{ Toolbar: GridToolbar }}
       />
     </div>
   );
