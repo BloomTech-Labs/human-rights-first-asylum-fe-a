@@ -15,6 +15,60 @@ const useStyles = makeStyles(theme => ({
       textAlign: 'center',
     },
   },
+  uploadPage: {
+    display: 'flex',
+    flexFlow: 'row no-wrap',
+    border: '1px solid black',
+    padding: '1%',
+    margin: '0 auto',
+    width: '80%',
+    alignItems: 'flex-start',
+    justifyContent: 'space-around',
+  },
+
+  leftDiv: {
+    marginTop: '15%',
+    width: '40%',
+    // marginRight: '40%',
+    display: 'inline-block',
+    border: '1px solid black',
+    padding: '1%',
+  },
+
+  pdfUpload: {
+    marginTop: '15%',
+    display: 'inline-block',
+    marginRight: '7.5%',
+    width: '100%',
+  },
+
+  // editForm: {
+  //   marginTop: '15%',
+  //   width: '40%',
+  //   display: 'inline-block',
+  //   border: '1px solid black',
+  //   padding: '1%'
+  // },
+
+  h1Styles: {
+    fontSize: '2rem',
+    marginBottom: '2.5rem',
+    color: '#215589',
+  },
+
+  h2Styles: {
+    fontSize: '1.3rem',
+    marginBottom: '2.5rem',
+    color: '#215589',
+    width: '100%',
+  },
+
+  buttonStyles: {
+    color: '#ffffff',
+    backgroundColor: '#BC541E',
+    marginRight: '50%',
+    marginLeft: '55%',
+  },
 }));
 
 const initialFormValues = {
@@ -109,50 +163,6 @@ const UploadCase = props => {
       });
   };
 
-  const uploadPage = {
-    display: 'inline-block',
-    flexDirection: 'row',
-  };
-
-  const leftDiv = {
-    marginTop: '15%',
-    width: '40%',
-    marginRight: '40%',
-  };
-
-  const pdfUpload = {
-    marginTop: '15%',
-    display: 'inline-block',
-    marginRight: '7.5%',
-    width: '100%',
-  };
-
-  const editForm = {
-    marginTop: '15%',
-    width: '40%',
-    display: 'inline-block',
-  };
-
-  const h1Styles = {
-    fontSize: '2rem',
-    marginBottom: '2.5rem',
-    color: '#215589',
-  };
-
-  const h2Styles = {
-    fontSize: '1.3rem',
-    marginBottom: '2.5rem',
-    color: '#215589',
-    width: '100%',
-  };
-
-  const buttonStyles = {
-    color: '#ffffff',
-    backgroundColor: '#BC541E',
-    marginRight: '50%',
-    marginLeft: '55%',
-  };
-
   const { handleSubmit, errors } = useForm();
   const onSubmit = () => {};
   const onFileChange = e => {
@@ -176,92 +186,92 @@ const UploadCase = props => {
   );
 
   return (
-    <div className="upload-page" style={uploadPage}>
-      <div className={classes.root}>
-        <div className="left-div" style={leftDiv}>
-          <div className="upload-form" style={pdfUpload}>
-            <h1 style={h1Styles}>Upload a New Case</h1>
-            <h2 style={h2Styles}>
-              Upload PDF and wait for form to populate. Please, fill out any
-              remaining empty fields.
-            </h2>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <div className="pdf-upload">
-                <label htmlFor="btn-upload">
-                  <input
-                    id="btn-upload"
-                    name="btn-upload"
-                    style={{ display: 'none' }}
-                    type="file"
-                    onChange={onFileChange}
-                  />
-                  <Button
-                    className="btn-choose"
-                    variant="outlined"
-                    component="span"
-                  >
-                    Upload a case
-                  </Button>
-                </label>
-              </div>
-            </form>
-          </div>
-        </div>
-        <div className="edit-form" style={editForm}>
+    <div className={classes.uploadPage}>
+      {/* <div className={classes.root}> */}
+      <div className={classes.leftDiv}>
+        <div className={classes.pdfUpload}>
+          <h1 className={classes.h1Styles}>Upload a New Case</h1>
+          <h2 className={classes.h2Styles}>
+            Upload PDF and wait for form to populate. Please, fill out any
+            remaining empty fields.
+          </h2>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <h2 style={h2Styles}>Or, fill out form manually:</h2>
-            <div className="hearing-date">
-              <label htmlFor="hearing-date">
-                <TextField
-                  id="hearing-date"
-                  label="Hearing Date"
-                  type="date"
-                  variant="outlined"
-                  defaultValue="2021-01-01"
-                  className={classes.textField}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
+            <div className="pdf-upload">
+              <label htmlFor="btn-upload">
+                <input
+                  id="btn-upload"
+                  name="btn-upload"
+                  style={{ display: 'none' }}
+                  type="file"
+                  onChange={onFileChange}
                 />
+                <Button
+                  className="btn-choose"
+                  variant="outlined"
+                  component="span"
+                >
+                  Upload a case
+                </Button>
               </label>
             </div>
-            <div className="judge">
-              <label htmlFor="judge">
-                <TextField
-                  multiline={true}
-                  type="text"
-                  variant="outlined"
-                  placeholder="Judge"
-                  name="Judge"
-                  onChange={onInputChange}
-                />
-              </label>
-            </div>
-            <div className="initial-or-appellate">
-              <label htmlFor="initial-or-appellate">
-                {formValues.course_type}
-                <TextField
-                  multiline={true}
-                  type="text"
-                  variant="outlined"
-                  placeholder="Initial or Appellate"
-                  name="Initial or Appellate"
-                  onChange={onInputChange}
-                />
-              </label>
-            </div>
-            <div className="case-outcome">
-              <label htmlFor="case-outcome">
-                <TextField
-                  multiline={true}
-                  variant="outlined"
-                  placeholder="Case Outcome"
-                  name="Case Outcome"
-                  onChange={onInputChange}
-                />
-              </label>
-            </div>
-            {/* This change is pending approval from stakeholder
+          </form>
+        </div>
+      </div>
+      <div className={classes.root}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <h2 className={classes.h2Styles}>Or, fill out form manually:</h2>
+          <div className="hearing-date">
+            <label htmlFor="hearing-date">
+              <TextField
+                id="hearing-date"
+                label="Hearing Date"
+                type="date"
+                variant="outlined"
+                defaultValue="2021-01-01"
+                className={classes.textField}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </label>
+          </div>
+          <div className="judge">
+            <label htmlFor="judge">
+              <TextField
+                multiline={true}
+                type="text"
+                variant="outlined"
+                placeholder="Judge"
+                name="Judge"
+                onChange={onInputChange}
+              />
+            </label>
+          </div>
+          <div className="initial-or-appellate">
+            <label htmlFor="initial-or-appellate">
+              {formValues.course_type}
+              <TextField
+                multiline={true}
+                type="text"
+                variant="outlined"
+                placeholder="Initial or Appellate"
+                name="Initial or Appellate"
+                onChange={onInputChange}
+              />
+            </label>
+          </div>
+          <div className="case-outcome">
+            <label htmlFor="case-outcome">
+              <TextField
+                multiline={true}
+                variant="outlined"
+                placeholder="Case Outcome"
+                name="Case Outcome"
+                onChange={onInputChange}
+              />
+            </label>
+          </div>
+          {/* This change is pending approval from stakeholder
           <div className="hearing-type">
             <label htmlFor="hearing-type">
               <TextField
@@ -274,179 +284,179 @@ const UploadCase = props => {
               />
             </label>
           </div> */}
-            <div className="nation-of-origin">
-              <label htmlFor="nation-of-origin">
-                <TextField
-                  multiline={true}
-                  type="text"
-                  variant="outlined"
-                  placeholder="Nation of Origin"
-                  name="Nation of Origin"
-                  onChange={onInputChange}
-                />
-              </label>
-            </div>
-            <div className="protected-ground">
-              <label htmlFor="protected-ground">
-                <TextField
-                  multiline={true}
-                  variant="outlined"
-                  name="Protected Ground"
-                  placeholder="Protected Ground"
-                  onChange={onInputChange}
-                />
-              </label>
-            </div>
-            <div className="application-type">
-              <label htmlFor="application-type">
-                <TextField
-                  multiline={true}
-                  type="text"
-                  variant="outlined"
-                  placeholder="Application Type "
-                  name="Application Type "
-                  onChange={onInputChange}
-                />
-              </label>
-            </div>
-            <div className="case-origin">
-              <label htmlFor="case-origin">
-                <TextField
-                  multiline={true}
-                  type="text"
-                  variant="outlined"
-                  placeholder="Case Origin"
-                  name="Case Origin"
-                  onChange={onInputChange}
-                />
-              </label>
-            </div>
-            <div className="applicant-perceived-credibility">
-              <label htmlFor="applicant-perceived-credibility">
-                <TextField
-                  multiline={true}
-                  type="text"
-                  variant="outlined"
-                  placeholder="Applicant Perceived Credibility"
-                  name="Applicant Perceived Credibility"
-                  onChange={onInputChange}
-                />
-              </label>
-            </div>
-            <div className="applicant-gender">
-              <label htmlFor="applicant-gender">
-                <TextField
-                  multiline={true}
-                  variant="outlined"
-                  placeholder="Applicant Gender"
-                  name="Applicant Gender"
-                  onChange={onInputChange}
-                />
-              </label>
-            </div>
-            <div className="applicant-language">
-              <label htmlFor="applicant-language">
-                <TextField
-                  multiline={true}
-                  variant="outlined"
-                  placeholder="Applicant Language"
-                  name="Applicant Language"
-                  onChange={onInputChange}
-                />
-              </label>
-            </div>
-            <div className="applicant-access-to-interpreter">
-              <label htmlFor="applicant-access-to-interpreter">
-                <TextField
-                  multiline={true}
-                  variant="outlined"
-                  placeholder="Applicant Access To Interpreter"
-                  name="Applicant Access To Interpreter"
-                  onChange={onInputChange}
-                />
-              </label>
-            </div>
-            <div className="applicant-indigenous-group">
-              <label htmlFor="applicant-indigenous-group">
-                <TextField
-                  multiline={true}
-                  type="text"
-                  variant="outlined"
-                  placeholder="Applicant Indigenous Group"
-                  name="Applicant Indigenous Group"
-                  onChange={onInputChange}
-                />
-              </label>
-            </div>
-            <div className="type-of-violence-experienced">
-              <label htmlFor="type-of-violence-experienced">
-                <TextField
-                  multiline={true}
-                  type="text"
-                  variant="outlined"
-                  placeholder="Type of Violence Experienced"
-                  name="Type of Violence Experienced"
-                  onChange={onInputChange}
-                />
-              </label>
-            </div>
-            <div className="case-filed-within-one-year">
-              <label htmlFor="case-filed-within-one-year">
-                <TextField
-                  multiline={true}
-                  type="text"
-                  variant="outlined"
-                  placeholder="Case Filed Within One Year"
-                  name="Case Filed Within One Year"
-                  onChange={onInputChange}
-                />
-              </label>
-            </div>
-            {userData && (
-              <>
-                <div className="submit-button">
-                  <Button
-                    className="btn-upload"
-                    style={buttonStyles}
-                    variant="contained"
-                    component="span"
-                  >
-                    Submit
-                  </Button>
-                </div>
-              </>
-            )}
-            <br />
-            {adminData && (
-              <>
-                <div className="approve-button">
-                  <Button
-                    onClick={acceptCase}
-                    className="btn-upload"
-                    style={buttonStyles}
-                    variant="contained"
-                    component="span"
-                  >
-                    Approve
-                  </Button>
-                </div>
-                <br />
-                <div className="reject-button">
-                  <Button
-                    onClick={rejectCase}
-                    className="btn-upload"
-                    style={buttonStyles}
-                    variant="contained"
-                    component="span"
-                  >
-                    Reject
-                  </Button>
-                </div>
-              </>
-            )}
-          </form>
-        </div>
+          <div className="nation-of-origin">
+            <label htmlFor="nation-of-origin">
+              <TextField
+                multiline={true}
+                type="text"
+                variant="outlined"
+                placeholder="Nation of Origin"
+                name="Nation of Origin"
+                onChange={onInputChange}
+              />
+            </label>
+          </div>
+          <div className="protected-ground">
+            <label htmlFor="protected-ground">
+              <TextField
+                multiline={true}
+                variant="outlined"
+                name="Protected Ground"
+                placeholder="Protected Ground"
+                onChange={onInputChange}
+              />
+            </label>
+          </div>
+          <div className="application-type">
+            <label htmlFor="application-type">
+              <TextField
+                multiline={true}
+                type="text"
+                variant="outlined"
+                placeholder="Application Type "
+                name="Application Type "
+                onChange={onInputChange}
+              />
+            </label>
+          </div>
+          <div className="case-origin">
+            <label htmlFor="case-origin">
+              <TextField
+                multiline={true}
+                type="text"
+                variant="outlined"
+                placeholder="Case Origin"
+                name="Case Origin"
+                onChange={onInputChange}
+              />
+            </label>
+          </div>
+          <div className="applicant-perceived-credibility">
+            <label htmlFor="applicant-perceived-credibility">
+              <TextField
+                multiline={true}
+                type="text"
+                variant="outlined"
+                placeholder="Applicant Perceived Credibility"
+                name="Applicant Perceived Credibility"
+                onChange={onInputChange}
+              />
+            </label>
+          </div>
+          <div className="applicant-gender">
+            <label htmlFor="applicant-gender">
+              <TextField
+                multiline={true}
+                variant="outlined"
+                placeholder="Applicant Gender"
+                name="Applicant Gender"
+                onChange={onInputChange}
+              />
+            </label>
+          </div>
+          <div className="applicant-language">
+            <label htmlFor="applicant-language">
+              <TextField
+                multiline={true}
+                variant="outlined"
+                placeholder="Applicant Language"
+                name="Applicant Language"
+                onChange={onInputChange}
+              />
+            </label>
+          </div>
+          <div className="applicant-access-to-interpreter">
+            <label htmlFor="applicant-access-to-interpreter">
+              <TextField
+                multiline={true}
+                variant="outlined"
+                placeholder="Applicant Access To Interpreter"
+                name="Applicant Access To Interpreter"
+                onChange={onInputChange}
+              />
+            </label>
+          </div>
+          <div className="applicant-indigenous-group">
+            <label htmlFor="applicant-indigenous-group">
+              <TextField
+                multiline={true}
+                type="text"
+                variant="outlined"
+                placeholder="Applicant Indigenous Group"
+                name="Applicant Indigenous Group"
+                onChange={onInputChange}
+              />
+            </label>
+          </div>
+          <div className="type-of-violence-experienced">
+            <label htmlFor="type-of-violence-experienced">
+              <TextField
+                multiline={true}
+                type="text"
+                variant="outlined"
+                placeholder="Type of Violence Experienced"
+                name="Type of Violence Experienced"
+                onChange={onInputChange}
+              />
+            </label>
+          </div>
+          <div className="case-filed-within-one-year">
+            <label htmlFor="case-filed-within-one-year">
+              <TextField
+                multiline={true}
+                type="text"
+                variant="outlined"
+                placeholder="Case Filed Within One Year"
+                name="Case Filed Within One Year"
+                onChange={onInputChange}
+              />
+            </label>
+          </div>
+          {userData && (
+            <>
+              <div className="submit-button">
+                <Button
+                  className={classes.buttonStyles}
+                  // style={buttonStyles}
+                  variant="contained"
+                  component="span"
+                >
+                  Submit
+                </Button>
+              </div>
+            </>
+          )}
+          <br />
+          {adminData && (
+            <>
+              <div className="approve-button">
+                <Button
+                  onClick={acceptCase}
+                  className={classes.buttonStyles}
+                  // style={buttonStyles}
+                  variant="contained"
+                  component="span"
+                >
+                  Approve
+                </Button>
+              </div>
+              <br />
+              <div className="reject-button">
+                <Button
+                  onClick={rejectCase}
+                  className={classes.buttonStyles}
+                  // style={buttonStyles}
+                  variant="contained"
+                  component="span"
+                >
+                  Reject
+                </Button>
+              </div>
+            </>
+          )}
+        </form>
       </div>
+      {/* </div> */}
     </div>
   );
 };
