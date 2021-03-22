@@ -46,7 +46,14 @@ function RenderHomePage(props) {
       })
       // )
       .then(res => {
-        setCaseData(res.data);
+        setCaseData(
+          res.data.map(eachCase => {
+            return {
+              ...eachCase,
+              id: eachCase.case_id,
+            };
+          })
+        );
       })
       .catch(err => {
         console.log(err);

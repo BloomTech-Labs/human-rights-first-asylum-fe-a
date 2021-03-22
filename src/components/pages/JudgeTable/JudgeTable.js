@@ -85,7 +85,7 @@ export default function JudgeTable(props) {
   ];
 
   judgeData.forEach((item, idx) => {
-    item.id = idx;
+    item.id = idx; //no?
   }); // this is VERY hacky, but the table doesn't take data without ids
 
   const classes = useStyles();

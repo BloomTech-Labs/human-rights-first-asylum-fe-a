@@ -53,7 +53,7 @@ const CaseOverview = props => {
             >
               Update this Case
             </Button>
-            <KeyParagraphBold>Case ID: {id}</KeyParagraphBold>
+            <KeyParagraphBold>Case ID: {caseData.case_id}</KeyParagraphBold>
             Case Specifics
             <KeyParagraph>Case Status: {caseData.case_status}</KeyParagraph>
             <KeyParagraph>Date: {caseData.hearing_date}</KeyParagraph>

@@ -39,7 +39,7 @@ function SavedCases({ savedCases, deleteBookmark }) {
 
   const columns = [
     {
-      field: 'id',
+      field: 'case_id', //yes
       headerName: 'Case ID',
       width: 200,
       options: {
@@ -91,7 +91,7 @@ function SavedCases({ savedCases, deleteBookmark }) {
         <IconButton>
           <DeleteIcon
             onClick={() => {
-              deleteBookmark(params.row.id);
+              deleteBookmark(params.row.id); //maybe?
             }}
           />
         </IconButton>
