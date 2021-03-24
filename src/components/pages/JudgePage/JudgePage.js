@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
 const columns = [
   {
     field: 'id',
-    headerName: 'ID',
+    headerName: 'Case Id',
     width: 100,
     renderCell: params => (
       <>

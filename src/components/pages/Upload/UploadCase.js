@@ -27,7 +27,7 @@ const initialFormValues = {
   credibility_of_refugee: '',
   case_status: '',
   case_outcome: '',
-  judge_name: '',
+  judge: '',
   protected_ground: [],
   application_type: [],
 };

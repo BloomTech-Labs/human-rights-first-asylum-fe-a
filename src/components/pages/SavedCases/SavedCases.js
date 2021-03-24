@@ -39,7 +39,7 @@ function SavedCases({ savedCases, deleteBookmark }) {
 
   const columns = [
     {
-      field: 'id',
+      field: 'case_id', //yes
       headerName: 'Case ID',
       width: 200,
       options: {
@@ -58,7 +58,7 @@ function SavedCases({ savedCases, deleteBookmark }) {
     { field: 'nation_of_origin', headerName: 'Nation of Origin', width: 130 },
     { field: 'protected_ground', headerName: 'Protected Ground', width: 150 },
     { field: 'application_type ', headerName: 'Application Type ', width: 130 },
-    { field: 'judge_name', headerName: 'Judge', width: 120 },
+    { field: 'judge', headerName: 'Judge', width: 120 },
     { field: 'case_outcome', headerName: 'Decision', width: 90 },
     { field: 'case_status', headerName: 'Case Status', width: 110 },
 
@@ -91,7 +91,7 @@ function SavedCases({ savedCases, deleteBookmark }) {
         <IconButton>
           <DeleteIcon
             onClick={() => {
-              deleteBookmark(params.row.id);
+              deleteBookmark(params.row.id); //maybe?
             }}
           />
         </IconButton>
