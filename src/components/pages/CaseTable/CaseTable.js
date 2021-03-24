@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { DataGrid, GridToolbar } from '@material-ui/data-grid';
+import {
+  DataGrid,
+  GridToolbarContainer,
+  GridColumnsToolbarButton,
+  GridToolbarExport,
+} from '@material-ui/data-grid';
+import SearchIcon from '@material-ui/icons/Search';
+import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
@@ -84,6 +91,15 @@ const useStyles = makeStyles(theme => ({
   buttons: {
     display: 'flex',
     width: '30%',
+  },
+  toolbar: {
+    display: 'flex',
+    flexDirection: 'row',
+    margin: '5px',
+    color: 'darkblue',
+    '&:hover': {
+      cursor: 'pointer',
+    },
   },
 }));
 
@@ -475,6 +491,33 @@ export default function CaseTable(props) {
     );
   };
 
+  const Toolbar = () => {
+    return (
+      <GridToolbarContainer>
+        <div
+          className={classes.toolbar}
+          onClick={() => {
+            toggleSearch();
+          }}
+        >
+          <SearchIcon />
+          <p>SEARCH</p>
+        </div>
+        <div
+          className={classes.toolbar}
+          onClick={() => {
+            bookmarkCases();
+          }}
+        >
+          <BookmarkBorderIcon />
+          <p>SAVE CASES</p>
+        </div>
+        <GridColumnsToolbarButton />
+        <GridToolbarExport />
+      </GridToolbarContainer>
+    );
+  };
+
   return (
     <div className={classes.tbl_container}>
       <div className={classes.search_container}>
@@ -506,7 +549,7 @@ export default function CaseTable(props) {
             })}
           </div>
         )}
-        <div className={classes.buttons}>
+        {/* <div className={classes.buttons}>
           <button
             onClick={() => {
               toggleSearch();
@@ -520,7 +563,7 @@ export default function CaseTable(props) {
             bookmarkCases={bookmarkCases}
             text={'Save Cases'}
           />
-        </div>
+        </div> */}
         <Drawer anchor="right" open={new_search} onClose={toggleSearch}>
           {drawerContent()}
         </Drawer>
@@ -534,7 +577,9 @@ export default function CaseTable(props) {
         checkboxSelection={true}
         onSelectionChange={onCheckboxSelect}
         showCellRightBorder={true}
-        components={{ Toolbar: GridToolbar }}
+        components={{
+          Toolbar: Toolbar,
+        }}
       />
     </div>
   );

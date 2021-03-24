@@ -21,6 +21,8 @@ import BookmarksIcon from '@material-ui/icons/Bookmarks';
 import PublishIcon from '@material-ui/icons/Publish';
 import GavelIcon from '@material-ui/icons/Gavel';
 import HomeIcon from '@material-ui/icons/Home';
+import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
+import BookmarkIcon from '@material-ui/icons/Bookmark';
 import { Link } from 'react-router-dom';
 
 import { SideDrawerData } from './SideDrawerData';
@@ -155,9 +157,17 @@ export default function SideDrawer(props) {
           <Link to="/">
             <ListItem button>
               <ListItemIcon>
-                <HomeIcon />
+                <BusinessCenterIcon />
               </ListItemIcon>
-              <ListItemText primary="Home" style={textItemStyles} />
+              <ListItemText primary="Cases" style={textItemStyles} />
+            </ListItem>
+          </Link>
+          <Link to="/">
+            <ListItem button>
+              <ListItemIcon>
+                <GavelIcon />
+              </ListItemIcon>
+              <ListItemText primary="Judges" style={textItemStyles} />
             </ListItem>
           </Link>
           <Link to="/upload-case">
@@ -179,7 +189,7 @@ export default function SideDrawer(props) {
           <Link to="/saved-judges">
             <ListItem button>
               <ListItemIcon>
-                <GavelIcon />
+                <BookmarkIcon />
               </ListItemIcon>
               <ListItemText primary="Saved Judges" style={textItemStyles} />
             </ListItem>
