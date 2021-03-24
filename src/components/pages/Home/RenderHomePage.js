@@ -46,7 +46,14 @@ function RenderHomePage(props) {
       })
       // )
       .then(res => {
-        setCaseData(res.data);
+        setCaseData(
+          res.data.map(eachCase => {
+            return {
+              ...eachCase,
+              id: eachCase.case_id,
+            };
+          })
+        );
       })
       .catch(err => {
         console.log(err);
@@ -118,7 +125,7 @@ function RenderHomePage(props) {
   };
 
   const deleteFromStateByName = (name, state, setState) => {
-    let index = state.findIndex(item => item.judge_name === name);
+    let index = state.findIndex(item => item.judge === name);
     return setState(state.slice(0, index).concat(state.slice(index + 1)));
   };
 

@@ -119,7 +119,14 @@ export default function CaseTable(props) {
 
   const columns = [
     {
-      field: 'id', //difficult, do last
+      field: 'id',
+      hide: true,
+      headerName: 'ID',
+      width: 130,
+      className: 'tableHeader',
+    },
+    {
+      field: 'case_id',
       headerName: 'Case ID',
       width: 130,
       className: 'tableHeader',
@@ -143,7 +150,7 @@ export default function CaseTable(props) {
       className: 'tableHeader',
     },
     {
-      field: 'judge_name', //difficult, do next to last
+      field: 'judge',
       headerName: 'Judge',
       width: 160,
       className: 'tableHeader',
@@ -158,30 +165,24 @@ export default function CaseTable(props) {
         </>
       ),
     },
-
-    //to be added
     {
       field: 'initial_or_appellate',
       headerName: 'Initial or Appellate',
       width: 80,
       className: 'tableHeader',
     },
-    //^
-
     {
       field: 'case_origin',
       headerName: 'Case Origin',
       width: 150,
       className: 'tableHeader',
     },
-
     {
       field: 'case_filed_within_one_year',
       headerName: 'Case Filed Within One Year',
       width: 80,
       className: 'tableHeader',
     },
-
     {
       field: 'application_type ',
       headerName: 'Application Type ',
@@ -189,7 +190,6 @@ export default function CaseTable(props) {
       className: 'tableHeader',
       hide: true,
     },
-
     {
       field: 'protected_ground',
       headerName: 'Protected Ground',
@@ -197,37 +197,30 @@ export default function CaseTable(props) {
       className: 'tableHeader',
       hide: true,
     },
-
     {
       field: 'case_outcome',
       headerName: 'Case Outcome',
       width: 120,
       className: 'tableHeader',
     },
-
     {
       field: 'nation_of_origin',
       headerName: 'Nation of Origin',
       width: 130,
       className: 'tableHeader',
     },
-
-    //to add?
     {
       field: 'applicant_sex',
       headerName: 'Applicant Sex',
       width: 130,
       className: 'tableHeader',
     },
-    //^
-    //to add?
     {
       field: 'type_of_violence_experienced',
       headerName: 'Type of Violence Experienced',
       width: 130,
       className: 'tableHeader',
     },
-    //^
     {
       field: 'applicant_indigenous_group',
       headerName: 'Applicant Indigenous Group',
@@ -247,7 +240,6 @@ export default function CaseTable(props) {
       width: 80,
       className: 'tableHeader',
     },
-
     {
       field: 'applicant_perceived_credibility',
       headerName: 'Applicant Perceived Credibility',
@@ -369,8 +361,8 @@ export default function CaseTable(props) {
   };
 
   const [queryValues, setQueryValues] = useState({
-    id: '',
-    judge_name: '',
+    case_id: '',
+    judge: '',
     case_origin: '',
     nation_of_origin: '',
     protected_ground: '',
@@ -410,8 +402,8 @@ export default function CaseTable(props) {
     return rows;
   };
   const searchOptions = [
-    { id: 'id', label: 'Case ID' },
-    { id: 'judge_name', label: 'Judge' },
+    { id: 'case_id', label: 'Case ID' },
+    { id: 'judge', label: 'Judge' },
     { id: 'protected_ground', label: 'Protected Ground' },
     { id: 'case_origin', label: 'Case Origin' },
     { id: 'application_type ', label: 'Application Type' },
