@@ -549,7 +549,7 @@ export default function CaseTable(props) {
             })}
           </div>
         )}
-        <div className={classes.buttons}>
+        {/* <div className={classes.buttons}>
           <button
             onClick={() => {
               toggleSearch();
@@ -563,7 +563,7 @@ export default function CaseTable(props) {
             bookmarkCases={bookmarkCases}
             text={'Save Cases'}
           />
-        </div>
+        </div> */}
         <Drawer anchor="right" open={new_search} onClose={toggleSearch}>
           {drawerContent()}
         </Drawer>
