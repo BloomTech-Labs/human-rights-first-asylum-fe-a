@@ -5,7 +5,12 @@ import { useForm } from 'react-hook-form';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-// import Switch from '@material-ui/core/Switch';
+import FormLabel from '@material-ui/core/FormLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Switch from '@material-ui/core/Switch';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -58,12 +63,21 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
   },
 
+  row: {
+    marginTop: '4%',
+    marginBottom: '2%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
   buttonStyles: {
     color: '#ffffff',
     backgroundColor: '#BC541E',
-    marginRight: '40%',
-    marginLeft: '40%',
-    marginTop: '2%',
+    marginTop: '3%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 }));
 
@@ -98,6 +112,21 @@ const UploadCase = props => {
   const [isDenied, setIsDenied] = useState(false);
   const [approvedQueue, setApprovedQueue] = useState([]);
   const { id } = useParams();
+
+  // This implements the switch functionality on the form
+  const [state, setState] = React.useState({
+    applicantAccessToInterpreter: false,
+    caseFiledWithinOneYear: false,
+    applicantPerceivedCredibility: false,
+    initialOrAppellate: false,
+  });
+
+  const handleChange = e => {
+    setState({
+      ...state,
+      [e.target.name]: e.target.checked,
+    });
+  };
 
   const adminData = () => {
     axios
@@ -244,19 +273,6 @@ const UploadCase = props => {
                 />
               </label>
             </div>
-            <div className="initial-or-appellate">
-              <label htmlFor="initial-or-appellate">
-                {formValues.course_type}
-                <TextField
-                  multiline={true}
-                  type="text"
-                  variant="outlined"
-                  placeholder="Initial or Appellate"
-                  name="Initial or Appellate"
-                  onChange={onInputChange}
-                />
-              </label>
-            </div>
             <div className="case-outcome">
               <label htmlFor="case-outcome">
                 <TextField
@@ -328,18 +344,6 @@ const UploadCase = props => {
                 />
               </label>
             </div>
-            <div className="applicant-perceived-credibility">
-              <label htmlFor="applicant-perceived-credibility">
-                <TextField
-                  multiline={true}
-                  type="text"
-                  variant="outlined"
-                  placeholder="Applicant Perceived Credibility"
-                  name="Applicant Perceived Credibility"
-                  onChange={onInputChange}
-                />
-              </label>
-            </div>
             <div className="applicant-gender">
               <label htmlFor="applicant-gender">
                 <TextField
@@ -358,17 +362,6 @@ const UploadCase = props => {
                   variant="outlined"
                   placeholder="Applicant Language"
                   name="Applicant Language"
-                  onChange={onInputChange}
-                />
-              </label>
-            </div>
-            <div className="applicant-access-to-interpreter">
-              <label htmlFor="applicant-access-to-interpreter">
-                <TextField
-                  multiline={true}
-                  variant="outlined"
-                  placeholder="Applicant Access To Interpreter"
-                  name="Applicant Access To Interpreter"
                   onChange={onInputChange}
                 />
               </label>
@@ -397,18 +390,59 @@ const UploadCase = props => {
                 />
               </label>
             </div>
-            <div className="case-filed-within-one-year">
-              <label htmlFor="case-filed-within-one-year">
-                <TextField
-                  multiline={true}
-                  type="text"
-                  variant="outlined"
-                  placeholder="Case Filed Within One Year"
-                  name="Case Filed Within One Year"
-                  onChange={onInputChange}
+            <FormControl component="fieldset">
+              <FormLabel component="legend"></FormLabel>
+              <FormGroup row className={classes.row}>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={state.applicantAccessToInterpreter}
+                      onChange={handleChange}
+                      name="applicantAccessToInterpreter"
+                    />
+                  }
+                  label="Applicant Access To Interpreter"
+                  labelPlacement="top"
                 />
-              </label>
-            </div>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={state.caseFiledWithinOneYear}
+                      onChange={handleChange}
+                      name="caseFiledWithinOneYear"
+                    />
+                  }
+                  label="Case Filed Within One Year"
+                  labelPlacement="top"
+                />
+              </FormGroup>
+              <FormGroup row className={classes.row}>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={state.initialOrAppellate}
+                      onChange={handleChange}
+                      name="initialOrAppellate"
+                    />
+                  }
+                  label="Initial or Appellate"
+                  labelPlacement="top"
+                />
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={state.applicantPerceivedCredibility}
+                      onChange={handleChange}
+                      name="applicantPerceivedCredibility"
+                    />
+                  }
+                  label="Applicant Perceived Credibility"
+                  labelPlacement="top"
+                />
+              </FormGroup>
+              <FormHelperText>Toggle to right if appellate</FormHelperText>
+            </FormControl>
+
             {userData && (
               <>
                 <div className="submit-button">
