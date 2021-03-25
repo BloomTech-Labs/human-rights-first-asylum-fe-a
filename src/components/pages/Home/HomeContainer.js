@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useOktaAuth } from '@okta/okta-react';
+import { UserContext } from '../../../context/UserContext';
 
 import RenderHomePage from './RenderHomePage';
 
@@ -35,11 +36,9 @@ function HomeContainer({ LoadingComponent }) {
         <LoadingComponent message="Fetching user profile..." />
       )}
       {authState.isAuthenticated && userInfo && (
-        <RenderHomePage
-          userInfo={userInfo}
-          oktaAuth={oktaAuth}
-          authState={authState}
-        />
+        <UserContext.Provider value={{ oktaAuth, authState, userInfo }}>
+          <RenderHomePage />
+        </UserContext.Provider>
       )}
     </>
   );
