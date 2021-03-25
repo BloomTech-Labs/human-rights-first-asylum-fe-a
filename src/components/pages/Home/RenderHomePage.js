@@ -30,7 +30,7 @@ function RenderHomePage(props) {
   const [caseData, setCaseData] = useState([]);
   const [judgeData, setJudgeData] = useState([]);
   const [savedCases, setSavedCases] = useState([]);
-  const [showCaseTable, setShowCaseTable] = useState(true);
+  // const [showCaseTable, setShowCaseTable] = useState(true);
   const [savedJudges, setSavedJudges] = useState([]);
   const [selectedRows, setSelectedRows] = useState({});
 
@@ -206,37 +206,30 @@ function RenderHomePage(props) {
       </Route>
 
       <Route exact path="/">
-        {/* showCaseTable is a boolean when true will display the Cases Table and when false will dispaly the Judges Table */}
-        {showCaseTable && (
-          <>
-            <CaseTable
-              showCaseTable={showCaseTable}
-              setShowCaseTable={setShowCaseTable}
-              caseData={caseData}
-              userInfo={user.userInfo}
-              savedCases={savedCases}
-              setSavedCases={setSavedCases}
-              authState={user.authState}
-              selectedRows={selectedRows}
-              setSelectedRows={setSelectedRows}
-            />
-            <Loader promiseTracker={usePromiseTracker} />
-          </>
-        )}
-        {!showCaseTable && (
-          <>
-            <JudgeTable
-              showCaseTable={showCaseTable}
-              setShowCaseTable={setShowCaseTable}
-              judgeData={judgeData}
-              userInfo={user.userInfo}
-              savedJudges={savedJudges}
-              setSavedJudges={setSavedJudges}
-              authState={user.authState}
-            />
-            <Loader promiseTracker={usePromiseTracker} />
-          </>
-        )}
+        <>
+          <CaseTable
+            caseData={caseData}
+            userInfo={user.userInfo}
+            savedCases={savedCases}
+            setSavedCases={setSavedCases}
+            authState={user.authState}
+            selectedRows={selectedRows}
+            setSelectedRows={setSelectedRows}
+          />
+          <Loader promiseTracker={usePromiseTracker} />
+        </>
+      </Route>
+      <Route exact path="/judges">
+        <>
+          <JudgeTable
+            judgeData={judgeData}
+            userInfo={user.userInfo}
+            savedJudges={savedJudges}
+            setSavedJudges={setSavedJudges}
+            authState={user.authState}
+          />
+          <Loader promiseTracker={usePromiseTracker} />
+        </>
       </Route>
     </div>
   );

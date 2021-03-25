@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
-import { DataGrid, GridToolbar } from '@material-ui/data-grid';
+import {
+  DataGrid,
+  GridToolbarContainer,
+  GridColumnsToolbarButton,
+  GridToolbarExport,
+  GridDensitySelector,
+} from '@material-ui/data-grid';
+import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
+import SearchIcon from '@material-ui/icons/Search';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-// Buttons
-import Tabs from '../Home/Tabs';
-import SaveButton from '../CaseTable/SaveButton';
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -43,18 +48,19 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  toolbar: {
+    display: 'flex',
+    flexDirection: 'row',
+    margin: '5px',
+    color: 'darkblue',
+    '&:hover': {
+      cursor: 'pointer',
+    },
+  },
 }));
 
 export default function JudgeTable(props) {
-  const {
-    judgeData,
-    userInfo,
-    savedJudges,
-    setSavedJudges,
-    authState,
-    setShowCaseTable,
-    showCaseTable,
-  } = props;
+  const { judgeData, userInfo, savedJudges, setSavedJudges, authState } = props;
   const [columnToSearch, setColumnToSearch] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedRows, setSelectedRows] = useState({});
@@ -193,13 +199,37 @@ export default function JudgeTable(props) {
     setSelectedRows(selections);
   };
 
+  const Toolbar = () => {
+    return (
+      <GridToolbarContainer>
+        <div
+          className={classes.toolbar}
+          onClick={() => {
+            alert('This is not yet functional');
+          }}
+        >
+          <SearchIcon />
+          <p>SEARCH</p>
+        </div>
+        <div
+          className={classes.toolbar}
+          onClick={() => {
+            bookmarkJudges();
+          }}
+        >
+          <BookmarkBorderIcon />
+          <p>SAVE JUDGES</p>
+        </div>
+        <GridColumnsToolbarButton />
+        <GridDensitySelector />
+        <GridToolbarExport />
+      </GridToolbarContainer>
+    );
+  };
+
   return (
     <div className={classes.tbl_container}>
       <div className={classes.search_container}>
-        <Tabs
-          setShowCaseTable={setShowCaseTable}
-          showCaseTable={showCaseTable}
-        ></Tabs>
         <div className={classes.colFilter}>
           {/* This puts the search by text inside of the search bar, give it all other components the same height */}
           <Select value={columnToSearch} onChange={handleChange} displayEmpty>
@@ -221,11 +251,11 @@ export default function JudgeTable(props) {
           type="text"
           style={{ width: '50%', marginLeft: 40 }}
         />
-        <SaveButton
+        {/* <SaveButton
           selectedRows={selectedRows}
           bookmarkCases={bookmarkJudges}
           text={'Save Judges'}
-        />
+        /> */}
       </div>
       <DataGrid
         rows={columnToSearch ? search(judgeData) : judgeData}
@@ -236,7 +266,7 @@ export default function JudgeTable(props) {
         checkboxSelection={true}
         onSelectionChange={onCheckboxSelect}
         showCellRightBorder={true}
-        components={{ Toolbar: GridToolbar }}
+        components={{ Toolbar: Toolbar }}
       />
     </div>
   );

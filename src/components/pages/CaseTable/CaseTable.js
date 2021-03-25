@@ -4,6 +4,7 @@ import {
   GridToolbarContainer,
   GridColumnsToolbarButton,
   GridToolbarExport,
+  GridDensitySelector,
 } from '@material-ui/data-grid';
 import SearchIcon from '@material-ui/icons/Search';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
@@ -11,9 +12,7 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
-// Buttons
-import Tabs from '../Home/Tabs';
-import SaveButton from './SaveButton';
+
 // Imports for PDF Modal
 import PDFViewer from '../PDFViewer/PDFViewer';
 import { Button } from 'antd';
@@ -112,8 +111,6 @@ export default function CaseTable(props) {
     authState,
     setSelectedRows,
     selectedRows,
-    setShowCaseTable,
-    showCaseTable,
   } = props;
 
   const { id } = useParams();
@@ -513,6 +510,7 @@ export default function CaseTable(props) {
           <p>SAVE CASES</p>
         </div>
         <GridColumnsToolbarButton />
+        <GridDensitySelector />
         <GridToolbarExport />
       </GridToolbarContainer>
     );
@@ -521,11 +519,6 @@ export default function CaseTable(props) {
   return (
     <div className={classes.tbl_container}>
       <div className={classes.search_container}>
-        <Tabs
-          setShowCaseTable={setShowCaseTable}
-          showCaseTable={showCaseTable}
-        />
-
         {searching && (
           <div className={classes.chips}>
             {searchOptions.map(option => {
@@ -550,14 +543,6 @@ export default function CaseTable(props) {
           </div>
         )}
         {/* <div className={classes.buttons}>
-          <button
-            onClick={() => {
-              toggleSearch();
-            }}
-            className={classes.filterButton}
-          >
-            Filter Cases
-          </button>
           <SaveButton
             selectedRows={selectedRows}
             bookmarkCases={bookmarkCases}
