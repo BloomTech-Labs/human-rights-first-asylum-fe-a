@@ -79,7 +79,7 @@ const useStyles = makeStyles(theme => ({
     border: 'none',
   },
   drawer: {
-    width: 240,
+    width: 300,
     marginTop: '40%',
   },
   tabs: {
@@ -442,19 +442,19 @@ export default function CaseTable(props) {
             fontSize: 'larger',
             fontWeight: 'bold',
             paddingBottom: '1%',
-            marginLeft: 10,
+            marginLeft: '15%',
           }}
         >
           Advanced search
         </h6>
-        <p style={{ paddingBottom: '5%', marginLeft: 10 }}>
+        <p style={{ paddingBottom: '5%', margin: '0 15%' }}>
           Search by 1 or more data fields. Multiple Search terms will be
           combined with AND logic.
         </p>
         {searchOptions.map(value => {
           return (
             <div className={classes.querydiv} key={value.id}>
-              <p style={{ marginLeft: 10 }}>{value.label}</p>
+              <p style={{ marginLeft: '15%' }}>{value.label}</p>
               <TextField
                 placeholder={'search query'}
                 variant="outlined"
@@ -468,7 +468,7 @@ export default function CaseTable(props) {
                   setSearching(true);
                 }}
                 type="text"
-                style={{ marginLeft: 10, marginBottom: 10 }}
+                style={{ marginLeft: '15%', marginBottom: 10 }}
               />
             </div>
           );
@@ -564,7 +564,12 @@ export default function CaseTable(props) {
             text={'Save Cases'}
           />
         </div> */}
-        <Drawer anchor="right" open={new_search} onClose={toggleSearch}>
+        <Drawer
+          anchor="right"
+          open={new_search}
+          onClose={toggleSearch}
+          variant="persistent"
+        >
           {drawerContent()}
         </Drawer>
       </div>
