@@ -7,7 +7,7 @@ const initialInfo = {
   hearing_date: '',
   case_origin: '',
   hearing_type: '',
-  judge_name: '',
+  judge: '',
   case_outcome: '',
   court_type: '',
   nation_of_origin: '',
@@ -105,7 +105,7 @@ const CaseUpdate = props => {
                 type="text"
                 name="judge_name"
                 onChange={handleChange}
-                value={caseData.judge_name}
+                value={caseData.judge}
               />
             </label>
             <label>

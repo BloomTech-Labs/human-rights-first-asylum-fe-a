@@ -10,7 +10,7 @@ import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import Switch from '@material-ui/core/Switch';
+import Checkbox from '@material-ui/core/Checkbox';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
 
   leftDiv: {
     marginTop: '15%',
-    width: '40%',
+    width: '35%',
     display: 'inline-block',
     padding: '1%',
   },
@@ -48,32 +48,29 @@ const useStyles = makeStyles(theme => ({
   editForm: {
     marginTop: '10%',
     padding: '1%',
+    paddingRight: '10%',
   },
 
   h1Styles: {
     fontSize: '2rem',
     marginBottom: '2.5rem',
-    color: '#215589',
   },
 
   h2Styles: {
     fontSize: '1.3rem',
     marginBottom: '2.5rem',
-    color: '#215589',
     width: '100%',
   },
 
   row: {
-    marginTop: '4%',
-    marginBottom: '2%',
+    fontSize: '1rem',
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    Margin: theme.spacing(2),
   },
 
   buttonStyles: {
     color: '#ffffff',
-    backgroundColor: '#BC541E',
+    backgroundColor: '#215589',
     marginTop: '3%',
     display: 'flex',
     alignItems: 'center',
@@ -215,10 +212,11 @@ const UploadCase = props => {
       {/* <div className={classes.root}> */}
       <div className={classes.leftDiv}>
         <div className={classes.pdfUpload}>
-          <h1 className={classes.h1Styles}>Upload a New Case</h1>
+          <h1 className={classes.h1Styles}>The Case Uploader</h1>
           <h2 className={classes.h2Styles}>
-            Upload PDF and wait for form to populate. Please, fill out any
-            remaining empty or incorrect information.
+            Upload PDF and wait for form on the right hand side to populate.
+            Please, fill out any remaining empty or incorrect information on the
+            form.
           </h2>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="pdf-upload">
@@ -231,7 +229,7 @@ const UploadCase = props => {
                   onChange={onFileChange}
                 />
                 <Button
-                  className="btn-choose"
+                  className={classes.buttonStyles}
                   variant="outlined"
                   component="span"
                 >
@@ -392,55 +390,59 @@ const UploadCase = props => {
             </div>
             <FormControl component="fieldset">
               <FormLabel component="legend"></FormLabel>
-              <FormGroup row className={classes.row}>
+              <FormGroup className={classes.row}>
                 <FormControlLabel
                   control={
-                    <Switch
+                    <Checkbox
                       checked={state.applicantAccessToInterpreter}
                       onChange={handleChange}
                       name="applicantAccessToInterpreter"
                     />
                   }
-                  label="Applicant Access To Interpreter"
-                  labelPlacement="top"
+                  label="Applicant Has Access To Interpreter"
+                  labelPlacement="right"
                 />
+              </FormGroup>
+              <FormGroup className={classes.row}>
                 <FormControlLabel
                   control={
-                    <Switch
+                    <Checkbox
                       checked={state.caseFiledWithinOneYear}
                       onChange={handleChange}
                       name="caseFiledWithinOneYear"
                     />
                   }
-                  label="Case Filed Within One Year"
-                  labelPlacement="top"
+                  label="Case Filed Within The Past Year"
+                  labelPlacement="right"
                 />
               </FormGroup>
-              <FormGroup row className={classes.row}>
+              <FormGroup className={classes.row}>
                 <FormControlLabel
                   control={
-                    <Switch
+                    <Checkbox
                       checked={state.initialOrAppellate}
                       onChange={handleChange}
                       name="initialOrAppellate"
                     />
                   }
-                  label="Initial or Appellate"
-                  labelPlacement="top"
+                  label="Appellate Case"
+                  labelPlacement="right"
                 />
+              </FormGroup>
+              <FormGroup className={classes.row}>
                 <FormControlLabel
                   control={
-                    <Switch
+                    <Checkbox
                       checked={state.applicantPerceivedCredibility}
                       onChange={handleChange}
                       name="applicantPerceivedCredibility"
                     />
                   }
-                  label="Applicant Perceived Credibility"
-                  labelPlacement="top"
+                  label="Applicant Is Perceived As Credibile"
+                  labelPlacement="right"
                 />
               </FormGroup>
-              <FormHelperText>Toggle to right if appellate</FormHelperText>
+              <FormHelperText></FormHelperText>
             </FormControl>
 
             {userData && (

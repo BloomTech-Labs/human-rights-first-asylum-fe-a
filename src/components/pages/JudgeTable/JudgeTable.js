@@ -85,7 +85,7 @@ export default function JudgeTable(props) {
   ];
 
   judgeData.forEach((item, idx) => {
-    item.id = idx;
+    item.id = idx; //no?
   }); // this is VERY hacky, but the table doesn't take data without ids
 
   const classes = useStyles();
@@ -149,12 +149,12 @@ export default function JudgeTable(props) {
       )
       .then(res => {
         let justAdded = res.data.judge_bookmarks.slice(-1);
-        let justAddedName = justAdded[0].judge_name;
+        let justAddedName = justAdded[0].judge;
         let wholeAddedRow = findRowByJudgeName(justAddedName, judgeData);
         console.log(wholeAddedRow);
         let reformattedJudge = {
           user_id: userInfo.sub,
-          judge_name: wholeAddedRow.name,
+          judge: wholeAddedRow.name,
         };
         setSavedJudges([...savedJudges, reformattedJudge]);
       })
