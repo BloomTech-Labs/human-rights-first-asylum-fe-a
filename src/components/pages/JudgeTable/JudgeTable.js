@@ -214,7 +214,7 @@ export default function JudgeTable(props) {
         <div
           className={classes.toolbar}
           onClick={() => {
-            bookmarkJudges();
+            bookmarkJudges(selectedRows);
           }}
         >
           <BookmarkBorderIcon />
@@ -264,7 +264,7 @@ export default function JudgeTable(props) {
         autoHeight={true}
         loading={judgeData ? false : true}
         checkboxSelection={true}
-        onSelectionChange={onCheckboxSelect}
+        onSelectionModelChange={onCheckboxSelect}
         showCellRightBorder={true}
         components={{ Toolbar: Toolbar }}
       />
