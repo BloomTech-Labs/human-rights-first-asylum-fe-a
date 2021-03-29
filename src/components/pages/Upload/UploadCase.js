@@ -46,7 +46,7 @@ const useStyles = makeStyles(theme => ({
   },
 
   editForm: {
-    marginTop: '10%',
+    marginTop: '15%',
     padding: '1%',
     paddingRight: '10%',
   },
@@ -187,10 +187,16 @@ const UploadCase = props => {
 
   const { handleSubmit, errors } = useForm();
   const onSubmit = () => {};
+
+  // endpoint to send file to backend
   const onFileChange = e => {
-    //const file = e.target.files[0];
-    //implement endpoint to send file to backend
+    const dataForm = new FormData();
+    dataForm.append('target_file', e.target.files[0]);
+    axios
+      .post(`${process.env.REACT_APP_API_URI}/upload/`, dataForm)
+      .catch(err => console.log(err));
   };
+
   const onInputChange = e => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
