@@ -503,7 +503,7 @@ export default function CaseTable(props) {
         <div
           className={classes.toolbar}
           onClick={() => {
-            bookmarkCases();
+            bookmarkCases(selectedRows);
           }}
         >
           <BookmarkBorderIcon />
@@ -565,7 +565,7 @@ export default function CaseTable(props) {
         autoHeight={true}
         loading={caseData ? false : true}
         checkboxSelection={true}
-        onSelectionChange={onCheckboxSelect}
+        onSelectionModelChange={onCheckboxSelect}
         showCellRightBorder={true}
         components={{ Toolbar: Toolbar }}
       />
