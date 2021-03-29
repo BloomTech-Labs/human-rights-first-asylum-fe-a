@@ -226,8 +226,8 @@ export default function CaseTable(props) {
       className: 'tableHeader',
     },
     {
-      field: 'applicant_sex',
-      headerName: 'Applicant Sex',
+      field: 'applicant_gender',
+      headerName: 'Applicant Gender',
       width: 130,
       className: 'tableHeader',
     },
@@ -563,7 +563,7 @@ export default function CaseTable(props) {
             bookmarkCases={bookmarkCases}
             text={'Save Cases'}
           />
-        </div> */}
+          </div> */}
         <Drawer anchor="right" open={new_search} onClose={toggleSearch}>
           {drawerContent()}
         </Drawer>
@@ -577,9 +577,7 @@ export default function CaseTable(props) {
         checkboxSelection={true}
         onSelectionChange={onCheckboxSelect}
         showCellRightBorder={true}
-        components={{
-          Toolbar: Toolbar,
-        }}
+        components={{ Toolbar: Toolbar }}
       />
     </div>
   );

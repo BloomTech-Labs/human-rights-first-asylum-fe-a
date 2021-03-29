@@ -103,7 +103,7 @@ const CaseUpdate = props => {
               Judge
               <input
                 type="text"
-                name="judge"
+                name="judge_name"
                 onChange={handleChange}
                 value={caseData.judge}
               />
