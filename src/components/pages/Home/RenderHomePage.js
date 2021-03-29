@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import CaseTable from '../CaseTable/CaseTable';
 import JudgeTable from '../JudgeTable/JudgeTable';
 import UploadCase from '../Upload/UploadCase';
@@ -7,6 +7,7 @@ import JudgePage from '../JudgePage/JudgePage';
 import CaseOverview from '../CaseOverview/CaseOverview';
 import { Route } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
+import { UserContext } from '../../../context/UserContext';
 
 import axios from 'axios';
 import SavedCases from '../SavedCases/SavedCases';
@@ -25,13 +26,15 @@ const useStyles = makeStyles({
 });
 
 function RenderHomePage(props) {
-  const { userInfo, oktaAuth, authState, uploadCase } = props;
+  const { uploadCase } = props;
   const [caseData, setCaseData] = useState([]);
   const [judgeData, setJudgeData] = useState([]);
   const [savedCases, setSavedCases] = useState([]);
-  const [showCaseTable, setShowCaseTable] = useState(true);
+  // const [showCaseTable, setShowCaseTable] = useState(true);
   const [savedJudges, setSavedJudges] = useState([]);
   const [selectedRows, setSelectedRows] = useState({});
+
+  const user = useContext(UserContext);
 
   // should move these API calls into a separate index folder at some point
 
@@ -41,7 +44,7 @@ function RenderHomePage(props) {
     axios
       .get(`${process.env.REACT_APP_API_URI}/cases`, {
         headers: {
-          Authorization: 'Bearer ' + authState.idToken.idToken,
+          Authorization: 'Bearer ' + user.authState.idToken.idToken,
         },
       })
       // )
@@ -58,14 +61,14 @@ function RenderHomePage(props) {
       .catch(err => {
         console.log(err);
       });
-  }, [authState.idToken.idToken]);
+  }, [user.authState.idToken.idToken]);
 
   useEffect(() => {
     trackPromise(
       // Tracks the axios call and implements spinning loader while executing
       axios.get(`${process.env.REACT_APP_API_URI}/judge`, {
         headers: {
-          Authorization: 'Bearer ' + authState.idToken.idToken,
+          Authorization: 'Bearer ' + user.authState.idToken.idToken,
         },
       })
     )
@@ -75,15 +78,18 @@ function RenderHomePage(props) {
       .catch(err => {
         console.log(err);
       });
-  }, [authState.idToken.idToken]);
+  }, [user.authState.idToken.idToken]);
 
   useEffect(() => {
     trackPromise(
-      axios.get(`${process.env.REACT_APP_API_URI}/profile/${userInfo.sub}`, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken.idToken,
-        },
-      })
+      axios.get(
+        `${process.env.REACT_APP_API_URI}/profile/${user.userInfo.sub}`,
+        {
+          headers: {
+            Authorization: 'Bearer ' + user.authState.idToken.idToken,
+          },
+        }
+      )
     )
       .then(res => {
         setSavedCases(res.data.case_bookmarks);
@@ -93,8 +99,8 @@ function RenderHomePage(props) {
         console.log(err);
       });
   }, [
-    authState.idToken.idToken,
-    userInfo.sub,
+    user.authState.idToken.idToken,
+    user.userInfo.sub,
     savedCases.length,
     savedJudges.length,
   ]);
@@ -109,10 +115,10 @@ function RenderHomePage(props) {
     // only works for cases, judge requires name instead of ID to delete
     axios
       .delete(
-        `${process.env.REACT_APP_API_URI}/profile/${userInfo.sub}/case/${caseID}`,
+        `${process.env.REACT_APP_API_URI}/profile/${user.userInfo.sub}/case/${caseID}`,
         {
           headers: {
-            Authorization: 'Bearer ' + authState.idToken.idToken,
+            Authorization: 'Bearer ' + user.authState.idToken.idToken,
           },
         }
       )
@@ -138,11 +144,11 @@ function RenderHomePage(props) {
     axios
       .delete(
         `${process.env.REACT_APP_API_URI}/profile/${
-          userInfo.sub
+          user.userInfo.sub
         }/judge/${formatJudgeName(name)}`,
         {
           headers: {
-            Authorization: 'Bearer ' + authState.idToken.idToken,
+            Authorization: 'Bearer ' + user.authState.idToken.idToken,
           },
         }
       )
@@ -154,14 +160,14 @@ function RenderHomePage(props) {
       });
   };
 
-  const logout = () => oktaAuth.signOut();
+  const logout = () => user.oktaAuth.signOut();
   const classes = useStyles();
 
   return (
     <div className={classes.container}>
       <SideDrawer
         logout={logout}
-        userInfo={userInfo}
+        userInfo={user.userInfo}
         uploadCase={uploadCase}
         savedCases={savedCases}
         savedJudges={savedJudges}
@@ -185,52 +191,45 @@ function RenderHomePage(props) {
         <JudgePage
           // clicking on a Judge should bring you to a url with their name in it
           // get request to get details of that judge
-          authState={authState}
+          authState={user.authState}
         />
       </Route>
-      <Route exact path="/case/:id" authState={authState}>
+      <Route exact path="/case/:id" authState={user.authState}>
         {/* clicking on a case name will bring you to a page where more indepth information
       about the case can be viewed, this page is linked to the cooresponding judge's page
       this page also links to the update case file which is not operational yet, see notation
       on CaseOverview & CaseUpdate for details */}
         <CaseOverview />
       </Route>
-      <Route exact path="case/:id/update" authState={authState}>
+      <Route exact path="case/:id/update" authState={user.authState}>
         <CaseUpdate />
       </Route>
 
       <Route exact path="/">
-        {/* showCaseTable is a boolean when true will display the Cases Table and when false will dispaly the Judges Table */}
-        {showCaseTable && (
-          <>
-            <CaseTable
-              showCaseTable={showCaseTable}
-              setShowCaseTable={setShowCaseTable}
-              caseData={caseData}
-              userInfo={userInfo}
-              savedCases={savedCases}
-              setSavedCases={setSavedCases}
-              authState={authState}
-              selectedRows={selectedRows}
-              setSelectedRows={setSelectedRows}
-            />
-            <Loader promiseTracker={usePromiseTracker} />
-          </>
-        )}
-        {!showCaseTable && (
-          <>
-            <JudgeTable
-              showCaseTable={showCaseTable}
-              setShowCaseTable={setShowCaseTable}
-              judgeData={judgeData}
-              userInfo={userInfo}
-              savedJudges={savedJudges}
-              setSavedJudges={setSavedJudges}
-              authState={authState}
-            />
-            <Loader promiseTracker={usePromiseTracker} />
-          </>
-        )}
+        <>
+          <CaseTable
+            caseData={caseData}
+            userInfo={user.userInfo}
+            savedCases={savedCases}
+            setSavedCases={setSavedCases}
+            authState={user.authState}
+            selectedRows={selectedRows}
+            setSelectedRows={setSelectedRows}
+          />
+          <Loader promiseTracker={usePromiseTracker} />
+        </>
+      </Route>
+      <Route exact path="/judges">
+        <>
+          <JudgeTable
+            judgeData={judgeData}
+            userInfo={user.userInfo}
+            savedJudges={savedJudges}
+            setSavedJudges={setSavedJudges}
+            authState={user.authState}
+          />
+          <Loader promiseTracker={usePromiseTracker} />
+        </>
       </Route>
     </div>
   );

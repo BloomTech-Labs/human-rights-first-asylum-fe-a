@@ -162,7 +162,7 @@ export default function SideDrawer(props) {
               <ListItemText primary="Cases" style={textItemStyles} />
             </ListItem>
           </Link>
-          <Link to="/">
+          <Link to="/judges">
             <ListItem button>
               <ListItemIcon>
                 <GavelIcon />
