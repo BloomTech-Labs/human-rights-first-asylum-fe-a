@@ -223,8 +223,8 @@ export default function CaseTable(props) {
       className: 'tableHeader',
     },
     {
-      field: 'applicant_sex',
-      headerName: 'Applicant Sex',
+      field: 'applicant_gender',
+      headerName: 'Applicant Gender',
       width: 130,
       className: 'tableHeader',
     },
@@ -567,9 +567,7 @@ export default function CaseTable(props) {
         checkboxSelection={true}
         onSelectionChange={onCheckboxSelect}
         showCellRightBorder={true}
-        components={{
-          Toolbar: Toolbar,
-        }}
+        components={{ Toolbar: Toolbar }}
       />
     </div>
   );
