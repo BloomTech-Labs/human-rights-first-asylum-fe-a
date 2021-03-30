@@ -18,29 +18,24 @@
 - Primary Action color: #3f51b5
 - Seconday "Disabled" color: #7f9bb3
 
-### Key Features and Notes to the Next Group
-- Table can be searched by column parameters and sorted by clicking on column headers. There is advanced searchability to search for one or more key terms to filter out unwanted case information
+### Key Features and Notes to the Next Group on what still needs work
+- Table columns can be sorted by clicking on column headers as well as added or removed by clicking the "columns" button
 
-- Cases and Judges can be saved to a user profile by checking their row's select box and clicking the save button
+- Clicking "search" on either case or judge table will open a panel with advanced searchability to filter out unwanted case information using set key words
 
-  - This will add them to the saved cases or saved judges page
+- Cases and Judges can be saved to a user profile by checking their row's select box and clicking the save button, this will add them to the saved cases or saved judges page
 
-- All Tables should let you go to a specfic page by clicking either case ID or Judge
+- All pages will route to either a case overview page by clicking case ID or a judge page by clicking a judge's name. These pages need more styling and further refining to pull in data from the backend / DS for visualizations and secondary tables
 
-- PDF viewer pops up a modal, minor visual bugs may appear. The functionality should work for this feature but due to issues with Heroku, data may not be returned.
-
-- Clicking on a Judge in the judge table will take you to a page with some expanded info and basic plots
-  -This judge page needs styling work (JudgePage.js)
-  -Other than the pie chart, the formulas for the other sample charts are hard coded and will need to be fixed once the database is actually populated beyond test data
-
-- Case Overview feature - When you click on a case, we currently have it redirected to a separate "Case info" page. The case info page has been restyled and follows the design flow of the rest of the app.
+- PDF viewer pops up a modal, more work is needed to make it functional
 
 - Case File Review Queue - This feature needs to be created so that when users submit a new case file, it is sent to the review queue for admin users to approve and send them to the list of all cases or reject and delete them from the database.
 
 ## Bugs
-The adminData and userData functions do not work currently as there are no endpoints for distinguishing between user types and the components do not exist.
 
-- Other know bugs and broken features can be seen on this [Google Doc](https://docs.google.com/document/d/1MTRA2X88MW4GwFX9NdmO_qqHEDqGHxj20Q0DWplD29E/edit?usp=sharing), feel free to copy it
+- PDF Modal (clicking “View PDF”) doesn’t work and causes errors when clicked
+- The adminData and userData functions do not work currently as there are no endpoints for distinguishing between user types and the components do not exist
+- Sometimes https://a.humanrightsfirstasylum.dev/ gets stuck on “Fetching user profile” after signing in.  The current workaround is to clear localStorage. Updaing Ockta may have cleaed it. 
 
 
 ## Contributors
@@ -69,3 +64,15 @@ The adminData and userData functions do not work currently as there are no endpo
 ### labs31 - Team A
 
 [Brian Abeyta-Pratt](https://github.com/babeytapratt),[LinkedIn](https://www.linkedin.com/in/brian-abeyta-pratt-9758991ba/)
+
+### Labs32 - Web
+
+|                                                                                                                                                                               |                                                                                                                                                                              |                                                                                                                                                                                   |
+| :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|                                                                [Matt Bokovitz](https://github.com/MattBokovitz1)                                                                |                                                               [Rees Harper](https://github.com/reesharper)                                                               |                                                                [Nathaniel Patterson](https://github.com/odst0016)                                                                 |
+| [<img src="https://avatars.githubusercontent.com/u/70045367?v=4" width = "200" align="center"/>](https://github.com/MattBokovitz1) | [<img src="https://avatars.githubusercontent.com/u/70249966?v=4" width = "200" align="center"/>](https://github.com/reesharper) | [<img src="https://avatars.githubusercontent.com/u/1438371?v=4" width = "200" align="center"/>](https://github.com/odst0016) |              
+|                                                                                                                                                                               |                                                                                                                                                                              |                                                                                                                                                                                   |
+|                                                                [Dionne Stratton](https://github.com/Dionne-Stratton)                                                                 |                                                              [Krista Verleger](https://github.com/kristapants)                                                               |                                                                                                                                      |
+| [<img src="https://avatars.githubusercontent.com/u/68926102?v=4" width = "200" align="center"/>](https://github.com/Dionne-Stratton) | [<img src="https://avatars.githubusercontent.com/u/42698664?v=4" width = "200" align="center"/>](https://github.com/kristapants) |
+
+###
