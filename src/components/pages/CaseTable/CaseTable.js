@@ -132,14 +132,7 @@ export default function CaseTable(props) {
 
   const columns = [
     {
-      field: 'id',
-      hide: true,
-      headerName: 'ID',
-      width: 130,
-      className: 'tableHeader',
-    },
-    {
-      field: 'case_id',
+      field: 'primary_key',
       headerName: 'Case ID',
       width: 130,
       className: 'tableHeader',
@@ -151,7 +144,7 @@ export default function CaseTable(props) {
       renderCell: params => (
         <>
           <Link to={`/case/${params.value}`} style={{ color: '#215589' }}>
-            <span>{params.value}</span>
+            <span>{params.row['case_id']}</span>
           </Link>
         </>
       ),
@@ -163,7 +156,7 @@ export default function CaseTable(props) {
       className: 'tableHeader',
     },
     {
-      field: 'judge',
+      field: 'judge_name',
       headerName: 'Judge',
       width: 160,
       className: 'tableHeader',
