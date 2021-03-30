@@ -79,7 +79,7 @@ const useStyles = makeStyles(theme => ({
   },
   drawer: {
     width: 300,
-    marginTop: '40%',
+    marginTop: '30%',
   },
   tabs: {
     width: '30%',
@@ -368,7 +368,7 @@ export default function CaseTable(props) {
 
   const [queryValues, setQueryValues] = useState({
     case_id: '',
-    judge: '',
+    judge_name: '',
     case_origin: '',
     nation_of_origin: '',
     protected_ground: '',
@@ -409,7 +409,7 @@ export default function CaseTable(props) {
   };
   const searchOptions = [
     { id: 'case_id', label: 'Case ID' },
-    { id: 'judge', label: 'Judge' },
+    { id: 'judge_name', label: 'Judge' },
     { id: 'protected_ground', label: 'Protected Ground' },
     { id: 'case_origin', label: 'Case Origin' },
     { id: 'application_type ', label: 'Application Type' },
@@ -427,20 +427,6 @@ export default function CaseTable(props) {
   const drawerContent = () => {
     return (
       <div className={classes.drawer}>
-        <h6
-          style={{
-            fontSize: 'larger',
-            fontWeight: 'bold',
-            paddingBottom: '1%',
-            marginLeft: '15%',
-          }}
-        >
-          Advanced search
-        </h6>
-        <p style={{ paddingBottom: '5%', margin: '0 15%' }}>
-          Search by 1 or more data fields. Multiple Search terms will be
-          combined with AND logic.
-        </p>
         {searchOptions.map(value => {
           return (
             <div className={classes.querydiv} key={value.id}>
@@ -463,20 +449,6 @@ export default function CaseTable(props) {
             </div>
           );
         })}
-        <button
-          onClick={() => {
-            toggleSearch();
-            setSearching(true);
-          }}
-          style={{
-            width: '30%',
-            margin: 'auto',
-            display: 'block',
-            marginBottom: 10,
-          }}
-        >
-          search
-        </button>
       </div>
     );
   };
@@ -535,13 +507,6 @@ export default function CaseTable(props) {
             })}
           </div>
         )}
-        {/* <div className={classes.buttons}>
-          <SaveButton
-            selectedRows={selectedRows}
-            bookmarkCases={bookmarkCases}
-            text={'Save Cases'}
-          />
-        </div> */}
         <Drawer
           anchor="right"
           open={new_search}
