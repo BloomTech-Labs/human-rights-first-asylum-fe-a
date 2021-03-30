@@ -20,7 +20,6 @@ import HRFlogo from './HRFlogo.png';
 import BookmarksIcon from '@material-ui/icons/Bookmarks';
 import PublishIcon from '@material-ui/icons/Publish';
 import GavelIcon from '@material-ui/icons/Gavel';
-import HomeIcon from '@material-ui/icons/Home';
 import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 import { Link } from 'react-router-dom';
