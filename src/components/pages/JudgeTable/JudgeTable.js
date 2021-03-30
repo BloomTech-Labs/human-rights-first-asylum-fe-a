@@ -8,8 +8,8 @@ import {
 } from '@material-ui/data-grid';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import SearchIcon from '@material-ui/icons/Search';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
+import { Drawer } from '@material-ui/core';
+import Chip from '@material-ui/core/Chip';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
@@ -48,6 +48,13 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  drawer: {
+    width: 300,
+    marginTop: '30%',
+  },
+  chips: {
+    display: 'flex',
+  },
   toolbar: {
     display: 'flex',
     flexDirection: 'row',
@@ -61,8 +68,6 @@ const useStyles = makeStyles(theme => ({
 
 export default function JudgeTable(props) {
   const { judgeData, userInfo, savedJudges, setSavedJudges, authState } = props;
-  const [columnToSearch, setColumnToSearch] = useState('');
-  const [searchQuery, setSearchQuery] = useState('');
   const [selectedRows, setSelectedRows] = useState({});
 
   const columns = [
@@ -95,22 +100,6 @@ export default function JudgeTable(props) {
   }); // this is VERY hacky, but the table doesn't take data without ids
 
   const classes = useStyles();
-
-  const handleChange = event => {
-    setColumnToSearch(event.target.value);
-  };
-
-  const handleSearchChange = event => {
-    setSearchQuery(event.target.value);
-  };
-
-  const search = rows => {
-    return rows.filter(
-      row =>
-        row[columnToSearch].toLowerCase().indexOf(searchQuery.toLowerCase()) >
-        -1
-    );
-  };
 
   const findRowByID = (rowID, rowData) => {
     for (let i = 0; i < rowData.length; i++) {
@@ -205,7 +194,7 @@ export default function JudgeTable(props) {
         <div
           className={classes.toolbar}
           onClick={() => {
-            alert('This is not yet functional');
+            toggleSearch();
           }}
         >
           <SearchIcon />
@@ -227,38 +216,121 @@ export default function JudgeTable(props) {
     );
   };
 
+  const [queryValues, setQueryValues] = useState({
+    name: '',
+    judge_county: '',
+    date_appointed: '',
+    appointed_by: '',
+    denial_rate: '',
+    approval_rate: '',
+  });
+
+  const [new_search, setSearch] = useState(false);
+  const toggleSearch = () => {
+    setSearch(!new_search);
+  };
+  const [searching, setSearching] = useState(false);
+
+  const filter = data => {
+    // searchedKeys is AT MOST 16 keys
+    const searchedKeys = Object.entries(queryValues).filter(
+      ([k, v]) => v !== ''
+    );
+    // for each ROW in DATA -- O(n) where n is the number of rows in our data
+    const filteredData = data.filter(row => {
+      const matchedHits = [];
+      // map through each searched [K, V] pair -- O(searched_keys) where searchedKeys is at min 0 and at most 16
+      // so nesting this inside is NOT all too expensive.
+      searchedKeys.forEach(([k, v]) => {
+        // if the stringified value at row[key] includes the searched-for value,
+        // then we'll push the key to our matchedHits
+        if (row[k].toString().includes(v.toString())) {
+          matchedHits.push(k);
+        }
+      });
+      // if the row[k] == v at EVERY searched-for key, then we'll return TRUE
+      // else return FALSE
+      return matchedHits.length === searchedKeys.length;
+    });
+    // filteredData is only going to contain rows where  every
+    // searched column includes subtext that matches the searched term
+    return filteredData;
+  };
+
+  const searchOptions = [
+    { id: 'name', label: 'Judge' },
+    { id: 'judge_county', label: 'Case Origin' },
+    { id: 'date_appointed', label: 'Date Appointed' },
+    { id: 'appointed_by', label: 'Appointed by' },
+    { id: 'denial_rate', label: '% Denial' },
+    { id: 'approval_rate', label: '% Approval' },
+  ];
+  const drawerContent = () => {
+    return (
+      <div className={classes.drawer}>
+        {searchOptions.map(value => {
+          return (
+            <div key={value.id}>
+              <p style={{ marginLeft: '15%' }}>{value.label}</p>
+              <TextField
+                placeholder={'search query'}
+                variant="outlined"
+                size="small"
+                value={queryValues[value.id]}
+                onChange={e => {
+                  setQueryValues({
+                    ...queryValues,
+                    [value.id]: e.target.value,
+                  });
+                  setSearching(true);
+                }}
+                type="text"
+                style={{ marginLeft: '15%', marginBottom: 10 }}
+              />
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+
   return (
     <div className={classes.tbl_container}>
       <div className={classes.search_container}>
-        <div className={classes.colFilter}>
-          {/* This puts the search by text inside of the search bar, give it all other components the same height */}
-          <Select value={columnToSearch} onChange={handleChange} displayEmpty>
-            <MenuItem value="" disabled>
-              Search By...
-            </MenuItem>
-            <MenuItem value="name">Judge</MenuItem>
-            <MenuItem value="judge_county">Case Origin</MenuItem>
-            <MenuItem value="date_appointed">Date Appointed</MenuItem>
-            <MenuItem value="appointed_by">Appointed By</MenuItem>
-            <MenuItem value="denial_rate">Denial Rate</MenuItem>
-            <MenuItem value="approval_rate">Approval Rate</MenuItem>
-          </Select>
-        </div>
-        <TextField
-          value={searchQuery}
-          placeholder="Enter Query..."
-          onChange={handleSearchChange}
-          type="text"
-          style={{ width: '50%', marginLeft: 40 }}
-        />
-        {/* <SaveButton
-          selectedRows={selectedRows}
-          bookmarkCases={bookmarkJudges}
-          text={'Save Judges'}
-        /> */}
+        {searching && (
+          <div className={classes.chips}>
+            {searchOptions.map(option => {
+              if (queryValues[option.id] !== '') {
+                return (
+                  <Chip
+                    key={option.id}
+                    label={`${option.label}: "${queryValues[option.id]}"`}
+                    onDelete={() => {
+                      setQueryValues({
+                        ...queryValues,
+                        [option.id]: '',
+                      });
+                    }}
+                    style={{ marginRight: 5 }}
+                  />
+                );
+              } else {
+                return null;
+              }
+            })}
+          </div>
+        )}
+        <Drawer
+          anchor="right"
+          open={new_search}
+          onClose={toggleSearch}
+          variant="persistent"
+        >
+          {drawerContent()}
+        </Drawer>
       </div>
       <DataGrid
-        rows={columnToSearch ? search(judgeData) : judgeData}
+        rows={searching ? filter(judgeData) : judgeData}
         columns={columns}
         className={classes.grid}
         autoHeight={true}

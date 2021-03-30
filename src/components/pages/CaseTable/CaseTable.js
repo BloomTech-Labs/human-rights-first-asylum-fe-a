@@ -368,17 +368,21 @@ export default function CaseTable(props) {
 
   const [queryValues, setQueryValues] = useState({
     case_id: '',
+    hearing_date: '',
     judge_name: '',
+    initial_or_appellate: '',
     case_origin: '',
-    nation_of_origin: '',
-    protected_ground: '',
-    application_type: '',
-    case_outcome: '',
-    applicant_access_to_interpreter: '',
-    applicant_language: '',
-    applicant_perceived_credibility: '',
-    applicant_indigenous_group: '',
     case_filed_within_one_year: '',
+    application_type: '',
+    protected_ground: '',
+    case_outcome: '',
+    nation_of_origin: '',
+    applicant_gender: '',
+    type_of_violence_experienced: '',
+    applicant_indigenous_group: '',
+    applicant_language: '',
+    applicant_access_to_interpreter: '',
+    applicant_perceived_credibility: '',
   });
 
   const [new_search, setSearch] = useState(false);
@@ -386,39 +390,49 @@ export default function CaseTable(props) {
     setSearch(!new_search);
   };
   const [searching, setSearching] = useState(false);
-  const filter = rows => {
-    const returnedRows = [];
-    const keysArray = Object.keys(queryValues);
-    const filtered = keysArray.filter(key => queryValues[key] !== '');
-    if (filtered.length > 0) {
-      rows.forEach(element => {
-        let counter = 0;
-        filtered.forEach(key => {
-          const keyValue = element[key].toString();
-          if (keyValue.includes(queryValues[key].toString())) {
-            counter++;
-          }
-          if (counter === filtered.length) {
-            returnedRows.push(element);
-          }
-        });
+
+  const filter = data => {
+    // searchedKeys is AT MOST 16 keys
+    const searchedKeys = Object.entries(queryValues).filter(
+      ([k, v]) => v !== ''
+    );
+    // for each ROW in DATA -- O(n) where n is the number of rows in our data
+    const filteredData = data.filter(row => {
+      const matchedHits = [];
+      // map through each searched [K, V] pair -- O(searched_keys) where searchedKeys is at min 0 and at most 16
+      // so nesting this inside is NOT all too expensive.
+      searchedKeys.forEach(([k, v]) => {
+        // if the stringified value at row[key] includes the searched-for value,
+        // then we'll push the key to our matchedHits
+        if (row[k].toString().includes(v.toString())) {
+          matchedHits.push(k);
+        }
       });
-      return returnedRows;
-    }
-    return rows;
+      // if the row[k] == v at EVERY searched-for key, then we'll return TRUE
+      // else return FALSE
+      return matchedHits.length === searchedKeys.length;
+    });
+    // filteredData is only going to contain rows where  every
+    // searched column includes subtext that matches the searched term
+    return filteredData;
   };
+
   const searchOptions = [
     { id: 'case_id', label: 'Case ID' },
+    { id: 'hearing_date', label: 'Hearing Date' },
     { id: 'judge_name', label: 'Judge' },
-    { id: 'protected_ground', label: 'Protected Ground' },
+    { id: 'initial_or_appellate', label: 'Initial or Appellate' },
     { id: 'case_origin', label: 'Case Origin' },
+    { id: 'case_filed_within_one_year', label: 'Case Filed Within One Year' },
     { id: 'application_type ', label: 'Application Type' },
+    { id: 'protected_ground', label: 'Protected Ground' },
     { id: 'case_outcome', label: 'Case Outcome' },
     { id: 'nation_of_origin', label: 'Nation of Origin' },
+    { id: 'applicant_gender', label: 'Applicant Gender' },
+    { id: 'type_of_violence_experienced', label: 'Violence Experienced' },
     { id: 'applicant_indigenous_group', label: 'Indigenous Applicant' },
     { id: 'applicant_language', label: 'Applicant Language' },
     { id: 'applicant_access_to_interpreter', label: 'Access to Interpreter' },
-    { id: 'case_filed_within_one_year', label: 'Case Filed Within One Year' },
     {
       id: 'applicant_perceived_credibility',
       label: 'Applicant Perceived Credibility',
@@ -429,7 +443,7 @@ export default function CaseTable(props) {
       <div className={classes.drawer}>
         {searchOptions.map(value => {
           return (
-            <div className={classes.querydiv} key={value.id}>
+            <div key={value.id}>
               <p style={{ marginLeft: '15%' }}>{value.label}</p>
               <TextField
                 placeholder={'search query'}
