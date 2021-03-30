@@ -30,7 +30,6 @@ function RenderHomePage(props) {
   const [caseData, setCaseData] = useState([]);
   const [judgeData, setJudgeData] = useState([]);
   const [savedCases, setSavedCases] = useState([]);
-  // const [showCaseTable, setShowCaseTable] = useState(true);
   const [savedJudges, setSavedJudges] = useState([]);
   const [selectedRows, setSelectedRows] = useState({});
 
