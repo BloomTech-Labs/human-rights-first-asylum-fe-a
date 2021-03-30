@@ -49,7 +49,7 @@ const CaseOverview = props => {
               type="primary"
               size="small"
               padding="15px"
-              onclick={`/case/${caseData.id}/update`}
+              onClick={`/case/${caseData.id}/update`}
             >
               Update this Case
             </Button>
@@ -63,7 +63,9 @@ const CaseOverview = props => {
             </KeyParagraph>
             <KeyParagraph>
               Judge:
-              <Link to={`/judge/${caseData.judge}`}>{caseData.judge}</Link>
+              <Link to={`/judge/${caseData.judge_name}`}>
+                {caseData.judge_name}
+              </Link>
             </KeyParagraph>
             <KeyParagraph>Court Type: {caseData.court_type}</KeyParagraph>
           </CaseSpecs>
