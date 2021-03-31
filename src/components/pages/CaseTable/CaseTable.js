@@ -559,7 +559,6 @@ export default function CaseTable(props) {
 
   return (
     <div className={classes.tbl_container}>
-      <PieChart />
       <div className={classes.search_container}>
         {searching && (
           <div className={classes.chips}>
@@ -604,6 +603,7 @@ export default function CaseTable(props) {
         showCellRightBorder={true}
         components={{ Toolbar: Toolbar }}
       />
+      <PieChart />
     </div>
   );
 }
