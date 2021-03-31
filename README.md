@@ -31,6 +31,10 @@
 
 - Case File Review Queue - This feature needs to be created so that when users submit a new case file, it is sent to the review queue for admin users to approve and send them to the list of all cases or reject and delete them from the database.
 
+- A user can now upload a pdf file which is sent to the DS team to analyze. Still need to get a response back of the scrapped data to populate edit fields so that the user can verify scraped data before submitting.
+
+- Case outcome pie chart dynamically renders based on searches
+
 ## Bugs
 
 - PDF Modal (clicking “View PDF”) doesn’t work and causes errors when clicked
