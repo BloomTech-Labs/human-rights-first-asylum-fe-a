@@ -12,6 +12,7 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
+import Plot from 'react-plotly.js';
 
 // Imports for PDF Modal
 import PDFViewer from '../PDFViewer/PDFViewer';
@@ -491,12 +492,80 @@ export default function CaseTable(props) {
         <GridColumnsToolbarButton />
         <GridDensitySelector />
         <GridToolbarExport />
+        {/* <div className={classes.toolbar}
+        onClick={() => {
+          console.log()
+        }}
+        >LOG</div> */}
       </GridToolbarContainer>
+    );
+  };
+
+  const data = searching ? filter(caseData) : caseData;
+
+  const PieChart = () => {
+    const denied = [];
+    const granted = [];
+    const remanded = [];
+    const sustained = [];
+    const terminated = [];
+
+    data.map(eachCase => {
+      if (eachCase.case_outcome === 'Denied') {
+        denied.push(eachCase.case_outcome);
+      }
+      if (eachCase.case_outcome === 'Granted') {
+        granted.push(eachCase.case_outcome);
+      }
+      if (eachCase.case_outcome === 'Remanded') {
+        remanded.push(eachCase.case_outcome);
+      }
+      if (eachCase.case_outcome === 'Sustained') {
+        sustained.push(eachCase.case_outcome);
+      }
+      if (eachCase.case_outcome === 'Terminated') {
+        terminated.push(eachCase.case_outcome);
+      }
+      return null;
+    });
+
+    return (
+      <Plot
+        data={[
+          {
+            type: 'pie',
+            values: [
+              granted.length,
+              denied.length,
+              remanded.length,
+              sustained.length,
+              terminated.length,
+            ],
+            labels: [
+              'Granted',
+              'Denied',
+              'Remanded',
+              'Sustained',
+              'Terminated',
+            ],
+            textinfo: 'label+percent',
+            textposition: 'outside',
+            automargin: true,
+          },
+        ]}
+        layout={{
+          height: 600,
+          width: 600,
+          showlegend: false,
+          title: 'Decision Rate',
+        }}
+      />
     );
   };
 
   return (
     <div className={classes.tbl_container}>
+      <PieChart />
       <div className={classes.search_container}>
         {searching && (
           <div className={classes.chips}>

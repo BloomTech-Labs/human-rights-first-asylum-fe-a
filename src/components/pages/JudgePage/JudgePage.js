@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Plot from 'react-plotly.js';
-import { FullPage, FlexDiv, Profile } from './JudgePageStyled';
+import { FullPage, FlexDiv, Profile, PlotDiv } from './JudgePageStyled';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { DataGrid } from '@material-ui/data-grid';
@@ -100,7 +100,7 @@ export default function JudgePage(props) {
           </div>
 
           <div>
-            <FlexDiv style={{ marginTop: 900 }}>
+            <PlotDiv style={{ margin: '0 auto' }}>
               {
                 //* values are granted: value, denial: value, other: value
               }
@@ -108,8 +108,8 @@ export default function JudgePage(props) {
                 data={[
                   {
                     type: 'pie',
-                    values: [judge.approval_rate, judge.denial_rate, 0],
-                    labels: ['Granted', 'Denial', 'Other'],
+                    values: [judge.approval_rate, judge.denial_rate],
+                    labels: ['Granted', 'Denial'],
                     textinfo: 'label+percent',
                     textposition: 'outside',
                     automargin: true,
@@ -163,8 +163,8 @@ export default function JudgePage(props) {
                   width: 600,
                 }}
               />
-            </FlexDiv>
-            <FlexDiv>
+            </PlotDiv>
+            <PlotDiv style={{ margin: '0 auto' }}>
               {
                 //* x = country_origin/application_type /protected_ground, y = granted: value / denial:value / other value
               }
@@ -282,7 +282,7 @@ export default function JudgePage(props) {
                   title: 'Decision By Protected Ground',
                 }}
               />
-            </FlexDiv>
+            </PlotDiv>
           </div>
         </div>
       )}
