@@ -39,7 +39,7 @@
 
 - PDF Modal (clicking “View PDF”) doesn’t work and causes errors when clicked
 - The adminData and userData functions do not work currently as there are no endpoints for distinguishing between user types and the components do not exist
-- Sometimes https://a.humanrightsfirstasylum.dev/ gets stuck on “Fetching user profile” after signing in.  The current workaround is to clear localStorage. Updaing Ockta may have cleaed it. 
+- Sometimes https://a.humanrightsfirstasylum.dev/ gets stuck on “Fetching user profile” after signing in.  The current workaround is to clear localStorage. Updating Okta may have fixed this problem. 
 
 
 ## Contributors
