@@ -504,27 +504,27 @@ export default function CaseTable(props) {
   const data = searching ? filter(caseData) : caseData;
 
   const PieChart = () => {
-    const denied = [];
-    const granted = [];
-    const remanded = [];
-    const sustained = [];
-    const terminated = [];
+    let denied = 0;
+    let granted = 0;
+    let remanded = 0;
+    let sustained = 0;
+    let terminated = 0;
 
     data.map(eachCase => {
       if (eachCase.case_outcome === 'Denied') {
-        denied.push(eachCase.case_outcome);
+        denied += 1;
       }
       if (eachCase.case_outcome === 'Granted') {
-        granted.push(eachCase.case_outcome);
+        granted += 1;
       }
       if (eachCase.case_outcome === 'Remanded') {
-        remanded.push(eachCase.case_outcome);
+        remanded += 1;
       }
       if (eachCase.case_outcome === 'Sustained') {
-        sustained.push(eachCase.case_outcome);
+        sustained += 1;
       }
       if (eachCase.case_outcome === 'Terminated') {
-        terminated.push(eachCase.case_outcome);
+        terminated += 1;
       }
       return null;
     });
@@ -534,13 +534,7 @@ export default function CaseTable(props) {
         data={[
           {
             type: 'pie',
-            values: [
-              granted.length,
-              denied.length,
-              remanded.length,
-              sustained.length,
-              terminated.length,
-            ],
+            values: [granted, denied, remanded, sustained, terminated],
             labels: [
               'Granted',
               'Denied',
