@@ -12,6 +12,7 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
+import Plot from 'react-plotly.js';
 
 // Imports for PDF Modal
 import PDFViewer from '../PDFViewer/PDFViewer';
@@ -491,7 +492,68 @@ export default function CaseTable(props) {
         <GridColumnsToolbarButton />
         <GridDensitySelector />
         <GridToolbarExport />
+        {/* <div className={classes.toolbar}
+        onClick={() => {
+          console.log()
+        }}
+        >LOG</div> */}
       </GridToolbarContainer>
+    );
+  };
+
+  const data = searching ? filter(caseData) : caseData;
+
+  const PieChart = () => {
+    let denied = 0;
+    let granted = 0;
+    let remanded = 0;
+    let sustained = 0;
+    let terminated = 0;
+
+    data.map(eachCase => {
+      if (eachCase.case_outcome === 'Denied') {
+        denied += 1;
+      }
+      if (eachCase.case_outcome === 'Granted') {
+        granted += 1;
+      }
+      if (eachCase.case_outcome === 'Remanded') {
+        remanded += 1;
+      }
+      if (eachCase.case_outcome === 'Sustained') {
+        sustained += 1;
+      }
+      if (eachCase.case_outcome === 'Terminated') {
+        terminated += 1;
+      }
+      return null;
+    });
+
+    return (
+      <Plot
+        data={[
+          {
+            type: 'pie',
+            values: [granted, denied, remanded, sustained, terminated],
+            labels: [
+              'Granted',
+              'Denied',
+              'Remanded',
+              'Sustained',
+              'Terminated',
+            ],
+            textinfo: 'label+percent',
+            textposition: 'outside',
+            automargin: true,
+          },
+        ]}
+        layout={{
+          height: 600,
+          width: 600,
+          showlegend: false,
+          title: 'Decision Rate',
+        }}
+      />
     );
   };
 
@@ -541,6 +603,7 @@ export default function CaseTable(props) {
         showCellRightBorder={true}
         components={{ Toolbar: Toolbar }}
       />
+      <PieChart />
     </div>
   );
 }
