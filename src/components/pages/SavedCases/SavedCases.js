@@ -39,9 +39,9 @@ function SavedCases({ savedCases, deleteBookmark }) {
 
   const columns = [
     {
-      field: 'case_id', //yes
+      field: 'primary_key',
       headerName: 'Case ID',
-      width: 200,
+      width: 130,
       options: {
         filter: true,
       },
