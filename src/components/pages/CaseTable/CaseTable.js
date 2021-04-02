@@ -13,6 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 import Plot from 'react-plotly.js';
+import CancelIcon from '@material-ui/icons/Cancel';
 
 // Imports for PDF Modal
 import PDFViewer from '../PDFViewer/PDFViewer';
@@ -81,6 +82,8 @@ const useStyles = makeStyles(theme => ({
   drawer: {
     width: 300,
     marginTop: '30%',
+    display: 'flex',
+    flexFlow: 'column wrap',
   },
   tabs: {
     width: '30%',
@@ -91,6 +94,16 @@ const useStyles = makeStyles(theme => ({
   buttons: {
     display: 'flex',
     width: '30%',
+  },
+  close: {
+    textAlign: 'right',
+    padding: '1%',
+    margin: 'auto 2% auto auto',
+    transform: 'scale(1.2)',
+    '&:hover': {
+      curser: 'pointer',
+      transform: 'scale(1.4)',
+    },
   },
   toolbar: {
     display: 'flex',
@@ -152,8 +165,8 @@ export default function CaseTable(props) {
     },
     {
       field: 'hearing_date',
-      headerName: 'Hearing Date',
-      width: 115,
+      headerName: 'Date',
+      width: 110,
       className: 'tableHeader',
     },
     {
@@ -174,82 +187,83 @@ export default function CaseTable(props) {
     },
     {
       field: 'initial_or_appellate',
-      headerName: 'Initial or Appellate',
-      width: 80,
+      headerName: 'Initial Hearing',
+      width: 120,
       className: 'tableHeader',
     },
     {
       field: 'case_origin',
       headerName: 'Case Origin',
-      width: 150,
+      width: 160,
       className: 'tableHeader',
     },
     {
       field: 'case_filed_within_one_year',
-      headerName: 'Case Filed Within One Year',
-      width: 80,
+      headerName: 'Filed 1 Year',
+      width: 110,
       className: 'tableHeader',
-    },
-    {
-      field: 'application_type ',
-      headerName: 'Application Type ',
-      width: 130,
-      className: 'tableHeader',
-      hide: true,
     },
     {
       field: 'protected_ground',
       headerName: 'Protected Ground',
-      width: 150,
+      width: 145,
       className: 'tableHeader',
-      hide: true,
     },
     {
       field: 'case_outcome',
-      headerName: 'Case Outcome',
-      width: 120,
+      headerName: 'Outcome',
+      width: 110,
       className: 'tableHeader',
     },
     {
       field: 'nation_of_origin',
       headerName: 'Nation of Origin',
-      width: 130,
+      width: 135,
       className: 'tableHeader',
     },
     {
       field: 'applicant_gender',
       headerName: 'Applicant Gender',
-      width: 130,
+      width: 145,
       className: 'tableHeader',
     },
     {
       field: 'type_of_violence_experienced',
-      headerName: 'Type of Violence Experienced',
-      width: 130,
+      headerName: 'Violence Experienced',
+      width: 175,
       className: 'tableHeader',
     },
     {
+      field: 'application_type',
+      headerName: 'Application Type ',
+      width: 140,
+      className: 'tableHeader',
+      hide: true,
+    },
+    {
       field: 'applicant_indigenous_group',
-      headerName: 'Applicant Indigenous Group',
-      width: 160,
+      headerName: 'Indigenous Group',
+      width: 150,
       className: 'tableHeader',
       hide: true,
     },
     {
       field: 'applicant_language',
       headerName: 'Applicant Language',
-      width: 110,
+      width: 160,
       className: 'tableHeader',
+      hide: true,
     },
     {
       field: 'applicant_access_to_interpreter',
-      headerName: 'Access to Interpreter',
-      width: 80,
+      headerName: 'Interpreter',
+      width: 100,
       className: 'tableHeader',
+      hide: true,
     },
     {
       field: 'applicant_perceived_credibility',
-      headerName: 'Applicant Perceived Credibility',
+      headerName: 'Applicant Credibility',
       width: 160,
       className: 'tableHeader',
       hide: true,
@@ -259,8 +273,9 @@ export default function CaseTable(props) {
     {
       field: 'view_pdf',
       headerName: 'View PDF',
-      width: 110,
+      width: 100,
       className: 'tableHeader',
+      hide: true,
       renderCell: params => (
         // Hook to control whether or not to show the PDF Modal
         <>
@@ -278,7 +293,7 @@ export default function CaseTable(props) {
     {
       field: 'download',
       headerName: 'Download',
-      width: 120,
+      width: 100,
       className: 'tableHeader',
       hide: true,
       renderCell: params => {
@@ -289,12 +304,6 @@ export default function CaseTable(props) {
               href={`${process.env.REACT_APP_API_URI}/case/${params.row.id}/download-pdf`}
             >
               PDF
-            </a>
-            <a
-              style={{ marginLeft: 20, color: '#215589' }}
-              href={`${process.env.REACT_APP_API_URI}/case/${params.row.id}/download-csv`}
-            >
-              CSV
             </a>
           </div>
         );
@@ -308,7 +317,7 @@ export default function CaseTable(props) {
   const findRowByID = (rowID, rowData) => {
     for (let i = 0; i < rowData.length; i++) {
       let currentRow = rowData[i];
-      if (currentRow.id === rowID) {
+      if (currentRow.primary_key === rowID) {
         return currentRow;
       }
     }
@@ -318,17 +327,17 @@ export default function CaseTable(props) {
   const postBookmark = rowToPost => {
     axios
       .post(
-        `${process.env.REACT_APP_API_URI}/profile/${userInfo.sub}/case/${rowToPost.id}`,
+        `${process.env.REACT_APP_API_URI}/profile/${userInfo.sub}/case/${rowToPost.primary_key}`,
         rowToPost,
         {
           headers: {
-            Authorization: 'Bearer ' + authState.idToken,
+            Authorization: 'Bearer ' + authState.idToken.idToken,
           },
         }
       )
       .then(res => {
         let justAdded = res.data.case_bookmarks.slice(-1); // response comes back as array of all existing bookmarks
-        let justAddedID = justAdded[0].case_id;
+        let justAddedID = justAdded[0].primary_key;
         let wholeAddedRow = findRowByID(justAddedID, caseData);
         setSavedCases([...savedCases, wholeAddedRow]);
       })
@@ -348,11 +357,11 @@ export default function CaseTable(props) {
       }
       let savedIds = [];
       for (let i = 0; i < savedCases.length; i++) {
-        savedIds.push(savedCases[i].id);
+        savedIds.push(savedCases[i].primary_key);
       }
 
       for (let i = 0; i < bookmarks.length; i++) {
-        if (savedIds.includes(bookmarks[i].id)) {
+        if (savedIds.includes(bookmarks[i].primary_key)) {
           console.log('Case already saved to bookmarks');
           continue;
         } else {
@@ -425,7 +434,7 @@ export default function CaseTable(props) {
     { id: 'initial_or_appellate', label: 'Initial or Appellate' },
     { id: 'case_origin', label: 'Case Origin' },
     { id: 'case_filed_within_one_year', label: 'Case Filed Within One Year' },
-    { id: 'application_type ', label: 'Application Type' },
+    { id: 'application_type', label: 'Application Type' },
     { id: 'protected_ground', label: 'Protected Ground' },
     { id: 'case_outcome', label: 'Case Outcome' },
     { id: 'nation_of_origin', label: 'Nation of Origin' },
@@ -442,6 +451,12 @@ export default function CaseTable(props) {
   const drawerContent = () => {
     return (
       <div className={classes.drawer}>
+        <CancelIcon
+          className={classes.close}
+          onClick={() => {
+            toggleSearch();
+          }}
+        />
         {searchOptions.map(value => {
           return (
             <div key={value.id}>
@@ -559,6 +574,7 @@ export default function CaseTable(props) {
 
   return (
     <div className={classes.tbl_container}>
+      <PieChart />
       <div className={classes.search_container}>
         {searching && (
           <div className={classes.chips}>
@@ -601,9 +617,9 @@ export default function CaseTable(props) {
         checkboxSelection={true}
         onSelectionModelChange={onCheckboxSelect}
         showCellRightBorder={true}
+        disableColumnMenu={true}
         components={{ Toolbar: Toolbar }}
       />
-      <PieChart />
     </div>
   );
 }
