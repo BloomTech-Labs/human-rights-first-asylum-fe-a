@@ -25,6 +25,7 @@ import Chip from '@material-ui/core/Chip';
 const useStyles = makeStyles(theme => ({
   grid: {
     marginTop: 15,
+    height: '90vh',
   },
   tbl_container: {
     display: 'flex',
@@ -563,8 +564,8 @@ export default function CaseTable(props) {
           },
         ]}
         layout={{
-          height: 600,
-          width: 600,
+          height: 300,
+          width: 300,
           showlegend: false,
           title: 'Decision Rate',
         }}
@@ -612,7 +613,6 @@ export default function CaseTable(props) {
         rows={searching ? filter(caseData) : caseData}
         columns={columns}
         className={classes.grid}
-        autoHeight={true}
         loading={caseData ? false : true}
         checkboxSelection={true}
         onSelectionModelChange={onCheckboxSelect}
