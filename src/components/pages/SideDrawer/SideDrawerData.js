@@ -1,16 +1,34 @@
 import React from 'react';
-import AccountIcon from '@material-ui/icons/AccountCircle';
-import HelpIcon from '@material-ui/icons/Help';
+import BookmarksIcon from '@material-ui/icons/Bookmarks';
+import PublishIcon from '@material-ui/icons/Publish';
+import GavelIcon from '@material-ui/icons/Gavel';
+import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
+import BookmarkIcon from '@material-ui/icons/Bookmark';
 
 export const SideDrawerData = [
   {
-    title: 'Account',
+    title: 'Cases',
     path: '/',
-    icon: <AccountIcon />,
+    icon: <BusinessCenterIcon />,
   },
   {
-    title: 'Support',
-    path: '/',
-    icon: <HelpIcon />,
+    title: 'Judges',
+    path: '/judges',
+    icon: <GavelIcon />,
+  },
+  {
+    title: 'Upload Case',
+    path: '/upload-case',
+    icon: <PublishIcon />,
+  },
+  {
+    title: 'Saved Cases',
+    path: '/saved-cases',
+    icon: <BookmarksIcon />,
+  },
+  {
+    title: 'Saved Judges',
+    path: '/saved-judges',
+    icon: <BookmarkIcon />,
   },
 ];

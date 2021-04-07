@@ -17,11 +17,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import CloseIcon from '@material-ui/icons/Close';
 import HRFlogo from './HRFlogo.png';
-import BookmarksIcon from '@material-ui/icons/Bookmarks';
-import PublishIcon from '@material-ui/icons/Publish';
-import GavelIcon from '@material-ui/icons/Gavel';
-import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
-import BookmarkIcon from '@material-ui/icons/Bookmark';
+import RateReviewIcon from '@material-ui/icons/RateReview';
+import AccountIcon from '@material-ui/icons/AccountCircle';
+import HelpIcon from '@material-ui/icons/Help';
 import { Link } from 'react-router-dom';
 
 import { SideDrawerData } from './SideDrawerData';
@@ -95,8 +93,9 @@ export default function SideDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
-  const itemList = SideDrawerData;
   const { logout } = props;
+
+  const admin = window.localStorage.getItem('Admin');
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -152,57 +151,46 @@ export default function SideDrawer(props) {
         </div>
         <Divider />
         <List>
+          {/* Maps through each item in SideDrawerData creating a nav item in the shape of the ones below the divider */}
+          {SideDrawerData.map(item => (
+            <Link to={item.path}>
+              <ListItem button key={item.title}>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.title} style={textItemStyles} />
+              </ListItem>
+            </Link>
+          ))}
+        </List>
+        <Divider />
+        <List>
+          {/* Checking if user is an admin before rendering the nav item */}
+          {admin === 'true' ? (
+            <Link to="/">
+              <ListItem button>
+                <ListItemIcon>
+                  <RateReviewIcon />
+                </ListItemIcon>
+                <ListItemText primary="Review Cases" style={textItemStyles} />
+              </ListItem>
+            </Link>
+          ) : null}
           {/* Link needs to be wrapped around the whole button to allow the whole button to be used to direct he user */}
           <Link to="/">
             <ListItem button>
               <ListItemIcon>
-                <BusinessCenterIcon />
+                <AccountIcon />
               </ListItemIcon>
-              <ListItemText primary="Cases" style={textItemStyles} />
+              <ListItemText primary="Account" style={textItemStyles} />
             </ListItem>
           </Link>
-          <Link to="/judges">
+          <Link to="/">
             <ListItem button>
               <ListItemIcon>
-                <GavelIcon />
+                <HelpIcon />
               </ListItemIcon>
-              <ListItemText primary="Judges" style={textItemStyles} />
+              <ListItemText primary="Support" style={textItemStyles} />
             </ListItem>
           </Link>
-          <Link to="/upload-case">
-            <ListItem button>
-              <ListItemIcon>
-                <PublishIcon />
-              </ListItemIcon>
-              <ListItemText primary="Upload Case" style={textItemStyles} />
-            </ListItem>
-          </Link>
-          <Link to="/saved-cases">
-            <ListItem button>
-              <ListItemIcon>
-                <BookmarksIcon />
-              </ListItemIcon>
-              <ListItemText primary="Saved Cases" style={textItemStyles} />
-            </ListItem>
-          </Link>
-          <Link to="/saved-judges">
-            <ListItem button>
-              <ListItemIcon>
-                <BookmarkIcon />
-              </ListItemIcon>
-              <ListItemText primary="Saved Judges" style={textItemStyles} />
-            </ListItem>
-          </Link>
-        </List>
-        <Divider />
-        <List>
-          {itemList.map((item, index) => (
-            <ListItem button key={item.title}>
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.title} />
-            </ListItem>
-          ))}
-
           <ListItem button onClick={logout}>
             <ListItemIcon>
               <CloseIcon />

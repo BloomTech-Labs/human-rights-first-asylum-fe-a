@@ -91,6 +91,7 @@ function RenderHomePage(props) {
       )
     )
       .then(res => {
+        window.localStorage.setItem('Admin', res.data.is_admin);
         setSavedCases(res.data.case_bookmarks);
         setSavedJudges(res.data.judge_bookmarks);
       })
@@ -159,7 +160,11 @@ function RenderHomePage(props) {
       });
   };
 
-  const logout = () => user.oktaAuth.signOut();
+  const logout = () => {
+    window.localStorage.removeItem('Admin');
+    user.oktaAuth.signOut();
+  };
+
   const classes = useStyles();
 
   return (

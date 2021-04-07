@@ -508,11 +508,6 @@ export default function CaseTable(props) {
         <GridColumnsToolbarButton />
         <GridDensitySelector />
         <GridToolbarExport />
-        {/* <div className={classes.toolbar}
-        onClick={() => {
-          console.log()
-        }}
-        >LOG</div> */}
       </GridToolbarContainer>
     );
   };
