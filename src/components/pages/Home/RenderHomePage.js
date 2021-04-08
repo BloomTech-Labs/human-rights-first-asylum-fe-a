@@ -18,6 +18,7 @@ import { trackPromise } from 'react-promise-tracker';
 import { usePromiseTracker } from 'react-promise-tracker';
 import Loader from 'react-promise-loader';
 import CaseUpdate from '../CaseOverview/CaseUpdate';
+import ManageCases from '../ManageCases/ManageCases';
 
 const useStyles = makeStyles({
   container: {
@@ -207,6 +208,9 @@ function RenderHomePage(props) {
       </Route>
       <Route exact path="case/:id/update" authState={user.authState}>
         <CaseUpdate />
+      </Route>
+      <Route exact path="/manage-cases">
+        <ManageCases />
       </Route>
 
       <Route exact path="/">
