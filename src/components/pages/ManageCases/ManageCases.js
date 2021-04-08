@@ -13,38 +13,9 @@ const useStyles = makeStyles(theme => ({
   },
 
   uploadPage: {
-    display: 'flex',
-    flexFlow: 'row no-wrap',
     padding: '1%',
     margin: '0 auto',
     width: '80%',
-    alignItems: 'flex-start',
-    justifyContent: 'space-around',
-  },
-
-  leftDiv: {
-    marginTop: '15%',
-    width: '35%',
-    display: 'inline-block',
-    padding: '1%',
-  },
-
-  pdfUpload: {
-    marginTop: '15%',
-    display: 'inline-block',
-    marginRight: '7.5%',
-    width: '100%',
-  },
-
-  h1Styles: {
-    fontSize: '2rem',
-    marginBottom: '2.5rem',
-  },
-
-  h2Styles: {
-    fontSize: '1.3rem',
-    marginBottom: '2.5rem',
-    width: '100%',
   },
 
   buttonStyles: {
@@ -89,6 +60,46 @@ const ManageCases = props => {
     setFormValues(initialFormValues);
   };
 
+  const [isApproved, setIsApproved] = useState(false);
+  const [isDenied, setIsDenied] = useState(false);
+  const [approvedQueue, setApprovedQueue] = useState([]);
+
+  const approvedCases = () => {
+    axios
+      .get(`${process.env.REACT_APP_API_URI}/manage/all`)
+      .then(res => {
+        console.log(res.data);
+        setApprovedQueue(res.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  const acceptCase = () => {
+    axios
+      .post(`${process.env.REACT_APP_API_URI}/manage/approve`)
+      .then(res => {
+        console.log(res.data);
+        setIsApproved(res.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  const rejectCase = () => {
+    axios
+      .delete(`${process.env.REACT_APP_API_URI}/manage/reject`)
+      .then(res => {
+        console.log(res.data);
+        setIsDenied(res.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   const onSubmit = () => {
     const newCase = {
       case_url: formValues.case_url.trim(),
@@ -118,82 +129,19 @@ const ManageCases = props => {
     setFormValues({ ...formValues, [name]: value });
   };
 
+  console.log(approvedCases, approvedQueue, isApproved, isDenied);
+
   return (
     <div className={classes.uploadPage}>
-      {/* <h2 className={classes.h2Styles}>Or, fill out form manually:</h2> */}
       <UploadCaseForm
         formValues={formValues}
         onInputChange={onInputChange}
         submit={onSubmit}
+        acceptCase={acceptCase}
+        rejectCase={rejectCase}
       />
     </div>
   );
 };
 
 export default ManageCases;
-
-// const [isApproved, setIsApproved] = useState(false);
-// const [isDenied, setIsDenied] = useState(false);
-// const [approvedQueue, setApprovedQueue] = useState([]);
-
-// const approvedCases = () => {
-//   axios
-//     .get(`${process.env.REACT_APP_API_URI}/manage/all`)
-//     .then(res => {
-//       console.log(res.data);
-//       setApprovedQueue(res.data);
-//     })
-//     .catch(error => {
-//       console.log(error);
-//     });
-// };
-
-// const acceptCase = () => {
-//   axios
-//     .post(`${process.env.REACT_APP_API_URI}/manage/approve`)
-//     .then(res => {
-//       console.log(res.data);
-//       setIsApproved(res.data);
-//     })
-//     .catch(error => {
-//       console.log(error);
-//     });
-// };
-
-// const rejectCase = () => {
-//   axios
-//     .delete(`${process.env.REACT_APP_API_URI}/manage/reject`)
-//     .then(res => {
-//       console.log(res.data);
-//       setIsDenied(res.data);
-//     })
-//     .catch(error => {
-//       console.log(error);
-//     });
-// };
-
-// <>
-// <div className="approve-button">
-//   <Button
-//     onClick={acceptCase}
-//     className={classes.buttonStyles}
-//     // style={buttonStyles}
-//     variant="contained"
-//     component="span"
-//   >
-//     Approve
-//   </Button>
-// </div>
-// <br />
-// <div className="reject-button">
-//   <Button
-//     onClick={rejectCase}
-//     className={classes.buttonStyles}
-//     // style={buttonStyles}
-//     variant="contained"
-//     component="span"
-//   >
-//     Reject
-//   </Button>
-// </div>
-// </>

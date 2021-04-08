@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -54,14 +52,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const UploadCaseForm = props => {
-  const [isUser, setIsUser] = useState(true);
-  const { id } = useParams();
-  const { formValues, onInputChange, submit } = props;
+  const { formValues, onInputChange, submit, acceptCase, rejectCase } = props;
 
   const classes = useStyles();
 
   // This implements the switch functionality on the form
-  const [state, setState] = React.useState({
+  const [state, setState] = useState({
     applicantAccessToInterpreter: false,
     caseFiledWithinOneYear: false,
     applicantPerceivedCredibility: false,
@@ -75,17 +71,7 @@ const UploadCaseForm = props => {
     });
   };
 
-  const userData = () => {
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/profile/${id}`)
-      .then(res => {
-        console.log(res.data);
-        setIsUser(res.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
+  const admin = window.localStorage.getItem('Admin');
 
   const { handleSubmit } = useForm();
 
@@ -93,9 +79,6 @@ const UploadCaseForm = props => {
     evt.preventDefault();
     submit();
   };
-
-  // !!!!!! This is meant to settle warnings for unimplemented features !!!!!!
-  console.log(isUser);
 
   return (
     <div className={classes.uploadPage}>
@@ -316,7 +299,7 @@ const UploadCaseForm = props => {
               <FormHelperText></FormHelperText>
             </FormControl>
 
-            {userData && (
+            {admin === 'false' ? (
               <>
                 <div className="submit-button">
                   <Button
@@ -326,6 +309,30 @@ const UploadCaseForm = props => {
                     component="span"
                   >
                     Submit
+                  </Button>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="approve-button">
+                  <Button
+                    onClick={acceptCase}
+                    className={classes.buttonStyles}
+                    variant="contained"
+                    component="span"
+                  >
+                    Approve
+                  </Button>
+                </div>
+                <br />
+                <div className="reject-button">
+                  <Button
+                    onClick={rejectCase}
+                    className={classes.buttonStyles}
+                    variant="contained"
+                    component="span"
+                  >
+                    Reject
                   </Button>
                 </div>
               </>
