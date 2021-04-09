@@ -175,7 +175,7 @@ export default function SideDrawer(props) {
             </Link>
           ) : null}
           {/* Link needs to be wrapped around the whole button to allow the whole button to be used to direct he user */}
-          <Link to="/">
+          <Link to="/account">
             <ListItem button>
               <ListItemIcon>
                 <AccountIcon />
@@ -183,7 +183,7 @@ export default function SideDrawer(props) {
               <ListItemText primary="Account" style={textItemStyles} />
             </ListItem>
           </Link>
-          <Link to="/">
+          <Link to="/support">
             <ListItem button>
               <ListItemIcon>
                 <HelpIcon />

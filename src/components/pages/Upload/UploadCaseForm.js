@@ -109,9 +109,9 @@ const UploadCaseForm = props => {
                   type="text"
                   variant="outlined"
                   placeholder="Judge"
-                  name="Judge"
+                  name="judge"
                   onChange={onInputChange}
-                  // value={formValues.judge}
+                  value={formValues.judge}
                 />
               </label>
             </div>
@@ -121,9 +121,9 @@ const UploadCaseForm = props => {
                   multiline={true}
                   variant="outlined"
                   placeholder="Case Outcome"
-                  name="Case Outcome"
+                  name="case_outcome"
                   onChange={onInputChange}
-                  // value={formValues.case_outcome}
+                  value={formValues.case_outcome}
                 />
               </label>
             </div>
@@ -148,9 +148,9 @@ const UploadCaseForm = props => {
                   type="text"
                   variant="outlined"
                   placeholder="Nation of Origin"
-                  name="Nation of Origin"
+                  name="nation_of_origin"
                   onChange={onInputChange}
-                  // value={formValues.nation_of_origin}
+                  value={formValues.nation_of_origin}
                 />
               </label>
             </div>
@@ -159,10 +159,10 @@ const UploadCaseForm = props => {
                 <TextField
                   multiline={true}
                   variant="outlined"
-                  name="Protected Ground"
+                  name="protected_ground"
                   placeholder="Protected Ground"
                   onChange={onInputChange}
-                  // value={formValues.protected_ground}
+                  value={formValues.protected_ground}
                 />
               </label>
             </div>
@@ -173,9 +173,9 @@ const UploadCaseForm = props => {
                   type="text"
                   variant="outlined"
                   placeholder="Application Type "
-                  name="Application Type "
+                  name="application_type"
                   onChange={onInputChange}
-                  // value={formValues.application_type}
+                  value={formValues.application_type}
                 />
               </label>
             </div>
@@ -186,9 +186,9 @@ const UploadCaseForm = props => {
                   type="text"
                   variant="outlined"
                   placeholder="Case Origin"
-                  name="Case Origin"
+                  name="case_origin"
                   onChange={onInputChange}
-                  // value={formValues.case_origin}
+                  value={formValues.case_origin}
                 />
               </label>
             </div>
@@ -198,9 +198,9 @@ const UploadCaseForm = props => {
                   multiline={true}
                   variant="outlined"
                   placeholder="Applicant Gender"
-                  name="Applicant Gender"
+                  name="applicant_gender"
                   onChange={onInputChange}
-                  // value={formValues.applicant_gender}
+                  value={formValues.applicant_gender}
                 />
               </label>
             </div>
@@ -210,9 +210,9 @@ const UploadCaseForm = props => {
                   multiline={true}
                   variant="outlined"
                   placeholder="Applicant Language"
-                  name="Applicant Language"
+                  name="applicant_language"
                   onChange={onInputChange}
-                  // value={formValues.applicant_language}
+                  value={formValues.applicant_language}
                 />
               </label>
             </div>
@@ -223,9 +223,9 @@ const UploadCaseForm = props => {
                   type="text"
                   variant="outlined"
                   placeholder="Applicant Indigenous Group"
-                  name="Applicant Indigenous Group"
+                  name="applicant_indigenous_group"
                   onChange={onInputChange}
-                  // value={formValues.applicant_indigenous_group}
+                  value={formValues.applicant_indigenous_group}
                 />
               </label>
             </div>
@@ -236,9 +236,9 @@ const UploadCaseForm = props => {
                   type="text"
                   variant="outlined"
                   placeholder="Type of Violence Experienced"
-                  name="Type of Violence Experienced"
+                  name="type_of_violence_experienced"
                   onChange={onInputChange}
-                  // value={formValues.type_of_violence_experienced}
+                  value={formValues.type_of_violence_experienced}
                 />
               </label>
             </div>
@@ -248,7 +248,7 @@ const UploadCaseForm = props => {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      // checked={state.applicantAccessToInterpreter}
+                      checked={state.applicantAccessToInterpreter}
                       onChange={handleChange}
                       name="applicantAccessToInterpreter"
                     />
