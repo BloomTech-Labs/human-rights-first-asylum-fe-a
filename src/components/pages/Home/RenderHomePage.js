@@ -21,6 +21,7 @@ import CaseUpdate from '../CaseOverview/CaseUpdate';
 import ManageCases from '../ManageCases/ManageCases';
 import AccountPage from '../AccountPage/AccountPage';
 import SupportPage from '../SupportPage/SupportPage';
+import AddUsersPage from '../AddUsersPage/AddUsers';
 
 const useStyles = makeStyles({
   container: {
@@ -221,6 +222,9 @@ function RenderHomePage(props) {
       </Route>
       <Route exact path="/support">
         <SupportPage />
+      </Route>
+      <Route exact path="/add-users">
+        <AddUsersPage />
       </Route>
 
       <Route exact path="/">
