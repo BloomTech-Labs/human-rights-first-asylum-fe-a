@@ -16,7 +16,7 @@ const LoginContainer = () => {
       clientId,
       redirectUri,
       registration: {},
-      features: { registration: true },
+      features: { registration: false },
       // turning this feature on allows your widget to use Okta for user registration
       logo: `${hrfLogo}`, // Import any logo you want to display at the top of the login widget
       i18n: {

@@ -18,6 +18,9 @@ import { trackPromise } from 'react-promise-tracker';
 import { usePromiseTracker } from 'react-promise-tracker';
 import Loader from 'react-promise-loader';
 import CaseUpdate from '../CaseOverview/CaseUpdate';
+import ManageCases from '../ManageCases/ManageCases';
+import AccountPage from '../AccountPage/AccountPage';
+import SupportPage from '../SupportPage/SupportPage';
 
 const useStyles = makeStyles({
   container: {
@@ -32,6 +35,7 @@ function RenderHomePage(props) {
   const [savedCases, setSavedCases] = useState([]);
   const [savedJudges, setSavedJudges] = useState([]);
   const [selectedRows, setSelectedRows] = useState({});
+  const [hrfUserInfo, setHrfUserInfo] = useState([]);
 
   const user = useContext(UserContext);
 
@@ -91,6 +95,8 @@ function RenderHomePage(props) {
       )
     )
       .then(res => {
+        window.localStorage.setItem('Admin', res.data.is_admin);
+        setHrfUserInfo(res.data);
         setSavedCases(res.data.case_bookmarks);
         setSavedJudges(res.data.judge_bookmarks);
       })
@@ -159,7 +165,11 @@ function RenderHomePage(props) {
       });
   };
 
-  const logout = () => user.oktaAuth.signOut();
+  const logout = () => {
+    window.localStorage.removeItem('Admin');
+    user.oktaAuth.signOut();
+  };
+
   const classes = useStyles();
 
   return (
@@ -202,6 +212,15 @@ function RenderHomePage(props) {
       </Route>
       <Route exact path="case/:id/update" authState={user.authState}>
         <CaseUpdate />
+      </Route>
+      <Route exact path="/manage-cases">
+        <ManageCases />
+      </Route>
+      <Route exact path="/account">
+        <AccountPage oktaUserInfo={user.userInfo} hrfUserInfo={hrfUserInfo} />
+      </Route>
+      <Route exact path="/support">
+        <SupportPage />
       </Route>
 
       <Route exact path="/">
