@@ -608,7 +608,6 @@ export default function CaseTable(props) {
           {drawerContent()}
         </Drawer>
       </div>
-      {/* <div className={classes.dataGridContainer}> */}
       <DataGrid
         rows={searching ? filter(caseData) : caseData}
         columns={columns}
@@ -621,7 +620,6 @@ export default function CaseTable(props) {
         disableColumnMenu={true}
         components={{ Toolbar: Toolbar }}
       />
-      {/* </div> */}
     </div>
   );
 }
