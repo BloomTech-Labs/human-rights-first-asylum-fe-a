@@ -192,7 +192,7 @@ export default function CaseTable(props) {
     {
       field: 'initial_or_appellate',
       renderHeader: params => <strong>{'Initial Hearing'}</strong>,
-      width: 120,
+      width: 130,
       className: 'tableHeader',
     },
     {
@@ -204,13 +204,13 @@ export default function CaseTable(props) {
     {
       field: 'case_filed_within_one_year',
       renderHeader: params => <strong>{'Filed 1 Year'}</strong>,
-      width: 110,
+      width: 115,
       className: 'tableHeader',
     },
     {
       field: 'protected_ground',
       renderHeader: params => <strong>{'Protected Ground'}</strong>,
-      width: 145,
+      width: 155,
       className: 'tableHeader',
     },
     {
@@ -222,19 +222,19 @@ export default function CaseTable(props) {
     {
       field: 'nation_of_origin',
       renderHeader: params => <strong>{'Nation of Origin'}</strong>,
-      width: 135,
+      width: 140,
       className: 'tableHeader',
     },
     {
       field: 'applicant_gender',
       renderHeader: params => <strong>{'Applicant Gender'}</strong>,
-      width: 145,
+      width: 155,
       className: 'tableHeader',
     },
     {
       field: 'type_of_violence_experienced',
       renderHeader: params => <strong>{'Violence Experienced'}</strong>,
-      width: 175,
+      width: 185,
       className: 'tableHeader',
     },
     {
