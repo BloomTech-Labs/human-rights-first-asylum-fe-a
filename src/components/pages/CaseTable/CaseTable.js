@@ -198,56 +198,48 @@ export default function CaseTable(props) {
     {
       field: 'case_origin',
       renderHeader: params => <strong>{'Case Origin'}</strong>,
-      // headerName: 'Case Origin',
       width: 160,
       className: 'tableHeader',
     },
     {
       field: 'case_filed_within_one_year',
       renderHeader: params => <strong>{'Filed 1 Year'}</strong>,
-      // headerName: 'Filed 1 Year',
       width: 110,
       className: 'tableHeader',
     },
     {
       field: 'protected_ground',
       renderHeader: params => <strong>{'Protected Ground'}</strong>,
-      // headerName: 'Protected Ground',
       width: 145,
       className: 'tableHeader',
     },
     {
       field: 'case_outcome',
       renderHeader: params => <strong>{'Outcome'}</strong>,
-      // headerName: 'Outcome',
       width: 110,
       className: 'tableHeader',
     },
     {
       field: 'nation_of_origin',
       renderHeader: params => <strong>{'Nation of Origin'}</strong>,
-      // headerName: 'Nation of Origin',
       width: 135,
       className: 'tableHeader',
     },
     {
       field: 'applicant_gender',
       renderHeader: params => <strong>{'Applicant Gender'}</strong>,
-      // headerName: 'Applicant Gender',
       width: 145,
       className: 'tableHeader',
     },
     {
       field: 'type_of_violence_experienced',
       renderHeader: params => <strong>{'Violence Experienced'}</strong>,
-      // headerName: 'Violence Experienced',
       width: 175,
       className: 'tableHeader',
     },
     {
       field: 'application_type',
       renderHeader: params => <strong>{'Application Type'}</strong>,
-      // headerName: 'Application Type ',
       width: 140,
       className: 'tableHeader',
       hide: true,
@@ -255,7 +247,6 @@ export default function CaseTable(props) {
     {
       field: 'applicant_indigenous_group',
       renderHeader: params => <strong>{'Indigenous Group'}</strong>,
-      // headerName: 'Indigenous Group',
       width: 150,
       className: 'tableHeader',
       hide: true,
@@ -263,7 +254,6 @@ export default function CaseTable(props) {
     {
       field: 'applicant_language',
       renderHeader: params => <strong>{'Applicant Language'}</strong>,
-      // headerName: 'Applicant Language',
       width: 160,
       className: 'tableHeader',
       hide: true,
@@ -271,7 +261,6 @@ export default function CaseTable(props) {
     {
       field: 'applicant_access_to_interpreter',
       renderHeader: params => <strong>{'Interpreter'}</strong>,
-      // headerName: 'Interpreter',
       width: 100,
       className: 'tableHeader',
       hide: true,
@@ -279,7 +268,6 @@ export default function CaseTable(props) {
     {
       field: 'applicant_perceived_credibility',
       renderHeader: params => <strong>{'Applicant Credibility'}</strong>,
-      // headerName: 'Applicant Credibility',
       width: 160,
       className: 'tableHeader',
       hide: true,
