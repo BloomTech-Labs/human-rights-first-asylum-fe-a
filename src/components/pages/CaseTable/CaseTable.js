@@ -26,10 +26,6 @@ const useStyles = makeStyles(theme => ({
   grid: {
     marginTop: 15,
   },
-  tableHeader: {
-    color: 'red',
-    fontWeight: 'normal',
-  },
   tbl_container: {
     display: 'flex',
     flexDirection: 'column',
