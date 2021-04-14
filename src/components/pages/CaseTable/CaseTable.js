@@ -109,8 +109,9 @@ const useStyles = makeStyles(theme => ({
   toolbar: {
     display: 'flex',
     flexDirection: 'row',
+    alignItems: 'right',
     margin: '5px',
-    color: 'darkblue',
+    color: '#215589',
     '&:hover': {
       cursor: 'pointer',
     },
@@ -505,9 +506,11 @@ export default function CaseTable(props) {
           <BookmarkBorderIcon />
           <p>SAVE CASES</p>
         </div>
-        <GridColumnsToolbarButton />
-        <GridDensitySelector />
-        <GridToolbarExport />
+        <div className={classes.toolbar}>
+          <GridColumnsToolbarButton />
+          <GridDensitySelector />
+          <GridToolbarExport />
+        </div>
       </GridToolbarContainer>
     );
   };
@@ -604,17 +607,19 @@ export default function CaseTable(props) {
           {drawerContent()}
         </Drawer>
       </div>
-      <DataGrid
-        rows={searching ? filter(caseData) : caseData}
-        columns={columns}
-        className={classes.grid}
-        loading={caseData ? false : true}
-        checkboxSelection={true}
-        onSelectionModelChange={onCheckboxSelect}
-        showCellRightBorder={true}
-        disableColumnMenu={true}
-        components={{ Toolbar: Toolbar }}
-      />
+      <div classname={classes.datagrid} style={{ color: '#215589' }}>
+        <DataGrid
+          rows={searching ? filter(caseData) : caseData}
+          columns={columns}
+          className={classes.grid}
+          loading={caseData ? false : true}
+          checkboxSelection={true}
+          onSelectionModelChange={onCheckboxSelect}
+          showCellRightBorder={true}
+          disableColumnMenu={true}
+          components={{ Toolbar: Toolbar }}
+        />
+      </div>
     </div>
   );
 }

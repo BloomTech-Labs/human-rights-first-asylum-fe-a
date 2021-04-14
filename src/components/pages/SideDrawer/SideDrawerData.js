@@ -1,5 +1,4 @@
 import React from 'react';
-import BookmarksIcon from '@material-ui/icons/Bookmarks';
 import PublishOutlinedIcon from '@material-ui/icons/PublishOutlined';
 import GavelOutlinedIcon from '@material-ui/icons/GavelOutlined';
 import BusinessCenterOutlinedIcon from '@material-ui/icons/BusinessCenterOutlined';
