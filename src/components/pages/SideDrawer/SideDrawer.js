@@ -40,6 +40,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: 'white',
     borderBottom: '1px solid #d9d9d9',
     color: '#215589',
+    padding: '1px',
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
@@ -50,6 +51,7 @@ const useStyles = makeStyles(theme => ({
     }),
   },
   menuButton: {
+    padding: '.2rem',
     marginRight: theme.spacing(2),
     [theme.breakpoints.down('sm')]: {
       display: 'none',
