@@ -121,7 +121,7 @@ export default function SideDrawer(props) {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
-        elevation="0"
+        elevation={0}
         position="fixed"
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
@@ -144,7 +144,7 @@ export default function SideDrawer(props) {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Hidden smDown="true">
+      <Hidden smDown={true}>
         <Drawer
           className={classes.drawer}
           variant="persistent"
@@ -167,7 +167,7 @@ export default function SideDrawer(props) {
           <List>
             {/* Maps through each item in SideDrawerData creating a nav item in the shape of the ones below the divider */}
             {SideDrawerData.map(item => (
-              <Link to={item.path}>
+              <Link to={item.path} key={item.title}>
                 <ListItem button key={item.title}>
                   <ListItemIcon>{item.icon}</ListItemIcon>
                   <ListItemText primary={item.title} style={textItemStyles} />
