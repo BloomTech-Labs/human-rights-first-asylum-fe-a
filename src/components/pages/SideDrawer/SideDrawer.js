@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     backgroundColor: 'white',
-    color: 'navy',
+    color: '#215589',
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
@@ -197,7 +197,25 @@ export default function SideDrawer(props) {
                 <ListItemText primary="Support" style={textItemStyles} />
               </ListItem>
             </Link>
-            <ListItem button onClick={logout}>
+            ) : null}
+            {/* Link needs to be wrapped around the whole button to allow the whole button to be used to direct the user */}
+            <Link to="/account">
+              <ListItem button>
+                <ListItemIcon>
+                  <AccountIcon />
+                </ListItemIcon>
+                <ListItemText primary="Account" style={textItemStyles} />
+              </ListItem>
+            </Link>
+            <Link to="/support">
+              <ListItem button>
+                <ListItemIcon>
+                  <CloseIcon />
+                </ListItemIcon>
+                <ListItemText primary="Logout" />
+              </ListItem>
+            </Link>
+            <ListItem button onClick={logout} style={textItemStyles}>
               <ListItemIcon>
                 <CloseIcon />
               </ListItemIcon>
@@ -206,7 +224,6 @@ export default function SideDrawer(props) {
           </List>
         </Drawer>
       </Hidden>
-
       <main
         className={clsx(classes.content, {
           [classes.contentShift]: open,
@@ -219,5 +236,5 @@ export default function SideDrawer(props) {
 }
 
 const textItemStyles = {
-  color: 'black',
+  color: ' #215589',
 };
