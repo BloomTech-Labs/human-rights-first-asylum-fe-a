@@ -38,6 +38,7 @@ const useStyles = makeStyles(theme => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     backgroundColor: 'white',
+    borderBottom: '1px solid #d9d9d9',
     color: '#215589',
   },
   appBarShift: {
@@ -106,14 +107,19 @@ export default function SideDrawer(props) {
 
   const admin = window.localStorage.getItem('Admin');
 
-  const handleDrawerToggle = () => {
-    setOpen(!open);
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
   };
 
   return (
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
+        elevation="0"
         position="fixed"
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
@@ -123,7 +129,7 @@ export default function SideDrawer(props) {
           <IconButton
             color="inherit"
             aria-label="open drawer"
-            onClick={handleDrawerToggle}
+            onClick={handleDrawerOpen}
             edge="start"
             className={clsx(classes.menuButton, open && classes.hide)}
           >
@@ -147,7 +153,7 @@ export default function SideDrawer(props) {
           }}
         >
           <div className={classes.drawerHeader}>
-            <IconButton onClick={handleDrawerToggle}>
+            <IconButton onClick={handleDrawerClose}>
               {theme.direction === 'ltr' ? (
                 <ChevronLeftIcon />
               ) : (
@@ -180,7 +186,7 @@ export default function SideDrawer(props) {
                 </ListItem>
               </Link>
             ) : null}
-            {/* Link needs to be wrapped around the whole button to allow the whole button to be used to direct he user */}
+            {/* Link needs to be wrapped around the whole button to allow the whole button to be used to direct the user */}
             <Link to="/account">
               <ListItem button>
                 <ListItemIcon>
@@ -195,24 +201,6 @@ export default function SideDrawer(props) {
                   <HelpIcon />
                 </ListItemIcon>
                 <ListItemText primary="Support" style={textItemStyles} />
-              </ListItem>
-            </Link>
-            ) : null}
-            {/* Link needs to be wrapped around the whole button to allow the whole button to be used to direct the user */}
-            <Link to="/account">
-              <ListItem button>
-                <ListItemIcon>
-                  <AccountIcon />
-                </ListItemIcon>
-                <ListItemText primary="Account" style={textItemStyles} />
-              </ListItem>
-            </Link>
-            <Link to="/support">
-              <ListItem button>
-                <ListItemIcon>
-                  <CloseIcon />
-                </ListItemIcon>
-                <ListItemText primary="Logout" />
               </ListItem>
             </Link>
             <ListItem button onClick={logout} style={textItemStyles}>
