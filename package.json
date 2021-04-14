@@ -19,7 +19,7 @@
     "@okta/okta-auth-js": "^4.8.0",
     "@okta/okta-react": "^5.0.0",
     "@okta/okta-signin-widget": "^4.1.2",
-    "antd": "^4.11.2",
+    "antd": "^4.15.1",
     "axios": "^0.21.1",
     "craco-less": "^1.17.0",
     "date-fns": "^2.16.1",
