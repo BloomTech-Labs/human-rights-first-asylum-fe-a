@@ -24,9 +24,11 @@ export const SideDrawerAnt = () => {
         onClose={onClose}
         visible={visible}
       >
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+        <p>Cases</p>
+        <p>Judges</p>
+        <p>Upload Case</p>
+        <p>Saved Cases</p>
+        <p>Saved Judges</p>
       </Drawer>
     </>
   );
