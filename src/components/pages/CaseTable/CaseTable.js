@@ -524,12 +524,20 @@ export default function CaseTable(props) {
               bookmarkCases(selectedRows);
             }}
           >
-            <Button style={{ background: '#3f51b5', color: '#fff' }} type="default" icon={<SaveOutlined />}>
+            <Button
+              style={{ background: '#3f51b5', color: '#fff' }}
+              type="default"
+              icon={<SaveOutlined />}
+            >
               Save Cases
             </Button>
           </div>
 
-          <Button style={{ background: '#3f51b5', color: '#fff' }} type="default" icon={<DownloadOutlined />}>
+          <Button
+            style={{ background: '#3f51b5', color: '#fff' }}
+            type="default"
+            icon={<DownloadOutlined />}
+          >
             Download All Selected
           </Button>
 
@@ -635,17 +643,19 @@ export default function CaseTable(props) {
           {drawerContent()}
         </Drawer>
       </div>
-      <DataGrid
-        rows={searching ? filter(caseData) : caseData}
-        columns={columns}
-        className={classes.grid}
-        loading={caseData ? false : true}
-        checkboxSelection={true}
-        onSelectionModelChange={onCheckboxSelect}
-        showCellRightBorder={true}
-        disableColumnMenu={true}
-        components={{ Toolbar: Toolbar }}
-      />
+      <div classname={classes.datagrid} style={{ color: '#215589' }}>
+        <DataGrid
+          rows={searching ? filter(caseData) : caseData}
+          columns={columns}
+          className={classes.grid}
+          loading={caseData ? false : true}
+          checkboxSelection={true}
+          onSelectionModelChange={onCheckboxSelect}
+          showCellRightBorder={true}
+          disableColumnMenu={true}
+          components={{ Toolbar: Toolbar }}
+        />
+      </div>
     </div>
   );
 }
