@@ -5,6 +5,7 @@
   "license": "MIT",
   "repository": "github:Lambda-School-Labs/labs-spa-starter",
   "dependencies": {
+    "@ant-design/icons": "^4.6.2",
     "@appbaseio/reactivesearch": "^3.14.2",
     "@casl/ability": "^5.2.2",
     "@casl/react": "^2.2.2",
