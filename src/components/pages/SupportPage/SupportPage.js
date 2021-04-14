@@ -76,10 +76,12 @@ const SupportPage = () => {
         <h2 className={classes.h2Styles}>FAQ</h2>
         <h4 className={classes.h4Styles}>Q: How do I upload a case?</h4>
         <p>
-          A: You must have a case file PDF ready to be uploaded then our system
-          pulls the necessary information from it to fill out a form for you to
-          check and make sure it is correct. Someone else please write the real
-          version of this!
+          A: Please navigate to the "Upload Case" page via the menu to the left
+          of your screen to upload your case files. Once your files are
+          succesfully uploaded, our system will comb through them and extract
+          the necessary information to then populate the form to the right of
+          the screen on the case upload page for your final approval before
+          completing your submission.
         </p>
       </div>
     </div>
