@@ -121,7 +121,7 @@ const useStyles = makeStyles(theme => ({
     padding: '1rem',
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     borderRadius: '6px',
     width: '100%',
