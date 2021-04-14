@@ -26,6 +26,8 @@ import './CaseTable.css';
 import { Drawer } from '@material-ui/core';
 import Chip from '@material-ui/core/Chip';
 
+import PDFOverviewButton from './PDF Overview Export/PDFOverviewButton';
+
 const useStyles = makeStyles(theme => ({
   grid: {
     marginTop: 15,
@@ -634,6 +636,9 @@ export default function CaseTable(props) {
             })}
           </div>
         )}
+        <div>
+          <PDFOverviewButton caseData={caseData} />
+        </div>
         <Drawer
           anchor="right"
           open={new_search}
