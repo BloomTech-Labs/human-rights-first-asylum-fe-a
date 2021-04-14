@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import {
   DataGrid,
-  GridToolbarContainer,
   GridColumnsToolbarButton,
   GridToolbarExport,
   GridDensitySelector,
 } from '@material-ui/data-grid';
-import SearchIcon from '@material-ui/icons/Search';
-import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
+
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
@@ -15,9 +13,15 @@ import { Link, useParams } from 'react-router-dom';
 import Plot from 'react-plotly.js';
 import CancelIcon from '@material-ui/icons/Cancel';
 
+import {
+  SearchOutlined,
+  DownloadOutlined,
+  SaveOutlined,
+} from '@ant-design/icons';
+
 // Imports for PDF Modal
 import PDFViewer from '../PDFViewer/PDFViewer';
-import { Button } from 'antd';
+import { Button, Menu } from 'antd';
 import './CaseTable.css';
 import { Drawer } from '@material-ui/core';
 import Chip from '@material-ui/core/Chip';
@@ -106,11 +110,22 @@ const useStyles = makeStyles(theme => ({
       transform: 'scale(1.4)',
     },
   },
+  toolbar_options: {
+    borderRadius: '6px',
+    padding: '0.5rem',
+    display: 'flex',
+    alignItems: 'center',
+  },
+
   toolbar: {
+    padding: '1rem',
     display: 'flex',
     flexDirection: 'row',
-    margin: '5px',
-    color: 'darkblue',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    borderRadius: '6px',
+    width: '100%',
+    color: 'black',
     '&:hover': {
       cursor: 'pointer',
     },
@@ -486,29 +501,45 @@ export default function CaseTable(props) {
 
   const Toolbar = () => {
     return (
-      <GridToolbarContainer>
-        <div
-          className={classes.toolbar}
-          onClick={() => {
-            toggleSearch();
-          }}
-        >
-          <SearchIcon />
-          <p>SEARCH</p>
+      <Menu>
+        <div className={classes.toolbar}>
+          <div
+            className={classes.toolbar_options}
+            onClick={() => {
+              toggleSearch();
+            }}
+          >
+            <Button
+              style={{ background: '#3f51b5', color: '#fff' }}
+              type="default"
+              icon={<SearchOutlined />}
+            >
+              Search
+            </Button>
+          </div>
+
+          <div
+            className={classes.toolbar_options}
+            onClick={() => {
+              bookmarkCases(selectedRows);
+            }}
+          >
+            <Button style={{ background: '#3f51b5', color: '#fff' }} type="default" icon={<SaveOutlined />}>
+              Save Cases
+            </Button>
+          </div>
+
+          <Button style={{ background: '#3f51b5', color: '#fff' }} type="default" icon={<DownloadOutlined />}>
+            Download All Selected
+          </Button>
+
+          <div>
+            <GridColumnsToolbarButton />
+            <GridDensitySelector />
+            <GridToolbarExport />
+          </div>
         </div>
-        <div
-          className={classes.toolbar}
-          onClick={() => {
-            bookmarkCases(selectedRows);
-          }}
-        >
-          <BookmarkBorderIcon />
-          <p>SAVE CASES</p>
-        </div>
-        <GridColumnsToolbarButton />
-        <GridDensitySelector />
-        <GridToolbarExport />
-      </GridToolbarContainer>
+      </Menu>
     );
   };
 
