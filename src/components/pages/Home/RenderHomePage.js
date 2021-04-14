@@ -96,10 +96,10 @@ function RenderHomePage(props) {
       )
     )
       .then(res => {
-        window.localStorage.setItem('Admin', res.data.is_admin);
+        window.localStorage.setItem('role', res.data.role);
         setHrfUserInfo(res.data);
-        setSavedCases(res.data.case_bookmarks);
-        setSavedJudges(res.data.judge_bookmarks);
+        // setSavedCases(res.data.case_bookmarks);
+        // setSavedJudges(res.data.judge_bookmarks);
       })
       .catch(err => {
         console.log(err);
@@ -107,8 +107,8 @@ function RenderHomePage(props) {
   }, [
     user.authState.idToken.idToken,
     user.userInfo.sub,
-    savedCases.length,
-    savedJudges.length,
+    // savedCases.length,
+    // savedJudges.length,
   ]);
 
   const deleteFromStateById = (id, state, setState) => {
@@ -167,7 +167,7 @@ function RenderHomePage(props) {
   };
 
   const logout = () => {
-    window.localStorage.removeItem('Admin');
+    window.localStorage.removeItem('role');
     user.oktaAuth.signOut();
   };
 
@@ -224,7 +224,7 @@ function RenderHomePage(props) {
         <SupportPage />
       </Route>
       <Route exact path="/add-users">
-        <AddUsersPage />
+        <AddUsersPage authState={user.authState} />
       </Route>
 
       <Route exact path="/">

@@ -3,6 +3,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -35,18 +40,22 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  radio: {
+    margin: '8%',
+    fontSize: '1.5rem',
+  },
 }));
 
 const initialFormValues = {
   firstName: '',
   lastName: '',
   email: '',
-  login: '',
-  password: '',
+  role: '',
 };
 
-const AddUsersPage = () => {
+const AddUsersPage = props => {
   const [formValues, setFormValues] = useState(initialFormValues);
+  const { authState } = props;
 
   const classes = useStyles();
 
@@ -57,7 +66,11 @@ const AddUsersPage = () => {
 
   const postNewUser = newUser => {
     axios
-      .post(`${process.env.REACT_APP_API_URI}/newUser/`, newUser)
+      .post(`${process.env.REACT_APP_API_URI}/profile/`, newUser, {
+        headers: {
+          Authorization: 'Bearer ' + authState.idToken.idToken,
+        },
+      })
       .catch(err => console.log(err));
     setFormValues(initialFormValues);
   };
@@ -65,18 +78,12 @@ const AddUsersPage = () => {
   const onSubmit = e => {
     e.preventDefault();
     const newUser = {
-      profile: {
-        firstName: formValues.firstName.trim(),
-        lastName: formValues.lastName.trim(),
-        email: formValues.email.trim(),
-        login: formValues.login.trim(),
-      },
-      credentials: {
-        password: {
-          value: formValues.password.trim(),
-        },
-      },
+      firstName: formValues.firstName.trim(),
+      lastName: formValues.lastName.trim(),
+      email: formValues.email.trim(),
+      role: formValues.role.trim(),
     };
+    console.log(newUser);
     postNewUser(newUser);
   };
 
@@ -90,6 +97,7 @@ const AddUsersPage = () => {
               id="firstName"
               label="First Name"
               type="text"
+              name="firstName"
               variant="outlined"
               onChange={onChange}
               className={classes.textField}
@@ -100,6 +108,7 @@ const AddUsersPage = () => {
               id="lastName"
               label="Last Name"
               type="text"
+              name="lastName"
               variant="outlined"
               onChange={onChange}
               className={classes.textField}
@@ -110,31 +119,28 @@ const AddUsersPage = () => {
               id="email"
               label="Email"
               type="text"
+              name="email"
               variant="outlined"
               onChange={onChange}
               className={classes.textField}
             />
           </label>
-          <label htmlFor="login">
-            <TextField
-              id="login"
-              label="Login"
-              type="text"
-              variant="outlined"
-              onChange={onChange}
-              className={classes.textField}
-            />
-          </label>
-          <label htmlFor="password">
-            <TextField
-              id="password"
-              label="Password"
-              type="text"
-              variant="outlined"
-              onChange={onChange}
-              className={classes.textField}
-            />
-          </label>
+          <FormControl>
+            <FormLabel className={classes.radio}>Role</FormLabel>
+            <RadioGroup aria-label="role" name="role" onChange={onChange}>
+              <FormControlLabel value="user" control={<Radio />} label="User" />
+              <FormControlLabel
+                value="moderator"
+                control={<Radio />}
+                label="Moderator"
+              />
+              <FormControlLabel
+                value="admin"
+                control={<Radio />}
+                label="Admin"
+              />
+            </RadioGroup>
+          </FormControl>
           <div className="submit-button">
             <Button
               onClick={onSubmit}

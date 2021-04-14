@@ -96,7 +96,7 @@ export default function SideDrawer(props) {
   const [open, setOpen] = React.useState(true);
   const { logout } = props;
 
-  const admin = window.localStorage.getItem('Admin');
+  const role = window.localStorage.getItem('role');
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -165,7 +165,7 @@ export default function SideDrawer(props) {
         <Divider />
         <List>
           {/* Checking if user is an admin before rendering the nav item */}
-          {admin === 'true' ? (
+          {role === 'admin' ? (
             <>
               <Link to="/manage-cases">
                 <ListItem button>
