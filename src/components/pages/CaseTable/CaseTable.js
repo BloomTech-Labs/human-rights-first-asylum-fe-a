@@ -524,12 +524,12 @@ export default function CaseTable(props) {
               bookmarkCases(selectedRows);
             }}
           >
-            <Button type="default" icon={<SaveOutlined />}>
+            <Button style={{ background: '#3f51b5', color: '#fff' }} type="default" icon={<SaveOutlined />}>
               Save Cases
             </Button>
           </div>
 
-          <Button type="default" icon={<DownloadOutlined />}>
+          <Button style={{ background: '#3f51b5', color: '#fff' }} type="default" icon={<DownloadOutlined />}>
             Download All Selected
           </Button>
 
