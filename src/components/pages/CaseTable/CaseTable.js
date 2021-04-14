@@ -148,7 +148,7 @@ export default function CaseTable(props) {
   const columns = [
     {
       field: 'primary_key',
-      headerName: 'Case ID',
+      renderHeader: params => <strong>{'Case ID'}</strong>,
       width: 130,
       className: 'tableHeader',
       options: {
@@ -159,20 +159,20 @@ export default function CaseTable(props) {
       renderCell: params => (
         <>
           <Link to={`/case/${params.value}`} style={{ color: '#215589' }}>
-            <span>{params.row['case_id']}</span>
+            <span> {params.row['case_id']}</span>
           </Link>
         </>
       ),
     },
     {
       field: 'hearing_date',
-      headerName: 'Date',
+      renderHeader: params => <strong>{'Date'}</strong>,
       width: 110,
       className: 'tableHeader',
     },
     {
       field: 'judge_name',
-      headerName: 'Judge',
+      renderHeader: params => <strong>{'Judge'}</strong>,
       width: 160,
       className: 'tableHeader',
       renderCell: params => (
@@ -188,83 +188,83 @@ export default function CaseTable(props) {
     },
     {
       field: 'initial_or_appellate',
-      headerName: 'Initial Hearing',
-      width: 120,
+      renderHeader: params => <strong>{'Initial Hearing'}</strong>,
+      width: 130,
       className: 'tableHeader',
     },
     {
       field: 'case_origin',
-      headerName: 'Case Origin',
+      renderHeader: params => <strong>{'Case Origin'}</strong>,
       width: 160,
       className: 'tableHeader',
     },
     {
       field: 'case_filed_within_one_year',
-      headerName: 'Filed 1 Year',
-      width: 110,
+      renderHeader: params => <strong>{'Filed 1 Year'}</strong>,
+      width: 115,
       className: 'tableHeader',
     },
     {
       field: 'protected_ground',
-      headerName: 'Protected Ground',
-      width: 145,
+      renderHeader: params => <strong>{'Protected Ground'}</strong>,
+      width: 155,
       className: 'tableHeader',
     },
     {
       field: 'case_outcome',
-      headerName: 'Outcome',
+      renderHeader: params => <strong>{'Outcome'}</strong>,
       width: 110,
       className: 'tableHeader',
     },
     {
       field: 'nation_of_origin',
-      headerName: 'Nation of Origin',
-      width: 135,
+      renderHeader: params => <strong>{'Nation of Origin'}</strong>,
+      width: 140,
       className: 'tableHeader',
     },
     {
       field: 'applicant_gender',
-      headerName: 'Applicant Gender',
-      width: 145,
+      renderHeader: params => <strong>{'Applicant Gender'}</strong>,
+      width: 155,
       className: 'tableHeader',
     },
     {
       field: 'type_of_violence_experienced',
-      headerName: 'Violence Experienced',
-      width: 175,
+      renderHeader: params => <strong>{'Violence Experienced'}</strong>,
+      width: 185,
       className: 'tableHeader',
     },
     {
       field: 'application_type',
-      headerName: 'Application Type ',
+      renderHeader: params => <strong>{'Application Type'}</strong>,
       width: 140,
       className: 'tableHeader',
       hide: true,
     },
     {
       field: 'applicant_indigenous_group',
-      headerName: 'Indigenous Group',
+      renderHeader: params => <strong>{'Indigenous Group'}</strong>,
       width: 150,
       className: 'tableHeader',
       hide: true,
     },
     {
       field: 'applicant_language',
-      headerName: 'Applicant Language',
+      renderHeader: params => <strong>{'Applicant Language'}</strong>,
       width: 160,
       className: 'tableHeader',
       hide: true,
     },
     {
       field: 'applicant_access_to_interpreter',
-      headerName: 'Interpreter',
+      renderHeader: params => <strong>{'Interpreter'}</strong>,
       width: 100,
       className: 'tableHeader',
       hide: true,
     },
     {
       field: 'applicant_perceived_credibility',
-      headerName: 'Applicant Credibility',
+      renderHeader: params => <strong>{'Applicant Credibility'}</strong>,
       width: 160,
       className: 'tableHeader',
       hide: true,

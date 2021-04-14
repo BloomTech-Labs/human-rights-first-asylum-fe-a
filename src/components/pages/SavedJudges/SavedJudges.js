@@ -56,7 +56,7 @@ function SavedJudges({ savedJudges, deleteSavedJudge }) {
     // { field: 'id', headerName: 'id', width: 100 },
     {
       field: 'name',
-      headerName: 'Judge',
+      renderHeader: params => <strong>{'Judge'}</strong>,
       width: 170,
       color: 'navy',
       //Link to individual judge page
@@ -71,14 +71,35 @@ function SavedJudges({ savedJudges, deleteSavedJudge }) {
         </>
       ),
     },
-    { field: 'judge_county', headerName: 'Court Location', width: 160 },
-    { field: 'date_appointed', headerName: 'Date Appointed', width: 140 },
-    { field: 'appointed_by', headerName: 'Appointed by', width: 160 },
-    { field: 'denial_rate', headerName: '% Denial', width: 110 },
-    { field: 'approval_rate', headerName: '% Approval', width: 110 },
+    {
+      field: 'judge_county',
+      renderHeader: params => <strong>{'Court Location'}</strong>,
+      width: 160,
+    },
+    {
+      field: 'date_appointed',
+      renderHeader: params => <strong>{'Date Appointed'}</strong>,
+      width: 160,
+    },
+    {
+      field: 'appointed_by',
+      renderHeader: params => <strong>{'Appointed By'}</strong>,
+      width: 160,
+    },
+    {
+      field: 'denial_rate',
+      renderHeader: params => <strong>{'% Denial'}</strong>,
+      width: 110,
+    },
+    {
+      field: 'approval_rate',
+      renderHeader: params => <strong>{'% Approval'}</strong>,
+      width: 140,
+    },
     {
       field: 'remove_judge',
-      headerName: 'Remove',
+      renderHeader: params => <strong>{'Remove'}</strong>,
+
       width: 110,
       renderCell: params => (
         <IconButton>

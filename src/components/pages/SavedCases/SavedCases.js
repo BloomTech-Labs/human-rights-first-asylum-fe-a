@@ -40,7 +40,7 @@ function SavedCases({ savedCases, deleteBookmark }) {
   const columns = [
     {
       field: 'primary_key',
-      headerName: 'Case ID',
+      renderHeader: params => <strong>{'Case ID'}</strong>,
       width: 130,
       options: {
         filter: true,
@@ -54,17 +54,45 @@ function SavedCases({ savedCases, deleteBookmark }) {
         </>
       ),
     },
-    { field: 'court_type', headerName: 'Court Type', width: 105 },
-    { field: 'nation_of_origin', headerName: 'Nation of Origin', width: 130 },
-    { field: 'protected_ground', headerName: 'Protected Ground', width: 150 },
-    { field: 'application_type ', headerName: 'Application Type ', width: 130 },
-    { field: 'judge', headerName: 'Judge', width: 120 },
-    { field: 'case_outcome', headerName: 'Decision', width: 90 },
-    { field: 'case_status', headerName: 'Case Status', width: 110 },
+    {
+      field: 'court_type',
+      renderHeader: params => <strong>{'Court Type'}</strong>,
+      width: 125,
+    },
+    {
+      field: 'nation_of_origin',
+      renderHeader: params => <strong>{'Nation Of Origin'}</strong>,
+      width: 170,
+    },
+    {
+      field: 'protected_ground',
+      renderHeader: params => <strong>{'Protected Ground'}</strong>,
+      width: 180,
+    },
+    {
+      field: 'application_type ',
+      renderHeader: params => <strong>{'Application Type'}</strong>,
+      width: 175,
+    },
+    {
+      field: 'judge',
+      renderHeader: params => <strong>{'Judge'}</strong>,
+      width: 120,
+    },
+    {
+      field: 'case_outcome',
+      renderHeader: params => <strong>{'Decision'}</strong>,
+      width: 115,
+    },
+    {
+      field: 'case_status',
+      renderHeader: params => <strong>{'Case Status'}</strong>,
+      width: 140,
+    },
 
     {
       field: 'download',
-      headerName: 'Download',
+      renderHeader: params => <strong>{'Download'}</strong>,
       width: 120,
       renderCell: params => (
         <div>
@@ -85,7 +113,7 @@ function SavedCases({ savedCases, deleteBookmark }) {
     },
     {
       field: 'remove_case',
-      headerName: 'Remove',
+      renderHeader: params => <strong>{'Remove'}</strong>,
       width: 110,
       renderCell: params => (
         <IconButton>
