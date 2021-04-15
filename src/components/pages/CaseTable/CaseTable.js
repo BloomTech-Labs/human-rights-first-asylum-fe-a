@@ -661,7 +661,7 @@ export default function CaseTable(props) {
           {drawerContent()}
         </Drawer>
       </div>
-      <div classname={classes.datagrid} style={{ color: '#215589' }}>
+      <div className={classes.datagrid} style={{ color: '#215589' }}>
         <DataGrid
           rows={searching ? filter(caseData) : caseData}
           columns={columns}
