@@ -26,7 +26,7 @@ import './CaseTable.css';
 import { Drawer } from '@material-ui/core';
 import Chip from '@material-ui/core/Chip';
 
-import PDFOverviewButton from './PDF Overview Export/PDFOverviewButton';
+import PDFExportButton from './PDFOverviewExport/PDFExportButton';
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -637,7 +637,7 @@ export default function CaseTable(props) {
           </div>
         )}
         <div>
-          <PDFOverviewButton caseData={caseData} />
+          <PDFExportButton caseData={caseData} />
         </div>
         <Drawer
           anchor="right"
