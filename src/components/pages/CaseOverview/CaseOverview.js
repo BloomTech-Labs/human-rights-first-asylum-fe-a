@@ -21,6 +21,7 @@ const CaseOverview = props => {
           },
         })
         .then(res => {
+          console.log(res.data, 'RESSSS');
           setCaseData(res.data);
           setLoading(false);
         })
@@ -48,7 +49,6 @@ const CaseOverview = props => {
           </p>
           <p> Case ID: {caseData.case_id}</p>
           <p>Date: {caseData.hearing_date}</p>
-          <p>Location: {caseData.case_origin}</p>
           <p>
             Judge:
             <Link
@@ -58,20 +58,30 @@ const CaseOverview = props => {
               {caseData.judge_name}
             </Link>
           </p>
-          <p>Court Type: {caseData.court_type}</p>
+          <p>
+            Initial Hearing: {caseData.initial_or_appellate ? 'True' : 'False'}
+          </p>
+          <p>Case Origin: {caseData.case_origin}</p>
+          <p>
+            Filed 1 Year:{' '}
+            {caseData.case_filed_within_one_year ? 'True' : 'False'}
+          </p>
+
           <br />
           <p style={{ textDecoration: 'underline', fontWeight: 'bold' }}>
             Client Specifics
           </p>
-          <p>Origin: {caseData.nation_of_origin}</p>
-          <p>Application Type: {caseData.application_type}</p>
-          <p>Protected Grounds:{caseData.protected_ground}</p>
-          <p>Credibility: {caseData.credibility}</p>
+
+          <p>Nation of Origin: {caseData.nation_of_origin}</p>
+          <p>
+            Protected Grounds: {caseData.protected_ground ? 'True' : 'False'}
+          </p>
+          <p>Applicant Gender: {caseData.applicant_gender}</p>
+          <p>Violence Experienced: {caseData.type_of_violence_experienced}</p>
           <br />
           <p style={{ textDecoration: 'underline', fontWeight: 'bold' }}>
             Results
           </p>
-          <p>Decision Date: {caseData.decision_date}</p>
           <p>Case Outcome: {caseData.case_outcome}</p>
           <br />
         </Skeleton>
