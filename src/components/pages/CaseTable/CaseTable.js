@@ -34,6 +34,7 @@ const useStyles = makeStyles(theme => ({
   tbl_container: {
     display: 'flex',
     flexDirection: 'column',
+    justifyContent: 'center',
     width: '57%',
     margin: 'auto',
     marginTop: 100,
@@ -119,13 +120,13 @@ const useStyles = makeStyles(theme => ({
 
   toolbar: {
     padding: '1rem',
+    overflow: 'hidden',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
     borderRadius: '6px',
     width: '100%',
-    color: 'black',
     '&:hover': {
       cursor: 'pointer',
     },
@@ -510,9 +511,13 @@ export default function CaseTable(props) {
             }}
           >
             <Button
-              style={{ background: '#3f51b5', color: '#fff' }}
+              style={{
+                background: '#215589',
+                color: '#fff',
+                textTransform: 'uppercase',
+              }}
               type="default"
-              icon={<SearchOutlined />}
+              icon={<SearchOutlined style={{ color: '#fff' }} />}
             >
               Search
             </Button>
@@ -525,23 +530,36 @@ export default function CaseTable(props) {
             }}
           >
             <Button
-              style={{ background: '#3f51b5', color: '#fff' }}
+              style={{
+                background: '#215589',
+                color: '#fff',
+                textTransform: 'uppercase',
+              }}
               type="default"
-              icon={<SaveOutlined />}
+              icon={<SaveOutlined style={{ color: '#fff' }} />}
             >
               Save Cases
             </Button>
           </div>
 
           <Button
-            style={{ background: '#3f51b5', color: '#fff' }}
+            style={{
+              background: '#215589',
+              color: '#fff',
+              textTransform: 'uppercase',
+            }}
             type="default"
-            icon={<DownloadOutlined />}
+            icon={<DownloadOutlined style={{ color: '#fff' }} />}
           >
             Download All Selected
           </Button>
 
-          <div>
+          <div
+            style={{
+              WebkitTextFillColor: '#215589',
+              WebkitMarginStart: '1rem',
+            }}
+          >
             <GridColumnsToolbarButton />
             <GridDensitySelector />
             <GridToolbarExport />
