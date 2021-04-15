@@ -21,8 +21,6 @@ import RateReviewIcon from '@material-ui/icons/RateReview';
 import AccountIcon from '@material-ui/icons/AccountCircle';
 import HelpIcon from '@material-ui/icons/Help';
 import { Link } from 'react-router-dom';
-import Hidden from '@material-ui/core/Hidden';
-
 import { SideDrawerData } from './SideDrawerData';
 
 const drawerWidth = 225;
@@ -114,8 +112,8 @@ export default function SideDrawer(props) {
     window.addEventListener(
       'resize',
       () => {
-        const mobile = window.innerWidth < 769;
-        if (mobile !== mobile) {
+        const mobileBreakpoint = window.innerWidth < 769;
+        if (mobileBreakpoint !== mobile) {
           setMobile(mobile);
         }
       },
