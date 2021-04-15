@@ -8,7 +8,6 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(theme => ({
   root: {
     position: 'fixed',
-    zIndex: '999',
     height: '2em',
     width: '2em',
     overflow: 'show',

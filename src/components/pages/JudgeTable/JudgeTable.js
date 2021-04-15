@@ -1,23 +1,37 @@
 import React, { useState } from 'react';
 import {
   DataGrid,
-  GridToolbarContainer,
   GridColumnsToolbarButton,
   GridToolbarExport,
   GridDensitySelector,
 } from '@material-ui/data-grid';
-import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
-import SearchIcon from '@material-ui/icons/Search';
 import { Drawer } from '@material-ui/core';
 import Chip from '@material-ui/core/Chip';
-import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
+
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+
+import {
+  SearchOutlined,
+  SaveOutlined,
+  DownloadOutlined,
+  CloseCircleOutlined,
+} from '@ant-design/icons';
+import { Button, Menu, Input } from 'antd';
 
 const useStyles = makeStyles(theme => ({
   grid: {
     marginTop: 15,
+  },
+  judgeTbl: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    width: '90%',
+    minHeight: '90vh',
+    height: '100%',
+    margin: '5rem',
   },
   tbl_container: {
     display: 'flex',
@@ -55,11 +69,31 @@ const useStyles = makeStyles(theme => ({
   chips: {
     display: 'flex',
   },
+  close: {
+    textAlign: 'right',
+    padding: '1%',
+    margin: 'auto 2% auto auto',
+    transform: 'scale(1.2)',
+    '&:hover': {
+      curser: 'pointer',
+      transform: 'scale(1.4)',
+    },
+  },
+  toolbar_options: {
+    borderRadius: '6px',
+    padding: '0.5rem',
+    display: 'flex',
+    alignItems: 'center',
+  },
   toolbar: {
+    padding: '1rem',
+    overflow: 'hidden',
     display: 'flex',
     flexDirection: 'row',
-    margin: '5px',
-    color: 'darkblue',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    borderRadius: '6px',
+    width: '100%',
     '&:hover': {
       cursor: 'pointer',
     },
@@ -70,29 +104,55 @@ export default function JudgeTable(props) {
   const { judgeData, userInfo, savedJudges, setSavedJudges, authState } = props;
   const [selectedRows, setSelectedRows] = useState({});
 
+  // caseTable has a const pdfData function... should this be implemented in here?
+
   const columns = [
     {
       field: 'name',
-      headerName: 'Judge',
+      renderHeader: params => <strong>{'Judge'}</strong>,
       width: 170,
-      color: 'navy',
+      className: 'tableHeader',
+      options: {
+        filter: true,
+      },
       //Link to individual judge page
+
       renderCell: params => (
         <>
           <Link
             to={`/judge/${params.value.split(' ').join('%20')}`}
             style={{ color: '#215589' }}
           >
-            {params.value}
+            <span>{params.value}</span>
           </Link>
         </>
       ),
     },
-    { field: 'judge_county', headerName: 'Case Origin', width: 160 },
-    { field: 'date_appointed', headerName: 'Date Appointed', width: 140 },
-    { field: 'appointed_by', headerName: 'Appointed by', width: 160 },
-    { field: 'denial_rate', headerName: '% Denial', width: 110 },
-    { field: 'approval_rate', headerName: '% Approval', width: 110 },
+    {
+      field: 'judge_county',
+      renderHeader: params => <strong>{'Case Origin'}</strong>,
+      width: 160,
+    },
+    {
+      field: 'date_appointed',
+      renderHeader: params => <strong>{'Date Appointed'}</strong>,
+      width: 160,
+    },
+    {
+      field: 'appointed_by',
+      renderHeader: params => <strong>{'Appointed By'}</strong>,
+      width: 160,
+    },
+    {
+      field: 'denial_rate',
+      renderHeader: params => <strong>{'% Denial'}</strong>,
+      width: 110,
+    },
+    {
+      field: 'approval_rate',
+      renderHeader: params => <strong>{'% Approval'}</strong>,
+      width: 130,
+    },
   ];
 
   judgeData.forEach((item, idx) => {
@@ -138,13 +198,13 @@ export default function JudgeTable(props) {
         rowToPost,
         {
           headers: {
-            Authorization: 'Bearer ' + authState.idToken,
+            Authorization: 'Bearer ' + authState.idToken.idToken,
           },
         }
       )
       .then(res => {
         let justAdded = res.data.judge_bookmarks.slice(-1);
-        let justAddedName = justAdded[0].judge;
+        let justAddedName = justAdded[0].name;
         let wholeAddedRow = findRowByJudgeName(justAddedName, judgeData);
         console.log(wholeAddedRow);
         let reformattedJudge = {
@@ -190,29 +250,69 @@ export default function JudgeTable(props) {
 
   const Toolbar = () => {
     return (
-      <GridToolbarContainer>
-        <div
-          className={classes.toolbar}
-          onClick={() => {
-            toggleSearch();
-          }}
-        >
-          <SearchIcon />
-          <p>SEARCH</p>
+      <Menu>
+        <div className={classes.toolbar}>
+          <div
+            className={classes.toolbar_options}
+            onClick={() => {
+              toggleSearch();
+            }}
+          >
+            <Button
+              style={{
+                background: '#215589',
+                color: '#fff',
+                textTransform: 'uppercase',
+              }}
+              type="default"
+              icon={<SearchOutlined style={{ color: '#fff' }} />}
+            >
+              Search
+            </Button>
+          </div>
+          <div
+            className={classes.toolbar_options}
+            onClick={() => {
+              bookmarkJudges(selectedRows);
+            }}
+          >
+            <Button
+              style={{
+                background: '#215589',
+                color: '#fff',
+                textTransform: 'uppercase',
+              }}
+              type="default"
+              icon={<SaveOutlined style={{ color: '#fff' }} />}
+            >
+              Save Judges
+            </Button>
+          </div>
+
+          <Button
+            style={{
+              background: '#215589',
+              color: '#fff',
+              textTransform: 'uppercase',
+            }}
+            type="default"
+            icon={<DownloadOutlined style={{ color: '#fff' }} />}
+          >
+            Download All Selected
+          </Button>
+
+          <div
+            style={{
+              WebkitTextFillColor: '#215589',
+              WebkitMarginStart: '1rem',
+            }}
+          >
+            <GridColumnsToolbarButton />
+            <GridDensitySelector />
+            <GridToolbarExport />
+          </div>
         </div>
-        <div
-          className={classes.toolbar}
-          onClick={() => {
-            bookmarkJudges(selectedRows);
-          }}
-        >
-          <BookmarkBorderIcon />
-          <p>SAVE JUDGES</p>
-        </div>
-        <GridColumnsToolbarButton />
-        <GridDensitySelector />
-        <GridToolbarExport />
-      </GridToolbarContainer>
+      </Menu>
     );
   };
 
@@ -268,14 +368,20 @@ export default function JudgeTable(props) {
   const drawerContent = () => {
     return (
       <div className={classes.drawer}>
+        <CloseCircleOutlined
+          style={{ marginLeft: '85%' }}
+          onClick={() => {
+            toggleSearch();
+          }}
+        />
         {searchOptions.map(value => {
           return (
             <div key={value.id}>
               <p style={{ marginLeft: '15%' }}>{value.label}</p>
-              <TextField
+              <Input
                 placeholder={'search query'}
                 variant="outlined"
-                size="small"
+                size="large"
                 value={queryValues[value.id]}
                 onChange={e => {
                   setQueryValues({
@@ -285,7 +391,7 @@ export default function JudgeTable(props) {
                   setSearching(true);
                 }}
                 type="text"
-                style={{ marginLeft: '15%', marginBottom: 10 }}
+                style={{ marginLeft: '15%', marginBottom: 10, marginTop: 10 }}
               />
             </div>
           );
@@ -329,17 +435,19 @@ export default function JudgeTable(props) {
           {drawerContent()}
         </Drawer>
       </div>
-      <DataGrid
-        rows={searching ? filter(judgeData) : judgeData}
-        columns={columns}
-        className={classes.grid}
-        autoHeight={true}
-        loading={judgeData ? false : true}
-        checkboxSelection={true}
-        onSelectionModelChange={onCheckboxSelect}
-        showCellRightBorder={true}
-        components={{ Toolbar: Toolbar }}
-      />
+      <div>
+        <DataGrid
+          rows={searching ? filter(judgeData) : judgeData}
+          columns={columns}
+          className={classes.judgeTbl}
+          autoHeight={true}
+          loading={judgeData ? false : true}
+          checkboxSelection={true}
+          onSelectionModelChange={onCheckboxSelect}
+          showCellRightBorder={true}
+          components={{ Toolbar: Toolbar }}
+        />
+      </div>
     </div>
   );
 }
