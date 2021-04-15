@@ -148,10 +148,7 @@ export default function SideDrawer(props) {
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
-            className={`${mobile} ? "mobileClass" : ${clsx(
-              classes.menuButton,
-              open && classes.hide
-            )}`}
+            className={clsx(classes.menuButton, open && classes.hide)}
           >
             <MenuIcon />
           </IconButton>
@@ -162,7 +159,7 @@ export default function SideDrawer(props) {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Hidden smDown={true}>
+      <Hidden sm={mobile}>
         <Drawer
           className={classes.drawer}
           variant="persistent"
