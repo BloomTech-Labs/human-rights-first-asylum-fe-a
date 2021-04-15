@@ -30,7 +30,6 @@ const drawerWidth = 225;
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
-    zIndex: '99999',
   },
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
@@ -182,8 +181,8 @@ export default function SideDrawer(props) {
           <List>
             {/* Maps through each item in SideDrawerData creating a nav item in the shape of the ones below the divider */}
             {SideDrawerData.map(item => (
-              <Link to={item.path}>
-                <ListItem button key={item.title}>
+              <Link to={item.path} key={item.title}>
+                <ListItem button>
                   <ListItemIcon>{item.icon}</ListItemIcon>
                   <ListItemText primary={item.title} style={textItemStyles} />
                 </ListItem>
