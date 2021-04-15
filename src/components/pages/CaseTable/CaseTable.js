@@ -430,7 +430,12 @@ export default function CaseTable(props) {
       searchedKeys.forEach(([k, v]) => {
         // if the stringified value at row[key] includes the searched-for value,
         // then we'll push the key to our matchedHits
-        if (row[k].toString().includes(v.toString())) {
+        if (
+          row[k]
+            .toString()
+            .toLowerCase()
+            .includes(v.toString().toLowerCase())
+        ) {
           matchedHits.push(k);
         }
       });
@@ -499,7 +504,7 @@ export default function CaseTable(props) {
     );
   };
 
-  const Toolbar = () => {
+  const CustomToolbar = () => {
     return (
       <Menu>
         <div className={classes.toolbar}>
@@ -667,10 +672,10 @@ export default function CaseTable(props) {
           className={classes.grid}
           loading={caseData ? false : true}
           checkboxSelection={true}
-          onSelectionModelChange={onCheckboxSelect}
           showCellRightBorder={true}
+          pageSize={25}
           disableColumnMenu={true}
-          components={{ Toolbar: Toolbar }}
+          components={{ Toolbar: CustomToolbar }}
         />
       </div>
     </div>
