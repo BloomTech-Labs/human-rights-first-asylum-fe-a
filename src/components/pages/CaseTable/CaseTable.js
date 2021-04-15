@@ -72,7 +72,6 @@ const useStyles = makeStyles(theme => ({
     top: '220px',
     right: 95,
     background: 'white',
-    zIndex: 100,
     borderRadius: '10px',
   },
   filterButton: {
