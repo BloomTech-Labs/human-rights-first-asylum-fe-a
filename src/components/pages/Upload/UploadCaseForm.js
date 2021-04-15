@@ -71,7 +71,7 @@ const UploadCaseForm = props => {
     });
   };
 
-  const admin = window.localStorage.getItem('Admin');
+  const role = window.localStorage.getItem('role');
 
   const { handleSubmit } = useForm();
 
@@ -299,7 +299,7 @@ const UploadCaseForm = props => {
               <FormHelperText></FormHelperText>
             </FormControl>
 
-            {admin === 'false' ? (
+            {role === 'user' ? (
               <>
                 <div className="submit-button">
                   <Button

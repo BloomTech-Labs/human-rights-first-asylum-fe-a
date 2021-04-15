@@ -24,10 +24,7 @@ const AccountPage = props => {
         <strong>Email:</strong> {oktaUserInfo.email}
       </p>
       <p>
-        <strong>Okta name:</strong> {oktaUserInfo.name}
-      </p>
-      <p>
-        <strong>HRF name:</strong> {hrfUserInfo.name}
+        <strong>Name:</strong> {hrfUserInfo.name}
       </p>
       <p>
         <strong>Date joined:</strong>{' '}
@@ -36,15 +33,9 @@ const AccountPage = props => {
       <p>
         <strong>Location:</strong> {oktaUserInfo.zoneinfo}
       </p>
-      {hrfUserInfo.is_admin === true ? (
-        <p>
-          <strong>Role:</strong> Admin
-        </p>
-      ) : (
-        <p>
-          <strong>Role:</strong> User
-        </p>
-      )}
+      <p>
+        <strong>Role:</strong> {hrfUserInfo.role}
+      </p>
     </div>
   );
 };
