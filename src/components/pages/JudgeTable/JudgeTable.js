@@ -9,10 +9,15 @@ import { Drawer } from '@material-ui/core';
 import Chip from '@material-ui/core/Chip';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
+
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-import { SearchOutlined, SaveOutlined } from '@ant-design/icons';
+import {
+  SearchOutlined,
+  SaveOutlined,
+  DownloadOutlined,
+} from '@ant-design/icons';
 import { Button, Menu } from 'antd';
 
 const useStyles = makeStyles(theme => ({
@@ -63,13 +68,13 @@ const useStyles = makeStyles(theme => ({
   },
   toolbar: {
     padding: '1rem',
+    overflow: 'hidden',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
     borderRadius: '6px',
     width: '100%',
-    color: 'darkblue',
     '&:hover': {
       cursor: 'pointer',
     },
@@ -229,9 +234,13 @@ export default function JudgeTable(props) {
             }}
           >
             <Button
-              style={{ background: '#3f51b5', color: '#fff' }}
+              style={{
+                background: '#215589',
+                color: '#fff',
+                textTransform: 'uppercase',
+              }}
               type="default"
-              icon={<SearchOutlined />}
+              icon={<SearchOutlined style={{ color: '#fff' }} />}
             >
               Search
             </Button>
@@ -243,14 +252,36 @@ export default function JudgeTable(props) {
             }}
           >
             <Button
-              style={{ background: '#3f51b5', color: '#fff' }}
+              style={{
+                background: '#215589',
+                color: '#fff',
+                textTransform: 'uppercase',
+              }}
               type="default"
-              icon={<SaveOutlined />}
+              icon={<SaveOutlined style={{ color: '#fff' }} />}
             >
               Save Judges
             </Button>
           </div>
-          <div>
+
+          <Button
+            style={{
+              background: '#215589',
+              color: '#fff',
+              textTransform: 'uppercase',
+            }}
+            type="default"
+            icon={<DownloadOutlined style={{ color: '#fff' }} />}
+          >
+            Download All Selected
+          </Button>
+
+          <div
+            style={{
+              WebkitTextFillColor: '#215589',
+              WebkitMarginStart: '1rem',
+            }}
+          >
             <GridColumnsToolbarButton />
             <GridDensitySelector />
             <GridToolbarExport />
