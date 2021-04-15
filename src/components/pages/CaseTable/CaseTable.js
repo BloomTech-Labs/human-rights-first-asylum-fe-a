@@ -430,7 +430,12 @@ export default function CaseTable(props) {
       searchedKeys.forEach(([k, v]) => {
         // if the stringified value at row[key] includes the searched-for value,
         // then we'll push the key to our matchedHits
-        if (row[k].toString().includes(v.toString())) {
+        if (
+          row[k]
+            .toString()
+            .toLowerCase()
+            .includes(v.toString().toLowerCase())
+        ) {
           matchedHits.push(k);
         }
       });
