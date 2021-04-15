@@ -15,7 +15,6 @@ import { Link } from 'react-router-dom';
 import {
   SearchOutlined,
   SaveOutlined,
-  DownloadOutlined,
   CloseCircleOutlined,
 } from '@ant-design/icons';
 import { Button, Menu, Input } from 'antd';
@@ -54,13 +53,6 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     width: '15%',
-  },
-  pdfView: {
-    width: '100%',
-    height: '500px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   drawer: {
     width: 300,
@@ -103,8 +95,6 @@ const useStyles = makeStyles(theme => ({
 export default function JudgeTable(props) {
   const { judgeData, userInfo, savedJudges, setSavedJudges, authState } = props;
   const [selectedRows, setSelectedRows] = useState({});
-
-  // caseTable has a const pdfData function... should this be implemented in here?
 
   const columns = [
     {
@@ -164,8 +154,7 @@ export default function JudgeTable(props) {
   const findRowByID = (rowID, rowData) => {
     for (let i = 0; i < rowData.length; i++) {
       let currentRow = rowData[i];
-      // eslint-disable-next-line
-      if (currentRow.id == rowID) {
+      if (currentRow.id === rowID) {
         return currentRow;
       }
     }
@@ -183,8 +172,7 @@ export default function JudgeTable(props) {
   };
 
   const formatJudgeName = name => {
-    // eslint-disable-next-line
-    if (name != undefined || name != null) {
+    if (name !== undefined || name != null) {
       return name.split(' ').join('%20');
     }
   };
@@ -288,18 +276,6 @@ export default function JudgeTable(props) {
               Save Judges
             </Button>
           </div>
-
-          <Button
-            style={{
-              background: '#215589',
-              color: '#fff',
-              textTransform: 'uppercase',
-            }}
-            type="default"
-            icon={<DownloadOutlined style={{ color: '#fff' }} />}
-          >
-            Download All Selected
-          </Button>
 
           <div
             style={{
