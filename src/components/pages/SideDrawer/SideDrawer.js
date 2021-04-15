@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -45,6 +45,7 @@ const useStyles = makeStyles(theme => ({
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth,
+
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
@@ -53,12 +54,12 @@ const useStyles = makeStyles(theme => ({
   menuButton: {
     padding: '.2rem',
     marginRight: theme.spacing(2),
-    [theme.breakpoints.down('sm')]: {
-      display: 'none',
-    },
   },
   hide: {
     display: 'none',
+  },
+  mobileClass: {
+    display: 'block',
   },
   drawer: {
     [theme.breakpoints.down('sm')]: {
@@ -104,10 +105,24 @@ const useStyles = makeStyles(theme => ({
 export default function SideDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = useState(true);
+  const [mobile, setMobile] = useState(window.innerWidth < 769);
   const { logout } = props;
 
   const admin = window.localStorage.getItem('Admin');
+
+  useEffect(() => {
+    window.addEventListener(
+      'resize',
+      () => {
+        const mobile = window.innerWidth < 769;
+        if (mobile !== mobile) {
+          setMobile(mobile);
+        }
+      },
+      false
+    );
+  }, [mobile]);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -121,7 +136,7 @@ export default function SideDrawer(props) {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
-        elevation="0"
+        elevation={0}
         position="fixed"
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
@@ -133,7 +148,10 @@ export default function SideDrawer(props) {
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
+            className={`${mobile} ? "mobileClass" : ${clsx(
+              classes.menuButton,
+              open && classes.hide
+            )}`}
           >
             <MenuIcon />
           </IconButton>
@@ -144,7 +162,7 @@ export default function SideDrawer(props) {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Hidden smDown="true">
+      <Hidden smDown={true}>
         <Drawer
           className={classes.drawer}
           variant="persistent"
