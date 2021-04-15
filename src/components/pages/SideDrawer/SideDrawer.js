@@ -20,6 +20,7 @@ import HRFlogo from './HRFlogo.png';
 import RateReviewIcon from '@material-ui/icons/RateReview';
 import AccountIcon from '@material-ui/icons/AccountCircle';
 import HelpIcon from '@material-ui/icons/Help';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import { Link } from 'react-router-dom';
 import { SideDrawerData } from './SideDrawerData';
 
@@ -106,14 +107,14 @@ export default function SideDrawer(props) {
   const [mobile, setMobile] = useState(window.innerWidth < 769);
   const { logout } = props;
 
-  const admin = window.localStorage.getItem('Admin');
+  const role = window.localStorage.getItem('role');
 
   useEffect(() => {
     window.addEventListener(
       'resize',
       () => {
-        const mobileBreakpoint = window.innerWidth < 769;
-        if (mobileBreakpoint !== mobile) {
+        const mobile = window.innerWidth < 769;
+        if (mobile !== mobile) {
           setMobile(mobile);
         }
       },
@@ -156,7 +157,6 @@ export default function SideDrawer(props) {
           </Typography>
         </Toolbar>
       </AppBar>
-      {/* <Hidden smUp={mobile}> */}
       <Drawer
         className={classes.drawer}
         variant="persistent"
@@ -190,17 +190,27 @@ export default function SideDrawer(props) {
         <Divider />
         <List>
           {/* Checking if user is an admin before rendering the nav item */}
-          {admin === 'true' ? (
-            <Link to="/manage-cases">
-              <ListItem button>
-                <ListItemIcon>
-                  <RateReviewIcon />
-                </ListItemIcon>
-                <ListItemText primary="Review Cases" style={textItemStyles} />
-              </ListItem>
-            </Link>
+          {role === 'admin' ? (
+            <>
+              <Link to="/manage-cases">
+                <ListItem button>
+                  <ListItemIcon>
+                    <RateReviewIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Review Cases" style={textItemStyles} />
+                </ListItem>
+              </Link>
+              <Link to="/add-users">
+                <ListItem button>
+                  <ListItemIcon>
+                    <PersonAddIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Invite Users" style={textItemStyles} />
+                </ListItem>
+              </Link>
+            </>
           ) : null}
-          {/* Link needs to be wrapped around the whole button to allow the whole button to be used to direct the user */}
+          {/* Link needs to be wrapped around the whole button to allow the whole button to be used to direct he user */}
           <Link to="/account">
             <ListItem button>
               <ListItemIcon>
@@ -225,7 +235,6 @@ export default function SideDrawer(props) {
           </ListItem>
         </List>
       </Drawer>
-      {/* </Hidden> */}
       <main
         className={clsx(classes.content, {
           [classes.contentShift]: open,
