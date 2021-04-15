@@ -1,19 +1,24 @@
 import React, { useState } from 'react';
 import {
   DataGrid,
-  GridToolbarContainer,
   GridColumnsToolbarButton,
   GridToolbarExport,
   GridDensitySelector,
 } from '@material-ui/data-grid';
-import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
-import SearchIcon from '@material-ui/icons/Search';
 import { Drawer } from '@material-ui/core';
 import Chip from '@material-ui/core/Chip';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
+
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+
+import {
+  SearchOutlined,
+  SaveOutlined,
+  DownloadOutlined,
+} from '@ant-design/icons';
+import { Button, Menu } from 'antd';
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -55,11 +60,21 @@ const useStyles = makeStyles(theme => ({
   chips: {
     display: 'flex',
   },
+  toolbar_options: {
+    borderRadius: '6px',
+    padding: '0.5rem',
+    display: 'flex',
+    alignItems: 'center',
+  },
   toolbar: {
+    padding: '1rem',
+    overflow: 'hidden',
     display: 'flex',
     flexDirection: 'row',
-    margin: '5px',
-    color: 'darkblue',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    borderRadius: '6px',
+    width: '100%',
     '&:hover': {
       cursor: 'pointer',
     },
@@ -210,29 +225,69 @@ export default function JudgeTable(props) {
 
   const Toolbar = () => {
     return (
-      <GridToolbarContainer>
-        <div
-          className={classes.toolbar}
-          onClick={() => {
-            toggleSearch();
-          }}
-        >
-          <SearchIcon />
-          <p>SEARCH</p>
+      <Menu>
+        <div className={classes.toolbar}>
+          <div
+            className={classes.toolbar_options}
+            onClick={() => {
+              toggleSearch();
+            }}
+          >
+            <Button
+              style={{
+                background: '#215589',
+                color: '#fff',
+                textTransform: 'uppercase',
+              }}
+              type="default"
+              icon={<SearchOutlined style={{ color: '#fff' }} />}
+            >
+              Search
+            </Button>
+          </div>
+          <div
+            className={classes.toolbar_options}
+            onClick={() => {
+              bookmarkJudges(selectedRows);
+            }}
+          >
+            <Button
+              style={{
+                background: '#215589',
+                color: '#fff',
+                textTransform: 'uppercase',
+              }}
+              type="default"
+              icon={<SaveOutlined style={{ color: '#fff' }} />}
+            >
+              Save Judges
+            </Button>
+          </div>
+
+          <Button
+            style={{
+              background: '#215589',
+              color: '#fff',
+              textTransform: 'uppercase',
+            }}
+            type="default"
+            icon={<DownloadOutlined style={{ color: '#fff' }} />}
+          >
+            Download All Selected
+          </Button>
+
+          <div
+            style={{
+              WebkitTextFillColor: '#215589',
+              WebkitMarginStart: '1rem',
+            }}
+          >
+            <GridColumnsToolbarButton />
+            <GridDensitySelector />
+            <GridToolbarExport />
+          </div>
         </div>
-        <div
-          className={classes.toolbar}
-          onClick={() => {
-            bookmarkJudges(selectedRows);
-          }}
-        >
-          <BookmarkBorderIcon />
-          <p>SAVE JUDGES</p>
-        </div>
-        <GridColumnsToolbarButton />
-        <GridDensitySelector />
-        <GridToolbarExport />
-      </GridToolbarContainer>
+      </Menu>
     );
   };
 

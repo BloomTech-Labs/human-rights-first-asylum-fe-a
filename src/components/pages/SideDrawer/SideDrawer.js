@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -22,6 +22,7 @@ import AccountIcon from '@material-ui/icons/AccountCircle';
 import HelpIcon from '@material-ui/icons/Help';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import { Link } from 'react-router-dom';
+import Hidden from '@material-ui/core/Hidden';
 
 import { SideDrawerData } from './SideDrawerData';
 
@@ -30,7 +31,6 @@ const drawerWidth = 225;
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
-    zIndex: '99999',
   },
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
@@ -38,25 +38,34 @@ const useStyles = makeStyles(theme => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     backgroundColor: 'white',
-    color: 'navy',
+    borderBottom: '1px solid #d9d9d9',
+    color: '#215589',
+    padding: '1px',
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth,
+
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
   menuButton: {
+    padding: '.2rem',
     marginRight: theme.spacing(2),
   },
   hide: {
     display: 'none',
   },
+  mobileClass: {
+    display: 'block',
+  },
   drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
+    [theme.breakpoints.down('sm')]: {
+      width: drawerWidth,
+      flexShrink: 0,
+    },
   },
   drawerPaper: {
     width: drawerWidth,
@@ -64,7 +73,7 @@ const useStyles = makeStyles(theme => ({
   drawerHeader: {
     display: 'flex',
     alignItems: 'center',
-    padding: theme.spacing(0, 1),
+    padding: theme.spacing(2, 1),
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
@@ -86,17 +95,34 @@ const useStyles = makeStyles(theme => ({
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
-    marginLeft: 0,
+    marginLeft: drawerWidth,
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: 0,
+    },
   },
 }));
 
 export default function SideDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = useState(true);
+  const [mobile, setMobile] = useState(window.innerWidth < 769);
   const { logout } = props;
 
   const role = window.localStorage.getItem('role');
+
+  useEffect(() => {
+    window.addEventListener(
+      'resize',
+      () => {
+        const mobile = window.innerWidth < 769;
+        if (mobile !== mobile) {
+          setMobile(mobile);
+        }
+      },
+      false
+    );
+  }, [mobile]);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -110,6 +136,7 @@ export default function SideDrawer(props) {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
+        elevation={0}
         position="fixed"
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
@@ -132,84 +159,92 @@ export default function SideDrawer(props) {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant="persistent"
-        anchor="left"
-        open={open}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
-          </IconButton>
-        </div>
-        <Divider />
-        <List>
-          {/* Maps through each item in SideDrawerData creating a nav item in the shape of the ones below the divider */}
-          {SideDrawerData.map(item => (
-            <Link to={item.path}>
-              <ListItem button key={item.title}>
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.title} style={textItemStyles} />
+      <Hidden sm={mobile}>
+        <Drawer
+          className={classes.drawer}
+          variant="persistent"
+          anchor="left"
+          open={open}
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+        >
+          <div className={classes.drawerHeader}>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === 'ltr' ? (
+                <ChevronLeftIcon />
+              ) : (
+                <ChevronRightIcon />
+              )}
+            </IconButton>
+          </div>
+          <Divider />
+          <List>
+            {/* Maps through each item in SideDrawerData creating a nav item in the shape of the ones below the divider */}
+            {SideDrawerData.map(item => (
+              <Link to={item.path} key={item.title}>
+                <ListItem button>
+                  <ListItemIcon>{item.icon}</ListItemIcon>
+                  <ListItemText primary={item.title} style={textItemStyles} />
+                </ListItem>
+              </Link>
+            ))}
+          </List>
+          <Divider />
+          <List>
+            {/* Checking if user is an admin before rendering the nav item */}
+            {role === 'admin' ? (
+              <>
+                <Link to="/manage-cases">
+                  <ListItem button>
+                    <ListItemIcon>
+                      <RateReviewIcon />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary="Review Cases"
+                      style={textItemStyles}
+                    />
+                  </ListItem>
+                </Link>
+                <Link to="/add-users">
+                  <ListItem button>
+                    <ListItemIcon>
+                      <PersonAddIcon />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary="Invite Users"
+                      style={textItemStyles}
+                    />
+                  </ListItem>
+                </Link>
+              </>
+            ) : null}
+            {/* Link needs to be wrapped around the whole button to allow the whole button to be used to direct he user */}
+            <Link to="/account">
+              <ListItem button>
+                <ListItemIcon>
+                  <AccountIcon />
+                </ListItemIcon>
+                <ListItemText primary="Account" style={textItemStyles} />
               </ListItem>
             </Link>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {/* Checking if user is an admin before rendering the nav item */}
-          {role === 'admin' ? (
-            <>
-              <Link to="/manage-cases">
-                <ListItem button>
-                  <ListItemIcon>
-                    <RateReviewIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Review Cases" style={textItemStyles} />
-                </ListItem>
-              </Link>
-              <Link to="/add-users">
-                <ListItem button>
-                  <ListItemIcon>
-                    <PersonAddIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Invite Users" style={textItemStyles} />
-                </ListItem>
-              </Link>
-            </>
-          ) : null}
-          {/* Link needs to be wrapped around the whole button to allow the whole button to be used to direct he user */}
-          <Link to="/account">
-            <ListItem button>
+            <Link to="/support">
+              <ListItem button>
+                <ListItemIcon>
+                  <HelpIcon />
+                </ListItemIcon>
+                <ListItemText primary="Support" style={textItemStyles} />
+              </ListItem>
+            </Link>
+            <ListItem button onClick={logout} style={textItemStyles}>
               <ListItemIcon>
-                <AccountIcon />
+                <CloseIcon />
               </ListItemIcon>
-              <ListItemText primary="Account" style={textItemStyles} />
+              <ListItemText primary="Logout" />
             </ListItem>
-          </Link>
-          <Link to="/support">
-            <ListItem button>
-              <ListItemIcon>
-                <HelpIcon />
-              </ListItemIcon>
-              <ListItemText primary="Support" style={textItemStyles} />
-            </ListItem>
-          </Link>
-          <ListItem button onClick={logout}>
-            <ListItemIcon>
-              <CloseIcon />
-            </ListItemIcon>
-            <ListItemText primary="Logout" />
-          </ListItem>
-        </List>
-      </Drawer>
+          </List>
+        </Drawer>
+      </Hidden>
       <main
         className={clsx(classes.content, {
           [classes.contentShift]: open,
@@ -222,5 +257,5 @@ export default function SideDrawer(props) {
 }
 
 const textItemStyles = {
-  color: 'black',
+  color: ' #215589',
 };
