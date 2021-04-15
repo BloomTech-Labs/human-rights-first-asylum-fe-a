@@ -637,7 +637,7 @@ export default function CaseTable(props) {
           </div>
         )}
         <div>
-          <PDFExportButton caseData={caseData} />
+          <PDFExportButton caseData={caseData} viz={<PieChart />} />
         </div>
         <Drawer
           anchor="right"

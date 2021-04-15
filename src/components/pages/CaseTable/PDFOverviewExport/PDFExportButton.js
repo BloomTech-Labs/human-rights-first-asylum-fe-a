@@ -5,7 +5,7 @@ import ExportGenerator from './ExportGenerator.jsx';
 const PDFExportButton = props => (
   <div>
     <PDFDownloadLink
-      document={<ExportGenerator caseData={props.caseData} />}
+      document={<ExportGenerator caseData={props.caseData} viz={props.viz} />}
       fileName="Testing.pdf"
     >
       {({ blob, url, loading, error }) =>

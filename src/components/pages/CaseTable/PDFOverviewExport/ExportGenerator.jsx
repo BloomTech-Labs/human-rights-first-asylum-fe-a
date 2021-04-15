@@ -1,5 +1,13 @@
 import React from 'react';
-import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
+import {
+  Document,
+  Page,
+  Text,
+  Image,
+  View,
+  StyleSheet,
+} from '@react-pdf/renderer';
+import hrfLogo from '../../SideDrawer/HRFlogo.png';
 
 const styles = StyleSheet.create({
   page: {
@@ -9,12 +17,18 @@ const styles = StyleSheet.create({
     display: 'flex',
     marginLeft: 5,
   },
+  logo: {
+    width: '50%',
+    height: 'auto',
+  },
 });
 
 export function MyDoc(props) {
   return (
     <Document>
       <Page style={styles.page}>
+        <Image source={hrfLogo} style={styles.logo} />
+        <Image src={props.viz} />
         <Text> LET THERE BE...PDF!!!</Text>
         {props.caseData.map(item => {
           return (
