@@ -483,7 +483,7 @@ export default function CaseTable(props) {
     );
   };
 
-  const Toolbar = () => {
+  const CustomToolbar = () => {
     return (
       <GridToolbarContainer>
         <div
@@ -608,18 +608,19 @@ export default function CaseTable(props) {
           {drawerContent()}
         </Drawer>
       </div>
-      <DataGrid
-        rows={searching ? filter(caseData) : caseData}
-        columns={columns}
-        className={classes.grid}
-        autoHeight={true}
-        loading={caseData ? false : true}
-        checkboxSelection={true}
-        onSelectionModelChange={onCheckboxSelect}
-        showCellRightBorder={true}
-        disableColumnMenu={true}
-        components={{ Toolbar: Toolbar }}
-      />
+      <div style={{ width: '100%' }}>
+        <DataGrid
+          rows={searching ? filter(caseData) : caseData}
+          columns={columns}
+          autoHeight={true}
+          loading={caseData ? false : true}
+          checkboxSelection={true}
+          pageSize={25}
+          showCellRightBorder={true}
+          disableColumnMenu={true}
+          components={{ Toolbar: CustomToolbar }}
+        />
+      </div>
     </div>
   );
 }
