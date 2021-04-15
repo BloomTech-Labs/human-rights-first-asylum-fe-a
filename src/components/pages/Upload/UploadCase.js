@@ -121,6 +121,11 @@ const UploadCase = props => {
   const onFileChange = e => {
     const dataForm = new FormData();
     dataForm.append('target_file', e.target.files[0]);
+
+    if (e.target.files.length === 0) {
+      return;
+    }
+
     axios
       .post(`${process.env.REACT_APP_API_URI}/upload/`, dataForm)
       .then(res => {
