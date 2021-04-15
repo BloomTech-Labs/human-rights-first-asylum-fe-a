@@ -158,76 +158,76 @@ export default function SideDrawer(props) {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Hidden sm={mobile}>
-        <Drawer
-          className={classes.drawer}
-          variant="persistent"
-          anchor="left"
-          open={open}
-          classes={{
-            paper: classes.drawerPaper,
-          }}
-        >
-          <div className={classes.drawerHeader}>
-            <IconButton onClick={handleDrawerClose}>
-              {theme.direction === 'ltr' ? (
-                <ChevronLeftIcon />
-              ) : (
-                <ChevronRightIcon />
-              )}
-            </IconButton>
-          </div>
-          <Divider />
-          <List>
-            {/* Maps through each item in SideDrawerData creating a nav item in the shape of the ones below the divider */}
-            {SideDrawerData.map(item => (
-              <Link to={item.path} key={item.title}>
-                <ListItem button>
-                  <ListItemIcon>{item.icon}</ListItemIcon>
-                  <ListItemText primary={item.title} style={textItemStyles} />
-                </ListItem>
-              </Link>
-            ))}
-          </List>
-          <Divider />
-          <List>
-            {/* Checking if user is an admin before rendering the nav item */}
-            {admin === 'true' ? (
-              <Link to="/manage-cases">
-                <ListItem button>
-                  <ListItemIcon>
-                    <RateReviewIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Review Cases" style={textItemStyles} />
-                </ListItem>
-              </Link>
-            ) : null}
-            {/* Link needs to be wrapped around the whole button to allow the whole button to be used to direct the user */}
-            <Link to="/account">
+      {/* <Hidden smUp={mobile}> */}
+      <Drawer
+        className={classes.drawer}
+        variant="persistent"
+        anchor="left"
+        open={open}
+        classes={{
+          paper: classes.drawerPaper,
+        }}
+      >
+        <div className={classes.drawerHeader}>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === 'ltr' ? (
+              <ChevronLeftIcon />
+            ) : (
+              <ChevronRightIcon />
+            )}
+          </IconButton>
+        </div>
+        <Divider />
+        <List>
+          {/* Maps through each item in SideDrawerData creating a nav item in the shape of the ones below the divider */}
+          {SideDrawerData.map(item => (
+            <Link to={item.path} key={item.title}>
               <ListItem button>
-                <ListItemIcon>
-                  <AccountIcon />
-                </ListItemIcon>
-                <ListItemText primary="Account" style={textItemStyles} />
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.title} style={textItemStyles} />
               </ListItem>
             </Link>
-            <Link to="/support">
+          ))}
+        </List>
+        <Divider />
+        <List>
+          {/* Checking if user is an admin before rendering the nav item */}
+          {admin === 'true' ? (
+            <Link to="/manage-cases">
               <ListItem button>
                 <ListItemIcon>
-                  <HelpIcon />
+                  <RateReviewIcon />
                 </ListItemIcon>
-                <ListItemText primary="Support" style={textItemStyles} />
+                <ListItemText primary="Review Cases" style={textItemStyles} />
               </ListItem>
             </Link>
-            <ListItem button onClick={logout} style={textItemStyles}>
+          ) : null}
+          {/* Link needs to be wrapped around the whole button to allow the whole button to be used to direct the user */}
+          <Link to="/account">
+            <ListItem button>
               <ListItemIcon>
-                <CloseIcon />
+                <AccountIcon />
               </ListItemIcon>
-              <ListItemText primary="Logout" />
+              <ListItemText primary="Account" style={textItemStyles} />
             </ListItem>
-          </List>
-        </Drawer>
-      </Hidden>
+          </Link>
+          <Link to="/support">
+            <ListItem button>
+              <ListItemIcon>
+                <HelpIcon />
+              </ListItemIcon>
+              <ListItemText primary="Support" style={textItemStyles} />
+            </ListItem>
+          </Link>
+          <ListItem button onClick={logout} style={textItemStyles}>
+            <ListItemIcon>
+              <CloseIcon />
+            </ListItemIcon>
+            <ListItemText primary="Logout" />
+          </ListItem>
+        </List>
+      </Drawer>
+      {/* </Hidden> */}
       <main
         className={clsx(classes.content, {
           [classes.contentShift]: open,
