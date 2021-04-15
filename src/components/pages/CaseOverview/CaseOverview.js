@@ -1,26 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Button } from 'antd';
-import { Card, Switch, Skeleton } from 'antd';
-import {
-  Container,
-  CaseSpecs,
-  ClientSpecs,
-  Results,
-  KeyParagraphBold,
-  KeyParagraph,
-  ValueParagraph,
-} from './CaseOverviewStyled';
+import { Card, Skeleton } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
+import { Container } from './CaseOverviewStyled';
 
 const CaseOverview = props => {
-  const { Meta } = Card;
   const { authState } = props;
   const [caseData, setCaseData] = useState({});
   const [loading, setLoading] = useState(false);
-
+  const history = useHistory();
   const { id } = useParams();
 
   useEffect(() => {
@@ -47,8 +37,16 @@ const CaseOverview = props => {
     <Container>
       {caseData && (
         <>
-          {/* <Switch checked={!loading} /> */}
-          <Card style={{ width: 500 }} actions={[<EditOutlined key="edit" />]}>
+          <Card
+            style={{ width: 500, fontWeight: 'normal' }}
+            actions={[
+              <div
+                onClick={() => history.push(`/case/${caseData.case_id}/update`)}
+              >
+                <EditOutlined key="edit" />
+              </div>,
+            ]}
+          >
             <Skeleton loading={loading}>
               <p style={{ textDecoration: 'underline', fontWeight: 'bold' }}>
                 Case Details
@@ -56,36 +54,33 @@ const CaseOverview = props => {
               <p> Case ID: {caseData.case_id}</p>
               <p>Date: {caseData.hearing_date}</p>
               <p>Location: {caseData.case_origin}</p>
-              <p>Judge: {caseData.judge_name}</p>
+              <p>
+                Judge:
+                <Link
+                  style={{ color: '#215589' }}
+                  to={`/judge/${caseData.judge_name}`}
+                >
+                  {' '}
+                  {caseData.judge_name}
+                </Link>
+              </p>
               <p>Court Type: {caseData.court_type}</p>
-            </Skeleton>
-          </Card>
-
-          <Card
-            style={{ width: 500, fontWeight: 'normal' }}
-            actions={[<EditOutlined key="edit" />]}
-          >
-            <Skeleton loading={loading}>
+              <br />
               <p style={{ textDecoration: 'underline', fontWeight: 'bold' }}>
-                {' '}
                 Client Specifics
               </p>
               <p>Origin: {caseData.nation_of_origin}</p>
               <p>Application Type: {caseData.application_type}</p>
               <p>Protected Grounds:{caseData.protected_ground}</p>
               <p>Credibility: {caseData.credibility}</p>
-            </Skeleton>
-          </Card>
-          <Card
-            style={{ width: 500, fontWeight: 'normal' }}
-            actions={[<EditOutlined key="edit" />]}
-          >
-            <Skeleton loading={loading}>
+              <br />
               <p style={{ textDecoration: 'underline', fontWeight: 'bold' }}>
                 Results
               </p>
               <p>Decision Date: {caseData.decision_date}</p>
               <p>Case Outcome: {caseData.case_outcome}</p>
+              <br />
+              {/* <Button>Edit</Button> */}
             </Skeleton>
           </Card>
         </>
@@ -93,6 +88,7 @@ const CaseOverview = props => {
     </Container>
   );
 };
+
 // These are just styled components see CaseOverviewStyled.js for editing
 {
   /* // <Container> */
