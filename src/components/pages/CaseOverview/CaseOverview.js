@@ -1,21 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Button } from 'antd';
-import {
-  Container,
-  CaseSpecs,
-  ClientSpecs,
-  Results,
-  KeyParagraphBold,
-  KeyParagraph,
-  ValueParagraph,
-} from './CaseOverviewStyled';
+import { Card, Skeleton } from 'antd';
+import { EditOutlined } from '@ant-design/icons';
 
 const CaseOverview = props => {
   const { authState } = props;
-  const [caseData, setCaseData] = useState();
+  const [caseData, setCaseData] = useState({});
+  const [loading, setLoading] = useState(false);
+  const history = useHistory();
   const { id } = useParams();
 
   useEffect(() => {
@@ -27,69 +21,72 @@ const CaseOverview = props => {
           },
         })
         .then(res => {
-          console.log(res.data);
+          console.log(res.data, 'RESSSS');
           setCaseData(res.data);
+          setLoading(false);
         })
         .catch(err => {
           console.log(err);
         });
     }
+    setLoading(true);
     fetchCase();
   }, [id, authState]);
 
   return (
-    // These are just styled components see CaseOverviewStyled.js for editing
-    <Container>
-      {caseData && (
-        <>
-          <CaseSpecs>
-            {/* Link to updateCase page, this page is not yet operational
-            backend endpoints need to be built out to allow page to render & send updates to the database */}
-            <Button
-              type="primary"
-              size="small"
-              padding="15px"
-              onClick={`/case/${caseData.id}/update`}
+    <>
+      <Card
+        style={{ width: 500, fontWeight: 'normal', margin: '10% 15% 0% 22%' }}
+        actions={[
+          <div onClick={() => history.push(`/case/${caseData.case_id}/update`)}>
+            <EditOutlined key="edit" style={{ color: '#215589' }} />
+          </div>,
+        ]}
+      >
+        <Skeleton loading={loading}>
+          <p style={{ textDecoration: 'underline', fontWeight: 'bold' }}>
+            Case Details
+          </p>
+          <p> Case ID: {caseData.case_id}</p>
+          <p>Date: {caseData.hearing_date}</p>
+          <p>
+            Judge:
+            <Link
+              style={{ color: '#215589', marginLeft: '5px' }}
+              to={`/judge/${caseData.judge_name}`}
             >
-              Update this Case
-            </Button>
-            <KeyParagraphBold>Case ID: {caseData.case_id}</KeyParagraphBold>
-            Case Specifics
-            <KeyParagraph>Case Status: {caseData.case_status}</KeyParagraph>
-            <KeyParagraph>Date: {caseData.hearing_date}</KeyParagraph>
-            <KeyParagraph>Location: {caseData.case_origin}</KeyParagraph>
-            <KeyParagraph>
-              Type of Hearing: {caseData.hearing_type}
-            </KeyParagraph>
-            <KeyParagraph>
-              Judge:
-              <Link to={`/judge/${caseData.judge_name}`}>
-                {caseData.judge_name}
-              </Link>
-            </KeyParagraph>
-            <KeyParagraph>Court Type: {caseData.court_type}</KeyParagraph>
-          </CaseSpecs>
-          <ClientSpecs>
+              {caseData.judge_name}
+            </Link>
+          </p>
+          <p>
+            Initial Hearing: {caseData.initial_or_appellate ? 'True' : 'False'}
+          </p>
+          <p>Case Origin: {caseData.case_origin}</p>
+          <p>
+            Filed 1 Year:{' '}
+            {caseData.case_filed_within_one_year ? 'True' : 'False'}
+          </p>
+
+          <br />
+          <p style={{ textDecoration: 'underline', fontWeight: 'bold' }}>
             Client Specifics
-            <ValueParagraph>Origin: {caseData.nation_of_origin}</ValueParagraph>
-            <ValueParagraph>
-              Application Type : {caseData.application_type}
-            </ValueParagraph>
-            <ValueParagraph>
-              Protected Grounds: {caseData.protected_ground}
-            </ValueParagraph>
-            <ValueParagraph>
-              Credibility: {caseData.credibility_of_refugee}
-            </ValueParagraph>
-          </ClientSpecs>
-          <Results>
+          </p>
+
+          <p>Nation of Origin: {caseData.nation_of_origin}</p>
+          <p>
+            Protected Grounds: {caseData.protected_ground ? 'True' : 'False'}
+          </p>
+          <p>Applicant Gender: {caseData.applicant_gender}</p>
+          <p>Violence Experienced: {caseData.type_of_violence_experienced}</p>
+          <br />
+          <p style={{ textDecoration: 'underline', fontWeight: 'bold' }}>
             Results
-            <KeyParagraph>Decision Date: {caseData.decision_date}</KeyParagraph>
-            <KeyParagraph>Case Outcome: {caseData.case_outcome}</KeyParagraph>
-          </Results>
-        </>
-      )}
-    </Container>
+          </p>
+          <p>Case Outcome: {caseData.case_outcome}</p>
+          <br />
+        </Skeleton>
+      </Card>
+    </>
   );
 };
 

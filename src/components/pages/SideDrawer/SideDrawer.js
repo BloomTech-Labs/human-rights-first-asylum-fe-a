@@ -22,8 +22,6 @@ import AccountIcon from '@material-ui/icons/AccountCircle';
 import HelpIcon from '@material-ui/icons/Help';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import { Link } from 'react-router-dom';
-import Hidden from '@material-ui/core/Hidden';
-
 import { SideDrawerData } from './SideDrawerData';
 
 const drawerWidth = 225;
@@ -159,92 +157,84 @@ export default function SideDrawer(props) {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Hidden sm={mobile}>
-        <Drawer
-          className={classes.drawer}
-          variant="persistent"
-          anchor="left"
-          open={open}
-          classes={{
-            paper: classes.drawerPaper,
-          }}
-        >
-          <div className={classes.drawerHeader}>
-            <IconButton onClick={handleDrawerClose}>
-              {theme.direction === 'ltr' ? (
-                <ChevronLeftIcon />
-              ) : (
-                <ChevronRightIcon />
-              )}
-            </IconButton>
-          </div>
-          <Divider />
-          <List>
-            {/* Maps through each item in SideDrawerData creating a nav item in the shape of the ones below the divider */}
-            {SideDrawerData.map(item => (
-              <Link to={item.path} key={item.title}>
+      <Drawer
+        className={classes.drawer}
+        variant="persistent"
+        anchor="left"
+        open={open}
+        classes={{
+          paper: classes.drawerPaper,
+        }}
+      >
+        <div className={classes.drawerHeader}>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === 'ltr' ? (
+              <ChevronLeftIcon />
+            ) : (
+              <ChevronRightIcon />
+            )}
+          </IconButton>
+        </div>
+        <Divider />
+        <List>
+          {/* Maps through each item in SideDrawerData creating a nav item in the shape of the ones below the divider */}
+          {SideDrawerData.map(item => (
+            <Link to={item.path} key={item.title}>
+              <ListItem button>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.title} style={textItemStyles} />
+              </ListItem>
+            </Link>
+          ))}
+        </List>
+        <Divider />
+        <List>
+          {/* Checking if user is an admin before rendering the nav item */}
+          {role === 'admin' ? (
+            <>
+              <Link to="/manage-cases">
                 <ListItem button>
-                  <ListItemIcon>{item.icon}</ListItemIcon>
-                  <ListItemText primary={item.title} style={textItemStyles} />
+                  <ListItemIcon>
+                    <RateReviewIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Review Cases" style={textItemStyles} />
                 </ListItem>
               </Link>
-            ))}
-          </List>
-          <Divider />
-          <List>
-            {/* Checking if user is an admin before rendering the nav item */}
-            {role === 'admin' ? (
-              <>
-                <Link to="/manage-cases">
-                  <ListItem button>
-                    <ListItemIcon>
-                      <RateReviewIcon />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary="Review Cases"
-                      style={textItemStyles}
-                    />
-                  </ListItem>
-                </Link>
-                <Link to="/add-users">
-                  <ListItem button>
-                    <ListItemIcon>
-                      <PersonAddIcon />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary="Invite Users"
-                      style={textItemStyles}
-                    />
-                  </ListItem>
-                </Link>
-              </>
-            ) : null}
-            {/* Link needs to be wrapped around the whole button to allow the whole button to be used to direct he user */}
-            <Link to="/account">
-              <ListItem button>
-                <ListItemIcon>
-                  <AccountIcon />
-                </ListItemIcon>
-                <ListItemText primary="Account" style={textItemStyles} />
-              </ListItem>
-            </Link>
-            <Link to="/support">
-              <ListItem button>
-                <ListItemIcon>
-                  <HelpIcon />
-                </ListItemIcon>
-                <ListItemText primary="Support" style={textItemStyles} />
-              </ListItem>
-            </Link>
-            <ListItem button onClick={logout} style={textItemStyles}>
+              <Link to="/add-users">
+                <ListItem button>
+                  <ListItemIcon>
+                    <PersonAddIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Invite Users" style={textItemStyles} />
+                </ListItem>
+              </Link>
+            </>
+          ) : null}
+          {/* Link needs to be wrapped around the whole button to allow the whole button to be used to direct he user */}
+          <Link to="/account">
+            <ListItem button>
               <ListItemIcon>
-                <CloseIcon />
+                <AccountIcon />
               </ListItemIcon>
-              <ListItemText primary="Logout" />
+              <ListItemText primary="Account" style={textItemStyles} />
             </ListItem>
-          </List>
-        </Drawer>
-      </Hidden>
+          </Link>
+          <Link to="/support">
+            <ListItem button>
+              <ListItemIcon>
+                <HelpIcon />
+              </ListItemIcon>
+              <ListItemText primary="Support" style={textItemStyles} />
+            </ListItem>
+          </Link>
+          <ListItem button onClick={logout} style={textItemStyles}>
+            <ListItemIcon>
+              <CloseIcon />
+            </ListItemIcon>
+            <ListItemText primary="Logout" />
+          </ListItem>
+        </List>
+      </Drawer>
       <main
         className={clsx(classes.content, {
           [classes.contentShift]: open,
