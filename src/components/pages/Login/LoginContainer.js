@@ -49,7 +49,10 @@ const LoginContainer = () => {
 
   return (
     <StyledLogin>
-      <div class="background-image" aria-label="cosmetic background image" />
+      <div
+        className="background-image"
+        aria-label="cosmetic background image"
+      />
       <div id="sign-in-widget" aria-label="login form" />
     </StyledLogin>
   );

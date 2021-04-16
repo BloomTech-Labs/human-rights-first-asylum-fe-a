@@ -4,23 +4,27 @@ import statueOfLiberty from './statueOfLiberty.jpg';
 export const StyledLogin = styled.div`
   display: flex;
   justify-content: space-between;
+  max-height: 100vh;
 
   .background-image {
     background-image: url(${statueOfLiberty});
-    width: 55vw;
-    height: 100vh;
+    width: 600px;
+    min-height: 100vh;
     background-position: center;
-    background-size: cover;
+    background-repeat: no-repeat;
+    @media (max-width: 600px) {
+      width: 0;
+    }
   }
 
   #sign-in-widget {
     display: flex;
     align-items: center;
     margin: 0 auto;
-    padding-bottom: 20%;
 
     #okta-sign-in.auth-container.main-container {
       font-family: Helvetica, Arial, sans-serif;
+      margin: 0;
     }
 
     .o-form-head {
