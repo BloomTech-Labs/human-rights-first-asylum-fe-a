@@ -120,6 +120,9 @@ export default function SideDrawer(props) {
       },
       false
     );
+    return () => {
+      window.removeEventListener('resize');
+    };
   }, [mobile]);
 
   const handleDrawerOpen = () => {
