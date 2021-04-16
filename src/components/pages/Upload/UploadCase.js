@@ -130,6 +130,7 @@ const UploadCase = props => {
       .post(`${process.env.REACT_APP_API_URI}/upload/`, dataForm)
       .then(res => {
         setFormValues(res.data);
+        alert('Case uploaded successfully');
       })
       .catch(err => console.log(err));
   };
