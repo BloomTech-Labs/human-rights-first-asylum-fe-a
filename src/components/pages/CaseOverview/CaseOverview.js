@@ -21,7 +21,6 @@ const CaseOverview = props => {
           },
         })
         .then(res => {
-          console.log(res.data, 'RESSSS');
           setCaseData(res.data);
           setLoading(false);
         })
