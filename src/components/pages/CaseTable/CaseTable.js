@@ -26,6 +26,8 @@ import './CaseTable.css';
 import { Drawer } from '@material-ui/core';
 import Chip from '@material-ui/core/Chip';
 
+import PDFExportButton from './PDFOverviewExport/PDFExportButton';
+
 const useStyles = makeStyles(theme => ({
   grid: {
     marginTop: 15,
@@ -672,6 +674,9 @@ export default function CaseTable(props) {
             })}
           </div>
         )}
+        <div>
+          <PDFExportButton caseData={caseData} viz={<PieChart />} />
+        </div>
         <Drawer
           anchor="right"
           open={new_search}
