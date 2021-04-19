@@ -21,7 +21,6 @@ const CaseOverview = props => {
           },
         })
         .then(res => {
-          console.log(res.data, 'RESSSS');
           setCaseData(res.data);
           setLoading(false);
         })
@@ -38,12 +37,16 @@ const CaseOverview = props => {
       <Card
         style={{ width: 500, fontWeight: 'normal', margin: '10% 15% 0% 22%' }}
         actions={[
-          <div onClick={() => history.push(`/case/${caseData.case_id}/update`)}>
-            <EditOutlined key="edit" style={{ color: '#215589' }} />
-          </div>,
+          !loading && (
+            <div
+              onClick={() => history.push(`/case/${caseData.case_id}/update`)}
+            >
+              <EditOutlined key="edit" style={{ color: '#215589' }} />
+            </div>
+          ),
         ]}
       >
-        <Skeleton loading={loading}>
+        <Skeleton loading={loading} active>
           <p style={{ textDecoration: 'underline', fontWeight: 'bold' }}>
             Case Details
           </p>
