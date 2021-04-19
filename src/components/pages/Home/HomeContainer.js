@@ -3,7 +3,7 @@ import { useOktaAuth } from '@okta/okta-react';
 import { UserContext } from '../../../context/UserContext';
 import RenderHomePage from './RenderHomePage';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -17,8 +17,17 @@ const useStyles = makeStyles(theme => ({
     bottom: '0',
     right: '0',
     transform: 'scale(2)',
+    color: '#215589',
   },
 }));
+
+const HRFBlueLoader = withStyles(() => ({
+  root: {
+    '& .MuiCircularProgress-circle': {
+      color: '#215589',
+    },
+  },
+}))(CircularProgress);
 
 function HomeContainer() {
   const { oktaAuth, authState } = useOktaAuth();
@@ -52,7 +61,7 @@ function HomeContainer() {
     <>
       {authState.isAuthenticated && !userInfo && (
         <div className={classes.root}>
-          <CircularProgress />
+          <HRFBlueLoader />
         </div>
       )}
       {authState.isAuthenticated && userInfo && (

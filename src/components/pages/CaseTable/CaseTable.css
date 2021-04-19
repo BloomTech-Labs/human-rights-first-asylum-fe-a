@@ -3,3 +3,6 @@
   font-family: 'Open Sans', sans-serif;
 }
 
+span.MuiButton-label {
+  color: #215589;
+}
