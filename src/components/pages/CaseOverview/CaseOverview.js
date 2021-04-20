@@ -5,19 +5,21 @@ import { Link } from 'react-router-dom';
 import { Card, Skeleton } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 
-const CaseOverview = props => {
-  const { authState } = props;
+const CaseOverview = () => {
+  const token = localStorage.getItem('okta-token-storage');
   const [caseData, setCaseData] = useState({});
   const [loading, setLoading] = useState(false);
   const history = useHistory();
   const { id } = useParams();
 
   useEffect(() => {
+    const parsedToken = JSON.parse(token);
+
     async function fetchCase() {
       axios
         .get(`${process.env.REACT_APP_API_URI}/case/${id}`, {
           headers: {
-            Authorization: 'Bearer ' + authState,
+            Authorization: 'Bearer ' + parsedToken.idToken.value,
           },
         })
         .then(res => {
@@ -28,9 +30,11 @@ const CaseOverview = props => {
           console.log(err);
         });
     }
-    setLoading(true);
-    fetchCase();
-  }, [id, authState]);
+    if (token) {
+      setLoading(true);
+      fetchCase();
+    }
+  }, [id]);
 
   return (
     <>

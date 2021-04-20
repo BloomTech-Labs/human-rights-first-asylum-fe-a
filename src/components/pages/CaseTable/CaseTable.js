@@ -148,7 +148,6 @@ export default function CaseTable(props) {
     axios
       .get(`${process.env.REACT_APP_API_URI}/case/${id}`)
       .then(res => {
-        console.log(res.data);
         setShowPdf(res.data);
       })
       .catch(error => {
