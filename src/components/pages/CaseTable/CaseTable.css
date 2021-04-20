@@ -6,3 +6,7 @@
 span.MuiButton-label {
   color: #215589;
 }
+
+.MuiCheckbox-colorPrimary.Mui-checked {
+    color: #215589 !important;
+    }
