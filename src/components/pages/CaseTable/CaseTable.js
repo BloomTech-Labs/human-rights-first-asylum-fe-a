@@ -15,7 +15,6 @@ import {
   SearchOutlined,
   DownloadOutlined,
   SaveOutlined,
-  FilePdfOutlined,
 } from '@ant-design/icons';
 import { Button, Menu, Drawer, Input, Card } from 'antd';
 import './CaseTable.css';

@@ -1,8 +1,7 @@
 import React from 'react';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import ExportGenerator from './ExportGenerator.jsx';
-import { FilePdfOutlined, LoadingOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 
 const PDFExportButton = props => (
   <div>
