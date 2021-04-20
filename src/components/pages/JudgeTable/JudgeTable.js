@@ -1,23 +1,17 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+
 import {
   DataGrid,
   GridColumnsToolbarButton,
   GridToolbarExport,
   GridDensitySelector,
 } from '@material-ui/data-grid';
-import { Drawer } from '@material-ui/core';
-import Chip from '@material-ui/core/Chip';
 import { makeStyles } from '@material-ui/core/styles';
 
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-
-import {
-  SearchOutlined,
-  SaveOutlined,
-  CloseCircleOutlined,
-} from '@ant-design/icons';
-import { Button, Menu, Input } from 'antd';
+import { SearchOutlined, SaveOutlined } from '@ant-design/icons';
+import { Button, Menu, Input, Card, Drawer } from 'antd';
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -58,7 +52,7 @@ const useStyles = makeStyles(theme => ({
     width: 300,
     marginTop: '30%',
   },
-  chips: {
+  cards: {
     display: 'flex',
   },
   close: {
@@ -344,20 +338,14 @@ export default function JudgeTable(props) {
   const drawerContent = () => {
     return (
       <div className={classes.drawer}>
-        <CloseCircleOutlined
-          style={{ marginLeft: '85%' }}
-          onClick={() => {
-            toggleSearch();
-          }}
-        />
         {searchOptions.map(value => {
           return (
             <div key={value.id}>
-              <p style={{ marginLeft: '15%' }}>{value.label}</p>
+              <p style={{ marginLeft: '5%' }}>{value.label}</p>
               <Input
                 placeholder={'search query'}
                 variant="outlined"
-                size="large"
+                size="medium"
                 value={queryValues[value.id]}
                 onChange={e => {
                   setQueryValues({
@@ -367,7 +355,7 @@ export default function JudgeTable(props) {
                   setSearching(true);
                 }}
                 type="text"
-                style={{ marginLeft: '15%', marginBottom: 10, marginTop: 10 }}
+                style={{ marginLeft: '5%', marginBottom: 10, marginTop: 10 }}
               />
             </div>
           );
@@ -380,11 +368,11 @@ export default function JudgeTable(props) {
     <div className={classes.tbl_container}>
       <div className={classes.search_container}>
         {searching && (
-          <div className={classes.chips}>
+          <div className={classes.cards}>
             {searchOptions.map(option => {
               if (queryValues[option.id] !== '') {
                 return (
-                  <Chip
+                  <Card
                     key={option.id}
                     label={`${option.label}: "${queryValues[option.id]}"`}
                     onDelete={() => {
@@ -403,10 +391,9 @@ export default function JudgeTable(props) {
           </div>
         )}
         <Drawer
-          anchor="right"
-          open={new_search}
+          visible={new_search}
           onClose={toggleSearch}
-          variant="persistent"
+          style={{ marginTop: '6rem' }}
         >
           {drawerContent()}
         </Drawer>
