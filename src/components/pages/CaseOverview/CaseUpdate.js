@@ -77,6 +77,14 @@ const CaseUpdate = props => {
       ...values,
       hearing_date: values['hearing_date'].format('M-D-YYYY'),
     };
+    axios
+      .put(`${process.env.REACT_APP_API_URI}/case/${id}`, newCase)
+      .then(res => {
+        props.setCaseData([...props.caseData, res.data]);
+        props.fetchCase();
+        history.push('/');
+      })
+      .catch(error => console.log(error));
   };
 
   const layout = {
@@ -129,7 +137,7 @@ const CaseUpdate = props => {
       </Form.Item>
 
       <Form.Item label="Application Type" name="application_type">
-        {/*dropdown*/}
+        {/*might changed to dropdown*/}
         <Input />
       </Form.Item>
 
