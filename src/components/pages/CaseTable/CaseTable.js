@@ -15,6 +15,7 @@ import {
   SearchOutlined,
   DownloadOutlined,
   SaveOutlined,
+  FilePdfOutlined,
 } from '@ant-design/icons';
 import { Button, Menu, Drawer, Input, Card } from 'antd';
 import './CaseTable.css';
@@ -565,6 +566,18 @@ export default function CaseTable(props) {
             Download All Selected
           </Button>
 
+          <Button
+            style={{
+              background: '#215589',
+              color: '#fff',
+              textTransform: 'uppercase',
+              marginLeft: '.5%',
+            }}
+            type="default"
+          >
+            <PDFExportButton caseData={filter(caseData)} viz={<PieChart />} />
+          </Button>
+
           <div
             style={{
               WebkitTextFillColor: '#215589',
@@ -663,9 +676,6 @@ export default function CaseTable(props) {
             })}
           </div>
         )}
-        <div>
-          <PDFExportButton caseData={caseData} viz={<PieChart />} />
-        </div>
         <Drawer
           visible={new_search}
           onClose={toggleSearch}
