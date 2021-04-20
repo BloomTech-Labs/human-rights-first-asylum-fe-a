@@ -95,6 +95,7 @@ export default function JudgeTable(props) {
       field: 'name',
       renderHeader: params => <strong>{'Judge'}</strong>,
       width: 170,
+      headerName: 'Name',
       className: 'tableHeader',
       options: {
         filter: true,
@@ -115,26 +116,31 @@ export default function JudgeTable(props) {
     {
       field: 'judge_county',
       renderHeader: params => <strong>{'Case Origin'}</strong>,
+      headerName: 'Case Origin',
       width: 160,
     },
     {
       field: 'date_appointed',
       renderHeader: params => <strong>{'Date Appointed'}</strong>,
+      headerName: 'Date Appointed',
       width: 160,
     },
     {
       field: 'appointed_by',
       renderHeader: params => <strong>{'Appointed By'}</strong>,
+      headerName: 'Appointed By',
       width: 160,
     },
     {
       field: 'denial_rate',
       renderHeader: params => <strong>{'% Denial'}</strong>,
+      headerName: 'Denial Rate',
       width: 110,
     },
     {
       field: 'approval_rate',
       renderHeader: params => <strong>{'% Approval'}</strong>,
+      headerName: 'Approval Rate',
       width: 130,
     },
   ];
