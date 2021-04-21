@@ -62,7 +62,7 @@ export default function JudgePage(props) {
       axios
         .get(`${process.env.REACT_APP_API_URI}/judge/${name}`, {
           headers: {
-            Authorization: 'Bearer ' + authState.idToken,
+            Authorization: 'Bearer ' + authState.idToken.idToken,
           },
         })
         .then(res => {
