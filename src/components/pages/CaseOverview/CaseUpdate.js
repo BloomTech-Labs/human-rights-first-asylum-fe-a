@@ -1,43 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
-import { Container } from './CaseOverviewStyled';
 import { Form, Input, Button, Checkbox, DatePicker, Select } from 'antd';
 import moment from 'moment';
-import { textAlign } from '@material-ui/system';
 const { Option } = Select;
-const initialInfo = {
-  case_status: '',
-  hearing_date: '',
-  case_origin: '',
-  hearing_type: '',
-  judge: '',
-  case_outcome: '',
-  court_type: '',
-  nation_of_origin: '',
-  application_type: '',
-  protected_ground: '',
-  credibility_of_refugee: '',
-  decision_date: '',
-};
 
 const CaseUpdate = props => {
   const history = useHistory();
   const { id } = useParams();
-  const [newCase, setNewCase] = useState(initialInfo);
   const [judges, setJudges] = useState([]);
   const { authState, caseData } = props;
-
-  useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/case/${id}`, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken.value,
-        },
-      })
-      .then(res => setNewCase(res.data))
-      .catch(error => console.log(error));
-  }, [id, authState]);
 
   useEffect(() => {
     axios
@@ -49,16 +21,6 @@ const CaseUpdate = props => {
       .then(res => setJudges(res.data))
       .catch(error => console.log(error));
   }, []);
-
-  const handleChange = event => {
-    //event.presists();
-    let value = event.target.value;
-
-    setNewCase({
-      ...newCase,
-      [event.target.name]: value,
-    });
-  };
 
   const onFinish = values => {
     const fieldsValue = {
@@ -97,27 +59,9 @@ const CaseUpdate = props => {
             : c;
         });
         props.setCasesData([...newCases]);
-        history.push('/'); // or change iseditting to false
+        history.push('/'); // or change iseditting to false and set caseData with new values
       })
       .catch(error => console.log(error));
-
-    // delete caseData['protected_ground'];
-    // delete caseData['social_group_type'];
-
-    // const newCases = props.casesData.map(c => {
-    //   return c.primary_key === caseData.primary_key
-    //     ? {
-    //         ...caseData,
-    //         ...fieldsValue,
-    //         judge_name: judges.filter(
-    //           j => fieldsValue['judge'] === j.judge_id
-    //         )[0]['name'],
-    //         id: caseData.primary_key,
-    //       }
-    //     : c;
-    // });
-    // props.setCasesData([...newCases]);
-    //history.push('/');
   };
 
   const layout = {
