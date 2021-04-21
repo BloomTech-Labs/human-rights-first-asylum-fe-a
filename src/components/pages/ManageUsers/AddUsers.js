@@ -11,7 +11,6 @@ import FormLabel from '@material-ui/core/FormLabel';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    marginTop: '7%',
     width: '100%',
     display: 'flex',
     justifyContent: 'space-around',

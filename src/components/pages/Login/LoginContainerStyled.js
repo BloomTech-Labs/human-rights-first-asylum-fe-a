@@ -17,6 +17,19 @@ export const StyledLogin = styled.div`
     }
   }
 
+  .login-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+
+    .buttonStyles {
+      margin-top: 3%;
+      width: 50%;
+    }
+  }
+
   #sign-in-widget {
     display: flex;
     align-items: center;
