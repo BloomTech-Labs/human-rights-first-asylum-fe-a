@@ -43,7 +43,7 @@ const CaseUpdate = props => {
     axios
       .get(`${process.env.REACT_APP_API_URI}/judges`, {
         headers: {
-          Authorization: 'Bearer ' + authState,
+          Authorization: 'Bearer ' + authState.idToken.value,
         },
       })
       .then(res => setJudges(res.data))
@@ -75,7 +75,11 @@ const CaseUpdate = props => {
 
     console.log(newCase);
     axios
-      .put(`${process.env.REACT_APP_API_URI}/case/${id}`, fieldsValue)
+      .put(`${process.env.REACT_APP_API_URI}/case/${id}`, fieldsValue, {
+        headers: {
+          Authorization: 'Bearer ' + authState.idToken.value,
+        },
+      })
       .then(res => {
         delete caseData['protected_ground'];
         delete caseData['social_group_type'];
