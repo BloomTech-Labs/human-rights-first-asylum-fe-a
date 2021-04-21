@@ -42,17 +42,35 @@ const useStyles = makeStyles(theme => ({
   },
 
   buttonStyles: {
-    color: '#ffffff',
+    color: 'white',
     backgroundColor: '#215589',
     marginTop: '3%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    '&.MuiButton-contained': {
+      boxShadow: 'none',
+      color: 'white',
+      border: '1px solid darkgray',
+      '&span': {
+        color: 'white',
+      },
+    },
+  },
+
+  checkbox: {
+    color: '#205488',
+    '&.MUI-checked': {
+      color: '#205488',
+    },
+    '&.MuiIconButton-root': {
+      color: '#205488',
+    },
   },
 }));
 
 const UploadCaseForm = props => {
-  const { formValues, onInputChange, submit, acceptCase, rejectCase } = props;
+  const { formValues, onInputChange, acceptCase, rejectCase } = props;
 
   const classes = useStyles();
 
@@ -77,7 +95,6 @@ const UploadCaseForm = props => {
 
   const onSubmit = evt => {
     evt.preventDefault();
-    submit();
   };
 
   return (
@@ -104,10 +121,10 @@ const UploadCaseForm = props => {
             <div className="judge">
               <label htmlFor="judge">
                 <TextField
-                  multiline={true}
+                  label="Judge"
+                  placeholder="Judge"
                   type="text"
                   variant="outlined"
-                  placeholder="Judge"
                   name="judge"
                   onChange={onInputChange}
                   value={formValues.judge}
@@ -117,9 +134,9 @@ const UploadCaseForm = props => {
             <div className="case-outcome">
               <label htmlFor="case-outcome">
                 <TextField
-                  multiline={true}
-                  variant="outlined"
+                  label="Case Outcome"
                   placeholder="Case Outcome"
+                  variant="outlined"
                   name="case_outcome"
                   onChange={onInputChange}
                   value={formValues.case_outcome}
@@ -143,7 +160,7 @@ const UploadCaseForm = props => {
             <div className="nation-of-origin">
               <label htmlFor="nation-of-origin">
                 <TextField
-                  multiline={true}
+                  label="Nation of Origin"
                   type="text"
                   variant="outlined"
                   placeholder="Nation of Origin"
@@ -156,7 +173,7 @@ const UploadCaseForm = props => {
             <div className="protected-ground">
               <label htmlFor="protected-ground">
                 <TextField
-                  multiline={true}
+                  label="Protected Ground"
                   variant="outlined"
                   name="protected_ground"
                   placeholder="Protected Ground"
@@ -168,10 +185,10 @@ const UploadCaseForm = props => {
             <div className="application-type">
               <label htmlFor="application-type">
                 <TextField
-                  multiline={true}
+                  label="Application Type"
                   type="text"
                   variant="outlined"
-                  placeholder="Application Type "
+                  placeholder="Application Type"
                   name="application_type"
                   onChange={onInputChange}
                   value={formValues.application_type}
@@ -181,7 +198,7 @@ const UploadCaseForm = props => {
             <div className="case-origin">
               <label htmlFor="case-origin">
                 <TextField
-                  multiline={true}
+                  label="Case Origin"
                   type="text"
                   variant="outlined"
                   placeholder="Case Origin"
@@ -194,7 +211,7 @@ const UploadCaseForm = props => {
             <div className="applicant-gender">
               <label htmlFor="applicant-gender">
                 <TextField
-                  multiline={true}
+                  label="Applicant Gender"
                   variant="outlined"
                   placeholder="Applicant Gender"
                   name="applicant_gender"
@@ -206,7 +223,7 @@ const UploadCaseForm = props => {
             <div className="applicant-language">
               <label htmlFor="applicant-language">
                 <TextField
-                  multiline={true}
+                  label="Applicant Language"
                   variant="outlined"
                   placeholder="Applicant Language"
                   name="applicant_language"
@@ -218,7 +235,7 @@ const UploadCaseForm = props => {
             <div className="applicant-indigenous-group">
               <label htmlFor="applicant-indigenous-group">
                 <TextField
-                  multiline={true}
+                  label="Applicant Indigenous Group"
                   type="text"
                   variant="outlined"
                   placeholder="Applicant Indigenous Group"
@@ -231,7 +248,7 @@ const UploadCaseForm = props => {
             <div className="type-of-violence-experienced">
               <label htmlFor="type-of-violence-experienced">
                 <TextField
-                  multiline={true}
+                  label="Type of Violence Experienced"
                   type="text"
                   variant="outlined"
                   placeholder="Type of Violence Experienced"
@@ -247,32 +264,7 @@ const UploadCaseForm = props => {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={state.applicantAccessToInterpreter}
-                      onChange={handleChange}
-                      name="applicantAccessToInterpreter"
-                    />
-                  }
-                  label="Applicant Has Access To Interpreter"
-                  labelPlacement="right"
-                />
-              </FormGroup>
-              <FormGroup className={classes.row}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={state.caseFiledWithinOneYear}
-                      onChange={handleChange}
-                      name="caseFiledWithinOneYear"
-                    />
-                  }
-                  label="Case Filed Within The Past Year"
-                  labelPlacement="right"
-                />
-              </FormGroup>
-              <FormGroup className={classes.row}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
+                      className={classes.checkbox}
                       checked={state.initialOrAppellate}
                       onChange={handleChange}
                       name="initialOrAppellate"
@@ -286,6 +278,21 @@ const UploadCaseForm = props => {
                 <FormControlLabel
                   control={
                     <Checkbox
+                      className={classes.checkbox}
+                      checked={state.caseFiledWithinOneYear}
+                      onChange={handleChange}
+                      name="caseFiledWithinOneYear"
+                    />
+                  }
+                  label="Case Filed Within One Year"
+                  labelPlacement="right"
+                />
+              </FormGroup>
+              <FormGroup className={classes.row}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      className={classes.checkbox}
                       checked={state.applicantPerceivedCredibility}
                       onChange={handleChange}
                       name="applicantPerceivedCredibility"
@@ -300,16 +307,14 @@ const UploadCaseForm = props => {
 
             {role === 'user' ? (
               <>
-                <div className="submit-button">
-                  <Button
-                    onClick={onSubmit}
-                    className={classes.buttonStyles}
-                    variant="contained"
-                    component="span"
-                  >
-                    Submit
-                  </Button>
-                </div>
+                <Button
+                  onClick={onSubmit}
+                  className={classes.buttonStyles}
+                  variant="contained"
+                  component="span"
+                >
+                  Submit
+                </Button>
               </>
             ) : (
               <>
