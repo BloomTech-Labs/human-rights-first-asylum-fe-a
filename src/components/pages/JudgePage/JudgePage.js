@@ -4,69 +4,10 @@ import Plot from 'react-plotly.js';
 import axios from 'axios';
 
 import { DataGrid } from '@material-ui/data-grid';
-import { makeStyles } from '@material-ui/core/styles';
-import { FullPage, FlexDiv, PlotDiv } from './JudgePageStyled';
 import './JudgePage.css';
 
 import { SearchOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Menu, Input, Card, Drawer, Avatar } from 'antd';
-
-const useStyles = makeStyles(theme => ({
-  judgeTbl: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    width: '90%',
-    minHeight: '30vh',
-    height: '100%',
-    margin: '5rem',
-  },
-  drawer: {
-    width: 300,
-    marginTop: '30%',
-  },
-  cards: {
-    display: 'flex',
-  },
-  close: {
-    textAlign: 'right',
-    padding: '1%',
-    margin: 'auto 2% auto auto',
-    transform: 'scale(1.2)',
-    '&:hover': {
-      curser: 'pointer',
-      transform: 'scale(1.4)',
-    },
-  },
-  toolbar_options: {
-    borderRadius: '6px',
-    padding: '0.5rem',
-    display: 'flex',
-    alignItems: 'center',
-  },
-  toolbar: {
-    padding: '1rem',
-    overflow: 'hidden',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    borderRadius: '6px',
-    width: '100%',
-    '&:hover': {
-      cursor: 'pointer',
-    },
-  },
-  tbl_container: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '100%',
-    margin: 'auto',
-    flexGrow: 1,
-    position: 'relative',
-    paddingRight: 30,
-  },
-}));
 
 export default function JudgePage(props) {
   const { authState } = props;
@@ -79,23 +20,16 @@ export default function JudgePage(props) {
       renderHeader: params => <strong>{'Case Id'}</strong>,
       width: 130,
       headerName: 'Case Id',
-      className: 'tableHeader',
       options: {
         filter: true,
       },
       renderCell: params => (
         <>
-          <Link to={`/case/${params.value}`} style={{ color: '#215589' }}>
+          <Link to={`/case/${params.value}`} className="judgePageLink">
             <span>{params.value}</span>
           </Link>
         </>
       ),
-    },
-    {
-      field: 'court_type',
-      renderHeader: params => <strong>{'Court Type'}</strong>,
-      headerName: 'Court Type',
-      width: 160,
     },
     {
       field: 'nation_of_origin',
@@ -121,22 +55,14 @@ export default function JudgePage(props) {
       headerName: 'Decision',
       width: 140,
     },
-    {
-      field: 'case_status',
-      renderHeader: params => <strong>{'Case Status'}</strong>,
-      headerName: 'Case Status',
-      width: 140,
-    },
   ];
-
-  const classes = useStyles();
 
   useEffect(() => {
     async function fetchJudge() {
       axios
         .get(`${process.env.REACT_APP_API_URI}/judge/${name}`, {
           headers: {
-            Authorization: 'Bearer ' + authState.idToken,
+            Authorization: 'Bearer ' + authState.idToken.idToken,
           },
         })
         .then(res => {
@@ -152,33 +78,21 @@ export default function JudgePage(props) {
 
   const Toolbar = () => {
     return (
-      <Menu>
-        <div className={classes.toolbar}>
+      <Menu className="judgePageContainer">
+        <div className="judgePageToolbar">
           <div
-            className={classes.toolbar_options}
             onClick={() => {
               toggleSearch();
             }}
           >
             <Button
-              style={{
-                background: '#215589',
-                color: '#fff',
-                textTransform: 'uppercase',
-              }}
+              className="judgePageBtn"
               type="default"
-              icon={<SearchOutlined style={{ color: '#fff' }} />}
+              icon={<SearchOutlined />}
             >
               Search
             </Button>
           </div>
-
-          <div
-            style={{
-              WebkitTextFillColor: '#215589',
-              WebkitMarginStart: '1rem',
-            }}
-          ></div>
         </div>
       </Menu>
     );
@@ -186,12 +100,10 @@ export default function JudgePage(props) {
 
   const [queryValues, setQueryValues] = useState({
     case_id: '',
-    court_type: '',
     nation_of_origin: '',
     protected_ground: '',
     application_type: '',
     case_outcome: '',
-    case_status: '',
   });
 
   const [new_search, setSearch] = useState(false);
@@ -201,48 +113,36 @@ export default function JudgePage(props) {
   const [searching, setSearching] = useState(false);
 
   const filter = data => {
-    // searchedKeys is AT MOST 16 keys
     const searchedKeys = Object.entries(queryValues).filter(
       ([k, v]) => v !== ''
     );
-    // for each ROW in DATA -- O(n) where n is the number of rows in our data
     const filteredData = data.filter(row => {
       const matchedHits = [];
-      // map through each searched [K, V] pair -- O(searched_keys) where searchedKeys is at min 0 and at most 16
-      // so nesting this inside is NOT all too expensive.
       searchedKeys.forEach(([k, v]) => {
-        // if the stringified value at row[key] includes the searched-for value,
-        // then we'll push the key to our matchedHits
         if (row[k].toString().includes(v.toString())) {
           matchedHits.push(k);
         }
       });
-      // if the row[k] == v at EVERY searched-for key, then we'll return TRUE
-      // else return FALSE
       return matchedHits.length === searchedKeys.length;
     });
-    // filteredData is only going to contain rows where  every
-    // searched column includes subtext that matches the searched term
     return filteredData;
   };
 
   const searchOptions = [
     { id: 'case_id', label: 'Case Id' },
-    { id: 'court_type', label: 'Court Type' },
     { id: 'nation_of_origin', label: 'Nation of Origin' },
     { id: 'protected_ground', label: 'Protected Ground' },
     { id: 'application_type', label: 'Application Type' },
     { id: 'case_outcome', label: 'Decision' },
-    { id: 'case_status', label: 'Case Status' },
   ];
 
   const drawerContent = () => {
     return (
-      <div className={classes.drawer}>
+      <div className="judgePageDrawer">
         {searchOptions.map(value => {
           return (
             <div key={value.id}>
-              <p style={{ marginLeft: '5%' }}>{value.label}</p>
+              <p>{value.label}</p>
               <Input
                 placeholder={'search query'}
                 variant="outlined"
@@ -256,7 +156,7 @@ export default function JudgePage(props) {
                   setSearching(true);
                 }}
                 type="text"
-                style={{ marginLeft: '5%', marginBottom: 10, marginTop: 10 }}
+                className="judgePageSearchInput"
               />
             </div>
           );
@@ -266,45 +166,51 @@ export default function JudgePage(props) {
   };
 
   return (
-    // Needs a lot of styling work
-    <FullPage>
+    <div className="judgePageContainer">
       {judge && (
         <div>
-          <FlexDiv className="header">
-            <div className="imgBox">
+          <div className="imgBox">
+            <div>
               <Avatar shape="square" size={200} icon={<UserOutlined />} />
               <h1>{judge.name}</h1>
             </div>
-            <Card title="Judge Info">
+            <Card className="judgePageCard" title="Judge Info">
               <p>Birthdate: {judge.birth_date}</p>
               <p>Appointed: {judge.date_appointed}</p>
               <p>Appointed By: {judge.appointed_by}</p>
               <p>County: {judge.judge_county}</p>
-              <a href={judge.biography}>Biography</a>
+              <a
+                className="judgePageLink"
+                href={judge.biography}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Biography
+              </a>
             </Card>
-          </FlexDiv>
+          </div>
           <Drawer
+            className="judgePageDrawer"
             visible={new_search}
             onClose={toggleSearch}
-            style={{ marginTop: '6rem' }}
           >
             {drawerContent()}
           </Drawer>
 
-          <div className={classes.tbl_container}>
-            Cases: "A section including relevant information/table of active
-            cases"
+          <div className="judgePageGridContainer">
+            {/* Cases: "A section including relevant information/table of active
+            cases" */}
             <DataGrid
               rows={searching ? filter(judge.case_data) : judge.case_data}
               columns={columns}
-              className={classes.judgeTbl}
+              className="judgePageTable"
               autoHeight={true}
               components={{ Toolbar: Toolbar }}
             />
           </div>
 
           <div>
-            <PlotDiv style={{ margin: '0 auto' }}>
+            <div className="judgePagePlotDiv">
               {
                 //* values are granted: value, denial: value, other: value
               }
@@ -367,8 +273,8 @@ export default function JudgePage(props) {
                   width: 600,
                 }}
               />
-            </PlotDiv>
-            <PlotDiv style={{ margin: '0 auto' }}>
+            </div>
+            <div className="judgePagePlotDiv">
               {
                 //* x = country_origin/application_type /protected_ground, y = granted: value / denial:value / other value
               }
@@ -486,10 +392,10 @@ export default function JudgePage(props) {
                   title: 'Decision By Protected Ground',
                 }}
               />
-            </PlotDiv>
+            </div>
           </div>
         </div>
       )}
-    </FullPage>
+    </div>
   );
 }

@@ -208,7 +208,7 @@ export default function SideDrawer(props) {
                   <ListItemIcon>
                     <PersonAddIcon />
                   </ListItemIcon>
-                  <ListItemText primary="Invite Users" style={textItemStyles} />
+                  <ListItemText primary="Manage Users" style={textItemStyles} />
                 </ListItem>
               </Link>
             </>

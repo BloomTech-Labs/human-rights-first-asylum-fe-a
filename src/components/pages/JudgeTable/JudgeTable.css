@@ -20,81 +20,63 @@
   transform: scale(1.4);
 }
 
-/* judgePage styles */
+/* judgeTable styles */
 
-.judgePageLink {
+.judgeTableLink {
   color: #215589;
 }
 
-.judgePageContainer {
+.judgeTable {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  align-content: center;
-}
-
-.imgBox {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
   width: 100%;
-  padding: 8rem 1rem 1rem 2rem;
-}
-
-h1 {
-  color: #215589;
-}
-
-.judgePageCard {
-  margin-left: 2rem;
-  min-width: 20rem;
-}
-
-.judgePageGridContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: 'center';
-  align-content: center;
-  width: 100%;
-}
-
-.judgePageTable {
-  display: 'flex';
-  flex-direction: 'column';
-  justify-content: 'center';
-  align-content: center;
-  width: 95%;
-  min-height: 30vh;
+  min-height: 80vh;
   height: 100%;
-  margin-left: 2rem;
+  margin: 8rem 4rem 4rem 0;
 }
 
-.judgePagePlotDiv {
+.judgeTableGridContainer {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  width: 90%;
+}
+
+/* judgeTable Toolbar styles */
+
+.judgeTableContainer {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 2rem;
-  margin: 5% 0 0 0;
+  align-content: center;
+  width: 100%;
 }
 
-/* judgePage Toolbar styles */
-
-.judgePageSearchInput {
+.judgeTableSearchInput {
   margin: 5% 10% 10% 5%;
 }
 
-.judgePageDrawer {
+.judgeTableDrawer {
   width: 300;
   margin-top: 5rem;
 }
 
-.judgePageDrawer p {
+.judgeTableDrawer p {
   margin-left: 5%;
 }
 
-.judgePageToolbar {
+.judgeTableToolbarOptions {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border-radius: 6px;
+  padding: 0.5rem;
+}
+
+.judgeTableToolbar {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -105,18 +87,18 @@ h1 {
   overflow: hidden;
 }
 
-.judgePageToolbar:hover {
+.judgeTableToolbar:hover {
   cursor: pointer;
 }
 
-.judgePageBtn {
+.judgeTableBtn {
   background: #215589;
   color: #fff;
   text-transform: uppercase;
   border: none;
 }
 
-.judgePageBtn:hover {
+.judgeTableBtn:hover {
   background: #215589;
   color: #fff;
   text-transform: uppercase;
