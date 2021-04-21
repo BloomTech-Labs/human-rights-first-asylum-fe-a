@@ -53,6 +53,7 @@ const PendingUsersPage = props => {
         },
       })
       .then(res => {
+        alert(`Profile request from ${profile.email} was approved`);
         console.log(res.data);
       })
       .catch(err => {
