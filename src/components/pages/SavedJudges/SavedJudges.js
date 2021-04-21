@@ -1,72 +1,30 @@
-import React from 'react';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/DeleteForever';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
+
 import { DataGrid } from '@material-ui/data-grid';
+import './SavedJudges.css';
+
+import { Button, Menu, Input, Drawer } from 'antd';
+import { DeleteOutlined, SearchOutlined } from '@ant-design/icons';
 
 function SavedJudges({ savedJudges, deleteSavedJudge }) {
-  const useStyles = makeStyles(theme => ({
-    grid: {
-      marginTop: 15,
-    },
-    tbl_container: {
-      display: 'flex',
-      flexDirection: 'column',
-      width: '57%',
-      margin: 'auto',
-      marginTop: 100,
-      flexGrow: 1,
-      paddingRight: 30,
-    },
-    select: {
-      margin: 70,
-      height: 20,
-    },
-    search_container: {
-      display: 'flex',
-      alignItems: 'flex-end',
-    },
-    colFilter: {
-      display: 'flex',
-      flexDirection: 'column',
-      width: '15%',
-    },
-    pdfView: {
-      width: '100%',
-      height: '500px',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-  }));
-  const divStyles = {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '20vh',
-    width: '100%',
-    flexDirection: 'column',
-  };
-  const h1Styles = {
-    fontSize: '1.3rem',
-  };
-
   const columns = [
-    // { field: 'id', headerName: 'id', width: 100 },
     {
       field: 'name',
       renderHeader: params => <strong>{'Judge'}</strong>,
-      width: 170,
-      color: 'navy',
+      headerName: 'Judge',
+      width: 130,
+      options: {
+        filter: true,
+      },
       //Link to individual judge page
       renderCell: params => (
         <>
           <Link
             to={`/judge/${params.value.split(' ').join('%20')}`}
-            style={{ color: '#215589' }}
+            className="savedJudgeLink"
           >
-            {params.value}
+            <span>{params.value}</span>
           </Link>
         </>
       ),
@@ -74,57 +32,158 @@ function SavedJudges({ savedJudges, deleteSavedJudge }) {
     {
       field: 'judge_county',
       renderHeader: params => <strong>{'Court Location'}</strong>,
+      headerName: 'Court Location',
       width: 160,
     },
     {
       field: 'date_appointed',
       renderHeader: params => <strong>{'Date Appointed'}</strong>,
+      headerName: 'Date Appointed',
       width: 160,
     },
     {
       field: 'appointed_by',
       renderHeader: params => <strong>{'Appointed By'}</strong>,
+      headerName: 'Appointed By',
       width: 160,
     },
     {
       field: 'denial_rate',
       renderHeader: params => <strong>{'% Denial'}</strong>,
+      headerName: '% Denial',
       width: 110,
     },
     {
       field: 'approval_rate',
       renderHeader: params => <strong>{'% Approval'}</strong>,
+      headerName: '% Approval',
       width: 140,
     },
+    // this field "remove_judge" does not exist in the migration data
+    // it is an idea to delete a saved case from this table using "deleteSavedJudge()"
+    // "deleteSavedJudge()" is from the RenderHomePage.js component
     {
       field: 'remove_judge',
       renderHeader: params => <strong>{'Remove'}</strong>,
-
+      headerName: 'Remove',
       width: 110,
       renderCell: params => (
-        <IconButton>
-          <DeleteIcon
+        <Button>
+          <DeleteOutlined
             onClick={() => {
               deleteSavedJudge(params.row.name);
             }}
           />
-        </IconButton>
+        </Button>
       ),
     },
   ];
-  const classes = useStyles();
 
   savedJudges.forEach((item, idx) => {
     item.id = idx;
   }); // this is VERY hacky, but the table doesn't take data without ids
   console.log(savedJudges);
+
+  const Toolbar = () => {
+    return (
+      <Menu className="savedJudgeContainer">
+        <div className="savedJudgeToolbar">
+          <div
+            onClick={() => {
+              toggleSearch();
+            }}
+          >
+            <Button
+              className="judgePageBtn"
+              type="default"
+              icon={<SearchOutlined />}
+            >
+              Search
+            </Button>
+          </div>
+        </div>
+      </Menu>
+    );
+  };
+
+  const [queryValues, setQueryValues] = useState({
+    name: '',
+    judge_county: '',
+    date_appointed: '',
+    appointed_by: '',
+    denial_rate: '',
+    approval_rate: '',
+    remove_judge: '',
+  });
+
+  const [new_search, setSearch] = useState(false);
+  const toggleSearch = () => {
+    setSearch(!new_search);
+  };
+  const [searching, setSearching] = useState(false);
+
+  const filter = data => {
+    const searchedKeys = Object.entries(queryValues).filter(
+      ([k, v]) => v !== ''
+    );
+    const filteredData = data.filter(row => {
+      const matchedHits = [];
+      searchedKeys.forEach(([k, v]) => {
+        if (row[k].toString().includes(v.toString())) {
+          matchedHits.push(k);
+        }
+      });
+      return matchedHits.length === searchedKeys.length;
+    });
+    return filteredData;
+  };
+
+  const searchOptions = [
+    { id: 'name', label: 'Judge' },
+    { id: 'judge_county', label: 'Court Location' },
+    { id: 'date_appointed', label: 'Date Appointed' },
+    { id: 'appointed_by', label: 'Appointed By' },
+    { id: 'denial_rate', label: '% Denial' },
+    { id: 'approval_rate', label: '% Approval' },
+    { id: 'remove_judge', label: 'Remove' },
+  ];
+
+  const drawerContent = () => {
+    return (
+      <div className="savedJudgeDrawer">
+        {searchOptions.map(value => {
+          return (
+            <div key={value.id}>
+              <p>{value.label}</p>
+              <Input
+                placeholder={'search query'}
+                variant="outlined"
+                size="medium"
+                value={queryValues[value.id]}
+                onChange={e => {
+                  setQueryValues({
+                    ...queryValues,
+                    [value.id]: e.target.value,
+                  });
+                  setSearching(true);
+                }}
+                type="text"
+                className="savedJudgeSearchInput"
+              />
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+
   return (
-    <div className={classes.tbl_container}>
-      {savedJudges.length === 0 ? (
-        <div style={divStyles}>
-          <h1 style={h1Styles}>No Saved Judges</h1>
+    <div className="savedJudgeContainer">
+      {savedJudges ? (
+        <div className="savedJudgeStyles">
+          <h1>No Saved Judges</h1>
           <br />
-          <Link to="/" style={{ color: '#3f51b5' }}>
+          <Link to="/" className="savedJudgeLink">
             Return back to Home
           </Link>
         </div>
@@ -132,14 +191,24 @@ function SavedJudges({ savedJudges, deleteSavedJudge }) {
         // This is so the top part only displays when there are no cases, but also displays the empty table below
         <></>
       )}
-      <DataGrid
-        rows={savedJudges}
-        columns={columns}
-        className={classes.grid}
-        autoHeight={true}
-        loading={savedJudges ? false : true}
-        showCellRightBorder={true}
-      />
+      <Drawer
+        className="savedJudgeDrawer"
+        visible={new_search}
+        onClose={toggleSearch}
+      >
+        {drawerContent()}
+      </Drawer>
+      <div className="savedJudgeGridContainer">
+        <DataGrid
+          rows={searching ? filter(savedJudges) : savedJudges}
+          columns={columns}
+          className="savedJudgeTable"
+          autoHeight={true}
+          loading={savedJudges ? false : true}
+          showCellRightBorder={true}
+          components={{ Toolbar: Toolbar }}
+        />
+      </div>
     </div>
   );
 }

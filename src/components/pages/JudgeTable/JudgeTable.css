@@ -104,3 +104,18 @@
   text-transform: uppercase;
   border: none;
 }
+
+/* MUI fixes for color */
+
+.table {
+  height: 400;
+  font-family: 'Open Sans', sans-serif;
+}
+
+span.MuiButton-label {
+  color: #215589;
+}
+
+.MuiCheckbox-colorPrimary.Mui-checked {
+    color: #215589 !important;
+    }
