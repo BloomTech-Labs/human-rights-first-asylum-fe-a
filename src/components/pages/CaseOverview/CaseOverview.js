@@ -19,7 +19,7 @@ const CaseOverview = props => {
       axios
         .get(`${process.env.REACT_APP_API_URI}/case/${id}`, {
           headers: {
-            Authorization: 'Bearer ' + authState,
+            Authorization: 'Bearer ' + authState.idToken.value,
           },
         })
         .then(res => {
@@ -48,7 +48,12 @@ const CaseOverview = props => {
       >
         <Skeleton loading={loading} active>
           {isEditing ? (
-            <CaseUpdate authState={authState} caseData={caseData} />
+            <CaseUpdate
+              authState={authState}
+              caseData={caseData}
+              setCasesData={props.setCasesData}
+              casesData={props.casesData}
+            />
           ) : (
             <>
               <p style={{ textDecoration: 'underline', fontWeight: 'bold' }}>

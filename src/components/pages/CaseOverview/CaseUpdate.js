@@ -32,7 +32,7 @@ const CaseUpdate = props => {
     axios
       .get(`${process.env.REACT_APP_API_URI}/case/${id}`, {
         headers: {
-          Authorization: 'Bearer ' + authState,
+          Authorization: 'Bearer ' + authState.idToken.value,
         },
       })
       .then(res => setNewCase(res.data))
@@ -60,31 +60,60 @@ const CaseUpdate = props => {
     });
   };
 
-  const handleSubmit = event => {
-    event.preventDefault();
-    axios
-      .put(`${process.env.REACT_APP_API_URI}/case/${id}`, newCase)
-      .then(res => {
-        props.setCaseData([...props.caseData, res.data]);
-        props.fetchCase();
-        history.push('/');
-      })
-      .catch(error => console.log(error));
-  };
-
   const onFinish = values => {
     const fieldsValue = {
       ...values,
       hearing_date: values['hearing_date'].format('M-D-YYYY'),
     };
+
+    delete fieldsValue['judge_name']; //judge_name will not send to BE
+
+    const newCase = { ...caseData, ...fieldsValue };
+    delete newCase['protected_ground'];
+    delete newCase['social_group_type'];
+    delete newCase['judge_name'];
+
+    console.log(newCase);
     axios
-      .put(`${process.env.REACT_APP_API_URI}/case/${id}`, newCase)
+      .put(`${process.env.REACT_APP_API_URI}/case/${id}`, fieldsValue)
       .then(res => {
-        props.setCaseData([...props.caseData, res.data]);
-        props.fetchCase();
-        history.push('/');
+        delete caseData['protected_ground'];
+        delete caseData['social_group_type'];
+
+        const newCases = props.casesData.map(c => {
+          return c.primary_key === caseData.primary_key
+            ? {
+                ...caseData,
+                ...fieldsValue,
+                judge_name: judges.filter(
+                  j => fieldsValue['judge'] === j.judge_id
+                )[0]['name'],
+                id: caseData.primary_key,
+              }
+            : c;
+        });
+        props.setCasesData([...newCases]);
+        history.push('/'); // or change iseditting to false
       })
       .catch(error => console.log(error));
+
+    // delete caseData['protected_ground'];
+    // delete caseData['social_group_type'];
+
+    // const newCases = props.casesData.map(c => {
+    //   return c.primary_key === caseData.primary_key
+    //     ? {
+    //         ...caseData,
+    //         ...fieldsValue,
+    //         judge_name: judges.filter(
+    //           j => fieldsValue['judge'] === j.judge_id
+    //         )[0]['name'],
+    //         id: caseData.primary_key,
+    //       }
+    //     : c;
+    // });
+    // props.setCasesData([...newCases]);
+    //history.push('/');
   };
 
   const layout = {
@@ -121,7 +150,7 @@ const CaseUpdate = props => {
         <DatePicker format="M-D-YYYY" />
       </Form.Item>
 
-      <Form.Item label="Judge" name="judge_name">
+      <Form.Item label="Judge" name="judge">
         <Select>
           {judges.map(judge => (
             <Option value={judge.judge_id} key={judge.judge_id}>
@@ -141,13 +170,8 @@ const CaseUpdate = props => {
         <Input />
       </Form.Item>
 
-      <Form.Item
-        label="protected_ground"
-        name="protected_ground"
-        valuePropName="checked"
-      >
-        {/*boolean*/}
-        <Checkbox />
+      <Form.Item label="Protected Ground" name="protected_ground">
+        <Input />
       </Form.Item>
 
       <Form.Item label="case_outcome" name="case_outcome">
