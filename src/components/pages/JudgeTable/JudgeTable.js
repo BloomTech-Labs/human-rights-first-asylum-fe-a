@@ -1,96 +1,17 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+
 import {
   DataGrid,
   GridColumnsToolbarButton,
   GridToolbarExport,
   GridDensitySelector,
 } from '@material-ui/data-grid';
-import { Drawer } from '@material-ui/core';
-import Chip from '@material-ui/core/Chip';
-import { makeStyles } from '@material-ui/core/styles';
 
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-
-import {
-  SearchOutlined,
-  SaveOutlined,
-  CloseCircleOutlined,
-} from '@ant-design/icons';
-import { Button, Menu, Input } from 'antd';
-
-const useStyles = makeStyles(theme => ({
-  grid: {
-    marginTop: 15,
-  },
-  judgeTbl: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    width: '90%',
-    minHeight: '90vh',
-    height: '100%',
-    margin: '5rem',
-  },
-  tbl_container: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '57%',
-    margin: 'auto',
-    marginTop: 100,
-    flexGrow: 1,
-    paddingRight: 30,
-  },
-  select: {
-    margin: 70,
-    height: 20,
-  },
-  search_container: {
-    display: 'flex',
-    alignItems: 'flex-end',
-  },
-  colFilter: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '15%',
-  },
-  drawer: {
-    width: 300,
-    marginTop: '30%',
-  },
-  chips: {
-    display: 'flex',
-  },
-  close: {
-    textAlign: 'right',
-    padding: '1%',
-    margin: 'auto 2% auto auto',
-    transform: 'scale(1.2)',
-    '&:hover': {
-      curser: 'pointer',
-      transform: 'scale(1.4)',
-    },
-  },
-  toolbar_options: {
-    borderRadius: '6px',
-    padding: '0.5rem',
-    display: 'flex',
-    alignItems: 'center',
-  },
-  toolbar: {
-    padding: '1rem',
-    overflow: 'hidden',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    borderRadius: '6px',
-    width: '100%',
-    '&:hover': {
-      cursor: 'pointer',
-    },
-  },
-}));
+import { SearchOutlined, SaveOutlined } from '@ant-design/icons';
+import { Button, Menu, Input, Card, Drawer } from 'antd';
+import './JudgeTable.css';
 
 export default function JudgeTable(props) {
   const { judgeData, userInfo, savedJudges, setSavedJudges, authState } = props;
@@ -101,6 +22,7 @@ export default function JudgeTable(props) {
       field: 'name',
       renderHeader: params => <strong>{'Judge'}</strong>,
       width: 170,
+      headerName: 'Name',
       className: 'tableHeader',
       options: {
         filter: true,
@@ -111,7 +33,7 @@ export default function JudgeTable(props) {
         <>
           <Link
             to={`/judge/${params.value.split(' ').join('%20')}`}
-            style={{ color: '#215589' }}
+            className="judgeTableLink"
           >
             <span>{params.value}</span>
           </Link>
@@ -121,26 +43,31 @@ export default function JudgeTable(props) {
     {
       field: 'judge_county',
       renderHeader: params => <strong>{'Case Origin'}</strong>,
+      headerName: 'Case Origin',
       width: 160,
     },
     {
       field: 'date_appointed',
       renderHeader: params => <strong>{'Date Appointed'}</strong>,
+      headerName: 'Date Appointed',
       width: 160,
     },
     {
       field: 'appointed_by',
       renderHeader: params => <strong>{'Appointed By'}</strong>,
+      headerName: 'Appointed By',
       width: 160,
     },
     {
       field: 'denial_rate',
       renderHeader: params => <strong>{'% Denial'}</strong>,
+      headerName: 'Denial Rate',
       width: 110,
     },
     {
       field: 'approval_rate',
       renderHeader: params => <strong>{'% Approval'}</strong>,
+      headerName: 'Approval Rate',
       width: 130,
     },
   ];
@@ -148,8 +75,6 @@ export default function JudgeTable(props) {
   judgeData.forEach((item, idx) => {
     item.id = idx; //no?
   }); // this is VERY hacky, but the table doesn't take data without ids
-
-  const classes = useStyles();
 
   const findRowByID = (rowID, rowData) => {
     for (let i = 0; i < rowData.length; i++) {
@@ -238,54 +163,48 @@ export default function JudgeTable(props) {
 
   const Toolbar = () => {
     return (
-      <Menu>
-        <div className={classes.toolbar}>
+      <Menu className="judgeTableContainer">
+        <div className="judgeTableToolbar">
           <div
-            className={classes.toolbar_options}
+            className="judgeTableToolbarOptions"
             onClick={() => {
               toggleSearch();
             }}
           >
             <Button
-              style={{
-                background: '#215589',
-                color: '#fff',
-                textTransform: 'uppercase',
-              }}
+              className="judgeTableBtn"
               type="default"
-              icon={<SearchOutlined style={{ color: '#fff' }} />}
+              icon={<SearchOutlined />}
             >
               Search
             </Button>
-          </div>
-          <div
-            className={classes.toolbar_options}
-            onClick={() => {
-              bookmarkJudges(selectedRows);
-            }}
-          >
-            <Button
-              style={{
-                background: '#215589',
-                color: '#fff',
-                textTransform: 'uppercase',
-              }}
-              type="default"
-              icon={<SaveOutlined style={{ color: '#fff' }} />}
-            >
-              Save Judges
-            </Button>
-          </div>
 
-          <div
-            style={{
-              WebkitTextFillColor: '#215589',
-              WebkitMarginStart: '1rem',
-            }}
-          >
-            <GridColumnsToolbarButton />
-            <GridDensitySelector />
-            <GridToolbarExport />
+            <div
+              className="judgeTableToolbarOptions"
+              onClick={() => {
+                bookmarkJudges(selectedRows);
+              }}
+            >
+              <Button
+                className="judgeTableBtn"
+                type="default"
+                icon={<SaveOutlined />}
+              >
+                Save Judges
+              </Button>
+
+              <div
+                className="judgeTableToolbarOptions"
+                style={{
+                  WebkitTextFillColor: '#215589',
+                  WebkitMarginStart: '1rem',
+                }}
+              >
+                <GridColumnsToolbarButton />
+                <GridDensitySelector />
+                <GridToolbarExport />
+              </div>
+            </div>
           </div>
         </div>
       </Menu>
@@ -343,21 +262,15 @@ export default function JudgeTable(props) {
   ];
   const drawerContent = () => {
     return (
-      <div className={classes.drawer}>
-        <CloseCircleOutlined
-          style={{ marginLeft: '85%' }}
-          onClick={() => {
-            toggleSearch();
-          }}
-        />
+      <div className="judgeTableDrawer">
         {searchOptions.map(value => {
           return (
             <div key={value.id}>
-              <p style={{ marginLeft: '15%' }}>{value.label}</p>
+              <p>{value.label}</p>
               <Input
                 placeholder={'search query'}
                 variant="outlined"
-                size="large"
+                size="medium"
                 value={queryValues[value.id]}
                 onChange={e => {
                   setQueryValues({
@@ -367,7 +280,7 @@ export default function JudgeTable(props) {
                   setSearching(true);
                 }}
                 type="text"
-                style={{ marginLeft: '15%', marginBottom: 10, marginTop: 10 }}
+                className="judgePageSearchInput"
               />
             </div>
           );
@@ -377,45 +290,42 @@ export default function JudgeTable(props) {
   };
 
   return (
-    <div className={classes.tbl_container}>
-      <div className={classes.search_container}>
-        {searching && (
-          <div className={classes.chips}>
-            {searchOptions.map(option => {
-              if (queryValues[option.id] !== '') {
-                return (
-                  <Chip
-                    key={option.id}
-                    label={`${option.label}: "${queryValues[option.id]}"`}
-                    onDelete={() => {
-                      setQueryValues({
-                        ...queryValues,
-                        [option.id]: '',
-                      });
-                    }}
-                    style={{ marginRight: 5 }}
-                  />
-                );
-              } else {
-                return null;
-              }
-            })}
-          </div>
-        )}
-        <Drawer
-          anchor="right"
-          open={new_search}
-          onClose={toggleSearch}
-          variant="persistent"
-        >
-          {drawerContent()}
-        </Drawer>
-      </div>
-      <div>
+    <div className="judgeTableContainer">
+      {searching && (
+        <div className="judgeTableCard">
+          {searchOptions.map(option => {
+            if (queryValues[option.id] !== '') {
+              return (
+                <Card
+                  key={option.id}
+                  label={`${option.label}: "${queryValues[option.id]}"`}
+                  onDelete={() => {
+                    setQueryValues({
+                      ...queryValues,
+                      [option.id]: '',
+                    });
+                  }}
+                />
+              );
+            } else {
+              return null;
+            }
+          })}
+        </div>
+      )}
+      <Drawer
+        className="judgeTableDrawer"
+        visible={new_search}
+        onClose={toggleSearch}
+      >
+        {drawerContent()}
+      </Drawer>
+
+      <div className="judgeTableGridContainer">
         <DataGrid
           rows={searching ? filter(judgeData) : judgeData}
           columns={columns}
-          className={classes.judgeTbl}
+          className="judgeTable"
           autoHeight={true}
           loading={judgeData ? false : true}
           checkboxSelection={true}

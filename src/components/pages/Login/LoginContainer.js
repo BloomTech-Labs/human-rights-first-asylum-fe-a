@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { StyledLogin } from './LoginContainerStyled';
 import OktaSignIn from '@okta/okta-signin-widget';
 import '@okta/okta-signin-widget/dist/css/okta-sign-in.min.css';
+import Button from '@material-ui/core/Button';
 // Below is the Human Rights logo
 import hrfLogo from './hrf-logo.png';
 
@@ -53,7 +55,14 @@ const LoginContainer = () => {
         className="background-image"
         aria-label="cosmetic background image"
       />
-      <div id="sign-in-widget" aria-label="login form" />
+      <div className="login-page">
+        <div id="sign-in-widget" aria-label="login form" />
+        <Button className="buttonStyles">
+          <Link to="/signup">
+            <p>Request to join</p>
+          </Link>
+        </Button>
+      </div>
     </StyledLogin>
   );
 };

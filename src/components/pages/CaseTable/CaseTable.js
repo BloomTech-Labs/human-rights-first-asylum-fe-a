@@ -1,31 +1,25 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { Link, useParams } from 'react-router-dom';
+import Plot from 'react-plotly.js';
+
 import {
   DataGrid,
   GridColumnsToolbarButton,
   GridToolbarExport,
   GridDensitySelector,
 } from '@material-ui/data-grid';
-
-import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import axios from 'axios';
-import { Link, useParams } from 'react-router-dom';
-import Plot from 'react-plotly.js';
-import CancelIcon from '@material-ui/icons/Cancel';
 
 import {
   SearchOutlined,
   DownloadOutlined,
   SaveOutlined,
 } from '@ant-design/icons';
-
-// Imports for PDF Modal
-import PDFViewer from '../PDFViewer/PDFViewer';
-import { Button, Menu } from 'antd';
+import { Button, Menu, Drawer, Input, Card } from 'antd';
 import './CaseTable.css';
-import { Drawer } from '@material-ui/core';
-import Chip from '@material-ui/core/Chip';
 
+import PDFViewer from '../PDFViewer/PDFViewer';
 import PDFExportButton from './PDFOverviewExport/PDFExportButton';
 
 const useStyles = makeStyles(theme => ({
@@ -95,7 +89,7 @@ const useStyles = makeStyles(theme => ({
   tabs: {
     width: '30%',
   },
-  chips: {
+  cards: {
     display: 'flex',
   },
   buttons: {
@@ -154,7 +148,6 @@ export default function CaseTable(props) {
     axios
       .get(`${process.env.REACT_APP_API_URI}/case/${id}`)
       .then(res => {
-        console.log(res.data);
         setShowPdf(res.data);
       })
       .catch(error => {
@@ -406,6 +399,7 @@ export default function CaseTable(props) {
     alert('Cases Successfully Saved');
   };
 
+  // eslint-disable-next-line no-unused-vars
   const onCheckboxSelect = selections => {
     setSelectedRows(selections);
   };
@@ -490,20 +484,14 @@ export default function CaseTable(props) {
   const drawerContent = () => {
     return (
       <div className={classes.drawer}>
-        <CancelIcon
-          className={classes.close}
-          onClick={() => {
-            toggleSearch();
-          }}
-        />
         {searchOptions.map(value => {
           return (
             <div key={value.id}>
-              <p style={{ marginLeft: '15%' }}>{value.label}</p>
-              <TextField
+              <p style={{ marginLeft: '5%' }}>{value.label}</p>
+              <Input
                 placeholder={'search query'}
                 variant="outlined"
-                size="small"
+                size="medium"
                 value={queryValues[value.id]}
                 onChange={e => {
                   setQueryValues({
@@ -513,7 +501,7 @@ export default function CaseTable(props) {
                   setSearching(true);
                 }}
                 type="text"
-                style={{ marginLeft: '15%', marginBottom: 10 }}
+                style={{ marginLeft: '5%', marginTop: 10, marginBottom: 10 }}
               />
             </div>
           );
@@ -574,6 +562,18 @@ export default function CaseTable(props) {
             icon={<DownloadOutlined style={{ color: '#fff' }} />}
           >
             Download All Selected
+          </Button>
+
+          <Button
+            style={{
+              background: '#215589',
+              color: '#fff',
+              textTransform: 'uppercase',
+              marginLeft: '.5%',
+            }}
+            type="default"
+          >
+            <PDFExportButton caseData={filter(caseData)} viz={<PieChart />} />
           </Button>
 
           <div
@@ -652,11 +652,11 @@ export default function CaseTable(props) {
       <PieChart />
       <div className={classes.search_container}>
         {searching && (
-          <div className={classes.chips}>
+          <div className={classes.cards}>
             {searchOptions.map(option => {
               if (queryValues[option.id] !== '') {
                 return (
-                  <Chip
+                  <Card
                     key={option.id}
                     label={`${option.label}: "${queryValues[option.id]}"`}
                     onDelete={() => {
@@ -674,14 +674,10 @@ export default function CaseTable(props) {
             })}
           </div>
         )}
-        <div>
-          <PDFExportButton caseData={caseData} viz={<PieChart />} />
-        </div>
         <Drawer
-          anchor="right"
-          open={new_search}
+          visible={new_search}
           onClose={toggleSearch}
-          variant="persistent"
+          style={{ marginTop: '4rem' }}
         >
           {drawerContent()}
         </Drawer>

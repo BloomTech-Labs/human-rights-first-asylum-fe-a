@@ -21,6 +21,7 @@ import { LandingPage } from './components/pages/Landing';
 import { ExampleDataViz } from './components/pages/ExampleDataViz';
 import { config } from './utils/oktaConfig';
 import { LoadingComponent } from './components/common';
+import SignupPage from './components/pages/Login/SignupPage';
 
 const oktaAuth = new OktaAuth(config);
 
@@ -57,6 +58,7 @@ function App() {
       <GlobalStyle />
       <Switch>
         <Route path="/login" component={LoginPage} />
+        <Route path="/signup" component={SignupPage} />
         <Route path="/implicit/callback" component={LoginCallback} />
         <Route path="/landing" component={LandingPage} />
         {/* any of the routes you need secured should be registered as SecureRoutes */}

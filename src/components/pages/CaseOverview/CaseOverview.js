@@ -7,7 +7,7 @@ import { EditOutlined } from '@ant-design/icons';
 import CaseUpdate from './CaseUpdate';
 
 const CaseOverview = props => {
-  const { authState } = props;
+  const token = localStorage.getItem('okta-token-storage');
   const [caseData, setCaseData] = useState({});
   const [loading, setLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -15,11 +15,13 @@ const CaseOverview = props => {
   const { id } = useParams();
 
   useEffect(() => {
+    const parsedToken = JSON.parse(token);
+
     async function fetchCase() {
       axios
         .get(`${process.env.REACT_APP_API_URI}/case/${id}`, {
           headers: {
-            Authorization: 'Bearer ' + authState.idToken.value,
+            Authorization: 'Bearer ' + parsedToken.idToken.value,
           },
         })
         .then(res => {
@@ -30,9 +32,11 @@ const CaseOverview = props => {
           console.log(err);
         });
     }
-    setLoading(true);
-    fetchCase();
-  }, [id, authState]);
+    if (token) {
+      setLoading(true);
+      fetchCase();
+    }
+  }, [id]);
 
   return (
     <>
@@ -49,7 +53,7 @@ const CaseOverview = props => {
         <Skeleton loading={loading} active>
           {isEditing ? (
             <CaseUpdate
-              authState={authState}
+              authState={JSON.parse(token)}
               caseData={caseData}
               setCasesData={props.setCasesData}
               casesData={props.casesData}

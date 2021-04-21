@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   logo: {
-    width: '50%',
+    width: '45%',
     height: 'auto',
     marginTop: '2%',
     marginBottom: '2%',
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   tableCol: {
-    width: '15%',
+    width: '12.5%',
     borderStyle: 'solid',
     borderWidth: 1,
     borderLeftWidth: 0,
@@ -46,7 +46,15 @@ const styles = StyleSheet.create({
   tableCell: {
     margin: 'auto',
     marginTop: 5,
-    fontSize: 10,
+    marginBottom: 5,
+    fontSize: 8,
+  },
+  columnNameCell: {
+    margin: 'auto',
+    marginTop: 5,
+    marginBottom: 5,
+    fontSize: 8,
+    fontWeight: 'Bold',
   },
 });
 
@@ -55,9 +63,35 @@ export function MyDoc(props) {
     <Document>
       <Page style={styles.page}>
         <Image source={hrfLogo} style={styles.logo} />
-        {props.caseData.map(item => {
-          return (
-            <View style={styles.table}>
+        <View style={styles.table}>
+          <View style={styles.tableRow}>
+            <View style={styles.tableCol}>
+              <Text style={styles.columnNameCell}>Case ID</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.columnNameCell}>Date</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.columnNameCell}>Judge</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.columnNameCell}>Case Origin</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.columnNameCell}>Case Outcome</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.columnNameCell}>Nation of Origin</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.columnNameCell}>Applicant Gender</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.columnNameCell}>Violence</Text>
+            </View>
+          </View>
+          {props.caseData.map(item => {
+            return (
               <View style={styles.tableRow}>
                 <View style={styles.tableCol}>
                   <Text style={styles.tableCell}>{item.case_id}</Text>
@@ -66,13 +100,10 @@ export function MyDoc(props) {
                   <Text style={styles.tableCell}>{item.hearing_date}</Text>
                 </View>
                 <View style={styles.tableCol}>
+                  <Text style={styles.tableCell}>{item.judge_name}</Text>
+                </View>
+                <View style={styles.tableCol}>
                   <Text style={styles.tableCell}>{item.case_origin}</Text>
-                </View>
-                <View style={styles.tableCol}>
-                  <Text style={styles.tableCell}>{item.application_type}</Text>
-                </View>
-                <View style={styles.tableCol}>
-                  <Text style={styles.tableCell}>{item.protected_ground}</Text>
                 </View>
                 <View style={styles.tableCol}>
                   <Text style={styles.tableCell}>{item.case_outcome}</Text>
@@ -85,13 +116,13 @@ export function MyDoc(props) {
                 </View>
                 <View style={styles.tableCol}>
                   <Text style={styles.tableCell}>
-                    {item.applicant_language}
+                    {item.type_of_violence_experienced}
                   </Text>
                 </View>
               </View>
-            </View>
-          );
-        })}
+            );
+          })}
+        </View>
       </Page>
     </Document>
   );

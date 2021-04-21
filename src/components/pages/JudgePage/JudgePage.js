@@ -1,58 +1,68 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import Plot from 'react-plotly.js';
-import { FullPage, FlexDiv, Profile, PlotDiv } from './JudgePageStyled';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+
 import { DataGrid } from '@material-ui/data-grid';
-import { makeStyles } from '@material-ui/core/styles';
 import './JudgePage.css';
 
-const useStyles = makeStyles(theme => ({
-  tbl_container: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '100%',
-    margin: 'auto',
-    flexGrow: 1,
-    position: 'relative',
-    paddingRight: 30,
-  },
-}));
-
-const columns = [
-  {
-    field: 'id',
-    headerName: 'Case Id',
-    width: 100,
-    renderCell: params => (
-      <>
-        <Link to={`/case/${params.value}`} style={{ color: '#215589' }}>
-          <span>{params.value}</span>
-        </Link>
-      </>
-    ),
-  },
-  { field: 'court_type', headerName: 'Court Type', width: 105 },
-  { field: 'nation_of_origin', headerName: 'Nation of Origin', width: 130 },
-  { field: 'protected_ground', headerName: 'Protected Ground', width: 150 },
-  { field: 'application_type ', headerName: 'Application Type ', width: 130 },
-  { field: 'case_outcome', headerName: 'Decision', width: 105 },
-  { field: 'case_status', headerName: 'Case Status', width: 120 },
-];
+import { SearchOutlined, UserOutlined } from '@ant-design/icons';
+import { Button, Menu, Input, Card, Drawer, Avatar } from 'antd';
 
 export default function JudgePage(props) {
   const { authState } = props;
   const [judge, setJudge] = useState();
   const { name } = useParams();
-  const classes = useStyles();
+
+  const columns = [
+    {
+      field: 'id',
+      renderHeader: params => <strong>{'Case Id'}</strong>,
+      width: 130,
+      headerName: 'Case Id',
+      options: {
+        filter: true,
+      },
+      renderCell: params => (
+        <>
+          <Link to={`/case/${params.value}`} className="judgePageLink">
+            <span>{params.value}</span>
+          </Link>
+        </>
+      ),
+    },
+    {
+      field: 'nation_of_origin',
+      renderHeader: params => <strong>{'Nation of Origin'}</strong>,
+      headerName: 'Nation of Origin',
+      width: 180,
+    },
+    {
+      field: 'protected_ground',
+      renderHeader: params => <strong>{'Protected Ground'}</strong>,
+      headerName: 'Protected Ground',
+      width: 180,
+    },
+    {
+      field: 'application_type ',
+      renderHeader: params => <strong>{'Application Type'}</strong>,
+      headerName: 'Application Type ',
+      width: 180,
+    },
+    {
+      field: 'case_outcome',
+      renderHeader: params => <strong>{'Decision'}</strong>,
+      headerName: 'Decision',
+      width: 140,
+    },
+  ];
 
   useEffect(() => {
     async function fetchJudge() {
       axios
         .get(`${process.env.REACT_APP_API_URI}/judge/${name}`, {
           headers: {
-            Authorization: 'Bearer ' + authState.idToken,
+            Authorization: 'Bearer ' + authState.idToken.idToken,
           },
         })
         .then(res => {
@@ -66,41 +76,141 @@ export default function JudgePage(props) {
     fetchJudge();
   }, [name, authState.idToken]);
 
+  const Toolbar = () => {
+    return (
+      <Menu className="judgePageContainer">
+        <div className="judgePageToolbar">
+          <div
+            onClick={() => {
+              toggleSearch();
+            }}
+          >
+            <Button
+              className="judgePageBtn"
+              type="default"
+              icon={<SearchOutlined />}
+            >
+              Search
+            </Button>
+          </div>
+        </div>
+      </Menu>
+    );
+  };
+
+  const [queryValues, setQueryValues] = useState({
+    case_id: '',
+    nation_of_origin: '',
+    protected_ground: '',
+    application_type: '',
+    case_outcome: '',
+  });
+
+  const [new_search, setSearch] = useState(false);
+  const toggleSearch = () => {
+    setSearch(!new_search);
+  };
+  const [searching, setSearching] = useState(false);
+
+  const filter = data => {
+    const searchedKeys = Object.entries(queryValues).filter(
+      ([k, v]) => v !== ''
+    );
+    const filteredData = data.filter(row => {
+      const matchedHits = [];
+      searchedKeys.forEach(([k, v]) => {
+        if (row[k].toString().includes(v.toString())) {
+          matchedHits.push(k);
+        }
+      });
+      return matchedHits.length === searchedKeys.length;
+    });
+    return filteredData;
+  };
+
+  const searchOptions = [
+    { id: 'case_id', label: 'Case Id' },
+    { id: 'nation_of_origin', label: 'Nation of Origin' },
+    { id: 'protected_ground', label: 'Protected Ground' },
+    { id: 'application_type', label: 'Application Type' },
+    { id: 'case_outcome', label: 'Decision' },
+  ];
+
+  const drawerContent = () => {
+    return (
+      <div className="judgePageDrawer">
+        {searchOptions.map(value => {
+          return (
+            <div key={value.id}>
+              <p>{value.label}</p>
+              <Input
+                placeholder={'search query'}
+                variant="outlined"
+                size="medium"
+                value={queryValues[value.id]}
+                onChange={e => {
+                  setQueryValues({
+                    ...queryValues,
+                    [value.id]: e.target.value,
+                  });
+                  setSearching(true);
+                }}
+                type="text"
+                className="judgePageSearchInput"
+              />
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+
   return (
-    // Needs a lot of styling work
-    <FullPage>
+    <div className="judgePageContainer">
       {judge && (
         <div>
-          <FlexDiv className="header">
-            <div className="imgBox">
-              {/* Judge Picture */}
-              <img
-                src="http://via.placeholder.com/300x400"
-                alt="judge profile"
-              />
-              <p>{judge.name} </p>
+          <div className="imgBox">
+            <div>
+              <Avatar shape="square" size={200} icon={<UserOutlined />} />
+              <h1>{judge.name}</h1>
             </div>
-            <Profile>
+            <Card className="judgePageCard" title="Judge Info">
               <p>Birthdate: {judge.birth_date}</p>
               <p>Appointed: {judge.date_appointed}</p>
               <p>Appointed By: {judge.appointed_by}</p>
               <p>County: {judge.judge_county}</p>
-              <p>Biography: {judge.biography}</p>
-            </Profile>
-          </FlexDiv>
+              <a
+                className="judgePageLink"
+                href={judge.biography}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Biography
+              </a>
+            </Card>
+          </div>
+          <Drawer
+            className="judgePageDrawer"
+            visible={new_search}
+            onClose={toggleSearch}
+          >
+            {drawerContent()}
+          </Drawer>
 
-          <div className={classes.tbl_container}>
-            Cases: "A section including relevant information/table of active
-            cases"
+          <div className="judgePageGridContainer">
+            {/* Cases: "A section including relevant information/table of active
+            cases" */}
             <DataGrid
+              rows={searching ? filter(judge.case_data) : judge.case_data}
               columns={columns}
-              rows={judge.case_data}
+              className="judgePageTable"
               autoHeight={true}
+              components={{ Toolbar: Toolbar }}
             />
           </div>
 
           <div>
-            <PlotDiv style={{ margin: '0 auto' }}>
+            <div className="judgePagePlotDiv">
               {
                 //* values are granted: value, denial: value, other: value
               }
@@ -163,8 +273,8 @@ export default function JudgePage(props) {
                   width: 600,
                 }}
               />
-            </PlotDiv>
-            <PlotDiv style={{ margin: '0 auto' }}>
+            </div>
+            <div className="judgePagePlotDiv">
               {
                 //* x = country_origin/application_type /protected_ground, y = granted: value / denial:value / other value
               }
@@ -282,10 +392,10 @@ export default function JudgePage(props) {
                   title: 'Decision By Protected Ground',
                 }}
               />
-            </PlotDiv>
+            </div>
           </div>
         </div>
       )}
-    </FullPage>
+    </div>
   );
 }

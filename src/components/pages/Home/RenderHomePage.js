@@ -21,7 +21,7 @@ import CaseUpdate from '../CaseOverview/CaseUpdate';
 import ManageCases from '../ManageCases/ManageCases';
 import AccountPage from '../AccountPage/AccountPage';
 import SupportPage from '../SupportPage/SupportPage';
-import AddUsersPage from '../AddUsersPage/AddUsers';
+import ManageUsersPage from '../ManageUsers/ManageUsers';
 
 const useStyles = makeStyles({
   container: {
@@ -228,7 +228,7 @@ function RenderHomePage(props) {
         <SupportPage />
       </Route>
       <Route exact path="/add-users">
-        <AddUsersPage authState={user.authState} />
+        <ManageUsersPage authState={user.authState} />
       </Route>
 
       <Route exact path="/">
