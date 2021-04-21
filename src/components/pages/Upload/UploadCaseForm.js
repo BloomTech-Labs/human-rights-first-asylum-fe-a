@@ -93,12 +93,11 @@ const UploadCaseForm = props => {
                   label="Hearing Date"
                   type="date"
                   variant="outlined"
-                  defaultValue="2021-01-01"
+                  defaultValue={formValues.hearing_date}
                   className={classes.textField}
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  value={formValues.hearing_date}
                 />
               </label>
             </div>
