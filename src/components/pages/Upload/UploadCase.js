@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import UploadCaseForm from './UploadCaseForm';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -80,9 +81,19 @@ const initialFormValues = {
   // case_status: '' pending stakeholder approval,
 };
 
+// spinner for upload
+const HRFBlueLoader = withStyles(() => ({
+  root: {
+    '& .MuiCircularProgress-circle': {
+      color: '#215589',
+    },
+  },
+}))(CircularProgress);
+
 const UploadCase = props => {
   const [formValues, setFormValues] = useState(initialFormValues);
   const classes = useStyles();
+  const [isLoading, setIsLoading] = useState(false);
 
   const postNewCase = newCase => {
     axios
@@ -126,10 +137,12 @@ const UploadCase = props => {
       return;
     }
 
+    setIsLoading(true);
     axios
       .post(`${process.env.REACT_APP_API_URI}/upload/`, dataForm)
       .then(res => {
         setFormValues(res.data);
+        setIsLoading(false);
         alert('Case uploaded successfully');
       })
       .catch(err => console.log(err));
@@ -161,6 +174,16 @@ const UploadCase = props => {
                   type="file"
                   onChange={onFileChange}
                 />
+                <>
+                  {console.log(isLoading)}
+                  {isLoading ? (
+                    <div>
+                      <HRFBlueLoader />
+                    </div>
+                  ) : (
+                    <p></p>
+                  )}
+                </>
                 <Button
                   className={classes.buttonStyles}
                   variant="outlined"
