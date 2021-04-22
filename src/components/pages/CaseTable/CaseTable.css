@@ -1,3 +1,126 @@
+/* caseTable styles */
+
+.tabs {
+  width: 30%;
+}
+
+.close {
+  text-align: right;
+  padding: 1%;
+  margin: auto 2% auto auto;
+  transform: scale(1.2);
+}
+
+.close:hover {
+  cursor: pointer;
+  transform: scale(1.4);
+}
+
+.caseTableLink {
+  color: #215589;
+}
+
+.pdfView {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 500px;
+}
+
+.caseTable {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  min-height: 90vh;
+  height: 100%;
+  margin: 8rem 4rem 4rem 0;
+}
+
+.caseTableGridContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  width: 90%;
+}
+
+/* caseTable Toolbar */
+
+.caseTableContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  width: 100%;
+}
+
+.caseTableSearchInput {
+  margin: 5% 10% 10% 5%;
+}
+
+.caseTableDrawer {
+  width: 300;
+  margin-top: 18%;
+  margin-bottom: 15%;
+  display: flex;
+  flex-flow: column wrap;
+}
+
+.caseTableDrawer p {
+  margin-left: 5%;
+}
+
+.caseTableToolbarOptions {
+  border-radius: 6px;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.caseTableToolbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 6px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.toolbar:hover {
+  cursor: pointer;
+}
+
+.caseTableBtn {
+  background: #215589;
+  color: #fff;
+  text-transform: uppercase;
+  border: none;
+}
+
+.caseTableBtnPDF {
+  background: #215589;
+  color: #fff;
+  text-transform: uppercase;
+  margin-left: 0.5%;
+}
+
+.caseTableSearchContainer {
+  display: flex;
+  align-items: flex-end;
+}
+
+.caseTableCard {
+  display: flex;
+}
+
+
+
+/* MUI color fixes */
 .table {
   height: 400;
   font-family: 'Open Sans', sans-serif;
@@ -8,5 +131,6 @@ span.MuiButton-label {
 }
 
 .MuiCheckbox-colorPrimary.Mui-checked {
-    color: #215589 !important;
-    }
+  color: #215589 !important;
+}
+
