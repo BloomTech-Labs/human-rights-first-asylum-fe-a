@@ -10,12 +10,32 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Checkbox from '@material-ui/core/Checkbox';
 
+import './CaseForm.css';
+
 const useStyles = makeStyles(theme => ({
   root: {
     '& .MuiTextField-root': {
       margin: theme.spacing(2),
       width: '30rem',
       textAlign: 'center',
+    },
+
+    '& .MuiOutlinedInput-root': {
+      '& input': {
+        color: '#215589',
+      },
+      '& fieldset': {
+        borderColor: '#215589',
+      },
+      '&:hover fieldset': {
+        borderColor: '#215589',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#215589',
+      },
+    },
+    '& .MuiFormLabel-root': {
+      color: '#215589',
     },
   },
 
@@ -42,26 +62,40 @@ const useStyles = makeStyles(theme => ({
   },
 
   buttonStyles: {
-    color: '#ffffff',
+    color: 'white',
     backgroundColor: '#215589',
     marginTop: '3%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    '&.MuiButton-contained': {
+      boxShadow: 'none',
+      color: 'white',
+      border: '1px solid darkgray',
+    },
+  },
+
+  checkbox: {
+    color: '#205488',
+    '&.MUI-checked': {
+      color: '#205488',
+    },
+    '&.MuiIconButton-root': {
+      color: '#205488',
+    },
   },
 }));
 
 const UploadCaseForm = props => {
-  const { formValues, onInputChange, submit, acceptCase, rejectCase } = props;
+  const { formValues, onInputChange, acceptCase, rejectCase } = props;
 
   const classes = useStyles();
 
   // This implements the switch functionality on the form
   const [state, setState] = useState({
-    applicantAccessToInterpreter: false,
-    caseFiledWithinOneYear: false,
-    applicantPerceivedCredibility: false,
-    initialOrAppellate: false,
+    filed_in_one_year: false,
+    credible: false,
+    initial_or_appellate: false,
   });
 
   const handleChange = e => {
@@ -77,12 +111,10 @@ const UploadCaseForm = props => {
 
   const onSubmit = evt => {
     evt.preventDefault();
-    submit();
   };
 
   return (
     <div className={classes.uploadPage}>
-      {/* <div className={classes.root}> */}
       <div className={classes.editForm}>
         <div className={classes.root}>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -93,22 +125,21 @@ const UploadCaseForm = props => {
                   label="Hearing Date"
                   type="date"
                   variant="outlined"
-                  defaultValue="2021-01-01"
+                  defaultValue={formValues.date}
                   className={classes.textField}
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  value={formValues.hearing_date}
                 />
               </label>
             </div>
             <div className="judge">
               <label htmlFor="judge">
                 <TextField
-                  multiline={true}
+                  label="Judge"
+                  placeholder="Judge"
                   type="text"
                   variant="outlined"
-                  placeholder="Judge"
                   name="judge"
                   onChange={onInputChange}
                   value={formValues.judge}
@@ -118,96 +149,95 @@ const UploadCaseForm = props => {
             <div className="case-outcome">
               <label htmlFor="case-outcome">
                 <TextField
-                  multiline={true}
-                  variant="outlined"
+                  label="Case Outcome"
                   placeholder="Case Outcome"
+                  variant="outlined"
                   name="case_outcome"
                   onChange={onInputChange}
                   value={formValues.case_outcome}
                 />
               </label>
             </div>
-            {/* This change is pending approval from stakeholder
-          <div className="hearing-type">
-            <label htmlFor="hearing-type">
-              <TextField
-                multiline={true}
-                type="text"
-                variant="outlined"
-                placeholder="Hearing Type"
-                name="Hearing Type"
-                onChange={onInputChange}
-                value={formValues.hearing_type}
-              />
-            </label>
-          </div> */}
             <div className="nation-of-origin">
               <label htmlFor="nation-of-origin">
                 <TextField
-                  multiline={true}
+                  label="Nation of Origin"
                   type="text"
                   variant="outlined"
                   placeholder="Nation of Origin"
-                  name="nation_of_origin"
+                  name="country_of_origin"
                   onChange={onInputChange}
-                  value={formValues.nation_of_origin}
+                  value={formValues.country_of_origin}
                 />
               </label>
             </div>
             <div className="protected-ground">
               <label htmlFor="protected-ground">
                 <TextField
-                  multiline={true}
+                  label="Protected Ground"
                   variant="outlined"
-                  name="protected_ground"
+                  name="protected_grounds"
                   placeholder="Protected Ground"
                   onChange={onInputChange}
-                  value={formValues.protected_ground}
+                  value={formValues.protected_grounds}
                 />
               </label>
             </div>
             <div className="application-type">
               <label htmlFor="application-type">
                 <TextField
-                  multiline={true}
+                  label="Application Type"
                   type="text"
                   variant="outlined"
-                  placeholder="Application Type "
+                  placeholder="Application Type"
                   name="application_type"
                   onChange={onInputChange}
                   value={formValues.application_type}
                 />
               </label>
             </div>
-            <div className="case-origin">
-              <label htmlFor="case-origin">
+            <div className="case-origin-city">
+              <label htmlFor="case-origin-city">
                 <TextField
-                  multiline={true}
+                  label="Case Origin City"
                   type="text"
                   variant="outlined"
-                  placeholder="Case Origin"
-                  name="case_origin"
+                  placeholder="Case Origin City"
+                  name="case_origin_city"
                   onChange={onInputChange}
-                  value={formValues.case_origin}
+                  value={formValues.case_origin_city}
+                />
+              </label>
+            </div>
+            <div className="case-origin-state">
+              <label htmlFor="case-origin-state">
+                <TextField
+                  label="Case Origin State"
+                  type="text"
+                  variant="outlined"
+                  placeholder="Case Origin State"
+                  name="case_origin_state"
+                  onChange={onInputChange}
+                  value={formValues.case_origin_state}
                 />
               </label>
             </div>
             <div className="applicant-gender">
               <label htmlFor="applicant-gender">
                 <TextField
-                  multiline={true}
+                  label="Applicant Gender"
                   variant="outlined"
                   placeholder="Applicant Gender"
-                  name="applicant_gender"
+                  name="gender"
                   onChange={onInputChange}
-                  value={formValues.applicant_gender}
+                  value={formValues.gender}
                 />
               </label>
             </div>
             <div className="applicant-language">
               <label htmlFor="applicant-language">
                 <TextField
-                  multiline={true}
+                  label="Applicant Language"
                   variant="outlined"
                   placeholder="Applicant Language"
                   name="applicant_language"
@@ -219,26 +249,26 @@ const UploadCaseForm = props => {
             <div className="applicant-indigenous-group">
               <label htmlFor="applicant-indigenous-group">
                 <TextField
-                  multiline={true}
+                  label="Applicant Indigenous Group"
                   type="text"
                   variant="outlined"
                   placeholder="Applicant Indigenous Group"
-                  name="applicant_indigenous_group"
+                  name="indigenous_group"
                   onChange={onInputChange}
-                  value={formValues.applicant_indigenous_group}
+                  value={formValues.indigenous_group}
                 />
               </label>
             </div>
             <div className="type-of-violence-experienced">
               <label htmlFor="type-of-violence-experienced">
                 <TextField
-                  multiline={true}
+                  label="Type of Violence Experienced"
                   type="text"
                   variant="outlined"
                   placeholder="Type of Violence Experienced"
-                  name="type_of_violence_experienced"
+                  name="type_of_violence"
                   onChange={onInputChange}
-                  value={formValues.type_of_violence_experienced}
+                  value={formValues.type_of_violence}
                 />
               </label>
             </div>
@@ -248,52 +278,42 @@ const UploadCaseForm = props => {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={state.applicantAccessToInterpreter}
+                      className={classes.checkbox}
+                      checked={state.initial_or_appellate}
                       onChange={handleChange}
-                      name="applicantAccessToInterpreter"
-                    />
-                  }
-                  label="Applicant Has Access To Interpreter"
-                  labelPlacement="right"
-                />
-              </FormGroup>
-              <FormGroup className={classes.row}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={state.caseFiledWithinOneYear}
-                      onChange={handleChange}
-                      name="caseFiledWithinOneYear"
-                    />
-                  }
-                  label="Case Filed Within The Past Year"
-                  labelPlacement="right"
-                />
-              </FormGroup>
-              <FormGroup className={classes.row}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={state.initialOrAppellate}
-                      onChange={handleChange}
-                      name="initialOrAppellate"
+                      name="initial_or_appellate"
                     />
                   }
                   label="Appellate Case"
-                  labelPlacement="right"
+                  labelPlacement="end"
                 />
               </FormGroup>
               <FormGroup className={classes.row}>
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={state.applicantPerceivedCredibility}
+                      className={classes.checkbox}
+                      checked={state.filed_in_one_year}
                       onChange={handleChange}
-                      name="applicantPerceivedCredibility"
+                      name="filed_in_one_year"
                     />
                   }
-                  label="Applicant Is Perceived As Credibility"
-                  labelPlacement="right"
+                  label="Case was filed Within One Year"
+                  labelPlacement="end"
+                />
+              </FormGroup>
+              <FormGroup className={classes.row}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      className={classes.checkbox}
+                      checked={state.credible}
+                      onChange={handleChange}
+                      name="credible"
+                    />
+                  }
+                  label="Applicant is Perceived as Credible"
+                  labelPlacement="end"
                 />
               </FormGroup>
               <FormHelperText></FormHelperText>
@@ -308,7 +328,7 @@ const UploadCaseForm = props => {
                     variant="contained"
                     component="span"
                   >
-                    Submit
+                    <p className="button-text">Submit</p>
                   </Button>
                 </div>
               </>
@@ -321,7 +341,7 @@ const UploadCaseForm = props => {
                     variant="contained"
                     component="span"
                   >
-                    Approve
+                    <p className="button-text">Approve</p>
                   </Button>
                 </div>
                 <br />
@@ -332,7 +352,7 @@ const UploadCaseForm = props => {
                     variant="contained"
                     component="span"
                   >
-                    Reject
+                    <p className="button-text">Reject</p>
                   </Button>
                 </div>
               </>
