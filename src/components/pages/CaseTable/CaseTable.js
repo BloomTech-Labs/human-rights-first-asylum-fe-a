@@ -82,7 +82,8 @@ const useStyles = makeStyles(theme => ({
   },
   drawer: {
     width: 300,
-    marginTop: '30%',
+    marginTop: '18%',
+    marginBottom: '15%',
     display: 'flex',
     flexFlow: 'column wrap',
   },
@@ -677,6 +678,7 @@ export default function CaseTable(props) {
         <Drawer
           visible={new_search}
           onClose={toggleSearch}
+          width={'25%'}
           style={{ marginTop: '4rem' }}
         >
           {drawerContent()}
