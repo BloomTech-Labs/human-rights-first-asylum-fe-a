@@ -82,7 +82,8 @@ const useStyles = makeStyles(theme => ({
   },
   drawer: {
     width: 300,
-    marginTop: '20%',
+    marginTop: '18%',
+    marginBottom: '15%',
     display: 'flex',
     flexFlow: 'column wrap',
   },
