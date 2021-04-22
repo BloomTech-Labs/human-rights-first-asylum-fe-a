@@ -10,6 +10,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Checkbox from '@material-ui/core/Checkbox';
 
+import './CaseForm.css';
+
 const useStyles = makeStyles(theme => ({
   root: {
     '& .MuiTextField-root': {
@@ -52,9 +54,6 @@ const useStyles = makeStyles(theme => ({
       boxShadow: 'none',
       color: 'white',
       border: '1px solid darkgray',
-      '&span': {
-        color: 'white',
-      },
     },
   },
 
@@ -110,7 +109,7 @@ const UploadCaseForm = props => {
                   label="Hearing Date"
                   type="date"
                   variant="outlined"
-                  defaultValue={formValues.hearing_date}
+                  defaultValue={formValues.date}
                   className={classes.textField}
                   InputLabelProps={{
                     shrink: true,
@@ -164,9 +163,9 @@ const UploadCaseForm = props => {
                   type="text"
                   variant="outlined"
                   placeholder="Nation of Origin"
-                  name="nation_of_origin"
+                  name="country_of_origin"
                   onChange={onInputChange}
-                  value={formValues.nation_of_origin}
+                  value={formValues.country_of_origin}
                 />
               </label>
             </div>
@@ -175,10 +174,10 @@ const UploadCaseForm = props => {
                 <TextField
                   label="Protected Ground"
                   variant="outlined"
-                  name="protected_ground"
+                  name="protected_grounds"
                   placeholder="Protected Ground"
                   onChange={onInputChange}
-                  value={formValues.protected_ground}
+                  value={formValues.protected_grounds}
                 />
               </label>
             </div>
@@ -195,16 +194,29 @@ const UploadCaseForm = props => {
                 />
               </label>
             </div>
-            <div className="case-origin">
-              <label htmlFor="case-origin">
+            <div className="case-origin-city">
+              <label htmlFor="case-origin-city">
                 <TextField
-                  label="Case Origin"
+                  label="Case Origin City"
                   type="text"
                   variant="outlined"
-                  placeholder="Case Origin"
-                  name="case_origin"
+                  placeholder="Case Origin City"
+                  name="case_origin_city"
                   onChange={onInputChange}
-                  value={formValues.case_origin}
+                  value={formValues.case_origin_city}
+                />
+              </label>
+            </div>
+            <div className="case-origin-state">
+              <label htmlFor="case-origin-state">
+                <TextField
+                  label="Case Origin State"
+                  type="text"
+                  variant="outlined"
+                  placeholder="Case Origin State"
+                  name="case_origin_state"
+                  onChange={onInputChange}
+                  value={formValues.case_origin_state}
                 />
               </label>
             </div>
@@ -214,9 +226,9 @@ const UploadCaseForm = props => {
                   label="Applicant Gender"
                   variant="outlined"
                   placeholder="Applicant Gender"
-                  name="applicant_gender"
+                  name="gender"
                   onChange={onInputChange}
-                  value={formValues.applicant_gender}
+                  value={formValues.gender}
                 />
               </label>
             </div>
@@ -239,9 +251,9 @@ const UploadCaseForm = props => {
                   type="text"
                   variant="outlined"
                   placeholder="Applicant Indigenous Group"
-                  name="applicant_indigenous_group"
+                  name="indigenous_group"
                   onChange={onInputChange}
-                  value={formValues.applicant_indigenous_group}
+                  value={formValues.indigenous_group}
                 />
               </label>
             </div>
@@ -252,9 +264,9 @@ const UploadCaseForm = props => {
                   type="text"
                   variant="outlined"
                   placeholder="Type of Violence Experienced"
-                  name="type_of_violence_experienced"
+                  name="type_of_violence"
                   onChange={onInputChange}
-                  value={formValues.type_of_violence_experienced}
+                  value={formValues.type_of_violence}
                 />
               </label>
             </div>
@@ -265,13 +277,13 @@ const UploadCaseForm = props => {
                   control={
                     <Checkbox
                       className={classes.checkbox}
-                      checked={state.initialOrAppellate}
+                      checked={state.initial_or_appellate}
                       onChange={handleChange}
-                      name="initialOrAppellate"
+                      name="initial_or_appellate"
                     />
                   }
                   label="Appellate Case"
-                  labelPlacement="right"
+                  labelPlacement="end"
                 />
               </FormGroup>
               <FormGroup className={classes.row}>
@@ -279,13 +291,13 @@ const UploadCaseForm = props => {
                   control={
                     <Checkbox
                       className={classes.checkbox}
-                      checked={state.caseFiledWithinOneYear}
+                      checked={state.filed_in_one_year}
                       onChange={handleChange}
-                      name="caseFiledWithinOneYear"
+                      name="filed_in_one_year"
                     />
                   }
                   label="Case Filed Within One Year"
-                  labelPlacement="right"
+                  labelPlacement="end"
                 />
               </FormGroup>
               <FormGroup className={classes.row}>
@@ -293,13 +305,13 @@ const UploadCaseForm = props => {
                   control={
                     <Checkbox
                       className={classes.checkbox}
-                      checked={state.applicantPerceivedCredibility}
+                      checked={state.credible}
                       onChange={handleChange}
-                      name="applicantPerceivedCredibility"
+                      name="credible"
                     />
                   }
                   label="Applicant Is Perceived As Credibility"
-                  labelPlacement="right"
+                  labelPlacement="end"
                 />
               </FormGroup>
               <FormHelperText></FormHelperText>
@@ -307,14 +319,16 @@ const UploadCaseForm = props => {
 
             {role === 'user' ? (
               <>
-                <Button
-                  onClick={onSubmit}
-                  className={classes.buttonStyles}
-                  variant="contained"
-                  component="span"
-                >
-                  Submit
-                </Button>
+                <div className="submit-button">
+                  <Button
+                    onClick={onSubmit}
+                    className={classes.buttonStyles}
+                    variant="contained"
+                    component="span"
+                  >
+                    <p className="button-text">Submit</p>
+                  </Button>
+                </div>
               </>
             ) : (
               <>
@@ -325,7 +339,7 @@ const UploadCaseForm = props => {
                     variant="contained"
                     component="span"
                   >
-                    Approve
+                    <p className="button-text">Approve</p>
                   </Button>
                 </div>
                 <br />
@@ -336,7 +350,7 @@ const UploadCaseForm = props => {
                     variant="contained"
                     component="span"
                   >
-                    Reject
+                    <p className="button-text">Reject</p>
                   </Button>
                 </div>
               </>

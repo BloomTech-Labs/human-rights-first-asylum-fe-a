@@ -6,6 +6,8 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 import UploadCaseForm from './UploadCaseForm';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+import './CaseForm.css';
+
 const useStyles = makeStyles(theme => ({
   root: {
     '& .MuiTextField-root': {
@@ -63,25 +65,21 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const initialFormValues = {
-  case_url: '',
-  hearing_date: '',
+  date: '',
   judge: '',
-  initial_or_appellate: '',
-  // hearing_type: '' pending stakeholder approval,
-  nation_of_origin: '',
+  case_outcome: '',
+  country_of_origin: '',
+  protegted_grounds: '',
+  application_type: '',
   case_origin_city: '',
   case_origin_state: '',
-  applicant_perceived_credibility: '',
-  case_outcome: '',
-  applicant_gender: '',
-  applicant_indigenous_group: '',
+  gender: '',
   applicant_language: '',
-  type_of_violence_experienced: '',
-  applicant_access_to_interpreter: '',
-  protected_ground: [],
-  application_type: [],
-  case_filled_within_one_year: '',
-  // case_status: '' pending stakeholder approval,
+  indigenous_group: '',
+  type_of_violence: '',
+  initial_or_appelate: false,
+  filed_in_one_year: false,
+  credible: false,
 };
 
 // spinner for upload
@@ -162,8 +160,8 @@ const UploadCase = props => {
         <div className={classes.pdfUpload}>
           <h1 className={classes.h1Styles}>The Case Uploader</h1>
           <h2 className={classes.h2Styles}>
-            Upload PDF and wait for form on the right hand side to populate.
-            Please, adjust any missing or incorrect information
+            Select a case PDF to upload. Once the case finishes uploading,
+            please make any necessary corrections before submitting.
           </h2>
           <form>
             <div className="pdf-upload">
@@ -175,24 +173,23 @@ const UploadCase = props => {
                   type="file"
                   onChange={onFileChange}
                 />
-                <>
-                  {console.log(isLoading)}
-                  {isLoading ? (
-                    <div>
-                      <HRFBlueLoader />
-                    </div>
-                  ) : (
-                    <p></p>
-                  )}
-                </>
                 <Button
                   className={classes.buttonStyles}
                   variant="outlined"
                   component="span"
                 >
-                  Upload a case
+                  <p className="button-text">Select case file</p>
                 </Button>
               </label>
+              <>
+                {isLoading ? (
+                  <div className="spinner_container">
+                    <HRFBlueLoader />
+                  </div>
+                ) : (
+                  <p />
+                )}
+              </>
             </div>
           </form>
         </div>
