@@ -1,0 +1,35 @@
+    /* .root {
+      margin-Top: '7%';
+      width: '100%';
+      display: 'flex';
+      justify-Content: 'space-around';
+    } */
+
+    .form {
+      width: '40%';
+    }
+    .faq {
+      width: '40%';
+    }
+    h2 {
+      font-Size: '1.3rem';
+      margin-Bottom: '2.5rem';
+      width: '100%';
+    }
+    h4 {
+      font-Size: '1.1rem';
+      margin-Bottom: '1.5rem';
+    }
+    .textField {
+      width: '100%';
+      margin: '0 auto';
+    }
+    .buttonStyles {
+      color: '#ffffff';
+      backgroundColor: '#215589';
+      marginTop: '3%';
+      display: 'flex';
+      alignItems: 'center';
+      justifyContent: 'center';
+    }
+  
