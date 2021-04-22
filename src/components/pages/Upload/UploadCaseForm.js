@@ -19,6 +19,24 @@ const useStyles = makeStyles(theme => ({
       width: '30rem',
       textAlign: 'center',
     },
+
+    '& .MuiOutlinedInput-root': {
+      '& input': {
+        color: '#215589',
+      },
+      '& fieldset': {
+        borderColor: '#215589',
+      },
+      '&:hover fieldset': {
+        borderColor: '#215589',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#215589',
+      },
+    },
+    '& .MuiFormLabel-root': {
+      color: '#215589',
+    },
   },
 
   uploadPage: {
@@ -75,10 +93,9 @@ const UploadCaseForm = props => {
 
   // This implements the switch functionality on the form
   const [state, setState] = useState({
-    applicantAccessToInterpreter: false,
-    caseFiledWithinOneYear: false,
-    applicantPerceivedCredibility: false,
-    initialOrAppellate: false,
+    filed_in_one_year: false,
+    credible: false,
+    initial_or_appellate: false,
   });
 
   const handleChange = e => {
@@ -98,7 +115,6 @@ const UploadCaseForm = props => {
 
   return (
     <div className={classes.uploadPage}>
-      {/* <div className={classes.root}> */}
       <div className={classes.editForm}>
         <div className={classes.root}>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -142,20 +158,6 @@ const UploadCaseForm = props => {
                 />
               </label>
             </div>
-            {/* This change is pending approval from stakeholder
-          <div className="hearing-type">
-            <label htmlFor="hearing-type">
-              <TextField
-                multiline={true}
-                type="text"
-                variant="outlined"
-                placeholder="Hearing Type"
-                name="Hearing Type"
-                onChange={onInputChange}
-                value={formValues.hearing_type}
-              />
-            </label>
-          </div> */}
             <div className="nation-of-origin">
               <label htmlFor="nation-of-origin">
                 <TextField
@@ -296,7 +298,7 @@ const UploadCaseForm = props => {
                       name="filed_in_one_year"
                     />
                   }
-                  label="Case Filed Within One Year"
+                  label="Case was filed Within One Year"
                   labelPlacement="end"
                 />
               </FormGroup>
@@ -310,7 +312,7 @@ const UploadCaseForm = props => {
                       name="credible"
                     />
                   }
-                  label="Applicant Is Perceived As Credibility"
+                  label="Applicant is Perceived as Credible"
                   labelPlacement="end"
                 />
               </FormGroup>
