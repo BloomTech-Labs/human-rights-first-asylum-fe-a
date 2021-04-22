@@ -24,7 +24,8 @@ const AccountPage = props => {
         <strong>Email:</strong> {oktaUserInfo.email}
       </p>
       <p>
-        <strong>Name:</strong> {hrfUserInfo.name}
+        <strong>Name:</strong>{' '}
+        {`${hrfUserInfo.firstName} ${hrfUserInfo.lastName}`}
       </p>
       <p>
         <strong>Date joined:</strong>{' '}
