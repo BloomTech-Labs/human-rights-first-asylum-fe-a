@@ -20,7 +20,7 @@ import HRFlogo from './HRFlogo.png';
 import RateReviewIcon from '@material-ui/icons/RateReview';
 import AccountIcon from '@material-ui/icons/AccountCircle';
 import HelpIcon from '@material-ui/icons/Help';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import BuildIcon from '@material-ui/icons/Build';
 import { Link } from 'react-router-dom';
 import { SideDrawerData } from './SideDrawerData';
 
@@ -193,7 +193,7 @@ export default function SideDrawer(props) {
         <Divider />
         <List>
           {/* Checking if user is an admin before rendering the nav item */}
-          {role === 'admin' ? (
+          {role === 'moderator' || 'admin' ? (
             <>
               <Link to="/manage-cases">
                 <ListItem button>
@@ -203,12 +203,16 @@ export default function SideDrawer(props) {
                   <ListItemText primary="Review Cases" style={textItemStyles} />
                 </ListItem>
               </Link>
-              <Link to="/add-users">
+            </>
+          ) : null}
+          {role === 'admin' ? (
+            <>
+              <Link to="/admin-tools">
                 <ListItem button>
                   <ListItemIcon>
-                    <PersonAddIcon />
+                    <BuildIcon />
                   </ListItemIcon>
-                  <ListItemText primary="Manage Users" style={textItemStyles} />
+                  <ListItemText primary="Admin Tools" style={textItemStyles} />
                 </ListItem>
               </Link>
             </>

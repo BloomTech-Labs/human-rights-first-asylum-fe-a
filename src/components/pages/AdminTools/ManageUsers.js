@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   root: {
+    marginTop: '7%',
     margin: '5% 0',
     width: '100%',
     display: 'flex',
@@ -26,53 +28,34 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const PendingUsersPage = props => {
+const ManageUsersPage = props => {
   const { authState } = props;
-  const [pendingProfiles, setPendingProfiles] = useState([]);
+  const [profiles, setProfiles] = useState([]);
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URI}/profiles/pending`, {
+      .get(`${process.env.REACT_APP_API_URI}/profiles`, {
         headers: {
           Authorization: 'Bearer ' + authState.idToken.idToken,
         },
       })
       .then(res => {
-        setPendingProfiles(res.data);
+        setProfiles(res.data);
       })
       .catch(err => {
         console.log(err);
       });
   }, [authState.idToken.idToken]);
 
-  const approveUser = profile => {
+  const deleteUser = profile => {
     axios
-      .post(`${process.env.REACT_APP_API_URI}/profile/`, profile, {
+      .delete(`${process.env.REACT_APP_API_URI}/profiles/${profile.id}`, {
         headers: {
           Authorization: 'Bearer ' + authState.idToken.idToken,
         },
       })
       .then(res => {
-        alert(`Profile request from ${profile.email} was approved`);
-        console.log(res.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
-
-  const rejectUser = profile => {
-    axios
-      .delete(
-        `${process.env.REACT_APP_API_URI}/profiles/pending/${profile.id}`,
-        {
-          headers: {
-            Authorization: 'Bearer ' + authState.idToken.idToken,
-          },
-        }
-      )
-      .then(res => {
-        alert(`Profile request from ${profile.email} was rejected`);
+        alert(`${profile.name}'s profile was deleted`);
         console.log(res.data);
       })
       .catch(err => {
@@ -84,9 +67,9 @@ const PendingUsersPage = props => {
 
   return (
     <div className={classes.root}>
-      <h1 className={classes.h1Styles}>Manage Requested Users</h1>
+      <h1 className={classes.h1Styles}>Manage Users</h1>
       <div>
-        {pendingProfiles.map(profile => (
+        {profiles.map(profile => (
           <div className={classes.profile}>
             <p className={classes.p}>
               {' '}
@@ -94,29 +77,21 @@ const PendingUsersPage = props => {
             </p>
             <p className={classes.p}>
               {' '}
-              <strong>First Name:</strong> {profile.firstName}
-            </p>
-            <p className={classes.p}>
-              {' '}
-              <strong>Last Name:</strong> {profile.lastName}
+              <strong>Name:</strong> {profile.name}
             </p>
             <p className={classes.p}>
               <strong>Date requested:</strong>{' '}
               {String(profile.created_at).slice(0, 10)}
             </p>
+            <Link to={`edit-user/${profile.id}`}>
+              <Button>Edit</Button>
+            </Link>
             <Button
               onClick={() => {
-                approveUser(profile);
+                deleteUser(profile);
               }}
             >
-              Approve
-            </Button>
-            <Button
-              onClick={() => {
-                rejectUser(profile);
-              }}
-            >
-              Reject
+              Delete
             </Button>
           </div>
         ))}
@@ -125,4 +100,4 @@ const PendingUsersPage = props => {
   );
 };
 
-export default PendingUsersPage;
+export default ManageUsersPage;

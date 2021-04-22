@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -8,9 +8,11 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
+import { useParams } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   root: {
+    marginTop: '7%',
     width: '100%',
     display: 'flex',
     justifyContent: 'space-around',
@@ -52,20 +54,31 @@ const initialFormValues = {
   role: '',
 };
 
-const AddUsersPage = props => {
+const EditUserPage = props => {
   const [formValues, setFormValues] = useState(initialFormValues);
   const { authState } = props;
+  const { id } = useParams();
 
   const classes = useStyles();
 
-  const onChange = e => {
-    const { name, value } = e.target;
-    setFormValues({ ...formValues, [name]: value });
-  };
-
-  const postNewUser = newUser => {
+  useEffect(() => {
     axios
-      .post(`${process.env.REACT_APP_API_URI}/profile/`, newUser, {
+      .get(`${process.env.REACT_APP_API_URI}/profiles/${id}`, {
+        headers: {
+          Authorization: 'Bearer ' + authState.idToken.idToken,
+        },
+      })
+      .then(res => {
+        setFormValues(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, [authState.idToken.idToken, id]);
+
+  const postNewUser = editedUser => {
+    axios
+      .put(`${process.env.REACT_APP_API_URI}/profile/`, editedUser, {
         headers: {
           Authorization: 'Bearer ' + authState.idToken.idToken,
         },
@@ -74,22 +87,27 @@ const AddUsersPage = props => {
     setFormValues(initialFormValues);
   };
 
+  const onChange = e => {
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
+  };
+
   const onSubmit = e => {
     e.preventDefault();
-    const newUser = {
+    const editedUser = {
       firstName: formValues.firstName.trim(),
       lastName: formValues.lastName.trim(),
       email: formValues.email.trim(),
       role: formValues.role.trim(),
     };
-    console.log(newUser);
-    postNewUser(newUser);
+    console.log(editedUser);
+    postNewUser(editedUser);
   };
 
   return (
     <div className={classes.root}>
       <div className={classes.form}>
-        <h2 className={classes.h1Styles}> Add User </h2>
+        <h2 className={classes.h1Styles}> Edit User </h2>
         <form onSubmit={onSubmit}>
           <label htmlFor="firstName">
             <TextField
@@ -100,6 +118,7 @@ const AddUsersPage = props => {
               variant="outlined"
               onChange={onChange}
               className={classes.textField}
+              value={formValues.firstName}
             />
           </label>
           <label htmlFor="lastName">
@@ -111,6 +130,7 @@ const AddUsersPage = props => {
               variant="outlined"
               onChange={onChange}
               className={classes.textField}
+              value={formValues.lastName}
             />
           </label>
           <label htmlFor="email">
@@ -122,11 +142,17 @@ const AddUsersPage = props => {
               variant="outlined"
               onChange={onChange}
               className={classes.textField}
+              value={formValues.email}
             />
           </label>
           <FormControl>
             <FormLabel className={classes.radio}>Role</FormLabel>
-            <RadioGroup aria-label="role" name="role" onChange={onChange}>
+            <RadioGroup
+              aria-label="role"
+              name="role"
+              onChange={onChange}
+              value={formValues.role}
+            >
               <FormControlLabel value="user" control={<Radio />} label="User" />
               <FormControlLabel
                 value="moderator"
@@ -156,4 +182,4 @@ const AddUsersPage = props => {
   );
 };
 
-export default AddUsersPage;
+export default EditUserPage;
