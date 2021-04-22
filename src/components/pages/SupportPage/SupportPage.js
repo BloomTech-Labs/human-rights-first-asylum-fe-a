@@ -25,6 +25,9 @@ const useStyles = makeStyles(theme => ({
     marginBottom: '2.5rem',
     width: '100%',
   },
+  pStyles: {
+    marginBottom: '1.5rem',
+  },
   textField: {
     width: '100%',
     margin: '0 auto',
@@ -75,7 +78,7 @@ const SupportPage = () => {
       <div className={classes.faq}>
         <h2 className={classes.h2Styles}>FAQ</h2>
         <h4 className={classes.h4Styles}>Q: How do I upload a case?</h4>
-        <p>
+        <p className={classes.pStyles}>
           A: Please navigate to the "Upload Case" page via the menu to the left
           of your screen to upload your case files. Once your files are
           succesfully uploaded, our system will comb through them and extract
@@ -83,6 +86,17 @@ const SupportPage = () => {
           the screen on the case upload page for your final approval before
           completing your submission.
         </p>
+        <h4 className={classes.h4Styles}>Q: Where does your data come from?</h4>
+        <p className={classes.pStyles}>
+          A: We aggregate data that you, the user, provide. We scrape the data
+          from case files asylum attorneys upload from all over the country and
+          display it for you in a neat, easily digestable package.
+        </p>
+        <h4 className={classes.h4Styles}>
+          Q: I know other attorneys that could benefit from this application,
+          how can they gain access?
+        </h4>
+        <p className={classes.pStyles}>A: currently invite only</p>
       </div>
     </div>
   );
