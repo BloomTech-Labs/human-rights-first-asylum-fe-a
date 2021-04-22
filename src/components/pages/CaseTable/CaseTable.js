@@ -9,7 +9,6 @@ import {
   GridToolbarExport,
   GridDensitySelector,
 } from '@material-ui/data-grid';
-import { makeStyles } from '@material-ui/core/styles';
 
 import {
   SearchOutlined,
@@ -21,112 +20,6 @@ import './CaseTable.css';
 
 import PDFViewer from '../PDFViewer/PDFViewer';
 import PDFExportButton from './PDFOverviewExport/PDFExportButton';
-
-const useStyles = makeStyles(theme => ({
-  grid: {
-    marginTop: 15,
-    height: '90vh',
-  },
-  tbl_container: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    width: '57%',
-    margin: 'auto',
-    marginTop: 100,
-    flexGrow: 1,
-    position: 'relative',
-    paddingRight: 30,
-  },
-  select: {
-    margin: 70,
-    height: 20,
-  },
-  search_container: {
-    display: 'flex',
-    alignItems: 'flex-end',
-  },
-  colFilter: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '15%',
-  },
-
-  pdfView: {
-    width: '100%',
-    height: '500px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  queryFields: {
-    display: 'flex',
-    flexDirection: 'column',
-    position: 'fixed',
-    border: '1px solid grey',
-    top: '220px',
-    right: 95,
-    background: 'white',
-    borderRadius: '10px',
-  },
-  filterButton: {
-    background: '#215589',
-    padding: '3%',
-    width: '100%',
-    color: 'white',
-    borderRadius: '8px',
-    fontWeight: 'bold',
-    fontSize: 'larger',
-    border: 'none',
-  },
-  drawer: {
-    width: 300,
-    marginTop: '30%',
-    display: 'flex',
-    flexFlow: 'column wrap',
-  },
-  tabs: {
-    width: '30%',
-  },
-  cards: {
-    display: 'flex',
-  },
-  buttons: {
-    display: 'flex',
-    width: '30%',
-  },
-  close: {
-    textAlign: 'right',
-    padding: '1%',
-    margin: 'auto 2% auto auto',
-    transform: 'scale(1.2)',
-    '&:hover': {
-      curser: 'pointer',
-      transform: 'scale(1.4)',
-    },
-  },
-  toolbar_options: {
-    borderRadius: '6px',
-    padding: '0.5rem',
-    display: 'flex',
-    alignItems: 'center',
-  },
-
-  toolbar: {
-    padding: '1rem',
-    overflow: 'hidden',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    borderRadius: '6px',
-    width: '100%',
-    '&:hover': {
-      cursor: 'pointer',
-    },
-  },
-}));
 
 export default function CaseTable(props) {
   const {
@@ -161,7 +54,6 @@ export default function CaseTable(props) {
       renderHeader: params => <strong>{'Case ID'}</strong>,
       headerName: 'Case ID',
       width: 130,
-      className: 'tableHeader',
       options: {
         filter: true,
       },
@@ -169,7 +61,7 @@ export default function CaseTable(props) {
 
       renderCell: params => (
         <>
-          <Link to={`/case/${params.value}`} style={{ color: '#215589' }}>
+          <Link to={`/case/${params.value}`} className="caseTableLink">
             <span> {params.row['case_id']}</span>
           </Link>
         </>
@@ -180,14 +72,12 @@ export default function CaseTable(props) {
       renderHeader: params => <strong>{'Date'}</strong>,
       headerName: 'Date',
       width: 110,
-      className: 'tableHeader',
     },
     {
       field: 'judge_name',
       renderHeader: params => <strong>{'Judge'}</strong>,
       headerName: 'Judge',
       width: 160,
-      className: 'tableHeader',
       renderCell: params => (
         <>
           <Link
@@ -204,63 +94,54 @@ export default function CaseTable(props) {
       renderHeader: params => <strong>{'Initial Hearing'}</strong>,
       headerName: 'Initial Hearing',
       width: 130,
-      className: 'tableHeader',
     },
     {
       field: 'case_origin',
       renderHeader: params => <strong>{'Case Origin'}</strong>,
       headerName: 'Case Origin',
       width: 160,
-      className: 'tableHeader',
     },
     {
       field: 'case_filed_within_one_year',
       renderHeader: params => <strong>{'Filed 1 Year'}</strong>,
       headerName: 'Filed 1 Year',
       width: 115,
-      className: 'tableHeader',
     },
     {
       field: 'protected_ground',
       renderHeader: params => <strong>{'Protected Ground'}</strong>,
       headerName: 'Protected Ground',
       width: 155,
-      className: 'tableHeader',
     },
     {
       field: 'case_outcome',
       renderHeader: params => <strong>{'Outcome'}</strong>,
       headerName: 'Outcome',
       width: 110,
-      className: 'tableHeader',
     },
     {
       field: 'nation_of_origin',
       renderHeader: params => <strong>{'Nation of Origin'}</strong>,
       headerName: 'Nation of Origin',
       width: 140,
-      className: 'tableHeader',
     },
     {
       field: 'applicant_gender',
       renderHeader: params => <strong>{'Applicant Gender'}</strong>,
       headerName: 'Applicant Gender',
       width: 155,
-      className: 'tableHeader',
     },
     {
       field: 'type_of_violence_experienced',
       renderHeader: params => <strong>{'Violence Experienced'}</strong>,
       headerName: 'Violence Experienced',
       width: 185,
-      className: 'tableHeader',
     },
     {
       field: 'application_type',
       renderHeader: params => <strong>{'Application Type'}</strong>,
       headerName: 'Application Type',
       width: 140,
-      className: 'tableHeader',
       hide: true,
     },
     {
@@ -268,7 +149,6 @@ export default function CaseTable(props) {
       renderHeader: params => <strong>{'Indigenous Group'}</strong>,
       headerName: 'Indigenous Group',
       width: 150,
-      className: 'tableHeader',
       hide: true,
     },
     {
@@ -276,7 +156,6 @@ export default function CaseTable(props) {
       renderHeader: params => <strong>{'Applicant Language'}</strong>,
       headerName: 'Applicant Language',
       width: 160,
-      className: 'tableHeader',
       hide: true,
     },
     {
@@ -284,7 +163,6 @@ export default function CaseTable(props) {
       renderHeader: params => <strong>{'Interpreter'}</strong>,
       headerName: 'Interpreter',
       width: 100,
-      className: 'tableHeader',
       hide: true,
     },
     {
@@ -292,7 +170,6 @@ export default function CaseTable(props) {
       renderHeader: params => <strong>{'Applicant Credibility'}</strong>,
       headerName: 'Applicant Credibility',
       width: 160,
-      className: 'tableHeader',
       hide: true,
     },
     // MODAL for PDFs / to be removed?
@@ -301,12 +178,11 @@ export default function CaseTable(props) {
       field: 'view_pdf',
       headerName: 'View PDF',
       width: 100,
-      className: 'tableHeader',
       hide: true,
       renderCell: params => (
         // Hook to control whether or not to show the PDF Modal
         <>
-          <div className={classes.pdfView}>
+          <div className="pdfView">
             <PDFViewer
               pdf={pdfData} // this will be set to viewPdf when endpoint is available
               onCancel={() => setShowPdf(false)}
@@ -321,7 +197,6 @@ export default function CaseTable(props) {
       field: 'download',
       headerName: 'Download',
       width: 100,
-      className: 'tableHeader',
       hide: true,
       renderCell: params => {
         return (
@@ -337,8 +212,6 @@ export default function CaseTable(props) {
       },
     },
   ];
-
-  const classes = useStyles();
 
   // the need for idParamName arose from case_id and id being used in different scenarios
   const findRowByID = (rowID, rowData) => {
@@ -483,11 +356,11 @@ export default function CaseTable(props) {
   ];
   const drawerContent = () => {
     return (
-      <div className={classes.drawer}>
+      <div className="caseTableDrawer">
         {searchOptions.map(value => {
           return (
             <div key={value.id}>
-              <p style={{ marginLeft: '5%' }}>{value.label}</p>
+              <p>{value.label}</p>
               <Input
                 placeholder={'search query'}
                 variant="outlined"
@@ -501,7 +374,7 @@ export default function CaseTable(props) {
                   setSearching(true);
                 }}
                 type="text"
-                style={{ marginLeft: '5%', marginTop: 10, marginBottom: 10 }}
+                className="caseTableSearchInput"
               />
             </div>
           );
@@ -512,76 +385,58 @@ export default function CaseTable(props) {
 
   const CustomToolbar = () => {
     return (
-      <Menu>
-        <div className={classes.toolbar}>
+      <Menu className="caseTableContainer">
+        <div className="caseTableToolbar">
           <div
-            className={classes.toolbar_options}
+            className="caseTableToolbarOptions"
             onClick={() => {
               toggleSearch();
             }}
           >
             <Button
-              style={{
-                background: '#215589',
-                color: '#fff',
-                textTransform: 'uppercase',
-              }}
+              className="caseTableBtn"
               type="default"
-              icon={<SearchOutlined style={{ color: '#fff' }} />}
+              style={{ background: '#215589', color: '#fff' }}
+              icon={<SearchOutlined />}
             >
               Search
             </Button>
           </div>
 
           <div
-            className={classes.toolbar_options}
+            className="caseTableToolbarOptions"
             onClick={() => {
               bookmarkCases(selectedRows);
             }}
           >
             <Button
-              style={{
-                background: '#215589',
-                color: '#fff',
-                textTransform: 'uppercase',
-              }}
+              className="caseTableBtn"
               type="default"
-              icon={<SaveOutlined style={{ color: '#fff' }} />}
+              style={{ background: '#215589', color: '#fff' }}
+              icon={<SaveOutlined />}
             >
               Save Cases
             </Button>
           </div>
 
           <Button
-            style={{
-              background: '#215589',
-              color: '#fff',
-              textTransform: 'uppercase',
-            }}
+            className="caseTableBtn"
             type="default"
-            icon={<DownloadOutlined style={{ color: '#fff' }} />}
+            style={{ background: '#215589', color: '#fff' }}
+            icon={<DownloadOutlined />}
           >
             Download All Selected
           </Button>
 
           <Button
-            style={{
-              background: '#215589',
-              color: '#fff',
-              textTransform: 'uppercase',
-              marginLeft: '.5%',
-            }}
+            className="caseTableBtnPDF"
             type="default"
+            style={{ background: '#215589', color: '#fff' }}
           >
             <PDFExportButton caseData={filter(caseData)} viz={<PieChart />} />
           </Button>
 
-          <div
-            style={{
-              WebkitTextFillColor: '#215589',
-              WebkitMarginStart: '1rem',
-            }}
-          >
+          <div className="caseTableToolbarOptions">
             <GridColumnsToolbarButton />
             <GridDensitySelector />
             <GridToolbarExport />
@@ -648,11 +503,11 @@ export default function CaseTable(props) {
   };
 
   return (
-    <div className={classes.tbl_container}>
+    <div className="caseTableContainer">
       <PieChart />
-      <div className={classes.search_container}>
+      <div className="caseTableCard">
         {searching && (
-          <div className={classes.cards}>
+          <div>
             {searchOptions.map(option => {
               if (queryValues[option.id] !== '') {
                 return (
@@ -677,16 +532,17 @@ export default function CaseTable(props) {
         <Drawer
           visible={new_search}
           onClose={toggleSearch}
+          width={'25%'}
           style={{ marginTop: '4rem' }}
         >
           {drawerContent()}
         </Drawer>
       </div>
-      <div className={classes.datagrid} style={{ color: '#215589' }}>
+      <div className="caseTableGridContainer">
         <DataGrid
           rows={searching ? filter(caseData) : caseData}
           columns={columns}
-          className={classes.grid}
+          className="caseTable"
           loading={caseData ? false : true}
           checkboxSelection={true}
           showCellRightBorder={true}
