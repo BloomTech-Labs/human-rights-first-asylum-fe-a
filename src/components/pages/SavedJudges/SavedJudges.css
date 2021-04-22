@@ -1,12 +1,4 @@
-/* both judgePage and judgeTable styles */
-
-.grid {
-  margin-top: 15;
-}
-
-.cards {
-  display: flex;
-}
+/* savedJudge styles */
 
 .close {
   text-align: center;
@@ -20,46 +12,33 @@
   transform: scale(1.4);
 }
 
-/* judgePage styles */
-
-.judgePageLink {
+.savedJudgeLink {
   color: #215589;
-}
-
-.judgePageContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-}
-
-.imgBox {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  width: 100%;
-  padding: 8rem 1rem 1rem 2rem;
 }
 
 h1 {
+  font-size: 1.3rem;
   color: #215589;
 }
 
-.judgePageCard {
-  margin-left: 2rem;
-  min-width: 20rem;
+.savedJudgeContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    width: 100%;
 }
 
-.judgePageGridContainer {
+.savedJudgeGridContainer {
   display: flex;
   flex-direction: column;
-  justify-content: 'center';
+  justify-content: center;
   align-content: center;
   width: 100%;
 }
 
-.judgePageTable {
+.savedJudgeTable {
   display: 'flex';
   flex-direction: 'column';
   justify-content: 'center';
@@ -70,31 +49,32 @@ h1 {
   margin-left: 2rem;
 }
 
-.judgePagePlotDiv {
+.savedJudgeStyles {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 2rem;
-  margin: 5% 0 0 0;
+  height: 20vh;
+  width: 100%;
+  margin-top: 5rem;
 }
 
-/* judgePage Toolbar styles */
+/* savedJudge Toolbar styles */
 
-.judgePageSearchInput {
+.savedJudgeSearchInput {
   margin: 5% 10% 10% 5%;
 }
 
-.judgePageDrawer {
+.savedJudgeDrawer {
   width: 300;
   margin-top: 5rem;
 }
 
-.judgePageDrawer p {
+.savedJudgeDrawer p {
   margin-left: 5%;
 }
 
-.judgePageToolbar {
+.savedJudgeToolbar {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -105,7 +85,7 @@ h1 {
   overflow: hidden;
 }
 
-.judgePageToolbar:hover {
+.savedJudgeToolbar:hover {
   cursor: pointer;
 }
 
@@ -115,4 +95,3 @@ h1 {
   text-transform: uppercase;
   border: none;
 }
-

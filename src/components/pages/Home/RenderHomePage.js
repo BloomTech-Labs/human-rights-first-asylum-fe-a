@@ -209,7 +209,11 @@ function RenderHomePage(props) {
       about the case can be viewed, this page is linked to the cooresponding judge's page
       this page also links to the update case file which is not operational yet, see notation
       on CaseOverview & CaseUpdate for details */}
-        <CaseOverview />
+        <CaseOverview
+          setCasesData={setCaseData}
+          authState={user.authState}
+          casesData={caseData}
+        />
       </Route>
       <Route exact path="case/:id/update" authState={user.authState}>
         <CaseUpdate />

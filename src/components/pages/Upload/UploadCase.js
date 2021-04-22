@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useForm } from 'react-hook-form';
 import Button from '@material-ui/core/Button';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import UploadCaseForm from './UploadCaseForm';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { notification } from 'antd';
+import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
+
+import './CaseForm.css';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -34,9 +37,11 @@ const useStyles = makeStyles(theme => ({
 
   pdfUpload: {
     marginTop: '15%',
-    display: 'inline-block',
+    display: 'flex',
     marginRight: '7.5%',
     width: '100%',
+    justifyContent: 'center',
+    flexDirection: 'column',
   },
 
   h1Styles: {
@@ -61,27 +66,23 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const initialFormValues = {
-  case_url: '',
-  hearing_date: '',
+  date: '',
   judge: '',
-  initial_or_appellate: '',
-  // hearing_type: '' pending stakeholder approval,
-  nation_of_origin: '',
-  case_origin: '',
-  applicant_perceived_credibility: '',
   case_outcome: '',
-  applicant_gender: '',
-  applicant_indigenous_group: '',
+  country_of_origin: '',
+  protected_grounds: '',
+  application_type: '',
+  case_origin_city: '',
+  case_origin_state: '',
+  gender: '',
   applicant_language: '',
-  type_of_violence_experienced: '',
-  applicant_access_to_interpreter: '',
-  protected_ground: [],
-  application_type: [],
-  case_filled_within_one_year: '',
-  // case_status: '' pending stakeholder approval,
+  indigenous_group: '',
+  type_of_violence: '',
+  initial_or_appellate: false,
+  filed_in_one_year: false,
+  credible: false,
 };
 
-// spinner for upload
 const HRFBlueLoader = withStyles(() => ({
   root: {
     '& .MuiCircularProgress-circle': {
@@ -95,40 +96,26 @@ const UploadCase = props => {
   const classes = useStyles();
   const [isLoading, setIsLoading] = useState(false);
 
-  const postNewCase = newCase => {
-    axios
-      .post(`${process.env.REACT_APP_API_URI}/upload/`, newCase)
-      .catch(err => console.log(err));
-    setFormValues(initialFormValues);
+  const successNotification = () => {
+    notification.open({
+      message: 'Upload Status',
+      description: 'Case uploaded successfully!',
+      top: 128,
+      icon: <CheckCircleOutlined style={{ color: 'green' }} />,
+    });
   };
 
-  const { handleSubmit } = useForm();
-
-  const onSubmit = () => {
-    const newCase = {
-      case_url: formValues.case_url.trim(),
-      hearing_date: formValues.hearing_date.trim(),
-      judge: formValues.judge.trim(),
-      initial_or_appellate: formValues.initial_or_appellate.trim(),
-      // hearing_type: formValues.hearing_type.trim() (pending stakeholder approval),
-      nation_of_origin: formValues.nation_of_origin.trim(),
-      case_origin: formValues.case_origin.trim(),
-      applicant_perceived_credibility: formValues.applicant_perceived_credibility.trim(),
-      case_outcome: formValues.case_outcome.trim(),
-      applicant_gender: formValues.applicant_gender.trim(),
-      applicant_indigenous_group: formValues.applicant_indigenous_group.trim(),
-      applicant_language: formValues.applicant_language.trim(),
-      type_of_violence_experienced: formValues.type_of_violence_experienced.trim(),
-      applicant_access_to_interpreter: formValues.applicant_access_to_interpreter.trim(),
-      protected_ground: formValues.protected_ground.trim(),
-      application_type: formValues.application_type.trim(),
-      case_filled_within_one_year: formValues.case_filled_within_one_year.trim(),
-      // case_status: formValues..trim() (pending stakeholder approval),
-    };
-    postNewCase(newCase);
+  const failNotification = () => {
+    notification.open({
+      message: 'Upload Status',
+      description:
+        'There was an issue with the upload. Please try again and if the issue persists contact the site administrator.',
+      top: 128,
+      duration: 8,
+      icon: <CloseCircleOutlined style={{ color: 'red' }} />,
+    });
   };
 
-  // endpoint to send file to backend
   const onFileChange = e => {
     const dataForm = new FormData();
     dataForm.append('target_file', e.target.files[0]);
@@ -143,9 +130,12 @@ const UploadCase = props => {
       .then(res => {
         setFormValues(res.data);
         setIsLoading(false);
-        alert('Case uploaded successfully');
+        successNotification();
       })
-      .catch(err => console.log(err));
+      .catch(() => {
+        setIsLoading(false);
+        failNotification();
+      });
   };
 
   const onInputChange = e => {
@@ -155,16 +145,14 @@ const UploadCase = props => {
 
   return (
     <div className={classes.uploadPage}>
-      {/* <div className={classes.root}> */}
       <div className={classes.leftDiv}>
         <div className={classes.pdfUpload}>
           <h1 className={classes.h1Styles}>The Case Uploader</h1>
           <h2 className={classes.h2Styles}>
-            Upload PDF and wait for form on the right hand side to populate.
-            Please, fill out any remaining empty or incorrect information on the
-            form.
+            Select a case PDF to upload. Once the case finishes uploading,
+            please make any necessary corrections before submitting.
           </h2>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form>
             <div className="pdf-upload">
               <label htmlFor="btn-upload">
                 <input
@@ -174,34 +162,28 @@ const UploadCase = props => {
                   type="file"
                   onChange={onFileChange}
                 />
-                <>
-                  {console.log(isLoading)}
-                  {isLoading ? (
-                    <div>
-                      <HRFBlueLoader />
-                    </div>
-                  ) : (
-                    <p></p>
-                  )}
-                </>
                 <Button
                   className={classes.buttonStyles}
                   variant="outlined"
                   component="span"
                 >
-                  Upload a case
+                  <p className="button-text">Select case file</p>
                 </Button>
               </label>
+              <>
+                {isLoading ? (
+                  <div className="spinner_container">
+                    <HRFBlueLoader />
+                  </div>
+                ) : (
+                  <p />
+                )}
+              </>
             </div>
           </form>
         </div>
       </div>
-      {/* <h2 className={classes.h2Styles}>Or, fill out form manually:</h2> */}
-      <UploadCaseForm
-        formValues={formValues}
-        onInputChange={onInputChange}
-        submit={onSubmit}
-      />
+      <UploadCaseForm formValues={formValues} onInputChange={onInputChange} />
     </div>
   );
 };
