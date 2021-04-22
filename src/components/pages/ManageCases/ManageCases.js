@@ -1,32 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { makeStyles } from '@material-ui/core/styles';
 import UploadCaseForm from '../Upload/UploadCaseForm';
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    '& .MuiTextField-root': {
-      margin: theme.spacing(2),
-      width: '30rem',
-      textAlign: 'center',
-    },
-  },
-
-  uploadPage: {
-    padding: '1%',
-    margin: '0 auto',
-    width: '80%',
-  },
-
-  buttonStyles: {
-    color: '#ffffff',
-    backgroundColor: '#215589',
-    marginTop: '3%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-}));
 
 const initialFormValues = {
   case_url: '',
@@ -51,7 +25,6 @@ const initialFormValues = {
 
 const ManageCases = props => {
   const [formValues, setFormValues] = useState(initialFormValues);
-  const classes = useStyles();
 
   const postNewCase = newCase => {
     axios
@@ -132,7 +105,7 @@ const ManageCases = props => {
   console.log(approvedCases, approvedQueue, isApproved, isDenied);
 
   return (
-    <div className={classes.uploadPage}>
+    <div className="uploadPage">
       <UploadCaseForm
         formValues={formValues}
         onInputChange={onInputChange}
