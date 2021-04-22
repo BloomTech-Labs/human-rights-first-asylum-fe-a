@@ -77,7 +77,8 @@ const ManageUsersPage = props => {
             </p>
             <p className={classes.p}>
               {' '}
-              <strong>Name:</strong> {profile.name}
+              <strong>Name:</strong>{' '}
+              {`${profile.firstName} ${profile.lastName}`}
             </p>
             <p className={classes.p}>
               <strong>Date requested:</strong>{' '}
