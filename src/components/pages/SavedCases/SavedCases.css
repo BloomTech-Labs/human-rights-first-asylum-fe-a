@@ -1,0 +1,98 @@
+/* savedJudge styles */
+
+.close {
+    text-align: center;
+    padding: 1%;
+    margin: auto 2% auto auto;
+    transform: scale(1.2);
+  }
+  
+  .close:hover {
+    cursor: pointer;
+    transform: scale(1.4);
+  }
+  
+  .savedCasesLink {
+    color: #215589;
+  }
+  
+  h1 {
+    font-size: 1.3rem;
+    color: #215589;
+  }
+  
+  .savedCasesContainer {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      align-content: center;
+      width: 100%;
+  }
+  
+  .savedCasesGridContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    width: 100%;
+  }
+  
+  .savedCasesTable {
+    display: 'flex';
+    flex-direction: 'column';
+    justify-content: 'center';
+    align-content: center;
+    width: 95%;
+    min-height: 30vh;
+    height: 100%;
+    margin-left: 2rem;
+  }
+  
+  .savedCasesStyles {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 20vh;
+    width: 100%;
+    margin-top: 5rem;
+  }
+  
+  /* savedJudge Toolbar styles */
+  
+  .savedCasesSearchInput {
+    margin: 5% 10% 10% 5%;
+  }
+  
+  .savedCasesDrawer {
+    width: 300;
+    margin-top: 5rem;
+  }
+  
+  .savedCasesDrawer p {
+    margin-left: 5%;
+  }
+  
+  .savedCasesToolbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    border-radius: 6px;
+    width: 100%;
+    padding: 1rem;
+    overflow: hidden;
+  }
+  
+  .savedCasesToolbar:hover {
+    cursor: pointer;
+  }
+  
+  .savedCasesBtn {
+    background: #215589;
+    color: #fff;
+    text-transform: uppercase;
+    border: none;
+  }
+  
