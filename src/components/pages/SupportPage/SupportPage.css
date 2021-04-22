@@ -1,35 +1,30 @@
-    /* .root {
-      margin-Top: '7%';
-      width: '100%';
-      display: 'flex';
-      justify-Content: 'space-around';
-    } */
+    .supportRoot {
+      margin-top: 10%;
+      width: 100%;
+      display: flex;
+      justify-Content: space-around;
+    }
 
     .form {
-      width: '40%';
+        width: 40%;
+        display: flex;
+        flex-direction: column;
     }
+
     .faq {
-      width: '40%';
+      width: 40%;
     }
-    h2 {
-      font-Size: '1.3rem';
-      margin-Bottom: '2.5rem';
-      width: '100%';
-    }
-    h4 {
-      font-Size: '1.1rem';
-      margin-Bottom: '1.5rem';
-    }
+
     .textField {
-      width: '100%';
-      margin: '0 auto';
+      width: 100%;
+      height: 15vh;
+      text-align: start ;
     }
-    .buttonStyles {
-      color: '#ffffff';
-      backgroundColor: '#215589';
-      marginTop: '3%';
-      display: 'flex';
-      alignItems: 'center';
-      justifyContent: 'center';
+
+    .formBtn {
+      color: #ffffff;
+      background-Color: #215589;
+      align-Items: center;
+      justify-Content: center;
     }
   

@@ -6,10 +6,10 @@ const SupportPage = () => {
   const { Title, Paragraph } = Typography;
 
   return (
-    <div className="root">
+    <div className="supportRoot">
       <div className="form">
-        <Title level={2}> Contact Us </Title>
-        <Form>
+        <Form className="contactForm">
+          <Title level={2}> Contact Us </Title>
           <Form.Item
             label="Message"
             name="Message"
@@ -20,11 +20,11 @@ const SupportPage = () => {
               },
             ]}
           >
-            <Input />
+            <Input className="textField" placeholder="Message" />
           </Form.Item>
           <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
+            <Button className="formBtn" type="primary" htmlType="submit">
+              SUBMIT
             </Button>
           </Form.Item>
         </Form>
