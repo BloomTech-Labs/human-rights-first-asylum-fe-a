@@ -79,7 +79,7 @@ export default function JudgeTable(props) {
   const findRowByID = (rowID, rowData) => {
     for (let i = 0; i < rowData.length; i++) {
       let currentRow = rowData[i];
-      if (currentRow.id === rowID) {
+      if (currentRow.name === rowID) {
         return currentRow;
       }
     }
@@ -193,13 +193,7 @@ export default function JudgeTable(props) {
                 Save Judges
               </Button>
 
-              <div
-                className="judgeTableToolbarOptions"
-                style={{
-                  WebkitTextFillColor: '#215589',
-                  WebkitMarginStart: '1rem',
-                }}
-              >
+              <div className="judgeTableToolbarOptions">
                 <GridColumnsToolbarButton />
                 <GridDensitySelector />
                 <GridToolbarExport />
