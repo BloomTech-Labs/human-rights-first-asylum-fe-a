@@ -186,7 +186,7 @@ function RenderHomePage(props) {
       />
 
       <Route exact path="/upload-case">
-        <UploadCase uploadCase={uploadCase} />
+        <UploadCase uploadCase={uploadCase} userInfo={user.userInfo} />
       </Route>
       <Route exact path="/saved-cases">
         <SavedCases savedCases={savedCases} deleteBookmark={deleteBookmark} />
