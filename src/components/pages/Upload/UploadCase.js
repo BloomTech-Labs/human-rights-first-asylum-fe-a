@@ -66,6 +66,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const initialFormValues = {
+  case_number: '',
+  case_url: '',
   date: '',
   judge: '',
   case_outcome: '',
@@ -81,6 +83,8 @@ const initialFormValues = {
   initial_or_appellate: false,
   filed_in_one_year: false,
   credible: false,
+  status: 'pending',
+  uploaded: '',
 };
 
 const HRFBlueLoader = withStyles(() => ({
