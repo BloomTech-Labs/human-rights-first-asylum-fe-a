@@ -133,6 +133,19 @@ const UploadCaseForm = props => {
                 />
               </label>
             </div>
+            <div className="case_number">
+              <label htmlFor="case_number">
+                <TextField
+                  label="Case Number"
+                  placeholder="Case Number"
+                  type="text"
+                  variant="outlined"
+                  name="case_number"
+                  onChange={onInputChange}
+                  value={formValues.case_number}
+                />
+              </label>
+            </div>
             <div className="judge">
               <label htmlFor="judge">
                 <TextField
