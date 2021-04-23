@@ -59,6 +59,8 @@ const EditUserPage = props => {
   const { authState } = props;
   const { id } = useParams();
 
+  const role = window.localStorage.getItem('role');
+
   const classes = useStyles();
 
   useEffect(() => {
@@ -78,7 +80,7 @@ const EditUserPage = props => {
 
   const postNewUser = editedUser => {
     axios
-      .put(`${process.env.REACT_APP_API_URI}/profile/`, editedUser, {
+      .put(`${process.env.REACT_APP_API_URI}/profile/${id}`, editedUser, {
         headers: {
           Authorization: 'Bearer ' + authState.idToken.idToken,
         },
@@ -145,27 +147,33 @@ const EditUserPage = props => {
               value={formValues.email}
             />
           </label>
-          <FormControl>
-            <FormLabel className={classes.radio}>Role</FormLabel>
-            <RadioGroup
-              aria-label="role"
-              name="role"
-              onChange={onChange}
-              value={formValues.role}
-            >
-              <FormControlLabel value="user" control={<Radio />} label="User" />
-              <FormControlLabel
-                value="moderator"
-                control={<Radio />}
-                label="Moderator"
-              />
-              <FormControlLabel
-                value="admin"
-                control={<Radio />}
-                label="Admin"
-              />
-            </RadioGroup>
-          </FormControl>
+          {role === 'admin' ? (
+            <FormControl>
+              <FormLabel className={classes.radio}>Role</FormLabel>
+              <RadioGroup
+                aria-label="role"
+                name="role"
+                onChange={onChange}
+                value={formValues.role}
+              >
+                <FormControlLabel
+                  value="user"
+                  control={<Radio />}
+                  label="User"
+                />
+                <FormControlLabel
+                  value="moderator"
+                  control={<Radio />}
+                  label="Moderator"
+                />
+                <FormControlLabel
+                  value="admin"
+                  control={<Radio />}
+                  label="Admin"
+                />
+              </RadioGroup>
+            </FormControl>
+          ) : null}
           <div className="submit-button">
             <Button
               onClick={onSubmit}

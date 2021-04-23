@@ -193,7 +193,7 @@ export default function SideDrawer(props) {
         <Divider />
         <List>
           {/* Checking if user is an admin before rendering the nav item */}
-          {role === 'moderator' || 'admin' ? (
+          {role === 'moderator' || role === 'admin' ? (
             <>
               <Link to="/manage-cases">
                 <ListItem button>
