@@ -56,7 +56,7 @@ const SupportPage = () => {
               'Q: I know other attorneys that could benefit from this application, how can they gain access?'
             }
           >
-            A: Currently the application invite only, please contact the
+            A: Currently, the application is invite only. Please contact the
             administrator in order to invite fellow attorneys.
           </Panel>
           <Panel header={'Q: How secure is your application?'}>
@@ -71,13 +71,3 @@ const SupportPage = () => {
 };
 
 export default SupportPage;
-
-// <Title level={4}>Q: How do I upload a case?</Title>
-// <Paragraph>
-//   A: Please navigate to the "Upload Case" page via the menu to the left
-//   of your screen to upload your case files. Once your files are
-//   succesfully uploaded, our system will comb through them and extract
-//   the necessary information to then populate the form to the right of
-//   the screen on the case upload page for your final approval before
-//   completing your submission.
-// </Paragraph>
