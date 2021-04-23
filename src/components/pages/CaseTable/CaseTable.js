@@ -7,21 +7,28 @@ import {
   DataGrid,
   GridColumnsToolbarButton,
   GridToolbarExport,
-  GridDensitySelector,
 } from '@material-ui/data-grid';
+import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutlined';
 
+import { SearchOutlined, DownloadOutlined } from '@ant-design/icons';
 import {
-  SearchOutlined,
-  DownloadOutlined,
-  SaveOutlined,
-} from '@ant-design/icons';
-import { Button, Menu, Drawer, Input, Card } from 'antd';
+  Button,
+  Typography,
+  Drawer,
+  Input,
+  Card,
+  Menu,
+  Dropdown,
+  message,
+} from 'antd';
 import './CaseTable.css';
 
 import PDFViewer from '../PDFViewer/PDFViewer';
 import PDFExportButton from './PDFOverviewExport/PDFExportButton';
 
 export default function CaseTable(props) {
+  const { Title } = Typography;
+
   const {
     caseData,
     userInfo,
@@ -384,65 +391,54 @@ export default function CaseTable(props) {
   };
 
   const CustomToolbar = () => {
+    const menuClick = ({ key }) => {
+      message.info(`Click on item ${key}`);
+    };
+
+    const menu = (
+      <Menu onClick={menuClick}>
+        <Menu.Item key="1" icon={<DownloadOutlined />}>
+          <GridToolbarExport />
+        </Menu.Item>
+        <Menu.Item key="2" icon={<DownloadOutlined />}>
+          <PDFExportButton caseData={filter(caseData)} viz={<PieChart />} />
+        </Menu.Item>
+        <Menu.Item key="3" icon={<DownloadOutlined />}>
+          Download all as PDF
+        </Menu.Item>
+      </Menu>
+    );
     return (
-      <Menu className="caseTableContainer">
-        <div className="caseTableToolbar">
-          <div
-            className="caseTableToolbarOptions"
+      <div className="menuContainer">
+        <Title style={{ color: '#215589' }} level={2}>
+          Case Table
+        </Title>
+        <div className="buttonContainer">
+          <Dropdown.Button
+            icon={<DownloadOutlined />}
+            onClick={e => e.preventDefault()}
+            overlay={menu}
+            trigger={['click']}
+          ></Dropdown.Button>
+          <Button
             onClick={() => {
               toggleSearch();
             }}
           >
-            <Button
-              className="caseTableBtn"
-              type="default"
-              style={{ background: '#215589', color: '#fff' }}
-              icon={<SearchOutlined />}
-            >
-              Search
-            </Button>
-          </div>
-
-          <div
-            className="caseTableToolbarOptions"
+            <SearchOutlined />
+          </Button>
+          <Button
             onClick={() => {
               bookmarkCases(selectedRows);
             }}
           >
-            <Button
-              className="caseTableBtn"
-              type="default"
-              style={{ background: '#215589', color: '#fff' }}
-              icon={<SaveOutlined />}
-            >
-              Save Cases
-            </Button>
-          </div>
-
-          <Button
-            className="caseTableBtn"
-            type="default"
-            style={{ background: '#215589', color: '#fff' }}
-            icon={<DownloadOutlined />}
-          >
-            Download All Selected
+            <BookmarkBorderOutlinedIcon />
           </Button>
-
-          <Button
-            className="caseTableBtnPDF"
-            type="default"
-            style={{ background: '#215589', color: '#fff' }}
-          >
-            <PDFExportButton caseData={filter(caseData)} viz={<PieChart />} />
-          </Button>
-
-          <div className="caseTableToolbarOptions">
-            <GridColumnsToolbarButton />
-            <GridDensitySelector />
-            <GridToolbarExport />
+          <div>
+            <GridColumnsToolbarButton onClick={e => e.preventDefault()} />
           </div>
         </div>
-      </Menu>
+      </div>
     );
   };
 
