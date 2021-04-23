@@ -1,7 +1,6 @@
 import React from 'react';
-import AddUsersPage from '../ManageUsers/AddUsers';
-import PendingUsers from '../ManageUsers/PendingUsers';
 import { makeStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -13,16 +12,16 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const ManageUsersPage = props => {
-  const { authState } = props;
+const AdminToolsPage = () => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <AddUsersPage authState={authState} />
-      <PendingUsers authState={authState} />
+      <Link to="add-users">Add Users</Link>
+      <Link to="manage-requested">Review Requested Users</Link>
+      <Link to="manage-users">Manage Users</Link>
     </div>
   );
 };
 
-export default ManageUsersPage;
+export default AdminToolsPage;
