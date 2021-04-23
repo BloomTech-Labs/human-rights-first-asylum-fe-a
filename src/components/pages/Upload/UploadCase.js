@@ -175,12 +175,10 @@ const UploadCase = props => {
                 </Button>
               </label>
               <>
-                {isLoading ? (
+                {isLoading && (
                   <div className="spinner_container">
                     <HRFBlueLoader />
                   </div>
-                ) : (
-                  <p />
                 )}
               </>
             </div>
