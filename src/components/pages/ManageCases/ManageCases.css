@@ -1,6 +1,7 @@
-.uploadPage {
-    align-items: center;
-    margin-left: 5%;
-    padding: 1%;
-    width: 80%;
+.Manage-Cases-Container {
+    position: absolute;
+    width: 60%;
+    height: 500px;
+    top: 78px;
+    left: 224px;
 }
