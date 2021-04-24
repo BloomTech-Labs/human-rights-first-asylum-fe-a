@@ -158,7 +158,6 @@ export default function JudgeTable(props) {
 
   const Toolbar = () => {
     const { Title } = Typography;
-
     return (
       <div className="menuContainer">
         <Title level={2}>Judge Table</Title>

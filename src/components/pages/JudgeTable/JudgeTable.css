@@ -88,7 +88,6 @@
   align-content: flex-end;
   width: 50%;
   margin-right: 2%;
-
 }
 
 .buttonContainer:hover {
@@ -99,8 +98,6 @@
   align-content: flex-end;
   width: 50%;
 }
-
-
 
 
 /* ant design fixes */
