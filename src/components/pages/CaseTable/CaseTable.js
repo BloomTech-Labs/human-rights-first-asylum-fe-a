@@ -416,7 +416,28 @@ export default function CaseTable(props) {
     );
     return (
       <div className="menuContainer">
-        <Title level={2}>Cases</Title>
+        <Title level={2}>
+          {
+            <AppBar
+              position="static"
+              classes={{ root: classes.root }}
+              elevation={0}
+            >
+              <Tabs
+                value={tabValue}
+                onChange={onChange}
+                aria-label="Types of Cases"
+                classes={{
+                  root: classes.root,
+                  indicator: classes.tabIndicator,
+                }}
+              >
+                <Tab label="Initial Cases" />
+                <Tab label="Appellate Cases" />
+              </Tabs>
+            </AppBar>
+          }
+        </Title>
         <div className="buttonContainer">
           <Dropdown.Button
             icon={<FeatherIcon icon="download" />}
@@ -542,9 +563,15 @@ export default function CaseTable(props) {
     tabIndicator: {
       backgroundColor: '#c95202',
     },
+    tabPanel: {
+      width: '100%',
+    },
   }));
 
   const classes = useStyles();
+  const sampleAppellateCases = [];
+  caseData.forEach(item => sampleAppellateCases.unshift(item));
+  console.log(sampleAppellateCases);
 
   return (
     <div className="caseTableContainer">
@@ -598,10 +625,25 @@ export default function CaseTable(props) {
         </Tabs>
       </AppBar>
 
-      <TabPanel value={tabValue} index={0}>
+      <TabPanel className={classes.tabPanel} value={tabValue} index={0}>
         <div className="caseTableGridContainer">
           <DataGrid
             rows={searching ? filter(caseData) : caseData}
+            columns={columns}
+            className="caseTable"
+            loading={caseData ? false : true}
+            checkboxSelection={true}
+            showCellRightBorder={true}
+            pageSize={25}
+            disableColumnMenu={true}
+            components={{ Toolbar: CustomToolbar }}
+          />
+        </div>
+      </TabPanel>
+      <TabPanel className={classes.tabPanel} value={tabValue} index={1}>
+        <div className="caseTableGridContainer">
+          <DataGrid
+            rows={sampleAppellateCases}
             columns={columns}
             className="caseTable"
             loading={caseData ? false : true}
