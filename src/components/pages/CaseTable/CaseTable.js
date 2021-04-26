@@ -2,6 +2,12 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 import Plot from 'react-plotly.js';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import AppBar from '@material-ui/core/AppBar';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+import { makeStyles } from '@material-ui/core/styles';
 
 import {
   DataGrid,
@@ -498,6 +504,49 @@ export default function CaseTable(props) {
     );
   };
 
+  const [tabValue, setTabValue] = useState(0);
+
+  const onChange = (e, newTabValue) => {
+    setTabValue(newTabValue);
+  };
+
+  function TabPanel(props) {
+    const { children, value, index, ...other } = props;
+
+    return (
+      <div
+        className="tabPanel"
+        role="tabpanel"
+        hidden={value !== index}
+        id={`simple-tabpanel-${index}`}
+        aria-labelledby={`simple-tab-${index}`}
+        {...other}
+      >
+        {value === index && (
+          <Box p={3}>
+            <Typography>{children}</Typography>
+          </Box>
+        )}
+      </div>
+    );
+  }
+
+  const useStyles = makeStyles(theme => ({
+    root: {
+      background: '#f9f9f9',
+      color: '#215589',
+      height: 48,
+      marginTop: '1rem',
+      marginLeft: '1rem',
+      zIndex: 1,
+    },
+    tabIndicator: {
+      backgroundColor: '#c95202',
+    },
+  }));
+
+  const classes = useStyles();
+
   return (
     <div className="caseTableContainer">
       <PieChart />
@@ -534,19 +583,37 @@ export default function CaseTable(props) {
           {drawerContent()}
         </Drawer>
       </div>
-      <div className="caseTableGridContainer">
-        <DataGrid
-          rows={searching ? filter(caseData) : caseData}
-          columns={columns}
-          className="caseTable"
-          loading={caseData ? false : true}
-          checkboxSelection={true}
-          showCellRightBorder={true}
-          pageSize={25}
-          disableColumnMenu={true}
-          components={{ Toolbar: CustomToolbar }}
-        />
-      </div>
+
+      <AppBar position="static" classes={{ root: classes.root }} elevation={0}>
+        <Tabs
+          value={tabValue}
+          onChange={onChange}
+          aria-label="Types of Cases"
+          classes={{
+            root: classes.root,
+            indicator: classes.tabIndicator,
+          }}
+        >
+          <Tab label="Initial Cases" />
+          <Tab label="Appellate Cases" />
+        </Tabs>
+      </AppBar>
+
+      <TabPanel value={tabValue} index={0}>
+        <div className="caseTableGridContainer">
+          <DataGrid
+            rows={searching ? filter(caseData) : caseData}
+            columns={columns}
+            className="caseTable"
+            loading={caseData ? false : true}
+            checkboxSelection={true}
+            showCellRightBorder={true}
+            pageSize={25}
+            disableColumnMenu={true}
+            components={{ Toolbar: CustomToolbar }}
+          />
+        </div>
+      </TabPanel>
     </div>
   );
 }
