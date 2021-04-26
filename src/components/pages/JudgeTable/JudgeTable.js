@@ -2,16 +2,12 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-import {
-  DataGrid,
-  GridColumnsToolbarButton,
-  GridToolbarExport,
-  GridDensitySelector,
-} from '@material-ui/data-grid';
+import { DataGrid } from '@material-ui/data-grid';
 
-import { SearchOutlined, SaveOutlined } from '@ant-design/icons';
-import { Button, Menu, Input, Card, Drawer } from 'antd';
+import { Button, Input, Card, Drawer, Typography } from 'antd';
 import './JudgeTable.css';
+
+import FeatherIcon from 'feather-icons-react';
 
 export default function JudgeTable(props) {
   const { judgeData, userInfo, savedJudges, setSavedJudges, authState } = props;
@@ -23,7 +19,6 @@ export default function JudgeTable(props) {
       renderHeader: params => <strong>{'Judge'}</strong>,
       width: 170,
       headerName: 'Name',
-      className: 'tableHeader',
       options: {
         filter: true,
       },
@@ -162,46 +157,27 @@ export default function JudgeTable(props) {
   };
 
   const Toolbar = () => {
+    const { Title } = Typography;
     return (
-      <Menu className="judgeTableContainer">
-        <div className="judgeTableToolbar">
-          <div
-            className="judgeTableToolbarOptions"
+      <div className="menuContainer">
+        <Title level={2}>Judges</Title>
+        <div className="buttonContainer">
+          <Button
             onClick={() => {
               toggleSearch();
             }}
           >
-            <Button
-              className="judgeTableBtn"
-              type="default"
-              icon={<SearchOutlined />}
-            >
-              Search
-            </Button>
-
-            <div
-              className="judgeTableToolbarOptions"
-              onClick={() => {
-                bookmarkJudges(selectedRows);
-              }}
-            >
-              <Button
-                className="judgeTableBtn"
-                type="default"
-                icon={<SaveOutlined />}
-              >
-                Save Judges
-              </Button>
-
-              <div className="judgeTableToolbarOptions">
-                <GridColumnsToolbarButton />
-                <GridDensitySelector />
-                <GridToolbarExport />
-              </div>
-            </div>
-          </div>
+            <FeatherIcon icon="search" />
+          </Button>
+          <Button
+            onClick={() => {
+              bookmarkJudges(selectedRows);
+            }}
+          >
+            <FeatherIcon icon="bookmark" />
+          </Button>
         </div>
-      </Menu>
+      </div>
     );
   };
 
@@ -308,9 +284,10 @@ export default function JudgeTable(props) {
         </div>
       )}
       <Drawer
-        className="judgeTableDrawer"
         visible={new_search}
         onClose={toggleSearch}
+        width={'25%'}
+        style={{ marginTop: '4rem' }}
       >
         {drawerContent()}
       </Drawer>
