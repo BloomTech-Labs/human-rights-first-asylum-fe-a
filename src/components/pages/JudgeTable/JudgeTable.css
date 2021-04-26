@@ -99,7 +99,6 @@
   width: 50%;
 }
 
-
 /* ant design fixes */
 
 h2.ant-typography {
@@ -117,29 +116,20 @@ button.ant-btn {
   color: #215589;
   font-size: 1rem;
   border: none;
-  width: 6rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 1rem;
   box-shadow: none;
-
 }
 
 button.ant-btn:hover {
   color: #215589;
   font-size: 1rem;
   border: none;
-  width: 6rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 1rem;
   box-shadow: none;
-}
-
-.ant-btn > span {
-  font-size: 0.8rem;
 }
 
 .anticon svg {
@@ -158,5 +148,5 @@ span.MuiButton-label {
 }
 
 .MuiCheckbox-colorPrimary.Mui-checked {
-    color: #215589 !important;
+  color: #215589 !important;
 }
