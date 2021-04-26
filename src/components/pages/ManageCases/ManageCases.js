@@ -32,6 +32,7 @@ export default function ManageCases(props) {
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalText, setModalText] = useState('Content of the modal');
 
+  const [apiData, setApiData] = useState([]);
   const [status, setStatus] = useState('');
 
   let filteredData = [];
@@ -46,10 +47,11 @@ export default function ManageCases(props) {
           })
         );
       })
+      .then(setApiData(filteredData))
       .catch(error => console.log(error));
-  });
+  }, []);
 
-  console.log(filteredData);
+  console.log(apiData);
 
   const showModal = () => {
     setVisible(true);
@@ -102,7 +104,7 @@ export default function ManageCases(props) {
       <Typography.Title level={2} className="manageCasesTitle">
         ManageCases
       </Typography.Title>
-      <Table dataSource={data}>
+      <Table dataSource={apiData[0]}>
         <Column
           title="Case ID"
           className="columnTitle"
