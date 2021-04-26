@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './ManageCases.css';
 
-import { Typography, Table, Space, Button } from 'antd';
+import { Modal, Typography, Table, Space, Button } from 'antd';
 
 const { Column } = Table;
 
@@ -10,33 +10,75 @@ const data = [
   {
     case_id: '1',
     user_id: 'John Brown',
-    uploaded: '4/21/2021',
+    uploaded: '4/21/2021 12:05:06',
     address: 'New York No. 1 Lake Park',
   },
   {
     case_id: '2',
     user_id: 'Jim Green',
-    uploaded: '4/21/2021',
+    uploaded: '4/21/2021 1:06:27',
     address: 'London No. 1 Lake Park',
   },
   {
     case_id: '3',
     user_id: 'Joe Black',
-    uploaded: '4/21/2021',
+    uploaded: '4/21/2021 8:40:35',
     address: 'Sidney No. 1 Lake Park',
   },
 ];
 
 export default function ManageCases(props) {
-  const [isApproved, setIsApproved] = useState(false);
-  const [isDenied, setIsDenied] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [modalText, setModalText] = useState('Content of the modal');
+
+  const [status, setStatus] = useState('');
+
+  let filteredData = [];
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_API_URI}/cases`)
+      .then(res => {
+        filteredData.push(
+          res.data.filter(caseOutcome => {
+            return caseOutcome.case_outcome === 'Remanded';
+          })
+        );
+      })
+      .catch(error => console.log(error));
+  });
+
+  console.log(filteredData);
+
+  const showModal = () => {
+    setVisible(true);
+  };
+
+  const handleAccept = case_id => {
+    setModalText(`Case number ${case_id} has been accepted`);
+    setConfirmLoading(true);
+    setTimeout(() => {
+      setVisible(false);
+      setConfirmLoading(false);
+    }, 2000);
+  };
+
+  const handleReject = case_id => {
+    setModalText(`Case number ${case_id} has been rejected`);
+    setConfirmLoading(true);
+    setTimeout(() => {
+      setVisible(false);
+      setConfirmLoading(false);
+    }, 2000);
+  };
 
   const acceptCase = () => {
     axios
       .put(`${process.env.REACT_APP_API_URI}/manage/approve`)
       .then(res => {
         console.log(res.data);
-        setIsApproved(true);
+        // setIsApproved(true);
       })
       .catch(error => {
         console.log(error);
@@ -48,7 +90,7 @@ export default function ManageCases(props) {
       .put(`${process.env.REACT_APP_API_URI}/manage/reject`)
       .then(res => {
         console.log(res.data);
-        setIsDenied(true);
+        // setIsDenied(true);
       })
       .catch(error => {
         console.log(error);
@@ -56,16 +98,37 @@ export default function ManageCases(props) {
   };
 
   return (
-    <div className="Manage-Cases-Container">
+    <div className="manageCasesContainer">
       <Typography.Title level={2} className="manageCasesTitle">
         ManageCases
       </Typography.Title>
       <Table dataSource={data}>
-        <Column title="Case ID" dataIndex="case_id" key="case_id" />
-        <Column title="Uploaded By" dataIndex="user_id" key="user_id" />
-        <Column title="Date" dataIndex="uploaded" key="uploaded" />
+        <Column
+          title="Case ID"
+          className="columnTitle"
+          dataIndex="case_id"
+          key="case_id"
+          render={data => (
+            <Space size="middle">
+              <a> {data}</a>
+            </Space>
+          )}
+        />
+        <Column
+          title="Uploaded By"
+          className="columnTitle"
+          dataIndex="user_id"
+          key="user_id"
+        />
+        <Column
+          title="Date Uploaded"
+          className="columnTitle"
+          dataIndex="uploaded"
+          key="uploaded"
+        />
         <Column
           title="Action"
+          className="columnTitle"
           key="action"
           render={(text, record) => (
             <Space size="middle">
@@ -98,7 +161,6 @@ export default function ManageCases(props) {
             <span> {params.row['case_id']}</span>
           </Link> */
 }
-
 // const initialFormValues = {
 //   case_url: '',
 //   hearing_date: '',
