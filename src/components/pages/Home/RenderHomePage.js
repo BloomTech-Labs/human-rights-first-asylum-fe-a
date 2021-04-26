@@ -21,7 +21,11 @@ import CaseUpdate from '../CaseOverview/CaseUpdate';
 import ManageCases from '../ManageCases/ManageCases';
 import AccountPage from '../AccountPage/AccountPage';
 import SupportPage from '../SupportPage/SupportPage';
-import ManageUsersPage from '../ManageUsers/ManageUsers';
+import AdminToolsPage from '../AdminTools/AdminTools';
+import AddUsersPage from '../AdminTools/AddUsers';
+import PendingUsers from '../AdminTools/PendingUsers';
+import ManageUsersPage from '../AdminTools/ManageUsers';
+import EditUserPage from '../AdminTools/EditUser';
 
 const useStyles = makeStyles({
   container: {
@@ -227,8 +231,20 @@ function RenderHomePage(props) {
       <Route exact path="/support">
         <SupportPage />
       </Route>
+      <Route exact path="/admin-tools">
+        <AdminToolsPage authState={user.authState} />
+      </Route>
       <Route exact path="/add-users">
+        <AddUsersPage authState={user.authState} />
+      </Route>
+      <Route exact path="/manage-requested">
+        <PendingUsers authState={user.authState} />
+      </Route>
+      <Route exact path="/manage-users">
         <ManageUsersPage authState={user.authState} />
+      </Route>
+      <Route exact path="/edit-user/:id">
+        <EditUserPage authState={user.authState} />
       </Route>
 
       <Route exact path="/">
