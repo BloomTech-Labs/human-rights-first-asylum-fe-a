@@ -5,7 +5,7 @@ import Plot from 'react-plotly.js';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import AppBar from '@material-ui/core/AppBar';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -14,9 +14,7 @@ import {
   GridColumnsToolbarButton,
   GridToolbarExport,
 } from '@material-ui/data-grid';
-import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutlined';
 
-import { SearchOutlined, DownloadOutlined } from '@ant-design/icons';
 import {
   Button,
   Typography,
