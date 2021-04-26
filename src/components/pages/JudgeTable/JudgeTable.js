@@ -160,7 +160,7 @@ export default function JudgeTable(props) {
     const { Title } = Typography;
     return (
       <div className="menuContainer">
-        <Title level={2}>Judge Table</Title>
+        <Title level={2}>Judges</Title>
         <div className="buttonContainer">
           <Button
             onClick={() => {
