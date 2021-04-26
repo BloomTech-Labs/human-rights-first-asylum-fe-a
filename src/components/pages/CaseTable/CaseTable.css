@@ -119,7 +119,6 @@ h2.ant-typography {
   padding-bottom: 1rem;
 }
 
-
 li.ant-dropdown-menu-item {
   display: flex;
   justify-content: flex-start;
@@ -136,7 +135,6 @@ li.ant-dropdown-menu-item:hover {
   font-size: 1rem;
   color: #215589;
   margin: 1rem;
-
 }
 
 span.MuiButton-label {
@@ -148,8 +146,6 @@ span.MuiButton-label {
   font-size: 2rem;
   box-shadow: none;
 }
-
-
 
 /* this is how we would select all icons on side menu to also be #215589 */
 /* div.MuiListItemIcon-root {
