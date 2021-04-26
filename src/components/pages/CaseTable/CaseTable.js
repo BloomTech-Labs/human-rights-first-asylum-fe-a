@@ -541,7 +541,7 @@ export default function CaseTable(props) {
       color: '#215589',
       height: 48,
       marginTop: '1rem',
-      marginLeft: '.5rem',
+      marginLeft: '1rem',
       zIndex: 1,
     },
     tabIndicator: {
