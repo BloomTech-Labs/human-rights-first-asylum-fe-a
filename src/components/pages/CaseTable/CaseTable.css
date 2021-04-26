@@ -117,34 +117,8 @@ h2.ant-typography {
   width: 50%;
   margin: 1rem 0 1rem 0;
   padding-bottom: 1rem;
-  color: #215589;
 }
 
-button.ant-btn {
-  color: #215589;
-  font-size: 1rem;
-  border: none;
-  width: 6rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 1rem;
-}
-
-button.ant-btn:hover {
-  color: #215589;
-  font-size: 1rem;
-  border: none;
-  width: 6rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 1rem;
-}
-
-.ant-btn > span {
-  font-size: 0.8rem;
-}
 
 li.ant-dropdown-menu-item {
   display: flex;
@@ -161,39 +135,21 @@ li.ant-dropdown-menu-item:hover {
   align-items: center;
   font-size: 1rem;
   color: #215589;
-}
+  margin: 1rem;
 
-.anticon svg {
-  font-size: 1rem;
-}
-
-/* MUI color fixes */
-.table {
-  height: 400;
-  font-family: 'Open Sans', sans-serif;
 }
 
 span.MuiButton-label {
-  font-size: 1rem;
-  color: #215589;
-  background-color: none;
+  font-size: 0%;
+  box-shadow: none;
 }
 
-.MuiCheckbox-colorPrimary.Mui-checked {
-  color: #215589 !important;
+.MuiButton-iconSizeSmall {
+  font-size: 2rem;
+  box-shadow: none;
 }
 
-span.MuiButton-startIcon {
-  display: none;
-}
 
-button.MuiButton-textSizeSmall {
-  text-transform: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  justify-content: flex-start;
-}
 
 /* this is how we would select all icons on side menu to also be #215589 */
 /* div.MuiListItemIcon-root {

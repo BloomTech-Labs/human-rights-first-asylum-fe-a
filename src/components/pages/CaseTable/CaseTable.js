@@ -23,6 +23,8 @@ import {
 } from 'antd';
 import './CaseTable.css';
 
+import FeatherIcon from 'feather-icons-react';
+
 import PDFViewer from '../PDFViewer/PDFViewer';
 import PDFExportButton from './PDFOverviewExport/PDFExportButton';
 
@@ -397,46 +399,45 @@ export default function CaseTable(props) {
 
     const menu = (
       <Menu onClick={menuClick}>
-        <Menu.Item key="1" icon={<DownloadOutlined />}>
+        <Menu.Item key="1" icon={<FeatherIcon icon="download" />}>
           <GridToolbarExport />
         </Menu.Item>
-        <Menu.Item key="2" icon={<DownloadOutlined />}>
+        <Menu.Item key="2" icon={<FeatherIcon icon="download" />}>
           <PDFExportButton caseData={filter(caseData)} viz={<PieChart />} />
         </Menu.Item>
-        <Menu.Item key="3" icon={<DownloadOutlined />}>
+        <Menu.Item key="3" icon={<FeatherIcon icon="download" />}>
           Download all as PDF
         </Menu.Item>
       </Menu>
     );
     return (
       <div className="menuContainer">
-        <Title style={{ color: '#215589' }} level={2}>
-          Case Table
-        </Title>
+        <Title level={2}>Cases</Title>
         <div className="buttonContainer">
           <Dropdown.Button
-            icon={<DownloadOutlined />}
+            icon={<FeatherIcon icon="download" />}
             onClick={e => e.preventDefault()}
             overlay={menu}
             trigger={['click']}
           ></Dropdown.Button>
+
           <Button
             onClick={() => {
               toggleSearch();
             }}
           >
-            <SearchOutlined />
+            <FeatherIcon icon="search" />
           </Button>
+
           <Button
             onClick={() => {
               bookmarkCases(selectedRows);
             }}
           >
-            <BookmarkBorderOutlinedIcon />
+            <FeatherIcon icon="bookmark" />
           </Button>
-          <div>
-            <GridColumnsToolbarButton onClick={e => e.preventDefault()} />
-          </div>
+
+          <GridColumnsToolbarButton onClick={e => e.preventDefault()} />
         </div>
       </div>
     );
