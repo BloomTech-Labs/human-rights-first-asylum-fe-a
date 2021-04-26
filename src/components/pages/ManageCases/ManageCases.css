@@ -1,7 +1,33 @@
 .Manage-Cases-Container {
     position: absolute;
-    width: 60%;
+    width: 75%;
     height: 500px;
     top: 78px;
-    left: 224px;
+    left: 265px;
+}
+
+.acceptCaseButton {
+    color: #ffffff;
+    background-color:#215589;
+    padding: 10% 20%;
+    margin-right: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rejectCaseButton {
+    color: #ffffff;
+    background-color:#215589;
+    padding: 10% 20%;
+    margin-left: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.manageCasesTitle {
+    color: #215589 !important;
+    text-align: center;
+    margin-top: 2%;
 }

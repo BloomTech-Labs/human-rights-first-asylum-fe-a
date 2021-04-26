@@ -1,64 +1,102 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import UploadCaseForm from '../Upload/UploadCaseForm';
 import './ManageCases.css';
 
-import { Typography, Table, Tag, Space } from 'antd';
+import { Typography, Table, Space, Button } from 'antd';
 
-const columns = [
-  {
-    title: 'Case Name',
-    dataIndex: 'Case Name',
-    key: 'Case Name',
-  },
-  {
-    title: 'User Name',
-    dataIndex: 'User Name',
-    key: 'User Name',
-  },
-  {
-    title: 'Date',
-    dataIndex: 'Date',
-    key: 'Date',
-  },
-  {
-    title: 'Time',
-    key: 'Time',
-    dataIndex: 'Time',
-  },
-];
+const { Column } = Table;
 
 const data = [
   {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
+    case_id: '1',
+    user_id: 'John Brown',
+    uploaded: '4/21/2021',
     address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
   },
   {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
+    case_id: '2',
+    user_id: 'Jim Green',
+    uploaded: '4/21/2021',
     address: 'London No. 1 Lake Park',
-    tags: ['loser'],
   },
   {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
+    case_id: '3',
+    user_id: 'Joe Black',
+    uploaded: '4/21/2021',
     address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
   },
 ];
 
 export default function ManageCases(props) {
+  const [isApproved, setIsApproved] = useState(false);
+  const [isDenied, setIsDenied] = useState(false);
+
+  const acceptCase = () => {
+    axios
+      .put(`${process.env.REACT_APP_API_URI}/manage/approve`)
+      .then(res => {
+        console.log(res.data);
+        setIsApproved(true);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  const rejectCase = () => {
+    axios
+      .put(`${process.env.REACT_APP_API_URI}/manage/reject`)
+      .then(res => {
+        console.log(res.data);
+        setIsDenied(true);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   return (
     <div className="Manage-Cases-Container">
-      <Typography.Title level={2}>ManageCases</Typography.Title>
-      <Table dataSource={data} columns={columns} />
+      <Typography.Title level={2} className="manageCasesTitle">
+        ManageCases
+      </Typography.Title>
+      <Table dataSource={data}>
+        <Column title="Case ID" dataIndex="case_id" key="case_id" />
+        <Column title="Uploaded By" dataIndex="user_id" key="user_id" />
+        <Column title="Date" dataIndex="uploaded" key="uploaded" />
+        <Column
+          title="Action"
+          key="action"
+          render={(text, record) => (
+            <Space size="middle">
+              <Button
+                onClick={acceptCase}
+                className="acceptCaseButton"
+                variant="contained"
+                component="span"
+              >
+                Accept
+              </Button>
+              <Button
+                onClick={rejectCase}
+                className="rejectCaseButton"
+                variant="contained"
+                component="span"
+              >
+                Reject
+              </Button>
+            </Space>
+          )}
+        />
+      </Table>
     </div>
   );
+}
+
+{
+  /* <Link to={`/case/${params.value}`} className="caseTableLink">
+            <span> {params.row['case_id']}</span>
+          </Link> */
 }
 
 // const initialFormValues = {
