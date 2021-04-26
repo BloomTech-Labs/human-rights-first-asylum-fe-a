@@ -28,6 +28,10 @@
   height: 500px;
 }
 
+.caseTableCard {
+  display: flex;
+}
+
 .caseTable {
   display: flex;
   flex-direction: column;
@@ -46,20 +50,18 @@
   width: 90%;
 }
 
-/* caseTable Toolbar */
-
 .caseTableContainer {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
   width: 100%;
+  margin-top: 6%;
+  padding: 2rem;
 }
 
-.caseTableSearchInput {
-  margin: 5% 10% 10% 5%;
-}
+/* caseTable drawer styles */
 
 .caseTableDrawer {
   width: 300;
@@ -69,56 +71,101 @@
   flex-flow: column wrap;
 }
 
-.caseTableDrawer p {
-  margin-left: 5%;
+.caseTableSearchInput {
+  margin: 5% 10% 10% 5%;
 }
 
-.caseTableToolbarOptions {
-  border-radius: 6px;
-  padding: 0.5rem;
+/* caseTable Toolbar */
+
+.menuContainer {
+  padding: 1rem;
+  color: #215589;
+  width: 100%;
   display: flex;
-  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  align-items: baseline;
+  background-color: #ffffff;
+  margin: 0 0 1rem 0;
 }
 
-.caseTableToolbar {
+.buttonContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  align-content: flex-end;
+  width: 50%;
+}
+
+.buttonContainer:hover {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  align-content: flex-end;
+  width: 50%;
+}
+
+/* ant design fixes */
+
+h2.ant-typography {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  padding: 1rem;
-  border-radius: 6px;
-  width: 100%;
-  overflow: hidden;
+  width: 50%;
+  margin: 1rem 0 1rem 0;
+  padding-bottom: 1rem;
+  color: #215589;
 }
 
-.toolbar:hover {
-  cursor: pointer;
-}
-
-.caseTableBtn {
-  background: #215589;
-  color: #fff;
-  text-transform: uppercase;
+button.ant-btn {
+  color: #215589;
+  font-size: 1rem;
   border: none;
-}
-
-.caseTableBtnPDF {
-  background: #215589;
-  color: #fff;
-  text-transform: uppercase;
-  margin-left: 0.5%;
-}
-
-.caseTableSearchContainer {
+  width: 6rem;
   display: flex;
-  align-items: flex-end;
+  justify-content: center;
+  align-items: center;
+  margin-right: 1rem;
 }
 
-.caseTableCard {
+button.ant-btn:hover {
+  color: #215589;
+  font-size: 1rem;
+  border: none;
+  width: 6rem;
   display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 1rem;
 }
 
+.ant-btn > span {
+  font-size: 0.8rem;
+}
 
+li.ant-dropdown-menu-item {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 1rem;
+  color: #215589;
+  margin: 1rem;
+}
+
+li.ant-dropdown-menu-item:hover {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 1rem;
+  color: #215589;
+}
+
+.anticon svg {
+  font-size: 1rem;
+}
 
 /* MUI color fixes */
 .table {
@@ -127,10 +174,28 @@
 }
 
 span.MuiButton-label {
+  font-size: 1rem;
   color: #215589;
+  background-color: none;
 }
 
 .MuiCheckbox-colorPrimary.Mui-checked {
   color: #215589 !important;
 }
 
+span.MuiButton-startIcon {
+  display: none;
+}
+
+button.MuiButton-textSizeSmall {
+  text-transform: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* this is how we would select all icons on side menu to also be #215589 */
+/* div.MuiListItemIcon-root {
+  color: #215589;
+} */
