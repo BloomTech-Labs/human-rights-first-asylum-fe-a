@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { DataGrid } from '@material-ui/data-grid';
+
+import { Button, Input, Drawer, Typography } from 'antd';
 import './SavedJudges.css';
 
-import { Button, Menu, Input, Drawer } from 'antd';
-import { DeleteOutlined, SearchOutlined } from '@ant-design/icons';
+import FeatherIcon from 'feather-icons-react';
 
 function SavedJudges({ savedJudges, deleteSavedJudge }) {
   const columns = [
@@ -69,7 +70,8 @@ function SavedJudges({ savedJudges, deleteSavedJudge }) {
       width: 110,
       renderCell: params => (
         <Button>
-          <DeleteOutlined
+          <FeatherIcon
+            icon="delete"
             onClick={() => {
               deleteSavedJudge(params.row.name);
             }}
@@ -85,24 +87,20 @@ function SavedJudges({ savedJudges, deleteSavedJudge }) {
   console.log(savedJudges);
 
   const Toolbar = () => {
+    const { Title } = Typography;
     return (
-      <Menu className="savedJudgeContainer">
-        <div className="savedJudgeToolbar">
-          <div
+      <div className="savedJudgeMenuContainer">
+        <Title level={2}>Saved Judges</Title>
+        <div className="savedJudgeMenubuttonContainer">
+          <Button
             onClick={() => {
               toggleSearch();
             }}
           >
-            <Button
-              className="judgePageBtn"
-              type="default"
-              icon={<SearchOutlined />}
-            >
-              Search
-            </Button>
-          </div>
+            <FeatherIcon icon="search" />
+          </Button>
         </div>
-      </Menu>
+      </div>
     );
   };
 
@@ -180,7 +178,7 @@ function SavedJudges({ savedJudges, deleteSavedJudge }) {
   return (
     <div className="savedJudgeContainer">
       {savedJudges ? (
-        <div className="savedJudgeStyles">
+        <div className="savedJudgeCard">
           <h1>No Saved Judges</h1>
           <br />
           <Link to="/" className="savedJudgeLink">
@@ -192,9 +190,10 @@ function SavedJudges({ savedJudges, deleteSavedJudge }) {
         <></>
       )}
       <Drawer
-        className="savedJudgeDrawer"
         visible={new_search}
         onClose={toggleSearch}
+        width={'25%'}
+        style={{ marginTop: '4rem' }}
       >
         {drawerContent()}
       </Drawer>
