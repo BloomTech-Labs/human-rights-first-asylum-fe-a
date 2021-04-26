@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { DataGrid } from '@material-ui/data-grid';
+
+import { Button, Input, Drawer, Typography } from 'antd';
 import './SavedCases.css';
 
-import { Button, Menu, Input, Drawer } from 'antd';
-import { DeleteOutlined, SearchOutlined } from '@ant-design/icons';
+import FeatherIcon from 'feather-icons-react';
 
 function SavedCases({ savedCases, deleteBookmark }) {
   const columns = [
@@ -93,7 +94,8 @@ function SavedCases({ savedCases, deleteBookmark }) {
       width: 110,
       renderCell: params => (
         <Button>
-          <DeleteOutlined
+          <FeatherIcon
+            icon="delete"
             onClick={() => {
               deleteBookmark(params.row.id); //maybe?
             }}
@@ -104,24 +106,20 @@ function SavedCases({ savedCases, deleteBookmark }) {
   ];
 
   const Toolbar = () => {
+    const { Title } = Typography;
     return (
-      <Menu className="savedCasesContainer">
-        <div className="savedCasesToolbar">
-          <div
+      <div className="savedCasesMenuContainer">
+        <Title level={2}>Saved Cases</Title>
+        <div className="savedCasesMenubuttonContainer">
+          <Button
             onClick={() => {
               toggleSearch();
             }}
           >
-            <Button
-              className="savedCasesBtn"
-              type="default"
-              icon={<SearchOutlined />}
-            >
-              Search
-            </Button>
-          </div>
+            <FeatherIcon icon="search" />
+          </Button>
         </div>
-      </Menu>
+      </div>
     );
   };
 
@@ -199,7 +197,7 @@ function SavedCases({ savedCases, deleteBookmark }) {
   return (
     <div className="savedCasesContainer">
       {savedCases.length === 0 ? (
-        <div className="savedCasesStyles">
+        <div className="savedCasesCard">
           <h1>No Saved Cases</h1>
           <br />
           <Link to="/" className="savedCasesLink">
@@ -211,9 +209,10 @@ function SavedCases({ savedCases, deleteBookmark }) {
         <></>
       )}
       <Drawer
-        className="savedCasesDrawer"
         visible={new_search}
         onClose={toggleSearch}
+        width={'25%'}
+        style={{ marginTop: '4rem' }}
       >
         {drawerContent()}
       </Drawer>
