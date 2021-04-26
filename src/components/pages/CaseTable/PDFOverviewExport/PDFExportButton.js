@@ -8,7 +8,7 @@ const PDFExportButton = props => (
     <PDFDownloadLink
       document={<ExportGenerator caseData={props.caseData} viz={props.viz} />}
       fileName="Case_Data_Overview.pdf"
-      style={{ color: '#fff' }}
+      style={{ color: '#215589' }}
     >
       {({ blob, url, loading, error }) =>
         loading ? <LoadingOutlined /> : 'Download PDF'
