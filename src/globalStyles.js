@@ -56,6 +56,16 @@ table {
     box-sizing:border-box;
 	/* max-width: 100%; // this line prevents the table from rendering for wahtever reason */
 }
+
+#root .MuiButton-root {
+  box-shadow: 0px;
+  & .MuiButton-label {
+    color:white;
+    &:hover {
+    color: #205488;
+    }
+  }
+}
 `;
 
 export default GlobalStyle;
