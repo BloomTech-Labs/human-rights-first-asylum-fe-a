@@ -51,9 +51,8 @@ export default function ManageCases(props) {
       .catch(error => console.log(error));
   }, []);
 
-  console.log(apiData);
-
   const showModal = () => {
+    console.log('Modal click');
     setVisible(true);
   };
 
@@ -63,7 +62,7 @@ export default function ManageCases(props) {
     setTimeout(() => {
       setVisible(false);
       setConfirmLoading(false);
-    }, 2000);
+    }, 3000);
   };
 
   const handleReject = case_id => {
@@ -72,7 +71,7 @@ export default function ManageCases(props) {
     setTimeout(() => {
       setVisible(false);
       setConfirmLoading(false);
-    }, 2000);
+    }, 3000);
   };
 
   const acceptCase = () => {
@@ -104,8 +103,15 @@ export default function ManageCases(props) {
       <Typography.Title level={2} className="manageCasesTitle">
         ManageCases
       </Typography.Title>
-      <Table dataSource={apiData[0]}>
+      <Table
+        dataSource={apiData[0]}
+        expandable={{
+          expandedRowRender: apiData => <p style={{ margin: 0 }}>{apiData}</p>,
+          rowExpandable: apiData => apiData.name !== 'Not Expandable',
+        }}
+      >
         <Column
+          onClick={showModal}
           title="Case ID"
           className="columnTitle"
           dataIndex="case_id"
