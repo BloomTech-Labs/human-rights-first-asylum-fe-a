@@ -137,11 +137,6 @@ li.ant-dropdown-menu-item:hover {
   margin: 1rem;
 }
 
-span.MuiButton-label {
-  font-size: 0%;
-  box-shadow: none;
-}
-
 .MuiButton-iconSizeSmall {
   font-size: 2rem;
   box-shadow: none;
