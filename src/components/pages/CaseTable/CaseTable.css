@@ -77,17 +77,6 @@
 
 /* caseTable Toolbar */
 
-/* .menuContainer {
-  padding: 1rem;
-  color: #215589;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: baseline;
-  background-color: #ffffff;
-  margin: 0 0 1rem 0;
-} */
 
 .menuContainer {
   color: #215589;
@@ -177,9 +166,6 @@ li.ant-dropdown-menu-item:hover {
   padding: 0.5rem;
 }
 
-/* .anticon svg {
-  font-size: 1rem;
-} */
 
 /* MUI fixes for color */
 
@@ -222,7 +208,4 @@ button.ant-btn.columnsBtn:hover {
   margin: 0;
 }
 
-/* this is how we would select all icons on side menu to also be #215589 */
-/* div.MuiListItemIcon-root {
-  color: #215589;
-} */
+
