@@ -26,6 +26,9 @@ import AddUsersPage from '../AdminTools/AddUsers';
 import PendingUsers from '../AdminTools/PendingUsers';
 import ManageUsersPage from '../AdminTools/ManageUsers';
 import EditUserPage from '../AdminTools/EditUser';
+import AddFaq from '../AdminTools/AddFaq';
+import ManageFaqPage from '../AdminTools/ManageFaq';
+import EditFaqPage from '../AdminTools/EditFaq';
 
 const useStyles = makeStyles({
   container: {
@@ -245,6 +248,15 @@ function RenderHomePage(props) {
       </Route>
       <Route exact path="/edit-user/:id">
         <EditUserPage authState={user.authState} />
+      </Route>
+      <Route exact path="/add-faq">
+        <AddFaq authState={user.authState} />
+      </Route>
+      <Route exact path="/manage-faq">
+        <ManageFaqPage authState={user.authState} />
+      </Route>
+      <Route exact path="/edit-faq/:id">
+        <EditFaqPage authState={user.authState} />
       </Route>
 
       <Route exact path="/">
