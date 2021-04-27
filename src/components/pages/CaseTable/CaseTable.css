@@ -174,12 +174,9 @@ li.ant-dropdown-menu-item:hover {
   font-family: 'Open Sans', sans-serif;
 }
 
-span.MuiButton-label {
-  color: #215589;
-}
-
-.MuiCheckbox-colorPrimary.Mui-checked {
-  color: #215589 !important;
+.MuiButton-iconSizeSmall {
+  font-size: 2rem;
+  box-shadow: none;
 }
 
 .MuiButton-iconSizeSmall {
