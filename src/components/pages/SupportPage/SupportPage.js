@@ -62,7 +62,7 @@ const SupportPage = () => {
       </div>
       <div className="faq">
         <Title level={2}> FAQ </Title>
-        <Collapse>
+        <Collapse defaultActiveKey={['0']} accordion>
           {FAQ.map(item => {
             return (
               <Panel header={`Q: ${item.question}`}>A: {item.answer}</Panel>
