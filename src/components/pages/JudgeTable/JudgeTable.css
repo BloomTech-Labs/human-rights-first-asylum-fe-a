@@ -67,8 +67,9 @@
 }
 
 /* judgeTable Toolbar styles */
+/* these are all inside of CaseTable.css, as they are named the same */
 
-.menuContainer {
+/* .menuContainer {
   color: #215589;
   width: 100%;
   display: flex;
@@ -78,9 +79,9 @@
   background-color: #ffffff;
   margin: 0;
   padding: 0;
-}
+} */
 
-.buttonContainer {
+/* .buttonContainer {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -97,11 +98,12 @@
   align-items: center;
   align-content: flex-end;
   width: 50%;
-}
+  margin-right: 2%;
+} */
 
 /* ant design fixes */
 
-h2.ant-typography {
+/* h2.ant-typography {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -110,9 +112,9 @@ h2.ant-typography {
   width: 50%;
   padding-left: 2%;
   padding-bottom: 0;
-}
+} */
 
-button.ant-btn {
+/* button.ant-btn {
   color: #215589;
   font-size: 1rem;
   border: none;
@@ -120,6 +122,8 @@ button.ant-btn {
   justify-content: center;
   align-items: center;
   box-shadow: none;
+  margin: 0.5rem;
+  background-color: pink;
 }
 
 button.ant-btn:hover {
@@ -130,15 +134,17 @@ button.ant-btn:hover {
   justify-content: center;
   align-items: center;
   box-shadow: none;
-}
+  margin: 0.5rem;
+  background-color: pink;
+} */
 
-.anticon svg {
+/* .anticon svg {
   font-size: 1rem;
-}
+} */
 
 /* MUI fixes for color */
 
-.table {
+/* .table {
   height: 400;
   font-family: 'Open Sans', sans-serif;
 }
@@ -149,4 +155,4 @@ span.MuiButton-label {
 
 .MuiCheckbox-colorPrimary.Mui-checked {
   color: #215589 !important;
-}
+} */

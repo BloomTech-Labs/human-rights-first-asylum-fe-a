@@ -462,7 +462,9 @@ export default function CaseTable(props) {
             <FeatherIcon icon="bookmark" />
           </Button>
 
-          <GridColumnsToolbarButton onClick={e => e.preventDefault()} />
+          <Button className="columnsBtn">
+            <GridColumnsToolbarButton onClick={e => e.preventDefault()} />
+          </Button>
         </div>
       </div>
     );
