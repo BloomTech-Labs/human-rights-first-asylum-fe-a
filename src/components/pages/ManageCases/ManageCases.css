@@ -6,7 +6,7 @@
     left: 265px;
 }
 
-.acceptCaseButton {
+#acceptCaseButton {
     color: #ffffff;
     background-color:#215589;
     padding: 10% 20%;
@@ -16,7 +16,7 @@
     border-radius: 15px;
 }
 
-.rejectCaseButton {
+#rejectCaseButton {
     color: #ffffff;
     background-color:#215589;
     padding: 10% 20%;

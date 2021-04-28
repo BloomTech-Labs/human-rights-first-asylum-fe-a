@@ -28,7 +28,7 @@ export default function ManageCases(props) {
       dataIndex: '',
       key: 'x',
       render: () => (
-        <Button onClick={handleAccept} className="acceptCaseButton">
+        <Button onClick={handleAccept} id="acceptCaseButton">
           Accept
         </Button>
       ),
@@ -38,7 +38,7 @@ export default function ManageCases(props) {
       dataIndex: '',
       key: 'y',
       render: () => (
-        <Button onClick={handleReject} className="rejectCaseButton">
+        <Button onClick={handleReject} id="rejectCaseButton">
           Reject
         </Button>
       ),
