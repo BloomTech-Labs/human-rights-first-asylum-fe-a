@@ -16,9 +16,10 @@
     }
 
     .textField {
+      margin-top: 5.5vh;
+      margin-left: -18vh;
       width: 100%;
-      height: 15vh;
-      text-align: start ;
+      text-align: start;
     }
 
     .formBtn {

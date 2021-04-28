@@ -77,8 +77,8 @@
 
 /* caseTable Toolbar */
 
+
 .menuContainer {
-  padding: 1rem;
   color: #215589;
   width: 100%;
   display: flex;
@@ -87,6 +87,7 @@
   align-items: baseline;
   background-color: #ffffff;
   margin: 0 0 1rem 0;
+  padding: 0;
 }
 
 .buttonContainer {
@@ -96,6 +97,7 @@
   align-items: center;
   align-content: flex-end;
   width: 50%;
+  margin-right: 2%;
 }
 
 .buttonContainer:hover {
@@ -105,6 +107,29 @@
   align-items: center;
   align-content: flex-end;
   width: 50%;
+  margin-right: 2%;
+}
+
+button.ant-btn {
+  color: #215589;
+  font-size: 1rem;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: none;
+  margin: 0.5rem;
+}
+
+button.ant-btn:hover {
+  color: #215589;
+  font-size: 1rem;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: none;
+  margin: 0.5rem;
 }
 
 /* ant design fixes */
@@ -115,8 +140,9 @@ h2.ant-typography {
   justify-content: flex-start;
   align-items: center;
   width: 50%;
-  margin: 1rem 0 1rem 0;
-  padding-bottom: 1rem;
+  /* margin: 1rem 0 1rem 0; */
+  padding-left: 2%;
+  padding-bottom: 0;
 }
 
 li.ant-dropdown-menu-item {
@@ -126,6 +152,8 @@ li.ant-dropdown-menu-item {
   font-size: 1rem;
   color: #215589;
   margin: 1rem;
+  padding: 0.5rem;
+
 }
 
 li.ant-dropdown-menu-item:hover {
@@ -135,11 +163,15 @@ li.ant-dropdown-menu-item:hover {
   font-size: 1rem;
   color: #215589;
   margin: 1rem;
+  padding: 0.5rem;
 }
 
-span.MuiButton-label {
-  font-size: 0%;
-  box-shadow: none;
+
+/* MUI fixes for color */
+
+.table {
+  height: 400;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .MuiButton-iconSizeSmall {
@@ -147,7 +179,30 @@ span.MuiButton-label {
   box-shadow: none;
 }
 
-/* this is how we would select all icons on side menu to also be #215589 */
-/* div.MuiListItemIcon-root {
+.MuiButton-iconSizeSmall {
+  font-size: 1rem;
   color: #215589;
-} */
+  box-shadow: 0px;
+}
+
+.buttonContainer span.MuiButton-label {
+  font-size: 0%;
+  box-shadow: 0px;
+}
+
+.buttonContainer span.MuiButton-label:hover {
+  font-size: 0%;
+  box-shadow: 0px;
+}
+
+button.ant-btn.columnsBtn {
+  padding: 0;
+  margin: 0;
+}
+
+button.ant-btn.columnsBtn:hover {
+  padding: 0;
+  margin: 0;
+}
+
+
