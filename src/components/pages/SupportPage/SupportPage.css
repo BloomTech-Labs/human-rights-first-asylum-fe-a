@@ -22,10 +22,19 @@
       text-align: start;
     }
 
-    .formBtn {
+    #formBtn {
       color: #ffffff;
       background-Color: #215589;
+      border: 1px solid  #215589;
       align-Items: center;
       justify-Content: center;
+      transition: 0.3s;
+    }
+
+    #formBtn:hover {
+      color:white;
+      border: 1px solid darkgray;
+      background-color: lightgray;
+      transition: 0.3s;
     }
   

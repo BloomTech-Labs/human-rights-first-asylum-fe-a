@@ -54,7 +54,7 @@ const SupportPage = () => {
             <TextArea className="textField" placeholder="Message" autoSize />
           </Form.Item>
           <Form.Item>
-            <Button className="formBtn" type="primary" htmlType="submit">
+            <Button id="formBtn" type="primary" htmlType="submit">
               SUBMIT
             </Button>
           </Form.Item>
