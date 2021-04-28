@@ -403,7 +403,11 @@ export default function CaseTable(props) {
 
     const menu = (
       <Menu onClick={menuClick}>
-        <Menu.Item key="1" icon={<FeatherIcon icon="download" />}>
+        <Menu.Item
+          key="1"
+          className="exportBtn"
+          icon={<FeatherIcon icon="download" />}
+        >
           <GridToolbarExport />
         </Menu.Item>
         <Menu.Item key="2" icon={<FeatherIcon icon="download" />}>
