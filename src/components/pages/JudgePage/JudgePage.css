@@ -1,12 +1,4 @@
-/* both judgePage and judgeTable styles */
-
-.grid {
-  margin-top: 15;
-}
-
-.cards {
-  display: flex;
-}
+/* judgePage styles */
 
 .close {
   text-align: center;
@@ -19,8 +11,6 @@
   cursor: pointer;
   transform: scale(1.4);
 }
-
-/* judgePage styles */
 
 .judgePageLink {
   color: #215589;
@@ -47,27 +37,25 @@ h1 {
 }
 
 .judgePageCard {
-  margin-left: 2rem;
-  min-width: 20rem;
+  display: flex;
+}
+
+.judgePageTable {
+  display: 'flex';
+  flex-direction: column;
+  justify-content: 'center';
+  width: 100%;
+  min-height: 30vh;
+  height: 100%;
+  margin: 8rem 4rem 4rem 0;
 }
 
 .judgePageGridContainer {
   display: flex;
   flex-direction: column;
-  justify-content: 'center';
+  justify-content: center;
   align-content: center;
-  width: 100%;
-}
-
-.judgePageTable {
-  display: 'flex';
-  flex-direction: 'column';
-  justify-content: 'center';
-  align-content: center;
-  width: 95%;
-  min-height: 30vh;
-  height: 100%;
-  margin-left: 2rem;
+  width: 90%;
 }
 
 .judgePagePlotDiv {
@@ -79,40 +67,21 @@ h1 {
   margin: 5% 0 0 0;
 }
 
-/* judgePage Toolbar styles */
-
-.judgePageSearchInput {
-  margin: 5% 10% 10% 5%;
-}
+/* judgePage drawer styles */
 
 .judgePageDrawer {
   width: 300;
-  margin-top: 5rem;
+  margin-top: 18%;
+  margin-bottom: 15%;
+  display: flex;
+  flex-flow: column wrap;
 }
 
 .judgePageDrawer p {
   margin-left: 5%;
+  margin-top: 3%;
 }
 
-.judgePageToolbar {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-start;
-  border-radius: 6px;
-  width: 100%;
-  padding: 1rem;
-  overflow: hidden;
+.judgePageSearchInput {
+  margin: 5% 10% 10% 5%;
 }
-
-.judgePageToolbar:hover {
-  cursor: pointer;
-}
-
-.judgePageBtn {
-  background: #215589;
-  color: #fff;
-  text-transform: uppercase;
-  border: none;
-}
-

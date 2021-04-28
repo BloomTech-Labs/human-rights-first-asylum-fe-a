@@ -98,7 +98,9 @@
   align-content: flex-end;
   width: 50%;
   margin-right: 2%;
+  margin-top: 0.5rem;
 }
+
 
 .buttonContainer:hover {
   display: flex;
@@ -108,7 +110,9 @@
   align-content: flex-end;
   width: 50%;
   margin-right: 2%;
+  margin-top: 0.5rem;
 }
+
 
 button.ant-btn {
   color: #215589;
@@ -118,7 +122,8 @@ button.ant-btn {
   justify-content: center;
   align-items: center;
   box-shadow: none;
-  margin: 0.5rem;
+  margin-right: 0.5rem;
+  margin-top: 0.5rem;
 }
 
 button.ant-btn:hover {
@@ -129,7 +134,8 @@ button.ant-btn:hover {
   justify-content: center;
   align-items: center;
   box-shadow: none;
-  margin: 0.5rem;
+  margin-right: 0.5rem;
+  margin-top: 0.5rem;
 }
 
 /* ant design fixes */
@@ -167,6 +173,7 @@ li.ant-dropdown-menu-item:hover {
 }
 
 
+
 /* MUI fixes for color */
 
 .table {
@@ -174,9 +181,13 @@ li.ant-dropdown-menu-item:hover {
   font-family: 'Open Sans', sans-serif;
 }
 
-.MuiButton-iconSizeSmall {
-  font-size: 2rem;
-  box-shadow: none;
+.exportBtn svg.MuiSvgIcon-root {
+  font-size: 0%;
+}
+
+.exportBtn span.MuiButton-label {
+  color: #215589;
+  box-shadow: 0px;
 }
 
 .MuiButton-iconSizeSmall {
