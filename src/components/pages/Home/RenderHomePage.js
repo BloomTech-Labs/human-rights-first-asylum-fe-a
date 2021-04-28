@@ -232,7 +232,7 @@ function RenderHomePage(props) {
         <AccountPage oktaUserInfo={user.userInfo} hrfUserInfo={hrfUserInfo} />
       </Route>
       <Route exact path="/support">
-        <SupportPage />
+        <SupportPage authState={user.authState} />
       </Route>
       <Route exact path="/admin-tools">
         <AdminToolsPage authState={user.authState} />
