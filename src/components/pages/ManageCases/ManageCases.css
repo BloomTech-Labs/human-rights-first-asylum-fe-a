@@ -4,14 +4,12 @@
     height: 500px;
     top: 78px;
     left: 265px;
-    font-weight: bold;
 }
 
 .acceptCaseButton {
     color: #ffffff;
     background-color:#215589;
-    padding: 10% 40%;
-    /* margin-right: 40%; */
+    padding: 10% 20%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -21,8 +19,7 @@
 .rejectCaseButton {
     color: #ffffff;
     background-color:#215589;
-    padding: 10% 40%;
-    margin-left: 50%;
+    padding: 10% 20%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -33,8 +30,4 @@
     color: #215589 !important;
     text-align: center;
     margin-top: 2%;
-}
-
-.columnTitle {
-    font-weight: bold;
 }
