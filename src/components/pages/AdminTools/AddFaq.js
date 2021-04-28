@@ -91,6 +91,7 @@ const AddFaq = props => {
               variant="outlined"
               onChange={onChange}
               className={classes.textField}
+              value={formValues.question}
             />
           </label>
           <label htmlFor="answer">
@@ -102,6 +103,7 @@ const AddFaq = props => {
               variant="outlined"
               onChange={onChange}
               className={classes.textField}
+              value={formValues.answer}
             />
           </label>
           <div className="submit-button">

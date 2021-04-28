@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
+import { Typography, Collapse } from 'antd';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -10,25 +11,31 @@ const useStyles = makeStyles(theme => ({
     margin: '5% 0',
     width: '100%',
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
     justifyContent: 'space-around',
-    textAlign: 'center',
   },
-  h1Styles: {
-    fontSize: '2rem',
-    marginBottom: '2.5rem',
-  },
-  faq: {
+  buttons: {
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-start',
   },
   p: {
     margin: '1%',
   },
+  buttonStyles: {
+    color: '#ffffff',
+    backgroundColor: '#215589',
+    marginTop: '3%',
+    marginLeft: '1%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 }));
 
 const ManageFaqPage = props => {
+  const { Title } = Typography;
+  const { Panel } = Collapse;
   const { authState } = props;
   const [faq, setFaq] = useState([]);
 
@@ -67,30 +74,30 @@ const ManageFaqPage = props => {
 
   return (
     <div className={classes.root}>
-      <h1 className={classes.h1Styles}>Manage FAQ</h1>
-      <div>
-        {faq.map(faq => (
-          <div className={classes.faq}>
-            <p className={classes.p}>
-              {' '}
-              <strong>Question:</strong> {faq.question}
-            </p>
-            <p className={classes.p}>
-              {' '}
-              <strong>Answer:</strong> {faq.answer}
-            </p>
-            <Link to={`edit-faq/${faq.id}`}>
-              <Button>Edit</Button>
-            </Link>
-            <Button
-              onClick={() => {
-                deleteFaq(faq);
-              }}
-            >
-              Delete
-            </Button>
-          </div>
-        ))}
+      <div className="faq">
+        <Title level={2}> Manage FAQ </Title>
+        <Collapse defaultActiveKey={['0']} accordion>
+          {faq.map(item => {
+            return (
+              <Panel header={`Q: ${item.question}`}>
+                A: {item.answer}
+                <div className={classes.buttons}>
+                  <Link to={`edit-faq/${item.id}`}>
+                    <Button className={classes.buttonStyles}>Edit</Button>
+                  </Link>
+                  <Button
+                    className={classes.buttonStyles}
+                    onClick={() => {
+                      deleteFaq(item);
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </div>
+              </Panel>
+            );
+          })}
+        </Collapse>
       </div>
     </div>
   );

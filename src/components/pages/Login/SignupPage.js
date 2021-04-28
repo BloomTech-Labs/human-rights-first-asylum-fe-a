@@ -98,6 +98,7 @@ const SignupPage = () => {
               variant="outlined"
               onChange={onChange}
               className={classes.textField}
+              value={formValues.firstName}
             />
           </label>
           <label htmlFor="lastName">
@@ -109,6 +110,7 @@ const SignupPage = () => {
               variant="outlined"
               onChange={onChange}
               className={classes.textField}
+              value={formValues.lastName}
             />
           </label>
           <label htmlFor="email">
@@ -120,6 +122,7 @@ const SignupPage = () => {
               variant="outlined"
               onChange={onChange}
               className={classes.textField}
+              value={formValues.email}
             />
           </label>
           <div className="submit-button">

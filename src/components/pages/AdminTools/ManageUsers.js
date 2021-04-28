@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
+import { Typography, Collapse } from 'antd';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -10,25 +11,34 @@ const useStyles = makeStyles(theme => ({
     margin: '5% 0',
     width: '100%',
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
     justifyContent: 'space-around',
-    textAlign: 'center',
-  },
-  h1Styles: {
-    fontSize: '2rem',
-    marginBottom: '2.5rem',
-  },
-  profile: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   p: {
     margin: '1%',
   },
+  panal: {
+    width: '40%',
+  },
+  buttonStyles: {
+    color: '#ffffff',
+    backgroundColor: '#215589',
+    marginTop: '1%',
+    marginLeft: '1%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttons: {
+    display: 'flex',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-start',
+  },
 }));
 
 const ManageUsersPage = props => {
+  const { Title } = Typography;
+  const { Panel } = Collapse;
   const { authState } = props;
   const [profiles, setProfiles] = useState([]);
 
@@ -67,35 +77,42 @@ const ManageUsersPage = props => {
 
   return (
     <div className={classes.root}>
-      <h1 className={classes.h1Styles}>Manage Users</h1>
-      <div>
-        {profiles.map(profile => (
-          <div className={classes.profile}>
-            <p className={classes.p}>
-              {' '}
-              <strong>Email:</strong> {profile.email}
-            </p>
-            <p className={classes.p}>
-              {' '}
-              <strong>Name:</strong>{' '}
-              {`${profile.firstName} ${profile.lastName}`}
-            </p>
-            <p className={classes.p}>
-              <strong>Date requested:</strong>{' '}
-              {String(profile.created_at).slice(0, 10)}
-            </p>
-            <Link to={`edit-user/${profile.id}`}>
-              <Button>Edit</Button>
-            </Link>
-            <Button
-              onClick={() => {
-                deleteUser(profile);
-              }}
-            >
-              Delete
-            </Button>
-          </div>
-        ))}
+      <div className={classes.panal}>
+        <Title level={2}> Manage Users </Title>
+        <Collapse defaultActiveKey={['0']} accordion>
+          {profiles.map(item => {
+            return (
+              <Panel header={`${item.firstName} ${item.lastName}`}>
+                <p>
+                  <strong>Name:</strong> {`${item.firstName} ${item.lastName}`}
+                </p>
+                <p>
+                  <strong>Email:</strong> {item.email}
+                </p>
+                <p>
+                  <strong>Role:</strong> {item.role}
+                </p>
+                <p>
+                  <strong>Date joined:</strong>{' '}
+                  {String(item.created_at).slice(0, 10)}
+                </p>
+                <div className={classes.buttons}>
+                  <Link to={`edit-user/${item.id}`}>
+                    <Button className={classes.buttonStyles}>Edit</Button>
+                  </Link>
+                  <Button
+                    className={classes.buttonStyles}
+                    onClick={() => {
+                      deleteUser(item);
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </div>
+              </Panel>
+            );
+          })}
+        </Collapse>
       </div>
     </div>
   );

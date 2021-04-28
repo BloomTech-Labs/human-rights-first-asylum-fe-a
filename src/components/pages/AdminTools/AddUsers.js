@@ -101,6 +101,7 @@ const AddUsersPage = props => {
               variant="outlined"
               onChange={onChange}
               className={classes.textField}
+              value={formValues.firstName}
             />
           </label>
           <label htmlFor="lastName">
@@ -112,6 +113,7 @@ const AddUsersPage = props => {
               variant="outlined"
               onChange={onChange}
               className={classes.textField}
+              value={formValues.lastName}
             />
           </label>
           <label htmlFor="email">
@@ -123,11 +125,17 @@ const AddUsersPage = props => {
               variant="outlined"
               onChange={onChange}
               className={classes.textField}
+              value={formValues.email}
             />
           </label>
           <FormControl>
             <FormLabel className={classes.radio}>Role</FormLabel>
-            <RadioGroup aria-label="role" name="role" onChange={onChange}>
+            <RadioGroup
+              aria-label="role"
+              name="role"
+              onChange={onChange}
+              value={formValues.role}
+            >
               <FormControlLabel value="user" control={<Radio />} label="User" />
               <FormControlLabel
                 value="moderator"
