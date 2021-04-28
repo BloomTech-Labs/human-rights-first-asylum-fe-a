@@ -28,6 +28,10 @@
   height: 500px;
 }
 
+.caseTableCard {
+  display: flex;
+}
+
 .caseTable {
   display: flex;
   flex-direction: column;
@@ -35,7 +39,7 @@
   width: 100%;
   min-height: 90vh;
   height: 100%;
-  margin: 8rem 4rem 4rem 0;
+  margin: 0 4rem 4rem 0;
 }
 
 .caseTableGridContainer {
@@ -46,20 +50,18 @@
   width: 90%;
 }
 
-/* caseTable Toolbar */
-
 .caseTableContainer {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
   width: 100%;
+  margin-top: 6%;
+  padding: 2rem;
 }
 
-.caseTableSearchInput {
-  margin: 5% 10% 10% 5%;
-}
+/* caseTable drawer styles */
 
 .caseTableDrawer {
   width: 300;
@@ -69,68 +71,149 @@
   flex-flow: column wrap;
 }
 
-.caseTableDrawer p {
-  margin-left: 5%;
+.caseTableSearchInput {
+  margin: 5% 10% 10% 5%;
 }
 
-.caseTableToolbarOptions {
-  border-radius: 6px;
-  padding: 0.5rem;
+/* caseTable Toolbar */
+
+
+.menuContainer {
+  color: #215589;
+  width: 100%;
   display: flex;
-  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  align-items: baseline;
+  background-color: #ffffff;
+  margin: 0 0 1rem 0;
+  padding: 0;
 }
 
-.caseTableToolbar {
+.buttonContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  align-content: flex-end;
+  width: 50%;
+  margin-right: 2%;
+  margin-top: 0.5rem;
+}
+
+
+.buttonContainer:hover {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  align-content: flex-end;
+  width: 50%;
+  margin-right: 2%;
+  margin-top: 0.5rem;
+}
+
+
+button.ant-btn {
+  color: #215589;
+  font-size: 1rem;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: none;
+  margin-right: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+button.ant-btn:hover {
+  color: #215589;
+  font-size: 1rem;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: none;
+  margin-right: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+/* ant design fixes */
+
+h2.ant-typography {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  padding: 1rem;
-  border-radius: 6px;
-  width: 100%;
-  overflow: hidden;
+  width: 50%;
+  /* margin: 1rem 0 1rem 0; */
+  padding-left: 2%;
+  padding-bottom: 0;
 }
 
-.toolbar:hover {
-  cursor: pointer;
-}
-
-.caseTableBtn {
-  background: #215589;
-  color: #fff;
-  text-transform: uppercase;
-  border: none;
-}
-
-.caseTableBtnPDF {
-  background: #215589;
-  color: #fff;
-  text-transform: uppercase;
-  margin-left: 0.5%;
-}
-
-.caseTableSearchContainer {
+li.ant-dropdown-menu-item {
   display: flex;
-  align-items: flex-end;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 1rem;
+  color: #215589;
+  margin: 1rem;
+  padding: 0.5rem;
+
 }
 
-.caseTableCard {
+li.ant-dropdown-menu-item:hover {
   display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 1rem;
+  color: #215589;
+  margin: 1rem;
+  padding: 0.5rem;
 }
 
 
 
-/* MUI color fixes */
+/* MUI fixes for color */
+
 .table {
   height: 400;
   font-family: 'Open Sans', sans-serif;
 }
 
-span.MuiButton-label {
-  color: #215589;
+.exportBtn svg.MuiSvgIcon-root {
+  font-size: 0%;
 }
 
-.MuiCheckbox-colorPrimary.Mui-checked {
-  color: #215589 !important;
+.exportBtn span.MuiButton-label {
+  color: #215589;
+  box-shadow: 0px;
 }
+
+.MuiButton-iconSizeSmall {
+  font-size: 1rem;
+  color: #215589;
+  box-shadow: 0px;
+}
+
+.buttonContainer span.MuiButton-label {
+  font-size: 0%;
+  box-shadow: 0px;
+}
+
+.buttonContainer span.MuiButton-label:hover {
+  font-size: 0%;
+  box-shadow: 0px;
+}
+
+button.ant-btn.columnsBtn {
+  padding: 0;
+  margin: 0;
+}
+
+button.ant-btn.columnsBtn:hover {
+  padding: 0;
+  margin: 0;
+}
+
 

@@ -18,8 +18,10 @@ const AdminToolsPage = () => {
   return (
     <div className={classes.root}>
       <Link to="add-users">Add Users</Link>
-      <Link to="manage-requested">Review Requested Users</Link>
       <Link to="manage-users">Manage Users</Link>
+      <Link to="add-faq">Add FAQ</Link>
+      <Link to="manage-faq">Manage FAQ</Link>
+      <Link to="manage-requested">Review Requested Users</Link>
     </div>
   );
 };

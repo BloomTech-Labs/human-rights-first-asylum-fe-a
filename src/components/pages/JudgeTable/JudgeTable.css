@@ -1,12 +1,4 @@
-/* both judgePage and judgeTable styles */
-
-.grid {
-  margin-top: 15;
-}
-
-.cards {
-  display: flex;
-}
+/* judgeTable styles */
 
 .close {
   text-align: center;
@@ -20,10 +12,12 @@
   transform: scale(1.4);
 }
 
-/* judgeTable styles */
-
 .judgeTableLink {
   color: #215589;
+}
+
+.judgeTableCard {
+  display: flex;
 }
 
 .judgeTable {
@@ -31,7 +25,7 @@
   flex-direction: column;
   justify-content: center;
   width: 100%;
-  min-height: 80vh;
+  min-height: 90vh;
   height: 100%;
   margin: 8rem 4rem 4rem 0;
 }
@@ -44,8 +38,6 @@
   width: 90%;
 }
 
-/* judgeTable Toolbar styles */
-
 .judgeTableContainer {
   display: flex;
   flex-direction: column;
@@ -55,67 +47,22 @@
   width: 100%;
 }
 
-.judgeTableSearchInput {
-  margin: 5% 10% 10% 5%;
-}
+/* judgeTable drawer styles */
 
 .judgeTableDrawer {
   width: 300;
-  margin-top: 5rem;
+  margin-top: 18%;
+  margin-bottom: 15%;
+  display: flex;
+  flex-flow: column wrap;
 }
 
 .judgeTableDrawer p {
   margin-left: 5%;
+  margin-top: 3%;
 }
 
-.judgeTableToolbarOptions {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  border-radius: 6px;
-  padding: 0.5rem;
+.judgeTableSearchInput {
+  margin: 5% 10% 10% 5%;
 }
 
-.judgeTableToolbar {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-start;
-  border-radius: 6px;
-  width: 100%;
-  padding: 1rem;
-  overflow: hidden;
-}
-
-.judgeTableToolbar:hover {
-  cursor: pointer;
-}
-
-.judgeTableBtn {
-  background: #215589;
-  color: #fff;
-  text-transform: uppercase;
-  border: none;
-}
-
-.judgeTableBtn:hover {
-  background: #215589;
-  color: #fff;
-  text-transform: uppercase;
-  border: none;
-}
-
-/* MUI fixes for color */
-
-.table {
-  height: 400;
-  font-family: 'Open Sans', sans-serif;
-}
-
-span.MuiButton-label {
-  color: #215589;
-}
-
-.MuiCheckbox-colorPrimary.Mui-checked {
-    color: #215589 !important;
-    }

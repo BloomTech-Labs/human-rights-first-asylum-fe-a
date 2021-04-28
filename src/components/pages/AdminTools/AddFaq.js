@@ -3,20 +3,16 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    // marginTop: '7%',
+    marginTop: '7%',
     width: '100%',
     display: 'flex',
-    flexDirection: 'column',
     justifyContent: 'space-around',
-    margin: '7% auto',
   },
   form: {
     width: '50%',
-    margin: '0 auto',
   },
   h1Styles: {
     fontSize: '2rem',
@@ -39,20 +35,20 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  backButtonStyles: {
-    width: '10%',
-    margin: '0 auto',
+  radio: {
+    margin: '8%',
+    fontSize: '1.5rem',
   },
 }));
 
 const initialFormValues = {
-  firstName: '',
-  lastName: '',
-  email: '',
+  question: '',
+  answer: '',
 };
 
-const SignupPage = () => {
+const AddFaq = props => {
   const [formValues, setFormValues] = useState(initialFormValues);
+  const { authState } = props;
 
   const classes = useStyles();
 
@@ -61,68 +57,53 @@ const SignupPage = () => {
     setFormValues({ ...formValues, [name]: value });
   };
 
-  const postNewUser = newUser => {
+  const postNewQuestion = question => {
     axios
-      .post(`${process.env.REACT_APP_API_URI}/profile/pending`, newUser)
+      .post(`${process.env.REACT_APP_API_URI}/faq/`, question, {
+        headers: {
+          Authorization: 'Bearer ' + authState.idToken.idToken,
+        },
+      })
       .catch(err => console.log(err));
     setFormValues(initialFormValues);
   };
 
   const onSubmit = e => {
     e.preventDefault();
-    const newUser = {
-      firstName: formValues.firstName.trim(),
-      lastName: formValues.lastName.trim(),
-      email: formValues.email.trim(),
+    const question = {
+      question: formValues.question.trim(),
+      answer: formValues.answer.trim(),
     };
-    console.log(newUser);
-    postNewUser(newUser);
+    postNewQuestion(question);
   };
 
   return (
     <div className={classes.root}>
-      <Button className={classes.backButtonStyles}>
-        <Link to="/login">
-          <p>Back to Login</p>
-        </Link>
-      </Button>
       <div className={classes.form}>
-        <h2 className={classes.h1Styles}> Add User </h2>
+        <h2 className={classes.h1Styles}> Add Question </h2>
         <form onSubmit={onSubmit}>
-          <label htmlFor="firstName">
+          <label htmlFor="question">
             <TextField
-              id="firstName"
-              label="First Name"
+              id="question"
+              label="Question"
               type="text"
-              name="firstName"
+              name="question"
               variant="outlined"
               onChange={onChange}
               className={classes.textField}
-              value={formValues.firstName}
+              value={formValues.question}
             />
           </label>
-          <label htmlFor="lastName">
+          <label htmlFor="answer">
             <TextField
-              id="lastName"
-              label="Last Name"
+              id="answer"
+              label="Answer"
               type="text"
-              name="lastName"
+              name="answer"
               variant="outlined"
               onChange={onChange}
               className={classes.textField}
-              value={formValues.lastName}
-            />
-          </label>
-          <label htmlFor="email">
-            <TextField
-              id="email"
-              label="Email"
-              type="text"
-              name="email"
-              variant="outlined"
-              onChange={onChange}
-              className={classes.textField}
-              value={formValues.email}
+              value={formValues.answer}
             />
           </label>
           <div className="submit-button">
@@ -141,4 +122,4 @@ const SignupPage = () => {
   );
 };
 
-export default SignupPage;
+export default AddFaq;

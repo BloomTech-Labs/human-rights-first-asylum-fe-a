@@ -4,10 +4,12 @@ import Plot from 'react-plotly.js';
 import axios from 'axios';
 
 import { DataGrid } from '@material-ui/data-grid';
+
+import { UserOutlined } from '@ant-design/icons';
+import { Button, Typography, Input, Card, Drawer, Avatar } from 'antd';
 import './JudgePage.css';
 
-import { SearchOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Menu, Input, Card, Drawer, Avatar } from 'antd';
+import FeatherIcon from 'feather-icons-react';
 
 export default function JudgePage(props) {
   const { authState } = props;
@@ -77,24 +79,21 @@ export default function JudgePage(props) {
   }, [name, authState.idToken]);
 
   const Toolbar = () => {
+    const { Title } = Typography;
+
     return (
-      <Menu className="judgePageContainer">
-        <div className="judgePageToolbar">
-          <div
+      <div className="menuContainer">
+        <Title level={2}>Judge</Title>
+        <div className="buttonContainer">
+          <Button
             onClick={() => {
               toggleSearch();
             }}
           >
-            <Button
-              className="judgePageBtn"
-              type="default"
-              icon={<SearchOutlined />}
-            >
-              Search
-            </Button>
-          </div>
+            <FeatherIcon icon="search" />
+          </Button>
         </div>
-      </Menu>
+      </div>
     );
   };
 
@@ -190,9 +189,10 @@ export default function JudgePage(props) {
             </Card>
           </div>
           <Drawer
-            className="judgePageDrawer"
             visible={new_search}
             onClose={toggleSearch}
+            width={'25%'}
+            style={{ marginTop: '4rem' }}
           >
             {drawerContent()}
           </Drawer>

@@ -1,9 +1,30 @@
-import React from 'react';
-import { Button, Typography, Form, Input } from 'antd';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Button, Typography, Form, Input, Collapse } from 'antd';
 import './SupportPage.css';
 
-const SupportPage = () => {
-  const { Title, Paragraph } = Typography;
+const SupportPage = props => {
+  const { Title } = Typography;
+  const { Panel } = Collapse;
+  const { TextArea } = Input;
+  const { authState } = props;
+
+  const [FAQ, setFaq] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_API_URI}/faq`, {
+        headers: {
+          Authorization: 'Bearer ' + authState.idToken.idToken,
+        },
+      })
+      .then(res => {
+        setFaq(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, [authState.idToken.idToken]);
 
   return (
     <div className="supportRoot">
@@ -11,7 +32,7 @@ const SupportPage = () => {
         <Form className="contactForm">
           <Title level={2}> Contact Us </Title>
           <Form.Item
-            label="Message"
+            label="How can we help?"
             name="Message"
             rules={[
               {
@@ -20,10 +41,10 @@ const SupportPage = () => {
               },
             ]}
           >
-            <Input className="textField" placeholder="Message" />
+            <TextArea className="textField" placeholder="Message" autoSize />
           </Form.Item>
           <Form.Item>
-            <Button className="formBtn" type="primary" htmlType="submit">
+            <Button id="formBtn" type="primary" htmlType="submit">
               SUBMIT
             </Button>
           </Form.Item>
@@ -31,15 +52,13 @@ const SupportPage = () => {
       </div>
       <div className="faq">
         <Title level={2}> FAQ </Title>
-        <Title level={4}>Q: How do I upload a case?</Title>
-        <Paragraph>
-          A: Please navigate to the "Upload Case" page via the menu to the left
-          of your screen to upload your case files. Once your files are
-          succesfully uploaded, our system will comb through them and extract
-          the necessary information to then populate the form to the right of
-          the screen on the case upload page for your final approval before
-          completing your submission.
-        </Paragraph>
+        <Collapse defaultActiveKey={['0']} accordion>
+          {FAQ.map(item => {
+            return (
+              <Panel header={`Q: ${item.question}`}>A: {item.answer}</Panel>
+            );
+          })}
+        </Collapse>
       </div>
     </div>
   );
