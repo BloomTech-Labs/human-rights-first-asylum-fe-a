@@ -2,38 +2,50 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './ManageCases.css';
 
-import { Modal, Typography, Table, Space, Button } from 'antd';
-
-const { Column } = Table;
-
-const data = [
-  {
-    case_id: '1',
-    user_id: 'John Brown',
-    uploaded: '4/21/2021 12:05:06',
-    address: 'New York No. 1 Lake Park',
-  },
-  {
-    case_id: '2',
-    user_id: 'Jim Green',
-    uploaded: '4/21/2021 1:06:27',
-    address: 'London No. 1 Lake Park',
-  },
-  {
-    case_id: '3',
-    user_id: 'Joe Black',
-    uploaded: '4/21/2021 8:40:35',
-    address: 'Sidney No. 1 Lake Park',
-  },
-];
+import { Typography, Table, Space, Button } from 'antd';
 
 export default function ManageCases(props) {
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
-  const [modalText, setModalText] = useState('Content of the modal');
 
   const [apiData, setApiData] = useState([]);
   const [status, setStatus] = useState('');
+
+  const handleAccept = case_id => {
+    console.log('Accepted');
+    // setConfirmLoading(true);
+    // setTimeout(() => {
+    //   setVisible(false);
+    //   setConfirmLoading(false);
+    // }, 3000);
+  };
+
+  const handleReject = case_id => {
+    console.log('Rejected');
+    // setConfirmLoading(true);
+    // setTimeout(() => {
+    //   setVisible(false);
+    //   setConfirmLoading(false);
+    // }, 3000);
+  };
+
+  const columns = [
+    { title: 'Case ID', dataIndex: 'case_id', key: 'case_id' },
+    { title: 'Uploaded By', dataIndex: 'user_id', key: 'user_id' },
+    { title: 'Date Uploaded', dataIndex: 'uploaded', key: 'uploaded' },
+    {
+      title: 'Approve',
+      dataIndex: '',
+      key: 'x',
+      render: () => <Button onClick={handleAccept}>Accept</Button>,
+    },
+    {
+      title: 'Reject',
+      dataIndex: '',
+      key: 'y',
+      render: () => <Button onClick={handleReject}>Reject</Button>,
+    },
+  ];
 
   let filteredData = [];
 
@@ -42,40 +54,23 @@ export default function ManageCases(props) {
       .get(`${process.env.REACT_APP_API_URI}/cases`)
       .then(res => {
         filteredData.push(
-          res.data.filter(caseOutcome => {
-            return caseOutcome.case_outcome === 'Remanded';
+          res.data.filter(caseStatus => {
+            return caseStatus.case_outcome === 'Remanded';
+            //When backend is updated, "case_outcome" needs to be switched to "status" (or whatever they decided to call case status) and "remanded" needs to be switched to "pending"
           })
         );
       })
-      .then(setApiData(filteredData))
-      .catch(error => console.log(error));
+      .then(() => {
+        setApiData(filteredData);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }, []);
-
-  const showModal = () => {
-    console.log('Modal click');
-    setVisible(true);
-  };
-
-  const handleAccept = case_id => {
-    setModalText(`Case number ${case_id} has been accepted`);
-    setConfirmLoading(true);
-    setTimeout(() => {
-      setVisible(false);
-      setConfirmLoading(false);
-    }, 3000);
-  };
-
-  const handleReject = case_id => {
-    setModalText(`Case number ${case_id} has been rejected`);
-    setConfirmLoading(true);
-    setTimeout(() => {
-      setVisible(false);
-      setConfirmLoading(false);
-    }, 3000);
-  };
 
   const acceptCase = () => {
     axios
+      //requests currently not functioning - need to be hooked up to proper backend router
       .put(`${process.env.REACT_APP_API_URI}/manage/approve`)
       .then(res => {
         console.log(res.data);
@@ -88,6 +83,7 @@ export default function ManageCases(props) {
 
   const rejectCase = () => {
     axios
+      //requests currently not functioning - need to be hooked up to proper backend router
       .put(`${process.env.REACT_APP_API_URI}/manage/reject`)
       .then(res => {
         console.log(res.data);
@@ -104,90 +100,64 @@ export default function ManageCases(props) {
         ManageCases
       </Typography.Title>
       <Table
+        columns={columns}
         dataSource={apiData[0]}
         expandable={{
-          expandedRowRender: apiData => <p style={{ margin: 0 }}>{apiData}</p>,
-          rowExpandable: apiData => apiData.name !== 'Not Expandable',
+          expandedRowRender: record => (
+            <>
+              <p style={{ margin: 0 }}> Case ID: {record.case_id}</p>
+              <p style={{ margin: 0 }}>Date: {record.hearing_date}</p>
+              <p style={{ margin: 0 }}>
+                Initial Hearing:
+                {record.initial_or_appellate ? 'True' : 'False'}
+              </p>
+              <p style={{ margin: 0 }}>Case Origin: {record.case_origin}</p>
+              <p style={{ margin: 0 }}>
+                Filed 1 Year:
+                {record.case_filed_within_one_year ? 'True' : 'False'}
+              </p>
+              <p style={{ margin: 0 }}>
+                Nation of Origin: {record.nation_of_origin}
+              </p>
+              <p style={{ margin: 0 }}>
+                Protected Grounds:
+                {record.protected_ground ? 'True' : 'False'}
+              </p>
+              <p style={{ margin: 0 }}>
+                Applicant Gender: {record.applicant_gender}
+              </p>
+              <p style={{ margin: 0 }}>
+                Violence Experienced: {record.type_of_violence_experienced}
+              </p>
+              <p style={{ margin: 0 }}>Case Outcome: {record.case_outcome}</p>
+            </>
+          ),
+          rowExpandable: record => record.name !== 'Not Expandable',
         }}
-      >
-        <Column
-          onClick={showModal}
-          title="Case ID"
-          className="columnTitle"
-          dataIndex="case_id"
-          key="case_id"
-          render={data => (
-            <Space size="middle">
-              <a> {data}</a>
-            </Space>
-          )}
-        />
-        <Column
-          title="Uploaded By"
-          className="columnTitle"
-          dataIndex="user_id"
-          key="user_id"
-        />
-        <Column
-          title="Date Uploaded"
-          className="columnTitle"
-          dataIndex="uploaded"
-          key="uploaded"
-        />
-        <Column
-          title="Action"
-          className="columnTitle"
-          key="action"
-          render={(text, record) => (
-            <Space size="middle">
-              <Button
-                onClick={acceptCase}
-                className="acceptCaseButton"
-                variant="contained"
-                component="span"
-              >
-                Accept
-              </Button>
-              <Button
-                onClick={rejectCase}
-                className="rejectCaseButton"
-                variant="contained"
-                component="span"
-              >
-                Reject
-              </Button>
-            </Space>
-          )}
-        />
-      </Table>
+      ></Table>
     </div>
   );
 }
 
-{
-  /* <Link to={`/case/${params.value}`} className="caseTableLink">
-            <span> {params.row['case_id']}</span>
-          </Link> */
-}
 // const initialFormValues = {
-//   case_url: '',
-//   hearing_date: '',
-//   judge: '',
-//   initial_or_appellate: '',
-//   // hearing_type: '' pending stakeholder approval,
-//   nation_of_origin: '',
-//   case_origin: '',
-//   applicant_perceived_credibility: '',
-//   case_outcome: '',
-//   applicant_gender: '',
-//   applicant_indigenous_group: '',
-//   applicant_language: '',
-//   type_of_violence_experienced: '',
-//   applicant_access_to_interpreter: '',
-//   protected_ground: [],
-//   application_type: [],
-//   case_filled_within_one_year: '',
-//   // case_status: '' pending stakeholder approval,
+// case_url: '',
+// hearing_date: '',
+// judge: '',
+// initial_or_appellate: '',
+// // hearing_type: '' pending stakeholder approval,
+// nation_of_origin: '',
+// case_origin: '',
+// applicant_perceived_credibility: '',
+// case_outcome: '',
+// applicant_gender: '',
+// applicant_indigenous_group: '',
+// applicant_language: '',
+// type_of_violence_experienced: '',
+// applicant_access_to_interpreter: '',
+// protected_ground: [],
+// application_type: [],
+// case_filled_within_one_year: '',
+// case_status: '' pending stakeholder approval,
 // };
 
 // const ManageCases = props => {
