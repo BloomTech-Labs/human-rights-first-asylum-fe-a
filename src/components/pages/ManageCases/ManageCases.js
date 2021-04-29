@@ -1,147 +1,113 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { makeStyles } from '@material-ui/core/styles';
-import UploadCaseForm from '../Upload/UploadCaseForm';
+import './ManageCases.css';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    '& .MuiTextField-root': {
-      margin: theme.spacing(2),
-      width: '30rem',
-      textAlign: 'center',
+import { Typography, Table, Button } from 'antd';
+
+//***There is a bug*** Currently, when you expand one caseObj they all expand. This may be an issue with accept and reject buttons - we don't want to accept all or reject all on accident!
+
+export default function ManageCases(props) {
+  const [apiData, setApiData] = useState([]);
+  const handleAccept = case_id => {
+    console.log('Accepted');
+    //Need to make and connect put request to handle "status"(or whatever they decided to call case status) update
+  };
+
+  const handleReject = case_id => {
+    console.log('Rejected');
+    //Need to make and connect put request to handle "status" (or whatever they decided to call case status) update
+  };
+
+  const columns = [
+    //will have to update dataIndex and keys for "Uploaded By" once backend is updated
+    { title: 'Case ID', dataIndex: 'case_id', key: 'case_id' },
+    { title: 'Uploaded By', dataIndex: 'user_id', key: 'user_id' },
+    { title: 'Date Uploaded', dataIndex: 'uploaded', key: 'uploaded' },
+    {
+      title: 'Approve',
+      dataIndex: '',
+      key: 'x',
+      render: () => (
+        <Button onClick={handleAccept} id="acceptCaseButton">
+          Accept
+        </Button>
+      ),
     },
-  },
+    {
+      title: 'Reject',
+      dataIndex: '',
+      key: 'y',
+      render: () => (
+        <Button onClick={handleReject} id="rejectCaseButton">
+          Reject
+        </Button>
+      ),
+    },
+  ];
 
-  uploadPage: {
-    padding: '1%',
-    margin: '0 auto',
-    width: '80%',
-  },
+  let filteredData = [];
 
-  buttonStyles: {
-    color: '#ffffff',
-    backgroundColor: '#215589',
-    marginTop: '3%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-}));
-
-const initialFormValues = {
-  case_url: '',
-  hearing_date: '',
-  judge: '',
-  initial_or_appellate: '',
-  // hearing_type: '' pending stakeholder approval,
-  nation_of_origin: '',
-  case_origin: '',
-  applicant_perceived_credibility: '',
-  case_outcome: '',
-  applicant_gender: '',
-  applicant_indigenous_group: '',
-  applicant_language: '',
-  type_of_violence_experienced: '',
-  applicant_access_to_interpreter: '',
-  protected_ground: [],
-  application_type: [],
-  case_filled_within_one_year: '',
-  // case_status: '' pending stakeholder approval,
-};
-
-const ManageCases = props => {
-  const [formValues, setFormValues] = useState(initialFormValues);
-  const classes = useStyles();
-
-  const postNewCase = newCase => {
+  useEffect(() => {
     axios
-      .post(`${process.env.REACT_APP_API_URI}/upload/`, newCase)
-      .catch(err => console.log(err));
-    setFormValues(initialFormValues);
-  };
-
-  const [isApproved, setIsApproved] = useState(false);
-  const [isDenied, setIsDenied] = useState(false);
-  const [approvedQueue, setApprovedQueue] = useState([]);
-
-  const approvedCases = () => {
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/manage/all`)
+      .get(`${process.env.REACT_APP_API_URI}/cases`)
       .then(res => {
-        console.log(res.data);
-        setApprovedQueue(res.data);
+        filteredData.push(
+          res.data.filter(caseStatus => {
+            return caseStatus.case_outcome === 'Remanded';
+            //When backend is updated, "case_outcome" needs to be switched to "status" (or whatever they decided to call case status) and "remanded" needs to be switched to "Pending"
+          })
+        );
       })
-      .catch(error => {
-        console.log(error);
-      });
-  };
-
-  const acceptCase = () => {
-    axios
-      .post(`${process.env.REACT_APP_API_URI}/manage/approve`)
-      .then(res => {
-        console.log(res.data);
-        setIsApproved(res.data);
+      .then(() => {
+        setApiData(filteredData);
       })
-      .catch(error => {
-        console.log(error);
+      .catch(err => {
+        console.log(err);
+        //need to change functionality to render the error to the screen for user
       });
-  };
-
-  const rejectCase = () => {
-    axios
-      .delete(`${process.env.REACT_APP_API_URI}/manage/reject`)
-      .then(res => {
-        console.log(res.data);
-        setIsDenied(res.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
-
-  const onSubmit = () => {
-    const newCase = {
-      case_url: formValues.case_url.trim(),
-      hearing_date: formValues.hearing_date.trim(),
-      judge: formValues.judge.trim(),
-      initial_or_appellate: formValues.initial_or_appellate.trim(),
-      // hearing_type: formValues.hearing_type.trim() (pending stakeholder approval),
-      nation_of_origin: formValues.nation_of_origin.trim(),
-      case_origin: formValues.case_origin.trim(),
-      applicant_perceived_credibility: formValues.applicant_perceived_credibility.trim(),
-      case_outcome: formValues.case_outcome.trim(),
-      applicant_gender: formValues.applicant_gender.trim(),
-      applicant_indigenous_group: formValues.applicant_indigenous_group.trim(),
-      applicant_language: formValues.applicant_language.trim(),
-      type_of_violence_experienced: formValues.type_of_violence_experienced.trim(),
-      applicant_access_to_interpreter: formValues.applicant_access_to_interpreter.trim(),
-      protected_ground: formValues.protected_ground.trim(),
-      application_type: formValues.application_type.trim(),
-      case_filled_within_one_year: formValues.case_filled_within_one_year.trim(),
-      // case_status: formValues..trim() (pending stakeholder approval),
-    };
-    postNewCase(newCase);
-  };
-
-  const onInputChange = e => {
-    const { name, value } = e.target;
-    setFormValues({ ...formValues, [name]: value });
-  };
-
-  console.log(approvedCases, approvedQueue, isApproved, isDenied);
+  }, []);
 
   return (
-    <div className={classes.uploadPage}>
-      <UploadCaseForm
-        formValues={formValues}
-        onInputChange={onInputChange}
-        submit={onSubmit}
-        acceptCase={acceptCase}
-        rejectCase={rejectCase}
-      />
+    <div className="manageCasesContainer">
+      <Typography.Title level={2} className="manageCasesTitle">
+        ManageCases
+      </Typography.Title>
+      <Table
+        columns={columns}
+        dataSource={apiData[0]}
+        expandable={{
+          expandedRowRender: caseObj => (
+            <div key={caseObj.case_id}>
+              <p style={{ margin: 0 }}> Case ID: {caseObj.case_id}</p>
+              <p style={{ margin: 0 }}>Date: {caseObj.hearing_date}</p>
+              <p style={{ margin: 0 }}>
+                Initial Hearing:
+                {caseObj.initial_or_appellate ? 'True' : 'False'}
+              </p>
+              <p style={{ margin: 0 }}>Case Origin: {caseObj.case_origin}</p>
+              <p style={{ margin: 0 }}>
+                Filed 1 Year:
+                {caseObj.case_filed_within_one_year ? 'True' : 'False'}
+              </p>
+              <p style={{ margin: 0 }}>
+                Nation of Origin: {caseObj.nation_of_origin}
+              </p>
+              <p style={{ margin: 0 }}>
+                Protected Grounds:
+                {caseObj.protected_ground ? 'True' : 'False'}
+              </p>
+              <p style={{ margin: 0 }}>
+                Applicant Gender: {caseObj.applicant_gender}
+              </p>
+              <p style={{ margin: 0 }}>
+                Violence Experienced: {caseObj.type_of_violence_experienced}
+              </p>
+              <p style={{ margin: 0 }}>Case Outcome: {caseObj.case_outcome}</p>
+            </div>
+          ),
+          rowExpandable: caseObj => caseObj.name !== 'Not Expandable',
+        }}
+      ></Table>
     </div>
   );
-};
-
-export default ManageCases;
+}

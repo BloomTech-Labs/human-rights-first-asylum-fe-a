@@ -14,58 +14,55 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
-  p: {
-    margin: '1%',
-  },
-  panal: {
-    width: '40%',
-  },
-  buttonStyles: {
-    color: '#ffffff',
-    backgroundColor: '#215589',
-    marginTop: '1%',
-    marginLeft: '1%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   buttons: {
     display: 'flex',
     alignItems: 'flex-end',
     justifyContent: 'flex-start',
   },
+  p: {
+    margin: '1%',
+  },
+  buttonStyles: {
+    color: '#ffffff',
+    backgroundColor: '#215589',
+    marginTop: '3%',
+    marginLeft: '1%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 }));
 
-const ManageUsersPage = props => {
+const ManageFaqPage = props => {
   const { Title } = Typography;
   const { Panel } = Collapse;
   const { authState } = props;
-  const [profiles, setProfiles] = useState([]);
+  const [faq, setFaq] = useState([]);
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URI}/profiles`, {
+      .get(`${process.env.REACT_APP_API_URI}/faq`, {
         headers: {
           Authorization: 'Bearer ' + authState.idToken.idToken,
         },
       })
       .then(res => {
-        setProfiles(res.data);
+        setFaq(res.data);
       })
       .catch(err => {
         console.log(err);
       });
   }, [authState.idToken.idToken]);
 
-  const deleteUser = profile => {
+  const deleteFaq = faq => {
     axios
-      .delete(`${process.env.REACT_APP_API_URI}/profiles/${profile.id}`, {
+      .delete(`${process.env.REACT_APP_API_URI}/faq/${faq.id}`, {
         headers: {
           Authorization: 'Bearer ' + authState.idToken.idToken,
         },
       })
       .then(res => {
-        alert(`${profile.name}'s profile was deleted`);
+        alert(`${faq.question}'s FAQ was deleted`);
         console.log(res.data);
       })
       .catch(err => {
@@ -77,33 +74,21 @@ const ManageUsersPage = props => {
 
   return (
     <div className={classes.root}>
-      <div className={classes.panal}>
-        <Title level={2}> Manage Users </Title>
+      <div className="faq">
+        <Title level={2}> Manage FAQ </Title>
         <Collapse defaultActiveKey={['0']} accordion>
-          {profiles.map(item => {
+          {faq.map(item => {
             return (
-              <Panel header={`${item.firstName} ${item.lastName}`}>
-                <p>
-                  <strong>Name:</strong> {`${item.firstName} ${item.lastName}`}
-                </p>
-                <p>
-                  <strong>Email:</strong> {item.email}
-                </p>
-                <p>
-                  <strong>Role:</strong> {item.role}
-                </p>
-                <p>
-                  <strong>Date joined:</strong>{' '}
-                  {String(item.created_at).slice(0, 10)}
-                </p>
+              <Panel header={`Q: ${item.question}`}>
+                A: {item.answer}
                 <div className={classes.buttons}>
-                  <Link to={`edit-user/${item.id}`}>
+                  <Link to={`edit-faq/${item.id}`}>
                     <Button className={classes.buttonStyles}>Edit</Button>
                   </Link>
                   <Button
                     className={classes.buttonStyles}
                     onClick={() => {
-                      deleteUser(item);
+                      deleteFaq(item);
                     }}
                   >
                     Delete
@@ -118,4 +103,4 @@ const ManageUsersPage = props => {
   );
 };
 
-export default ManageUsersPage;
+export default ManageFaqPage;

@@ -403,7 +403,11 @@ export default function CaseTable(props) {
 
     const menu = (
       <Menu onClick={menuClick}>
-        <Menu.Item key="1" icon={<FeatherIcon icon="download" />}>
+        <Menu.Item
+          key="1"
+          className="exportBtn"
+          icon={<FeatherIcon icon="download" />}
+        >
           <GridToolbarExport />
         </Menu.Item>
         <Menu.Item key="2" icon={<FeatherIcon icon="download" />}>
@@ -462,7 +466,9 @@ export default function CaseTable(props) {
             <FeatherIcon icon="bookmark" />
           </Button>
 
-          <GridColumnsToolbarButton onClick={e => e.preventDefault()} />
+          <Button className="columnsBtn">
+            <GridColumnsToolbarButton onClick={e => e.preventDefault()} />
+          </Button>
         </div>
       </div>
     );
@@ -553,11 +559,9 @@ export default function CaseTable(props) {
 
   const useStyles = makeStyles(theme => ({
     root: {
-      background: '#f9f9f9',
+      background: '#fff',
       color: '#215589',
       height: 48,
-      marginTop: '1rem',
-      marginLeft: '1rem',
       zIndex: 1,
     },
     tabIndicator: {
@@ -609,21 +613,6 @@ export default function CaseTable(props) {
           {drawerContent()}
         </Drawer>
       </div>
-
-      <AppBar position="static" classes={{ root: classes.root }} elevation={0}>
-        <Tabs
-          value={tabValue}
-          onChange={onChange}
-          aria-label="Types of Cases"
-          classes={{
-            root: classes.root,
-            indicator: classes.tabIndicator,
-          }}
-        >
-          <Tab label="Initial Cases" />
-          <Tab label="Appellate Cases" />
-        </Tabs>
-      </AppBar>
 
       <TabPanel className={classes.tabPanel} value={tabValue} index={0}>
         <div className="caseTableGridContainer">

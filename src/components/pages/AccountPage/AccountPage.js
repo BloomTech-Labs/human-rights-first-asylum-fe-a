@@ -11,6 +11,15 @@ const useStyles = makeStyles(theme => ({
     fontSize: '2rem',
     marginBottom: '2.5rem',
   },
+  buttonStyles: {
+    color: '#ffffff',
+    backgroundColor: '#215589',
+    marginTop: '3%',
+    marginLeft: '1%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 }));
 
 const AccountPage = props => {
@@ -40,7 +49,7 @@ const AccountPage = props => {
         <strong>Role:</strong> {hrfUserInfo.role}
       </p>
       <Link to={`edit-user/${hrfUserInfo.id}`}>
-        <Button>Edit</Button>
+        <Button className={classes.buttonStyles}>Edit</Button>
       </Link>
     </div>
   );

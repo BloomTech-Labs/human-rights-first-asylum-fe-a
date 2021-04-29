@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
+import { Typography, Collapse } from 'antd';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -9,25 +10,34 @@ const useStyles = makeStyles(theme => ({
     margin: '5% 0',
     width: '100%',
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
     justifyContent: 'space-around',
-    textAlign: 'center',
-  },
-  h1Styles: {
-    fontSize: '2rem',
-    marginBottom: '2.5rem',
-  },
-  profile: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   p: {
     margin: '1%',
   },
+  panal: {
+    width: '50%',
+  },
+  buttonStyles: {
+    color: '#ffffff',
+    backgroundColor: '#215589',
+    marginTop: '1%',
+    marginLeft: '1%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttons: {
+    display: 'flex',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-start',
+  },
 }));
 
 const PendingUsersPage = props => {
+  const { Title } = Typography;
+  const { Panel } = Collapse;
   const { authState } = props;
   const [pendingProfiles, setPendingProfiles] = useState([]);
 
@@ -85,42 +95,47 @@ const PendingUsersPage = props => {
 
   return (
     <div className={classes.root}>
-      <h1 className={classes.h1Styles}>Manage Requested Users</h1>
-      <div>
-        {pendingProfiles.map(profile => (
-          <div className={classes.profile}>
-            <p className={classes.p}>
-              {' '}
-              <strong>Email:</strong> {profile.email}
-            </p>
-            <p className={classes.p}>
-              {' '}
-              <strong>First Name:</strong> {profile.firstName}
-            </p>
-            <p className={classes.p}>
-              {' '}
-              <strong>Last Name:</strong> {profile.lastName}
-            </p>
-            <p className={classes.p}>
-              <strong>Date requested:</strong>{' '}
-              {String(profile.created_at).slice(0, 10)}
-            </p>
-            <Button
-              onClick={() => {
-                approveUser(profile);
-              }}
-            >
-              Approve
-            </Button>
-            <Button
-              onClick={() => {
-                rejectUser(profile);
-              }}
-            >
-              Reject
-            </Button>
-          </div>
-        ))}
+      <div className={classes.panal}>
+        <Title level={2}> Manage Requested Users </Title>
+        <Collapse defaultActiveKey={['0']} accordion>
+          {pendingProfiles.map(item => {
+            return (
+              <Panel header={`${item.firstName} ${item.lastName}`}>
+                <p>
+                  <strong>Name:</strong> {`${item.firstName} ${item.lastName}`}
+                </p>
+                <p>
+                  <strong>Email:</strong> {item.email}
+                </p>
+                <p>
+                  <strong>Role:</strong> (Defaults to User){' '}
+                </p>
+                <p>
+                  <strong>Date requested:</strong>{' '}
+                  {String(item.created_at).slice(0, 10)}
+                </p>
+                <div className={classes.buttons}>
+                  <Button
+                    className={classes.buttonStyles}
+                    onClick={() => {
+                      approveUser(item);
+                    }}
+                  >
+                    Approve
+                  </Button>
+                  <Button
+                    className={classes.buttonStyles}
+                    onClick={() => {
+                      rejectUser(item);
+                    }}
+                  >
+                    Reject
+                  </Button>
+                </div>
+              </Panel>
+            );
+          })}
+        </Collapse>
       </div>
     </div>
   );
