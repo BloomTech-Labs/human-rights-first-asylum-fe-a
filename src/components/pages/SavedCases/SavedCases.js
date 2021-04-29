@@ -11,9 +11,9 @@ import FeatherIcon from 'feather-icons-react';
 function SavedCases({ savedCases, deleteBookmark }) {
   const columns = [
     {
-      field: 'primary_key',
-      renderHeader: params => <strong>{'Case ID'}</strong>,
-      headerName: 'Case ID',
+      field: 'case_number',
+      renderHeader: params => <strong>{'Case Number'}</strong>,
+      headerName: 'Case Number',
       width: 120,
       options: {
         filter: true,
@@ -28,15 +28,15 @@ function SavedCases({ savedCases, deleteBookmark }) {
       ),
     },
     {
-      field: 'nation_of_origin',
-      renderHeader: params => <strong>{'Nation Of Origin'}</strong>,
-      headerName: 'Nation of Origin',
+      field: 'country_of_origin',
+      renderHeader: params => <strong>{'Country Of Origin'}</strong>,
+      headerName: 'Country of Origin',
       width: 175,
     },
     {
-      field: 'protected_ground',
-      renderHeader: params => <strong>{'Protected Ground'}</strong>,
-      headerName: 'Protected Ground',
+      field: 'protected_grounds',
+      renderHeader: params => <strong>{'Protected Grounds'}</strong>,
+      headerName: 'Protected Grounds',
       width: 180,
     },
     {
@@ -124,9 +124,9 @@ function SavedCases({ savedCases, deleteBookmark }) {
   };
 
   const [queryValues, setQueryValues] = useState({
-    primary_key: '',
-    nation_of_origin: '',
-    protected_ground: '',
+    case_number: '',
+    country_of_origin: '',
+    protected_grounds: '',
     application_type: '',
     judge: '',
     case_outcome: '',
@@ -156,9 +156,9 @@ function SavedCases({ savedCases, deleteBookmark }) {
   };
 
   const searchOptions = [
-    { id: 'primary_key', label: 'Case ID' },
-    { id: 'nation_of_origin', label: 'Nation of Origin' },
-    { id: 'protected_ground', label: 'Protected Ground' },
+    { id: 'case_number', label: 'Case Number' },
+    { id: 'country_of_origin', label: 'Country of Origin' },
+    { id: 'protected_grounds', label: 'Protected Grounds' },
     { id: 'application_type', label: 'Application Type' },
     { id: 'judge', label: 'Judge' },
     { id: 'case_outcome', label: 'Decision' },

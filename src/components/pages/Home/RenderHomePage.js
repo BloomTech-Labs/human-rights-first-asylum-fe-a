@@ -64,7 +64,7 @@ function RenderHomePage(props) {
           res.data.map(eachCase => {
             return {
               ...eachCase,
-              id: eachCase.primary_key,
+              id: eachCase.case_number,
             };
           })
         );

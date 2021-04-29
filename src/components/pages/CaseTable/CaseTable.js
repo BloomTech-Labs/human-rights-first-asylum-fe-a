@@ -63,9 +63,9 @@ export default function CaseTable(props) {
 
   const columns = [
     {
-      field: 'primary_key',
-      renderHeader: params => <strong>{'Case ID'}</strong>,
-      headerName: 'Case ID',
+      field: 'case_number',
+      renderHeader: params => <strong>{'Case Number'}</strong>,
+      headerName: 'Case Number',
       width: 130,
       options: {
         filter: true,
@@ -75,19 +75,19 @@ export default function CaseTable(props) {
       renderCell: params => (
         <>
           <Link to={`/case/${params.value}`} className="caseTableLink">
-            <span> {params.row['case_id']}</span>
+            <span> {params.row['case_number']}</span>
           </Link>
         </>
       ),
     },
     {
-      field: 'hearing_date',
+      field: 'date',
       renderHeader: params => <strong>{'Date'}</strong>,
       headerName: 'Date',
       width: 110,
     },
     {
-      field: 'judge_name',
+      field: 'judge',
       renderHeader: params => <strong>{'Judge'}</strong>,
       headerName: 'Judge',
       width: 160,
@@ -103,27 +103,33 @@ export default function CaseTable(props) {
       ),
     },
     {
-      field: 'initial_or_appellate',
+      field: 'appellate',
       renderHeader: params => <strong>{'Initial Hearing'}</strong>,
       headerName: 'Initial Hearing',
       width: 130,
     },
     {
-      field: 'case_origin',
-      renderHeader: params => <strong>{'Case Origin'}</strong>,
-      headerName: 'Case Origin',
+      field: 'case_origin_city',
+      renderHeader: params => <strong>{'Origin City'}</strong>,
+      headerName: 'Origin City',
       width: 160,
     },
     {
-      field: 'case_filed_within_one_year',
-      renderHeader: params => <strong>{'Filed 1 Year'}</strong>,
-      headerName: 'Filed 1 Year',
+      field: 'case_origin_state',
+      renderHeader: params => <strong>{'Origin State'}</strong>,
+      headerName: 'Origin State',
+      width: 160,
+    },
+    {
+      field: 'filed_in_one_year',
+      renderHeader: params => <strong>{'Filed in 1 Year'}</strong>,
+      headerName: 'Filed in 1 Year',
       width: 115,
     },
     {
-      field: 'protected_ground',
-      renderHeader: params => <strong>{'Protected Ground'}</strong>,
-      headerName: 'Protected Ground',
+      field: 'protected_grounds',
+      renderHeader: params => <strong>{'Protected Grounds'}</strong>,
+      headerName: 'Protected Grounds',
       width: 155,
     },
     {
@@ -133,19 +139,19 @@ export default function CaseTable(props) {
       width: 110,
     },
     {
-      field: 'nation_of_origin',
-      renderHeader: params => <strong>{'Nation of Origin'}</strong>,
-      headerName: 'Nation of Origin',
+      field: 'country_of_origin',
+      renderHeader: params => <strong>{'Country of Origin'}</strong>,
+      headerName: 'Country of Origin',
       width: 140,
     },
     {
-      field: 'applicant_gender',
+      field: 'gender',
       renderHeader: params => <strong>{'Applicant Gender'}</strong>,
       headerName: 'Applicant Gender',
       width: 155,
     },
     {
-      field: 'type_of_violence_experienced',
+      field: 'type_of_violence',
       renderHeader: params => <strong>{'Violence Experienced'}</strong>,
       headerName: 'Violence Experienced',
       width: 185,
@@ -158,7 +164,7 @@ export default function CaseTable(props) {
       hide: true,
     },
     {
-      field: 'applicant_indigenous_group',
+      field: 'indigenous_group',
       renderHeader: params => <strong>{'Indigenous Group'}</strong>,
       headerName: 'Indigenous Group',
       width: 150,
@@ -172,16 +178,9 @@ export default function CaseTable(props) {
       hide: true,
     },
     {
-      field: 'applicant_access_to_interpreter',
-      renderHeader: params => <strong>{'Interpreter'}</strong>,
-      headerName: 'Interpreter',
-      width: 100,
-      hide: true,
-    },
-    {
-      field: 'applicant_perceived_credibility',
-      renderHeader: params => <strong>{'Applicant Credibility'}</strong>,
-      headerName: 'Applicant Credibility',
+      field: 'credible',
+      renderHeader: params => <strong>{'Credible Applicant'}</strong>,
+      headerName: 'Credible Applicant',
       width: 160,
       hide: true,
     },
@@ -230,7 +229,7 @@ export default function CaseTable(props) {
   const findRowByID = (rowID, rowData) => {
     for (let i = 0; i < rowData.length; i++) {
       let currentRow = rowData[i];
-      if (currentRow.primary_key === rowID) {
+      if (currentRow.case_number === rowID) {
         return currentRow;
       }
     }
@@ -240,7 +239,7 @@ export default function CaseTable(props) {
   const postBookmark = rowToPost => {
     axios
       .post(
-        `${process.env.REACT_APP_API_URI}/profile/${userInfo.sub}/case/${rowToPost.primary_key}`,
+        `${process.env.REACT_APP_API_URI}/profile/${userInfo.sub}/case/${rowToPost.case_number}`,
         rowToPost,
         {
           headers: {
@@ -250,7 +249,7 @@ export default function CaseTable(props) {
       )
       .then(res => {
         let justAdded = res.data.case_bookmarks.slice(-1); // response comes back as array of all existing bookmarks
-        let justAddedID = justAdded[0].primary_key;
+        let justAddedID = justAdded[0].case_number;
         let wholeAddedRow = findRowByID(justAddedID, caseData);
         setSavedCases([...savedCases, wholeAddedRow]);
       })
@@ -270,11 +269,11 @@ export default function CaseTable(props) {
       }
       let savedIds = [];
       for (let i = 0; i < savedCases.length; i++) {
-        savedIds.push(savedCases[i].primary_key);
+        savedIds.push(savedCases[i].case_number);
       }
 
       for (let i = 0; i < bookmarks.length; i++) {
-        if (savedIds.includes(bookmarks[i].primary_key)) {
+        if (savedIds.includes(bookmarks[i].case_number)) {
           console.log('Case already saved to bookmarks');
           continue;
         } else {
@@ -291,22 +290,21 @@ export default function CaseTable(props) {
   };
 
   const [queryValues, setQueryValues] = useState({
-    case_id: '',
-    hearing_date: '',
-    judge_name: '',
-    initial_or_appellate: '',
-    case_origin: '',
-    case_filed_within_one_year: '',
+    case_number: '',
+    date: '',
+    judge: '',
+    case_origin_city: '',
+    case_origin_state: '',
+    filed_in_one_year: '',
     application_type: '',
-    protected_ground: '',
+    protected_grounds: '',
     case_outcome: '',
-    nation_of_origin: '',
-    applicant_gender: '',
-    type_of_violence_experienced: '',
-    applicant_indigenous_group: '',
+    country_of_origin: '',
+    gender: '',
+    type_of_violence: '',
+    indigenous_group: '',
     applicant_language: '',
-    applicant_access_to_interpreter: '',
-    applicant_perceived_credibility: '',
+    credible: '',
   });
 
   const [new_search, setSearch] = useState(false);
@@ -347,24 +345,23 @@ export default function CaseTable(props) {
   };
 
   const searchOptions = [
-    { id: 'case_id', label: 'Case ID' },
-    { id: 'hearing_date', label: 'Hearing Date' },
-    { id: 'judge_name', label: 'Judge' },
-    { id: 'initial_or_appellate', label: 'Initial or Appellate' },
-    { id: 'case_origin', label: 'Case Origin' },
-    { id: 'case_filed_within_one_year', label: 'Case Filed Within One Year' },
+    { id: 'case_number', label: 'Case Number' },
+    { id: 'date', label: 'Date' },
+    { id: 'judge', label: 'Judge' },
+    { id: 'case_origin_city', label: 'Origin City' },
+    { id: 'case_origin_state', label: 'Origin State' },
+    { id: 'filed_in_one_year', label: 'Case Filed Within One Year' },
     { id: 'application_type', label: 'Application Type' },
-    { id: 'protected_ground', label: 'Protected Ground' },
+    { id: 'protected_grounds', label: 'Protected Grounds' },
     { id: 'case_outcome', label: 'Case Outcome' },
-    { id: 'nation_of_origin', label: 'Nation of Origin' },
-    { id: 'applicant_gender', label: 'Applicant Gender' },
-    { id: 'type_of_violence_experienced', label: 'Violence Experienced' },
-    { id: 'applicant_indigenous_group', label: 'Indigenous Applicant' },
+    { id: 'country_of_origin', label: 'Country of Origin' },
+    { id: 'gender', label: 'Applicant Gender' },
+    { id: 'type_of_violence', label: 'Violence Experienced' },
+    { id: 'indigenous_group', label: 'Indigenous Applicant' },
     { id: 'applicant_language', label: 'Applicant Language' },
-    { id: 'applicant_access_to_interpreter', label: 'Access to Interpreter' },
     {
-      id: 'applicant_perceived_credibility',
-      label: 'Applicant Perceived Credibility',
+      id: 'credible',
+      label: 'Credible Applicant',
     },
   ];
   const drawerContent = () => {
@@ -575,7 +572,7 @@ export default function CaseTable(props) {
   const classes = useStyles();
   const sampleAppellateCases = [];
   caseData.forEach(item => sampleAppellateCases.unshift(item));
-  console.log(sampleAppellateCases);
+  // Conditional rendering needs to be applied to render initial and appellate cases to their respective tabs
 
   return (
     <div className="caseTableContainer">
