@@ -47,14 +47,14 @@ const CaseUpdate = props => {
         delete caseData['social_group_type'];
 
         const newCases = props.casesData.map(c => {
-          return c.primary_key === caseData.primary_key
+          return c.case_number === caseData.case_number
             ? {
                 ...caseData,
                 ...fieldsValue,
                 judge_name: judges.filter(
                   j => fieldsValue['judge'] === j.judge_id
                 )[0]['name'],
-                id: caseData.primary_key,
+                id: caseData.case_number,
               }
             : c;
         });
