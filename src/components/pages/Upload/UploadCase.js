@@ -91,7 +91,7 @@ const HRFBlueLoader = withStyles(() => ({
   },
 }))(CircularProgress);
 
-const UploadCase = props => {
+const UploadCase = ({ authState }) => {
   const [formValues, setFormValues] = useState(initialFormValues);
   const classes = useStyles();
   const [isLoading, setIsLoading] = useState(false);
@@ -126,7 +126,11 @@ const UploadCase = props => {
 
     setIsLoading(true);
     axios
-      .post(`${process.env.REACT_APP_API_URI}/upload/`, dataForm)
+      .post(`${process.env.REACT_APP_API_URI}/upload/`, dataForm, {
+        headers: {
+          Authorization: 'Bearer ' + authState.idToken.idToken,
+        },
+      })
       .then(res => {
         setFormValues(res.data);
         setIsLoading(false);
