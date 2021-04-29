@@ -7,22 +7,20 @@
 
     .form {
         width: 40%;
-        display: flex;
-        flex-direction: column;
     }
 
     .faq {
       width: 40%;
     }
 
-    .textField {
+    /* .textField {
       margin-top: 5.5vh;
       margin-left: -18vh;
       width: 100%;
       text-align: start;
-    }
+    } */
 
-    #formBtn {
+    /* #formBtn {
       color: #ffffff;
       background-Color: #215589;
       border: 1px solid  #215589;
@@ -36,5 +34,18 @@
       border: 1px solid darkgray;
       background-color: lightgray;
       transition: 0.3s;
+    } */
+
+    .textField {
+      width: 100%;
+      margin: 1% auto;
     }
-  
+
+    #buttonStyles {
+      color: #ffffff;
+      background-color: #215589;
+      margin-top: 3%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
