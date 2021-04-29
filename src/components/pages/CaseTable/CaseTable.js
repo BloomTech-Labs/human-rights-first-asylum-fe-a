@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 import Plot from 'react-plotly.js';
@@ -87,7 +87,7 @@ export default function CaseTable(props) {
       width: 110,
     },
     {
-      field: 'judge',
+      field: 'judge_name',
       renderHeader: params => <strong>{'Judge'}</strong>,
       headerName: 'Judge',
       width: 160,
@@ -103,12 +103,6 @@ export default function CaseTable(props) {
       ),
     },
     {
-      field: 'appellate',
-      renderHeader: params => <strong>{'Initial Hearing'}</strong>,
-      headerName: 'Initial Hearing',
-      width: 130,
-    },
-    {
       field: 'case_origin_city',
       renderHeader: params => <strong>{'Origin City'}</strong>,
       headerName: 'Origin City',
@@ -118,13 +112,13 @@ export default function CaseTable(props) {
       field: 'case_origin_state',
       renderHeader: params => <strong>{'Origin State'}</strong>,
       headerName: 'Origin State',
-      width: 160,
+      width: 120,
     },
     {
       field: 'filed_in_one_year',
       renderHeader: params => <strong>{'Filed in 1 Year'}</strong>,
       headerName: 'Filed in 1 Year',
-      width: 115,
+      width: 145,
     },
     {
       field: 'protected_grounds',
@@ -614,7 +608,11 @@ export default function CaseTable(props) {
       <TabPanel className={classes.tabPanel} value={tabValue} index={0}>
         <div className="caseTableGridContainer">
           <DataGrid
-            rows={searching ? filter(caseData) : caseData}
+            rows={
+              caseData
+                ? filter(caseData.filter(item => item.appellate === false))
+                : caseData.filter(item => item.appellate === false)
+            }
             columns={columns}
             className="caseTable"
             loading={caseData ? false : true}
@@ -629,7 +627,11 @@ export default function CaseTable(props) {
       <TabPanel className={classes.tabPanel} value={tabValue} index={1}>
         <div className="caseTableGridContainer">
           <DataGrid
-            rows={sampleAppellateCases}
+            rows={
+              caseData
+                ? filter(caseData.filter(item => item.appellate === true))
+                : caseData.filter(item => item.appellate === true)
+            }
             columns={columns}
             className="caseTable"
             loading={caseData ? false : true}
