@@ -1,15 +1,58 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Button, Typography, Form, Input, Collapse } from 'antd';
+import { Typography, Collapse } from 'antd';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 import './SupportPage.css';
+
+const initialFormValues = {
+  message: '',
+  email: '',
+  name: '',
+};
 
 const SupportPage = props => {
   const { Title } = Typography;
   const { Panel } = Collapse;
-  const { TextArea } = Input;
-  const { authState } = props;
+  const { authState, userInfo } = props;
 
   const [FAQ, setFaq] = useState([]);
+  const [formValues, setFormValues] = useState(initialFormValues);
+
+  useEffect(() => {
+    setFormValues({
+      ...initialFormValues,
+      email: userInfo.email,
+      name: `${userInfo.firstName} ${userInfo.lastName}`,
+    });
+  }, [userInfo]);
+
+  const onChange = e => {
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
+  };
+
+  const postNewMessage = message => {
+    axios
+      .post(`${process.env.REACT_APP_API_URI}/faq/contact/`, message, {
+        headers: {
+          Authorization: 'Bearer ' + authState.idToken.idToken,
+        },
+      })
+      .catch(err => console.log(err));
+    setFormValues(initialFormValues);
+  };
+
+  const onSubmit = e => {
+    e.preventDefault();
+    const message = {
+      message: formValues.message.trim(),
+      email: formValues.email.trim(),
+      name: formValues.name.trim(),
+    };
+    alert('Message sent');
+    postNewMessage(message);
+  };
 
   useEffect(() => {
     axios
@@ -29,26 +72,30 @@ const SupportPage = props => {
   return (
     <div className="supportRoot">
       <div className="form">
-        <Form className="contactForm">
-          <Title level={2}> Contact Us </Title>
-          <Form.Item
-            label="How can we help?"
-            name="Message"
-            rules={[
-              {
-                required: true,
-                message: 'Please input a message',
-              },
-            ]}
+        <Title level={2}> Contact Us </Title>
+        <form onSubmit={onSubmit}>
+          <label htmlFor="message">
+            <TextField
+              id="message"
+              label="Message"
+              type="text"
+              name="message"
+              variant="outlined"
+              multiline={true}
+              onChange={onChange}
+              className="textField"
+              value={formValues.message}
+            />
+          </label>
+          <Button
+            onClick={onSubmit}
+            id="buttonStyles"
+            variant="contained"
+            component="span"
           >
-            <TextArea className="textField" placeholder="Message" autoSize />
-          </Form.Item>
-          <Form.Item>
-            <Button id="formBtn" type="primary" htmlType="submit">
-              SUBMIT
-            </Button>
-          </Form.Item>
-        </Form>
+            Submit
+          </Button>
+        </form>
       </div>
       <div className="faq">
         <Title level={2}> FAQ </Title>

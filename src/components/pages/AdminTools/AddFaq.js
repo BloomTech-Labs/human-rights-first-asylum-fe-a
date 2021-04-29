@@ -89,6 +89,7 @@ const AddFaq = props => {
               type="text"
               name="question"
               variant="outlined"
+              multiline={true}
               onChange={onChange}
               className={classes.textField}
               value={formValues.question}
@@ -101,6 +102,7 @@ const AddFaq = props => {
               type="text"
               name="answer"
               variant="outlined"
+              multiline={true}
               onChange={onChange}
               className={classes.textField}
               value={formValues.answer}
