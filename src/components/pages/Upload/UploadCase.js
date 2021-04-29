@@ -126,7 +126,7 @@ const UploadCase = ({ authState }) => {
 
     setIsLoading(true);
     axios
-      .post(`${process.env.REACT_APP_API_URI}/upload/`, dataForm, {
+      .post(`${process.env.REACT_APP_API_URI}/upload`, dataForm, {
         headers: {
           Authorization: 'Bearer ' + authState.idToken.idToken,
         },
