@@ -19,7 +19,6 @@ export default function ManageCases(props) {
   };
 
   const columns = [
-    //will have to update dataIndex and keys for "Uploaded By" once backend is updated
     { title: 'Case ID', dataIndex: 'case_id', key: 'case_id' },
     { title: 'Uploaded By', dataIndex: 'user_id', key: 'user_id' },
     { title: 'Date Uploaded', dataIndex: 'uploaded', key: 'uploaded' },
@@ -53,8 +52,8 @@ export default function ManageCases(props) {
       .then(res => {
         filteredData.push(
           res.data.filter(caseStatus => {
-            return caseStatus.case_outcome === 'Remanded';
-            //When backend is updated, "case_outcome" needs to be switched to "status" (or whatever they decided to call case status) and "remanded" needs to be switched to "Pending"
+            return caseStatus.status === 'pending';
+            //currently, there is only one pending case in the seed data. If you want to test multiple case objects, try setting "status" to case_outcome and "pending" to "remanded" or "denied"
           })
         );
       })
@@ -79,30 +78,43 @@ export default function ManageCases(props) {
           expandedRowRender: caseObj => (
             <div key={caseObj.case_id}>
               <p style={{ margin: 0 }}> Case ID: {caseObj.case_id}</p>
-              <p style={{ margin: 0 }}>Date: {caseObj.hearing_date}</p>
+              <p style={{ margin: 0 }}>Date: {caseObj.date}</p>
+              <p style={{ margin: 0 }}>Case Outcome: {caseObj.case_outcome}</p>
               <p style={{ margin: 0 }}>
-                Initial Hearing:
-                {caseObj.initial_or_appellate ? 'True' : 'False'}
-              </p>
-              <p style={{ margin: 0 }}>Case Origin: {caseObj.case_origin}</p>
-              <p style={{ margin: 0 }}>
-                Filed 1 Year:
-                {caseObj.case_filed_within_one_year ? 'True' : 'False'}
-              </p>
-              <p style={{ margin: 0 }}>
-                Nation of Origin: {caseObj.nation_of_origin}
+                Country of Origin: {caseObj.country_of_origin}
               </p>
               <p style={{ margin: 0 }}>
                 Protected Grounds:
                 {caseObj.protected_ground ? 'True' : 'False'}
               </p>
               <p style={{ margin: 0 }}>
-                Applicant Gender: {caseObj.applicant_gender}
+                Application Type: {caseObj.application_type}
+              </p>
+              <p style={{ margin: 0 }}>
+                Case Origin State: {caseObj.case_origin_state}
+              </p>
+              <p style={{ margin: 0 }}>
+                Case Origin City: {caseObj.case_origin_city}
+              </p>
+              <p style={{ margin: 0 }}>Applicant Gender: {caseObj.gender}</p>
+              <p style={{ margin: 0 }}>
+                Applicant Language: {caseObj.applicant_language}
+              </p>
+              <p style={{ margin: 0 }}>
+                Initial Hearing:
+                {caseObj.initial_or_appellate ? 'True' : 'False'}
+              </p>
+              <p style={{ margin: 0 }}>
+                Filed 1 Year:
+                {caseObj.case_filed_within_one_year ? 'True' : 'False'}
+              </p>
+              <p style={{ margin: 0 }}>
+                Credible:
+                {caseObj.credible ? 'True' : 'False'}
               </p>
               <p style={{ margin: 0 }}>
                 Violence Experienced: {caseObj.type_of_violence_experienced}
               </p>
-              <p style={{ margin: 0 }}>Case Outcome: {caseObj.case_outcome}</p>
             </div>
           ),
           rowExpandable: caseObj => caseObj.name !== 'Not Expandable',
