@@ -87,7 +87,13 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const UploadCaseForm = props => {
-  const { formValues, onInputChange, acceptCase, rejectCase } = props;
+  const {
+    formValues,
+    onInputChange,
+    formValueQueue,
+    acceptCase,
+    rejectCase,
+  } = props;
 
   const classes = useStyles();
 

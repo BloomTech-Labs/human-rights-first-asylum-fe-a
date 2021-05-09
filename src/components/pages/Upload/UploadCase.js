@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import UploadCaseForm from './UploadCaseForm';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { notification } from 'antd';
+import { notification, Upload } from 'antd';
 import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
-
+import { InboxOutlined } from '@ant-design/icons';
 import './CaseForm.css';
 
 const useStyles = makeStyles(theme => ({
@@ -93,9 +93,13 @@ const HRFBlueLoader = withStyles(() => ({
 
 const UploadCase = ({ authState }) => {
   const [formValues, setFormValues] = useState(initialFormValues);
+  const [formValueQueue, setFormValueQueue] = useState([]);
   const classes = useStyles();
   const [isLoading, setIsLoading] = useState(false);
-
+  const [isEditing, setIsEditing] = useState(false);
+  const { Dragger } = Upload;
+  const [postQueue, setPostQueue] = useState([]);
+  const [nextPost, setNextPost] = useState(null);
   const successNotification = () => {
     notification.open({
       message: 'Upload Status',
@@ -117,35 +121,141 @@ const UploadCase = ({ authState }) => {
   };
 
   const onFileChange = e => {
-    const dataForm = new FormData();
-    dataForm.append('target_file', e.target.files[0]);
-
-    if (e.target.files.length === 0) {
-      return;
+    let multiFile = [];
+    for (let i = 0; i < e.target.files.length; i++) {
+      let dataForm = new FormData();
+      dataForm.append('target_file', e.target.files[i]);
+      setIsLoading(true);
+      multiFile.push(dataForm);
     }
-
-    setIsLoading(true);
-    axios
-      .post(`${process.env.REACT_APP_API_URI}/upload`, dataForm, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken.idToken,
-        },
-      })
-      .then(res => {
-        setFormValues(res.data);
-        setIsLoading(false);
-        successNotification();
-      })
-      .catch(() => {
-        setIsLoading(false);
-        failNotification();
-      });
+    setPostQueue([...postQueue, ...multiFile]);
   };
+
+  const DragProps = {
+    customRequest: async info => {
+      const dataForm = new FormData();
+      console.log(info);
+      dataForm.append('target_file', info.file);
+      setPostQueue([...postQueue, dataForm]);
+      console.log(postQueue);
+      setIsLoading(true);
+      // await axios
+      //   .post(`${process.env.REACT_APP_API_URI}/upload`, dataForm, {
+      //     headers: {
+      //       Authorization: 'Bearer ' + authState.idToken.idToken,
+      //     },
+      //   })
+      //   .then(res => {
+      //     setFormValueQueue([...formValueQueue, res.data]);
+      //     setIsLoading(false);
+      //     successNotification();
+      //   })
+      //   .catch(() => {
+      //     setIsLoading(false);
+      //     failNotification();
+      //   });
+    },
+    name: 'file',
+    multiple: true,
+    action: '',
+    accept: '.pdf',
+    onChange: e => {
+      console.log(e.fileList);
+    },
+  };
+  // const onDropFileChange = e => {
+  //   if (e.fileList.length === 0) {
+  //     return;
+  //   }
+  //   e.fileList.forEach(file => {
+  //     console.log(file);
+  //     const dataForm = new FormData();
+  //     dataForm.append('target_file', file.originFileObj);
+  //     console.log(dataForm.get('target_file'));
+  //     setIsLoading(true);
+  //     axios
+  //       .post(`${process.env.REACT_APP_API_URI}/upload`, dataForm, {
+  //         headers: {
+  //           Authorization: 'Bearer ' + authState.idToken.idToken,
+  //         },
+  //       })
+  //       .then(res => {
+  //         setFormValueQueue([...formValueQueue, res.data]);
+  //         setIsLoading(false);
+  //         successNotification();
+  //         console.log(formValueQueue);
+  //       })
+  //       .catch(() => {
+  //         setIsLoading(false);
+  //         failNotification();
+  //       });
+  //   });
+  // };
 
   const onInputChange = e => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
   };
+  useEffect(() => {
+    if (!nextPost && postQueue.length !== 0) {
+      console.log('test', postQueue, !nextPost);
+      const copy = postQueue;
+      setNextPost(copy.shift());
+      setPostQueue(copy);
+      console.log(postQueue, nextPost);
+    }
+  }, [postQueue]);
+
+  useEffect(() => {
+    if (nextPost) {
+      console.log('whyyyyyyyyyyyyyyyyyyyyyyy');
+      console.log(nextPost);
+      console.log(postQueue);
+      axios
+        .post(`${process.env.REACT_APP_API_URI}/upload`, nextPost, {
+          headers: {
+            Authorization: 'Bearer ' + authState.idToken.idToken,
+          },
+        })
+        .then(res => {
+          setFormValueQueue([...formValueQueue, res.data]);
+          setIsLoading(false);
+          setIsEditing(true);
+          successNotification();
+          console.log(formValueQueue);
+          console.log(postQueue);
+          setNextPost(null);
+          if (postQueue) {
+            const copy = postQueue;
+            setNextPost(copy.shift());
+            setPostQueue(copy);
+            console.log(postQueue, nextPost);
+          }
+        })
+        .catch(() => {
+          setIsLoading(false);
+          failNotification();
+        });
+    }
+  }, [nextPost]);
+  useEffect(() => {
+    if (formValueQueue && isEditing) {
+      let nextForm = formValueQueue[0];
+      let currentForm = formValues;
+      for (const values in nextForm) {
+        if (values in currentForm) {
+          if (nextForm[values] === null) {
+            currentForm[values] = '';
+          } else {
+            currentForm[values] = nextForm[values];
+          }
+        }
+      }
+      console.log(nextForm, formValues);
+      setFormValues(currentForm);
+      console.log(formValueQueue);
+    }
+  }, [formValueQueue]);
 
   return (
     <div className={classes.uploadPage}>
@@ -164,6 +274,7 @@ const UploadCase = ({ authState }) => {
                   name="btn-upload"
                   style={{ display: 'none' }}
                   type="file"
+                  multiple
                   onChange={onFileChange}
                 />
                 <Button
@@ -174,6 +285,14 @@ const UploadCase = ({ authState }) => {
                   <p className="button-text">Select case file</p>
                 </Button>
               </label>
+              <Dragger {...DragProps}>
+                <p className="ant-upload-drag-icon">
+                  <InboxOutlined />
+                </p>
+                <p className="ant-upload-text">
+                  Drag files to this area to upload
+                </p>
+              </Dragger>
               <>
                 {isLoading ? (
                   <div className="spinner_container">
@@ -187,9 +306,12 @@ const UploadCase = ({ authState }) => {
           </form>
         </div>
       </div>
-      <UploadCaseForm formValues={formValues} onInputChange={onInputChange} />
+      <UploadCaseForm
+        formValues={formValues}
+        onInputChange={onInputChange}
+        formValueQueue={formValueQueue}
+      />
     </div>
   );
 };
-
 export default UploadCase;
