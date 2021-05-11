@@ -4,19 +4,15 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import CloseIcon from '@material-ui/icons/Close';
-import HRFlogo from './HRFlogo.png';
 import RateReviewIcon from '@material-ui/icons/RateReview';
 import AccountIcon from '@material-ui/icons/AccountCircle';
 import HelpIcon from '@material-ui/icons/Help';
@@ -24,79 +20,55 @@ import BuildIcon from '@material-ui/icons/Build';
 import { Link } from 'react-router-dom';
 import { SideDrawerData } from './SideDrawerData';
 
-const drawerWidth = 225;
+const drawerWidth = 235;
 
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
   },
   appBar: {
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    backgroundColor: 'white',
-    borderBottom: '1px solid #d9d9d9',
-    color: '#215589',
-    padding: '1px',
-  },
-  appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
-
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButton: {
-    padding: '.2rem',
-    marginRight: theme.spacing(2),
+    zIndex: theme.zIndex.drawer + 1,
   },
   hide: {
     display: 'none',
   },
-  mobileClass: {
-    display: 'block',
-  },
   drawer: {
-    [theme.breakpoints.down('sm')]: {
-      width: drawerWidth,
-      flexShrink: 0,
-    },
+    width: drawerWidth,
+    flexShrink: 0,
+    whiteSpace: 'nowrap',
   },
   drawerPaper: {
     width: drawerWidth,
+    height: 'calc(100% - 65px)',
+    top: 65,
   },
-  drawerHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(2, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
+  drawerContainer: {
+    overflow: 'auto',
   },
-  favorites: {
-    overflowY: 'scroll',
+  drawerOpen: {
+    width: drawerWidth,
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
   },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create('margin', {
+  drawerClose: {
+    transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    marginLeft: -drawerWidth,
-  },
-  contentShift: {
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginLeft: drawerWidth,
-    [theme.breakpoints.down('sm')]: {
-      marginLeft: 0,
+    overflowX: 'hidden',
+    width: theme.spacing(7) + 1,
+    [theme.breakpoints.up('sm')]: {
+      width: theme.spacing(9) + 1,
     },
+  },
+
+  toolbar: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    padding: theme.spacing(0, 1),
   },
 }));
 
@@ -125,57 +97,36 @@ export default function SideDrawer(props) {
     };
   }, [mobile]);
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
+  const handleDrawer = () => {
+    setOpen(!open);
   };
 
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar
-        elevation={0}
+      {/* <AppBar
         position="fixed"
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
       >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography>
-            <a href="/">
-              <img src={HRFlogo} alt=" HRF logo" className="hrflogo" />
-            </a>
-          </Typography>
-        </Toolbar>
-      </AppBar>
+      </AppBar> */}
       <Drawer
-        className={classes.drawer}
-        variant="persistent"
-        anchor="left"
-        open={open}
+        variant="permanent"
+        className={clsx(classes.drawer, {
+          [classes.drawerOpen]: open,
+          [classes.drawerClose]: !open,
+        })}
         classes={{
-          paper: classes.drawerPaper,
+          paper: clsx(classes.drawerPaper, {
+            [classes.drawerOpen]: open,
+            [classes.drawerClose]: !open,
+          }),
         }}
       >
-        <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
+        <div className={classes.toolbar}>
+          <IconButton onClick={handleDrawer}>
+            {open === false ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </div>
         <Divider />
@@ -242,13 +193,6 @@ export default function SideDrawer(props) {
           </ListItem>
         </List>
       </Drawer>
-      <main
-        className={clsx(classes.content, {
-          [classes.contentShift]: open,
-        })}
-      >
-        <div className={classes.drawerHeader} />
-      </main>
     </div>
   );
 }

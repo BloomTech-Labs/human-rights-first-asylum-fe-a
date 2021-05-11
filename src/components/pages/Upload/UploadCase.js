@@ -3,7 +3,7 @@ import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import UploadCaseForm from './UploadCaseForm';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from '@material-ui/core/CircularProgress'; // change circular progress to bar + axios
 import { notification } from 'antd';
 import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 
@@ -86,6 +86,7 @@ const initialFormValues = {
 const HRFBlueLoader = withStyles(() => ({
   root: {
     '& .MuiCircularProgress-circle': {
+      // change circular progress here
       color: '#215589',
     },
   },
@@ -118,11 +119,18 @@ const UploadCase = ({ authState }) => {
 
   const onFileChange = e => {
     const dataForm = new FormData();
-    dataForm.append('target_file', e.target.files[0]);
+    const files = e.target.files;
 
-    if (e.target.files.length === 0) {
+    if (files.length === 0) {
       return;
     }
+
+    for (let i = 0; i < files.length; i++) {
+      dataForm.append('target_file', files[i]);
+      console.log('from uploadCase-FE:', dataForm, files);
+    }
+
+    // dataForm.append('target_file', e.target.files[0]);
 
     setIsLoading(true);
     axios
@@ -164,6 +172,7 @@ const UploadCase = ({ authState }) => {
                   name="btn-upload"
                   style={{ display: 'none' }}
                   type="file"
+                  multiple
                   onChange={onFileChange}
                 />
                 <Button
