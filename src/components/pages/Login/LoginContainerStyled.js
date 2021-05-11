@@ -36,7 +36,7 @@ export const StyledLogin = styled.div`
     margin: 0 auto;
 
     #okta-sign-in.auth-container.main-container {
-      font-family: Helvetica, Arial, sans-serif;
+      font-family: 'Lato' sans-serif;
       margin: 0;
     }
 

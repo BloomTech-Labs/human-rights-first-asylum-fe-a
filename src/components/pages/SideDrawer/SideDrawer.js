@@ -3,7 +3,6 @@ import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
@@ -20,7 +19,11 @@ import BuildIcon from '@material-ui/icons/Build';
 import { Link } from 'react-router-dom';
 import { SideDrawerData } from './SideDrawerData';
 
-const drawerWidth = 235;
+// icons
+import ArrowLeft from '../../../styles/icons/arrow-left.svg';
+import ArrowRight from '../../../styles/icons/arrow-right.svg';
+
+const drawerWidth = 215;
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -40,7 +43,7 @@ const useStyles = makeStyles(theme => ({
   drawerPaper: {
     width: drawerWidth,
     height: 'calc(100% - 65px)',
-    top: 65,
+    top: 87,
   },
   drawerContainer: {
     overflow: 'auto',
@@ -126,7 +129,7 @@ export default function SideDrawer(props) {
       >
         <div className={classes.toolbar}>
           <IconButton onClick={handleDrawer}>
-            {open === false ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            {open === false ? <ArrowRight /> : <ArrowLeft />}
           </IconButton>
         </div>
         <Divider />
