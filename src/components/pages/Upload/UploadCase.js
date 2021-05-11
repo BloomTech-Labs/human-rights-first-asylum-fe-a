@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import UploadCaseForm from './UploadCaseForm';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { notification, Upload } from 'antd';
+import { notification, Upload, Modal } from 'antd';
 import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import { InboxOutlined } from '@ant-design/icons';
 import './CaseForm.css';
@@ -100,6 +100,7 @@ const UploadCase = ({ authState }) => {
   const { Dragger } = Upload;
   const [postQueue, setPostQueue] = useState([]);
   const [nextPost, setNextPost] = useState(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const successNotification = () => {
     notification.open({
       message: 'Upload Status',
@@ -122,76 +123,35 @@ const UploadCase = ({ authState }) => {
 
   const onFileChange = e => {
     let multiFile = [];
-    for (let i = 0; i < e.target.files.length; i++) {
+    for (let i = 0; i < e.length; i++) {
       let dataForm = new FormData();
-      dataForm.append('target_file', e.target.files[i]);
+      dataForm.append('target_file', e[i]);
       setIsLoading(true);
       multiFile.push(dataForm);
     }
     setPostQueue([...postQueue, ...multiFile]);
   };
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
 
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
   const DragProps = {
-    customRequest: async info => {
-      const dataForm = new FormData();
-      console.log(info);
-      dataForm.append('target_file', info.file);
-      setPostQueue([...postQueue, dataForm]);
-      console.log(postQueue);
-      setIsLoading(true);
-      // await axios
-      //   .post(`${process.env.REACT_APP_API_URI}/upload`, dataForm, {
-      //     headers: {
-      //       Authorization: 'Bearer ' + authState.idToken.idToken,
-      //     },
-      //   })
-      //   .then(res => {
-      //     setFormValueQueue([...formValueQueue, res.data]);
-      //     setIsLoading(false);
-      //     successNotification();
-      //   })
-      //   .catch(() => {
-      //     setIsLoading(false);
-      //     failNotification();
-      //   });
-    },
     name: 'file',
     multiple: true,
-    action: '',
     accept: '.pdf',
-    onChange: e => {
-      console.log(e.fileList);
+    progress: false,
+    fileList: [],
+    beforeUpload: (file, fileList) => {
+      onFileChange(fileList);
     },
   };
-  // const onDropFileChange = e => {
-  //   if (e.fileList.length === 0) {
-  //     return;
-  //   }
-  //   e.fileList.forEach(file => {
-  //     console.log(file);
-  //     const dataForm = new FormData();
-  //     dataForm.append('target_file', file.originFileObj);
-  //     console.log(dataForm.get('target_file'));
-  //     setIsLoading(true);
-  //     axios
-  //       .post(`${process.env.REACT_APP_API_URI}/upload`, dataForm, {
-  //         headers: {
-  //           Authorization: 'Bearer ' + authState.idToken.idToken,
-  //         },
-  //       })
-  //       .then(res => {
-  //         setFormValueQueue([...formValueQueue, res.data]);
-  //         setIsLoading(false);
-  //         successNotification();
-  //         console.log(formValueQueue);
-  //       })
-  //       .catch(() => {
-  //         setIsLoading(false);
-  //         failNotification();
-  //       });
-  //   });
-  // };
-
   const onInputChange = e => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
@@ -205,12 +165,8 @@ const UploadCase = ({ authState }) => {
       console.log(postQueue, nextPost);
     }
   }, [postQueue]);
-
   useEffect(() => {
     if (nextPost) {
-      console.log('whyyyyyyyyyyyyyyyyyyyyyyy');
-      console.log(nextPost);
-      console.log(postQueue);
       axios
         .post(`${process.env.REACT_APP_API_URI}/upload`, nextPost, {
           headers: {
@@ -260,57 +216,74 @@ const UploadCase = ({ authState }) => {
   return (
     <div className={classes.uploadPage}>
       <div className={classes.leftDiv}>
-        <div className={classes.pdfUpload}>
-          <h1 className={classes.h1Styles}>The Case Uploader</h1>
-          <h2 className={classes.h2Styles}>
-            Select a case PDF to upload. Once the case finishes uploading,
-            please make any necessary corrections before submitting.
-          </h2>
-          <form>
-            <div className="pdf-upload">
-              <label htmlFor="btn-upload">
-                <input
-                  id="btn-upload"
-                  name="btn-upload"
-                  style={{ display: 'none' }}
-                  type="file"
-                  multiple
-                  onChange={onFileChange}
-                />
-                <Button
-                  className={classes.buttonStyles}
-                  variant="outlined"
-                  component="span"
-                >
-                  <p className="button-text">Select case file</p>
-                </Button>
-              </label>
-              <Dragger {...DragProps}>
-                <p className="ant-upload-drag-icon">
-                  <InboxOutlined />
-                </p>
-                <p className="ant-upload-text">
-                  Drag files to this area to upload
-                </p>
-              </Dragger>
-              <>
-                {isLoading ? (
-                  <div className="spinner_container">
-                    <HRFBlueLoader />
-                  </div>
-                ) : (
-                  <p />
-                )}
-              </>
-            </div>
-          </form>
-        </div>
-      </div>
-      <UploadCaseForm
+        <Button
+          className={classes.buttonStyles}
+          variant="outlined"
+          component="span"
+          onClick={showModal}
+        >
+          Upload A Case
+        </Button>
+        <Modal
+          title="Upload Files"
+          visible={isModalVisible}
+          onOk={handleOk}
+          onCancel={handleCancel}
+        >
+          <div className={classes.pdfUpload}>
+            <h1 className={classes.h1Styles}>The Case Uploader</h1>
+            <h2 className={classes.h2Styles}>
+              Select a case PDF to upload. Once the case finishes uploading,
+              please make any necessary corrections before submitting.
+            </h2>
+            <form>
+              <div className="pdf-upload">
+                <label htmlFor="btn-upload">
+                  <input
+                    id="btn-upload"
+                    name="btn-upload"
+                    style={{ display: 'none' }}
+                    type="file"
+                    multiple
+                    onChange={e => {
+                      onFileChange(e.target.files);
+                    }}
+                  />
+                  <Button
+                    className={classes.buttonStyles}
+                    variant="outlined"
+                    component="span"
+                  >
+                    <p className="button-text">Select case file</p>
+                  </Button>
+                </label>
+                <Dragger {...DragProps}>
+                  <p className="ant-upload-drag-icon">
+                    <InboxOutlined />
+                  </p>
+                  <p className="ant-upload-text">
+                    Drag files to this area to upload
+                  </p>
+                </Dragger>
+                <>
+                  {isLoading ? (
+                    <div className="spinner_container">
+                      <HRFBlueLoader />
+                    </div>
+                  ) : (
+                    <p />
+                  )}
+                </>
+              </div>
+            </form>
+          </div>
+          {/* <UploadCaseForm
         formValues={formValues}
         onInputChange={onInputChange}
         formValueQueue={formValueQueue}
-      />
+      /> */}
+        </Modal>
+      </div>
     </div>
   );
 };
