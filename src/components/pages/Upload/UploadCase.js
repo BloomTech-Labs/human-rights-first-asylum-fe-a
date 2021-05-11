@@ -152,10 +152,11 @@ const UploadCase = ({ authState }) => {
       onFileChange(fileList);
     },
   };
-  const onInputChange = e => {
-    const { name, value } = e.target;
-    setFormValues({ ...formValues, [name]: value });
-  };
+  // Might need this later depending on design changes
+  // const onInputChange = e => {
+  //   const { name, value } = e.target;
+  //   setFormValues({ ...formValues, [name]: value });
+  // };
   useEffect(() => {
     if (!nextPost && postQueue.length !== 0) {
       console.log('test', postQueue, !nextPost);
@@ -178,14 +179,11 @@ const UploadCase = ({ authState }) => {
           setIsLoading(false);
           setIsEditing(true);
           successNotification();
-          console.log(formValueQueue);
-          console.log(postQueue);
           setNextPost(null);
           if (postQueue) {
             const copy = postQueue;
             setNextPost(copy.shift());
             setPostQueue(copy);
-            console.log(postQueue, nextPost);
           }
         })
         .catch(() => {
@@ -194,24 +192,23 @@ const UploadCase = ({ authState }) => {
         });
     }
   }, [nextPost]);
-  useEffect(() => {
-    if (formValueQueue && isEditing) {
-      let nextForm = formValueQueue[0];
-      let currentForm = formValues;
-      for (const values in nextForm) {
-        if (values in currentForm) {
-          if (nextForm[values] === null) {
-            currentForm[values] = '';
-          } else {
-            currentForm[values] = nextForm[values];
-          }
-        }
-      }
-      console.log(nextForm, formValues);
-      setFormValues(currentForm);
-      console.log(formValueQueue);
-    }
-  }, [formValueQueue]);
+  // Might need this later depending on design changes
+  // useEffect(() => {
+  //   if (formValueQueue && isEditing) {
+  //     let nextForm = formValueQueue[0];
+  //     let currentForm = formValues;
+  //     for (const values in nextForm) {
+  //       if (values in currentForm) {
+  //         if (nextForm[values] === null) {
+  //           currentForm[values] = '';
+  //         } else {
+  //           currentForm[values] = nextForm[values];
+  //         }
+  //       }
+  //     }
+  //     setFormValues(currentForm);
+  //   }
+  // }, [formValueQueue]);
 
   return (
     <div className={classes.uploadPage}>
@@ -277,11 +274,14 @@ const UploadCase = ({ authState }) => {
               </div>
             </form>
           </div>
-          {/* <UploadCaseForm
+          {
+            // Might need this later depending on design changes
+            /* <UploadCaseForm
         formValues={formValues}
         onInputChange={onInputChange}
         formValueQueue={formValueQueue}
-      /> */}
+      /> */
+          }
         </Modal>
       </div>
     </div>
