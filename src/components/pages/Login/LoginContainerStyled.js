@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import statueOfLiberty from './statueOfLiberty.jpg';
+import statueOfLiberty from '../../../styles/statueOfLiberty.jpg';
 
 export const StyledLogin = styled.div`
   display: flex;
@@ -10,7 +10,7 @@ export const StyledLogin = styled.div`
     background-image: url(${statueOfLiberty});
     width: 600px;
     min-height: 100vh;
-    background-position: center;
+    background-position: top;
     background-repeat: no-repeat;
     @media (max-width: 600px) {
       width: 0;

@@ -5,7 +5,7 @@ import OktaSignIn from '@okta/okta-signin-widget';
 import '@okta/okta-signin-widget/dist/css/okta-sign-in.min.css';
 import Button from '@material-ui/core/Button';
 // Below is the Human Rights logo
-import hrfLogo from './hrf-logo.png';
+import hrfLogo from '../../../styles/hrf-logo.png';
 
 import { config } from '../../../utils/oktaConfig';
 
@@ -23,7 +23,7 @@ const LoginContainer = () => {
       logo: `${hrfLogo}`, // Import any logo you want to display at the top of the login widget
       i18n: {
         en: {
-          'primaryauth.title': 'Login',
+          'primaryauth.title': 'Log in to Continue',
           // change title for your app
         },
       },
