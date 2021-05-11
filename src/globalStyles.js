@@ -18,7 +18,7 @@ time, mark, audio, video {
 	padding: 0;
 	border: 0;
 	font-size: 100%;
-	font-family: 'Oswald', sans-serif;
+	font-family: 'Lato', sans-serif;
 	vertical-align: baseline;
 	
 }
@@ -44,7 +44,7 @@ q:before, q:after {
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
-	font-family: 'Oswald', sans-serif;
+	font-family: 'Lato', sans-serif;
 }
 .hrflogo{
 	padding-top: 1.5%;

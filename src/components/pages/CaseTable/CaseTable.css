@@ -77,7 +77,6 @@
 
 /* caseTable Toolbar */
 
-
 .menuContainer {
   color: #215589;
   width: 100%;
@@ -101,7 +100,6 @@
   margin-top: 0.5rem;
 }
 
-
 .buttonContainer:hover {
   display: flex;
   flex-direction: row;
@@ -112,7 +110,6 @@
   margin-right: 2%;
   margin-top: 0.5rem;
 }
-
 
 button.ant-btn {
   color: #215589;
@@ -159,7 +156,6 @@ li.ant-dropdown-menu-item {
   color: #215589;
   margin: 1rem;
   padding: 0.5rem;
-
 }
 
 li.ant-dropdown-menu-item:hover {
@@ -172,13 +168,11 @@ li.ant-dropdown-menu-item:hover {
   padding: 0.5rem;
 }
 
-
-
 /* MUI fixes for color */
 
 .table {
   height: 400;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Lato', sans-serif;
 }
 
 .exportBtn svg.MuiSvgIcon-root {
@@ -215,5 +209,3 @@ button.ant-btn.columnsBtn:hover {
   padding: 0;
   margin: 0;
 }
-
-
