@@ -39,10 +39,28 @@ export const StyledLogin = styled.div`
       font-family: 'Lato' sans-serif;
       margin: 0;
       border: none;
+      label {
+        font-family: 'Lato', sans-serif;
+      }
     }
 
     .o-form-head {
       font-size: 1.8rem;
+    }
+
+    .auth-header {
+      border-bottom: none;
+      top: 0;
+      left: 0;
+      display: flex;
+      justify-content: center;
+      .auth-org-logo {
+        max-width: 450px;
+        max-height: 65px;
+      }
+      .auth-footer {
+        border-bottom: none;
+      }
     }
 
     .button-primary {
