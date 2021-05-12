@@ -6,6 +6,7 @@ import SideDrawer from '../SideDrawer/SideDrawer';
 import MainHeader from '../Home/MainHeader';
 import JudgePage from '../JudgePage/JudgePage';
 import CaseOverview from '../CaseOverview/CaseOverview';
+import MyCases from '../MyCases/MyCases';
 import { Route } from 'react-router-dom';
 import {
   makeStyles,
@@ -55,6 +56,11 @@ const lato = {
 const useStyles = makeStyles({
   container: {
     display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  upload: {
+    justifyContent: 'flex-end',
   },
 });
 
@@ -219,19 +225,22 @@ function RenderHomePage(props) {
     <>
       <MainHeader />
       <div className={classes.container}>
+        <div className={classes.upload}>
+          <UploadCase />
+        </div>
         <ThemeProvider theme={theme}>
           <SideDrawer
             logout={logout}
             userInfo={user.userInfo}
-            uploadCase={uploadCase}
+            MyCases={MyCases}
             savedCases={savedCases}
             savedJudges={savedJudges}
             deleteBookmark={deleteBookmark}
             deleteSavedJudge={deleteSavedJudge}
           />
 
-          <Route exact path="/upload-case">
-            <UploadCase uploadCase={uploadCase} authState={user.authState} />
+          <Route exact path="/my-cases">
+            <MyCases />
           </Route>
           <Route exact path="/saved-cases">
             <SavedCases

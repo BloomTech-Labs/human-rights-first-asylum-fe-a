@@ -17,8 +17,8 @@ export const SideDrawerData = [
     icon: <GavelOutlinedIcon />,
   },
   {
-    title: 'Upload Case',
-    path: '/upload-case',
+    title: 'My Cases',
+    path: '/my-cases',
     icon: <PublishOutlinedIcon />,
   },
   {
