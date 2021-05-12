@@ -19,10 +19,6 @@ import BuildIcon from '@material-ui/icons/Build';
 import { Link } from 'react-router-dom';
 import { SideDrawerData } from './SideDrawerData';
 
-// icons
-import ArrowLeft from '../../../styles/icons/arrow-left.svg';
-import ArrowRight from '../../../styles/icons/arrow-right.svg';
-
 const drawerWidth = 215;
 
 const useStyles = makeStyles(theme => ({
@@ -107,13 +103,6 @@ export default function SideDrawer(props) {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      {/* <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-      >
-      </AppBar> */}
       <Drawer
         variant="permanent"
         className={clsx(classes.drawer, {
@@ -129,7 +118,8 @@ export default function SideDrawer(props) {
       >
         <div className={classes.toolbar}>
           <IconButton onClick={handleDrawer}>
-            {open === false ? <ArrowRight /> : <ArrowLeft />}
+            {open === false ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            {/* {open === false ? <ArrowRight /> : <ArrowLeft />} */}
           </IconButton>
         </div>
         <Divider />
