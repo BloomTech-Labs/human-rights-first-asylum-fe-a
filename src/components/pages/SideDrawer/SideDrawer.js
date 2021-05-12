@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import List from '@material-ui/core/List';
@@ -16,7 +16,7 @@ import RateReviewIcon from '@material-ui/icons/RateReview';
 import AccountIcon from '@material-ui/icons/AccountCircle';
 import HelpIcon from '@material-ui/icons/Help';
 import BuildIcon from '@material-ui/icons/Build';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { SideDrawerData } from './SideDrawerData';
 
 const drawerWidth = 215;
@@ -28,9 +28,6 @@ const useStyles = makeStyles(theme => ({
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
   },
-  hide: {
-    display: 'none',
-  },
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
@@ -38,11 +35,8 @@ const useStyles = makeStyles(theme => ({
   },
   drawerPaper: {
     width: drawerWidth,
-    height: 'calc(100% - 65px)',
+    height: '100%',
     top: 87,
-  },
-  drawerContainer: {
-    overflow: 'auto',
   },
   drawerOpen: {
     width: drawerWidth,
@@ -62,7 +56,6 @@ const useStyles = makeStyles(theme => ({
       width: theme.spacing(9) + 1,
     },
   },
-
   toolbar: {
     display: 'flex',
     alignItems: 'center',
@@ -71,12 +64,14 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SideDrawer(props) {
+function SideDrawer(props) {
   const classes = useStyles();
-  const theme = useTheme();
   const [open, setOpen] = useState(true);
   const [mobile, setMobile] = useState(window.innerWidth < 769);
-  const { logout } = props;
+  const {
+    logout,
+    location: { pathname },
+  } = props;
 
   const role = window.localStorage.getItem('role');
 
@@ -85,7 +80,7 @@ export default function SideDrawer(props) {
       'resize',
       () => {
         const mobile = window.innerWidth < 769;
-        if (mobile !== mobile) {
+        if (!mobile) {
           setMobile(mobile);
         }
       },
@@ -125,12 +120,16 @@ export default function SideDrawer(props) {
         <List>
           {/* Maps through each item in SideDrawerData creating a nav item in the shape of the ones below the divider */}
           {SideDrawerData.map(item => (
-            <Link to={item.path} key={item.title}>
-              <ListItem button>
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.title} style={textItemStyles} />
-              </ListItem>
-            </Link>
+            <ListItem
+              button
+              key={item.title}
+              component={Link}
+              to={item.path}
+              selected={item.path === pathname}
+            >
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.title} style={textItemStyles} />
+            </ListItem>
           ))}
         </List>
         <Divider />
@@ -138,45 +137,56 @@ export default function SideDrawer(props) {
           {/* Checking if user is an admin before rendering the nav item */}
           {role === 'moderator' || role === 'admin' ? (
             <>
-              <Link to="/manage-cases">
-                <ListItem button>
-                  <ListItemIcon>
-                    <RateReviewIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Review Cases" style={textItemStyles} />
-                </ListItem>
-              </Link>
+              <ListItem
+                button
+                component={Link}
+                to={'/manage-cases'}
+                selected={'/manage-cases' === pathname}
+              >
+                <ListItemIcon>
+                  <RateReviewIcon />
+                </ListItemIcon>
+                <ListItemText primary="Review Cases" style={textItemStyles} />
+              </ListItem>
             </>
           ) : null}
           {role === 'admin' ? (
             <>
-              <Link to="/admin-tools">
-                <ListItem button>
-                  <ListItemIcon>
-                    <BuildIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Admin Tools" style={textItemStyles} />
-                </ListItem>
-              </Link>
+              <ListItem
+                button
+                component={Link}
+                to={'/admin-tools'}
+                selected={'/admin-tools' === pathname}
+              >
+                <ListItemIcon>
+                  <BuildIcon />
+                </ListItemIcon>
+                <ListItemText primary="Admin Tools" style={textItemStyles} />
+              </ListItem>
             </>
           ) : null}
-          {/* Link needs to be wrapped around the whole button to allow the whole button to be used to direct he user */}
-          <Link to="/account">
-            <ListItem button>
-              <ListItemIcon>
-                <AccountIcon />
-              </ListItemIcon>
-              <ListItemText primary="Account" style={textItemStyles} />
-            </ListItem>
-          </Link>
-          <Link to="/support">
-            <ListItem button>
-              <ListItemIcon>
-                <HelpIcon />
-              </ListItemIcon>
-              <ListItemText primary="Support" style={textItemStyles} />
-            </ListItem>
-          </Link>
+          <ListItem
+            button
+            component={Link}
+            to={'/account'}
+            selected={'/account' === pathname}
+          >
+            <ListItemIcon>
+              <AccountIcon />
+            </ListItemIcon>
+            <ListItemText primary="Account" style={textItemStyles} />
+          </ListItem>
+          <ListItem
+            button
+            component={Link}
+            to={'/support'}
+            selected={'/support' === pathname}
+          >
+            <ListItemIcon>
+              <HelpIcon />
+            </ListItemIcon>
+            <ListItemText primary="Support" style={textItemStyles} />
+          </ListItem>
           <ListItem button onClick={logout} style={textItemStyles}>
             <ListItemIcon>
               <CloseIcon />
@@ -192,3 +202,5 @@ export default function SideDrawer(props) {
 const textItemStyles = {
   color: ' #215589',
 };
+
+export default withRouter(SideDrawer);
