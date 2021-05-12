@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Card, Skeleton } from 'antd';
@@ -11,7 +11,6 @@ const CaseOverview = props => {
   const [caseData, setCaseData] = useState({});
   const [loading, setLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const history = useHistory();
   const { id } = useParams();
 
   useEffect(() => {

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import statueOfLiberty from './statueOfLiberty.jpg';
+import statueOfLiberty from '../../../styles/statueOfLiberty.jpg';
 
 export const StyledLogin = styled.div`
   display: flex;
@@ -10,7 +10,7 @@ export const StyledLogin = styled.div`
     background-image: url(${statueOfLiberty});
     width: 600px;
     min-height: 100vh;
-    background-position: center;
+    background-position: top;
     background-repeat: no-repeat;
     @media (max-width: 600px) {
       width: 0;
@@ -38,20 +38,39 @@ export const StyledLogin = styled.div`
     #okta-sign-in.auth-container.main-container {
       font-family: 'Lato' sans-serif;
       margin: 0;
+      border: none;
+      label {
+        font-family: 'Lato', sans-serif;
+      }
     }
 
     .o-form-head {
-      font-size: 2.4rem;
+      font-size: 1.8rem;
+    }
+
+    .auth-header {
+      border-bottom: none;
+      top: 0;
+      left: 0;
+      display: flex;
+      justify-content: center;
+      .auth-org-logo {
+        max-width: 450px;
+        max-height: 65px;
+      }
+      .auth-footer {
+        border-bottom: none;
+      }
     }
 
     .button-primary {
-      background: #bc541e;
-      border: 1px solid #d39460;
-    }
-
-    .button-primary:hover {
-      background: #d39460;
-      border: 1px solid #d39460;
+      background: #bd5a27;
+      border: none;
+      &:hover {
+        background: #ffffff;
+        border: 1px solid #bd5a27;
+        color: #bd5a27;
+      }
     }
   }
 `;

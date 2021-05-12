@@ -102,7 +102,9 @@ const SupportPage = props => {
         <Collapse defaultActiveKey={['0']} accordion>
           {FAQ.map(item => {
             return (
-              <Panel header={`Q: ${item.question}`}>A: {item.answer}</Panel>
+              <Panel key={item.id} header={`Q: ${item.question}`}>
+                A: {item.answer}
+              </Panel>
             );
           })}
         </Collapse>
