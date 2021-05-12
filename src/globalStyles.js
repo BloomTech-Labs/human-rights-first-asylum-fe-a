@@ -56,6 +56,18 @@ table {
     box-sizing:border-box;
 	/* max-width: 100%; // this line prevents the table from rendering for wahtever reason */
 }
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+*::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+* {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
 #root .MuiButton-root {
   box-shadow: 0px;
   & .MuiButton-label {

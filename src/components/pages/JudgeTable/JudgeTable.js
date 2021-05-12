@@ -301,7 +301,7 @@ export default function JudgeTable(props) {
           loading={judgeData ? false : true}
           checkboxSelection={true}
           onSelectionModelChange={onCheckboxSelect}
-          showCellRightBorder={true}
+          showCellRightBorder={false}
           components={{ Toolbar: Toolbar }}
         />
       </div>
