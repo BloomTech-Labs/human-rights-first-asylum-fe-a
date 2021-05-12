@@ -38,20 +38,21 @@ export const StyledLogin = styled.div`
     #okta-sign-in.auth-container.main-container {
       font-family: 'Lato' sans-serif;
       margin: 0;
+      border: none;
     }
 
     .o-form-head {
-      font-size: 2.4rem;
+      font-size: 1.8rem;
     }
 
     .button-primary {
-      background: #bc541e;
-      border: 1px solid #d39460;
-    }
-
-    .button-primary:hover {
-      background: #d39460;
-      border: 1px solid #d39460;
+      background: #bd5a27;
+      border: none;
+      &:hover {
+        background: #ffffff;
+        border: 1px solid #bd5a27;
+        color: #bd5a27;
+      }
     }
   }
 `;
