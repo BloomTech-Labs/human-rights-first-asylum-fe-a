@@ -35,7 +35,7 @@ import AddFaq from '../AdminTools/AddFaq';
 import ManageFaqPage from '../AdminTools/ManageFaq';
 import EditFaqPage from '../AdminTools/EditFaq';
 
-// Styling for MUI components
+// Global styling for MUI components
 import Lato from '../../../styles/Lato-Font.woff2';
 
 const lato = {
