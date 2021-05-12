@@ -59,9 +59,6 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     justifyContent: 'center',
   },
-  upload: {
-    justifyContent: 'flex-end',
-  },
 });
 
 const theme = createMuiTheme({
@@ -224,21 +221,18 @@ function RenderHomePage(props) {
   return (
     <>
       <MainHeader />
+      <SideDrawer
+        logout={logout}
+        userInfo={user.userInfo}
+        MyCases={MyCases}
+        savedCases={savedCases}
+        savedJudges={savedJudges}
+        deleteBookmark={deleteBookmark}
+        deleteSavedJudge={deleteSavedJudge}
+      />
       <div className={classes.container}>
-        <div className={classes.upload}>
-          <UploadCase />
-        </div>
+        <UploadCase />
         <ThemeProvider theme={theme}>
-          <SideDrawer
-            logout={logout}
-            userInfo={user.userInfo}
-            MyCases={MyCases}
-            savedCases={savedCases}
-            savedJudges={savedJudges}
-            deleteBookmark={deleteBookmark}
-            deleteSavedJudge={deleteSavedJudge}
-          />
-
           <Route exact path="/my-cases">
             <MyCases />
           </Route>

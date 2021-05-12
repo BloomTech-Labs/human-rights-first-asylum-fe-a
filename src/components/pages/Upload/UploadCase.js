@@ -20,19 +20,10 @@ const useStyles = makeStyles(theme => ({
 
   uploadPage: {
     display: 'flex',
-    flexFlow: 'row no-wrap',
     padding: '1%',
     margin: '0 auto',
-    width: '80%',
-    alignItems: 'flex-start',
-    justifyContent: 'space-around',
-  },
-
-  leftDiv: {
-    marginTop: '15%',
-    width: '35%',
-    display: 'inline-block',
-    padding: '1%',
+    width: '100%',
+    justifyContent: 'flex-end',
   },
 
   pdfUpload: {
@@ -212,7 +203,7 @@ const UploadCase = ({ authState }) => {
 
   return (
     <div className={classes.uploadPage}>
-      <div className={classes.leftDiv}>
+      <div className={classes.uploadButton}>
         <Button
           className={classes.buttonStyles}
           variant="outlined"
