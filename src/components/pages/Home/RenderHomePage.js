@@ -4,11 +4,14 @@ import JudgeTable from '../JudgeTable/JudgeTable';
 import UploadCase from '../Upload/UploadCase';
 import SideDrawer from '../SideDrawer/SideDrawer';
 import MainHeader from '../Home/MainHeader';
-
 import JudgePage from '../JudgePage/JudgePage';
 import CaseOverview from '../CaseOverview/CaseOverview';
 import { Route } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
+import {
+  makeStyles,
+  ThemeProvider,
+  createMuiTheme,
+} from '@material-ui/core/styles';
 import { UserContext } from '../../../context/UserContext';
 
 import axios from 'axios';
@@ -32,9 +35,39 @@ import AddFaq from '../AdminTools/AddFaq';
 import ManageFaqPage from '../AdminTools/ManageFaq';
 import EditFaqPage from '../AdminTools/EditFaq';
 
+// self-import font for MUI components
+import Lato from '../../../styles/Lato-Font.woff2';
+
+const lato = {
+  fontFamily: 'Lato',
+  fontStyle: 'normal',
+  fontDisplay: 'swap',
+  fontWeight: 400,
+  src: `
+    local('Lato'),
+    local('Lato-Regular'),
+    url(${Lato}) format('woff2')
+  `,
+  unicodeRange:
+    'U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF',
+};
+
 const useStyles = makeStyles({
   container: {
     display: 'flex',
+  },
+});
+
+const theme = createMuiTheme({
+  typography: {
+    fontFamily: 'Lato, san-serif',
+  },
+  overrides: {
+    MuiCssBaseline: {
+      '@global': {
+        '@font-face': [lato],
+      },
+    },
   },
 });
 
@@ -186,109 +219,117 @@ function RenderHomePage(props) {
     <>
       <MainHeader />
       <div className={classes.container}>
-        <SideDrawer
-          logout={logout}
-          userInfo={user.userInfo}
-          uploadCase={uploadCase}
-          savedCases={savedCases}
-          savedJudges={savedJudges}
-          deleteBookmark={deleteBookmark}
-          deleteSavedJudge={deleteSavedJudge}
-        />
-
-        <Route exact path="/upload-case">
-          <UploadCase uploadCase={uploadCase} authState={user.authState} />
-        </Route>
-        <Route exact path="/saved-cases">
-          <SavedCases savedCases={savedCases} deleteBookmark={deleteBookmark} />
-        </Route>
-        <Route exact path="/saved-judges">
-          <SavedJudges
+        <ThemeProvider theme={theme}>
+          <SideDrawer
+            logout={logout}
+            userInfo={user.userInfo}
+            uploadCase={uploadCase}
+            savedCases={savedCases}
             savedJudges={savedJudges}
+            deleteBookmark={deleteBookmark}
             deleteSavedJudge={deleteSavedJudge}
           />
-        </Route>
-        <Route exact path="/judge/:name">
-          <JudgePage
-            // clicking on a Judge should bring you to a url with their name in it
-            // get request to get details of that judge
-            authState={user.authState}
-          />
-        </Route>
-        <Route exact path="/case/:id" authState={user.authState}>
-          {/* clicking on a case name will bring you to a page where more indepth information
+
+          <Route exact path="/upload-case">
+            <UploadCase uploadCase={uploadCase} authState={user.authState} />
+          </Route>
+          <Route exact path="/saved-cases">
+            <SavedCases
+              savedCases={savedCases}
+              deleteBookmark={deleteBookmark}
+            />
+          </Route>
+          <Route exact path="/saved-judges">
+            <SavedJudges
+              savedJudges={savedJudges}
+              deleteSavedJudge={deleteSavedJudge}
+            />
+          </Route>
+          <Route exact path="/judge/:name">
+            <JudgePage
+              // clicking on a Judge should bring you to a url with their name in it
+              // get request to get details of that judge
+              authState={user.authState}
+            />
+          </Route>
+          <Route exact path="/case/:id" authState={user.authState}>
+            {/* clicking on a case name will bring you to a page where more indepth information
       about the case can be viewed, this page is linked to the cooresponding judge's page
       this page also links to the update case file which is not operational yet, see notation
       on CaseOverview & CaseUpdate for details */}
-          <CaseOverview
-            setCasesData={setCaseData}
-            authState={user.authState}
-            casesData={caseData}
-          />
-        </Route>
-        <Route exact path="case/:id/update" authState={user.authState}>
-          <CaseUpdate />
-        </Route>
-        <Route exact path="/manage-cases">
-          <ManageCases />
-        </Route>
-        <Route exact path="/account">
-          <AccountPage oktaUserInfo={user.userInfo} hrfUserInfo={hrfUserInfo} />
-        </Route>
-        <Route exact path="/support">
-          <SupportPage authState={user.authState} userInfo={hrfUserInfo} />
-        </Route>
-        <Route exact path="/admin-tools">
-          <AdminToolsPage authState={user.authState} />
-        </Route>
-        <Route exact path="/add-users">
-          <AddUsersPage authState={user.authState} />
-        </Route>
-        <Route exact path="/manage-requested">
-          <PendingUsers authState={user.authState} />
-        </Route>
-        <Route exact path="/manage-users">
-          <ManageUsersPage authState={user.authState} />
-        </Route>
-        <Route exact path="/edit-user/:id">
-          <EditUserPage authState={user.authState} />
-        </Route>
-        <Route exact path="/add-faq">
-          <AddFaq authState={user.authState} />
-        </Route>
-        <Route exact path="/manage-faq">
-          <ManageFaqPage authState={user.authState} />
-        </Route>
-        <Route exact path="/edit-faq/:id">
-          <EditFaqPage authState={user.authState} />
-        </Route>
+            <CaseOverview
+              setCasesData={setCaseData}
+              authState={user.authState}
+              casesData={caseData}
+            />
+          </Route>
+          <Route exact path="case/:id/update" authState={user.authState}>
+            <CaseUpdate />
+          </Route>
+          <Route exact path="/manage-cases">
+            <ManageCases />
+          </Route>
+          <Route exact path="/account">
+            <AccountPage
+              oktaUserInfo={user.userInfo}
+              hrfUserInfo={hrfUserInfo}
+            />
+          </Route>
+          <Route exact path="/support">
+            <SupportPage authState={user.authState} userInfo={hrfUserInfo} />
+          </Route>
+          <Route exact path="/admin-tools">
+            <AdminToolsPage authState={user.authState} />
+          </Route>
+          <Route exact path="/add-users">
+            <AddUsersPage authState={user.authState} />
+          </Route>
+          <Route exact path="/manage-requested">
+            <PendingUsers authState={user.authState} />
+          </Route>
+          <Route exact path="/manage-users">
+            <ManageUsersPage authState={user.authState} />
+          </Route>
+          <Route exact path="/edit-user/:id">
+            <EditUserPage authState={user.authState} />
+          </Route>
+          <Route exact path="/add-faq">
+            <AddFaq authState={user.authState} />
+          </Route>
+          <Route exact path="/manage-faq">
+            <ManageFaqPage authState={user.authState} />
+          </Route>
+          <Route exact path="/edit-faq/:id">
+            <EditFaqPage authState={user.authState} />
+          </Route>
 
-        <Route exact path="/">
-          <>
-            <CaseTable
-              caseData={caseData}
-              userInfo={user.userInfo}
-              savedCases={savedCases}
-              setSavedCases={setSavedCases}
-              authState={user.authState}
-              selectedRows={selectedRows}
-              setSelectedRows={setSelectedRows}
-            />
-            <Loader promiseTracker={usePromiseTracker} />
-          </>
-        </Route>
-        <Route exact path="/judges">
-          <>
-            <JudgeTable
-              judgeData={judgeData}
-              userInfo={user.userInfo}
-              savedJudges={savedJudges}
-              setSavedJudges={setSavedJudges}
-              authState={user.authState}
-            />
-            <Loader promiseTracker={usePromiseTracker} />
-          </>
-        </Route>
+          <Route exact path="/">
+            <>
+              <CaseTable
+                caseData={caseData}
+                userInfo={user.userInfo}
+                savedCases={savedCases}
+                setSavedCases={setSavedCases}
+                authState={user.authState}
+                selectedRows={selectedRows}
+                setSelectedRows={setSelectedRows}
+              />
+              <Loader promiseTracker={usePromiseTracker} />
+            </>
+          </Route>
+          <Route exact path="/judges">
+            <>
+              <JudgeTable
+                judgeData={judgeData}
+                userInfo={user.userInfo}
+                savedJudges={savedJudges}
+                setSavedJudges={setSavedJudges}
+                authState={user.authState}
+              />
+              <Loader promiseTracker={usePromiseTracker} />
+            </>
+          </Route>
+        </ThemeProvider>
       </div>
     </>
   );
