@@ -119,7 +119,6 @@ export default function SideDrawer(props) {
         <div className={classes.toolbar}>
           <IconButton onClick={handleDrawer}>
             {open === false ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-            {/* {open === false ? <ArrowRight /> : <ArrowLeft />} */}
           </IconButton>
         </div>
         <Divider />
