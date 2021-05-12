@@ -86,7 +86,6 @@ const initialFormValues = {
 const HRFBlueLoader = withStyles(() => ({
   root: {
     '& .MuiCircularProgress-circle': {
-      // change circular progress here
       color: '#215589',
     },
   },
