@@ -20,19 +20,11 @@ const useStyles = makeStyles(theme => ({
 
   uploadPage: {
     display: 'flex',
-    flexFlow: 'row no-wrap',
     padding: '1%',
     margin: '0 auto',
-    width: '80%',
-    alignItems: 'flex-start',
-    justifyContent: 'space-around',
-  },
-
-  leftDiv: {
-    marginTop: '15%',
-    width: '35%',
-    display: 'inline-block',
-    padding: '1%',
+    width: '100%',
+    justifyContent: 'flex-end',
+    marginLeft: '-4rem',
   },
 
   pdfUpload: {
@@ -212,7 +204,7 @@ const UploadCase = ({ authState }) => {
 
   return (
     <div className={classes.uploadPage}>
-      <div className={classes.leftDiv}>
+      <div className={classes.uploadButton}>
         <Button
           className={classes.buttonStyles}
           variant="outlined"
@@ -222,44 +214,31 @@ const UploadCase = ({ authState }) => {
           Upload A Case
         </Button>
         <Modal
-          title="Upload Files"
+          title=""
           visible={isModalVisible}
           onOk={handleOk}
           onCancel={handleCancel}
+          footer={[
+            <Button key="back" onClick={handleCancel}>
+              Not Now
+            </Button>,
+            <Button onClick={handleOk}>Review Cases</Button>,
+          ]}
         >
           <div className={classes.pdfUpload}>
-            <h1 className={classes.h1Styles}>The Case Uploader</h1>
+            <h1 className={classes.h1Styles}>Upload Cases</h1>
             <h2 className={classes.h2Styles}>
               Select a case PDF to upload. Once the case finishes uploading,
               please make any necessary corrections before submitting.
             </h2>
             <form>
               <div className="pdf-upload">
-                <label htmlFor="btn-upload">
-                  <input
-                    id="btn-upload"
-                    name="btn-upload"
-                    style={{ display: 'none' }}
-                    type="file"
-                    multiple
-                    onChange={e => {
-                      onFileChange(e.target.files);
-                    }}
-                  />
-                  <Button
-                    className={classes.buttonStyles}
-                    variant="outlined"
-                    component="span"
-                  >
-                    <p className="button-text">Select case file</p>
-                  </Button>
-                </label>
                 <Dragger {...DragProps}>
                   <p className="ant-upload-drag-icon">
                     <InboxOutlined />
                   </p>
                   <p className="ant-upload-text">
-                    Drag files to this area to upload
+                    Click here or drag files to this area to upload
                   </p>
                 </Dragger>
                 <>
