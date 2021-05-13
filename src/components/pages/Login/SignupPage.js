@@ -1,49 +1,8 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import { Form, Input, Button } from 'antd';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    // marginTop: '7%',
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-around',
-    margin: '7% auto',
-  },
-  form: {
-    width: '50%',
-    margin: '0 auto',
-  },
-  h1Styles: {
-    fontSize: '2rem',
-    marginBottom: '2.5rem',
-  },
-  h2Styles: {
-    fontSize: '1.3rem',
-    marginBottom: '2.5rem',
-    width: '100%',
-  },
-  textField: {
-    width: '100%',
-    margin: '1% auto',
-  },
-  buttonStyles: {
-    color: '#ffffff',
-    backgroundColor: '#215589',
-    marginTop: '3%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  backButtonStyles: {
-    width: '10%',
-    margin: '0 auto',
-  },
-}));
+import './_SignupPageStyled.less';
+import logo from '../../../styles/hrf-logo.png';
 
 const initialFormValues = {
   firstName: '',
@@ -53,8 +12,6 @@ const initialFormValues = {
 
 const SignupPage = () => {
   const [formValues, setFormValues] = useState(initialFormValues);
-
-  const classes = useStyles();
 
   const onChange = e => {
     const { name, value } = e.target;
@@ -80,62 +37,59 @@ const SignupPage = () => {
   };
 
   return (
-    <div className={classes.root}>
-      <Button className={classes.backButtonStyles}>
-        <Link to="/login">
-          <p>Back to Login</p>
-        </Link>
-      </Button>
-      <div className={classes.form}>
-        <h2 className={classes.h1Styles}> Add User </h2>
-        <form onSubmit={onSubmit}>
-          <label htmlFor="firstName">
-            <TextField
-              id="firstName"
-              label="First Name"
+    <div className="root">
+      <div
+        className="background-image"
+        aria-label=" cosmetic background image"
+      />
+      <div className="form">
+        <div className="logo">
+          <img src={logo} alt="logo" />
+        </div>
+        <h2 className="h2styles">Register for Access</h2>
+        <Form onSubmit={onSubmit} layout="vertical">
+          <Form.Item label="First Name">
+            <Input
+              id="firstname"
               type="text"
-              name="firstName"
-              variant="outlined"
+              name="firstname"
               onChange={onChange}
-              className={classes.textField}
+              className="textfield"
               value={formValues.firstName}
             />
-          </label>
-          <label htmlFor="lastName">
-            <TextField
-              id="lastName"
-              label="Last Name"
+          </Form.Item>
+          <Form.Item label="Last Name">
+            <Input
+              id="lastname"
               type="text"
-              name="lastName"
-              variant="outlined"
+              name="lastname"
               onChange={onChange}
-              className={classes.textField}
+              className="textfield"
               value={formValues.lastName}
             />
-          </label>
-          <label htmlFor="email">
-            <TextField
+          </Form.Item>
+          <Form.Item label="Email Address">
+            <Input
               id="email"
-              label="Email"
               type="text"
               name="email"
-              variant="outlined"
               onChange={onChange}
-              className={classes.textField}
+              className="textfield"
               value={formValues.email}
             />
-          </label>
+          </Form.Item>
           <div className="submit-button">
-            <Button
-              onClick={onSubmit}
-              className={classes.buttonStyles}
-              variant="contained"
-              component="span"
-            >
-              Submit
+            <Button onClick={onSubmit} className="buttonStyles">
+              Request Access
             </Button>
           </div>
-        </form>
+          <div className="link-back">
+            <p>Already have an account?</p>
+            <a className="link" href="/login">
+              Log In
+            </a>
+          </div>
+        </Form>
       </div>
     </div>
   );
