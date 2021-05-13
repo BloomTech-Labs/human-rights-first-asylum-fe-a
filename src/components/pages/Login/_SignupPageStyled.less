@@ -1,0 +1,76 @@
+@background-image: '../../../styles/statueOfLiberty.jpg';
+
+.root {
+  width: 100%;
+  display: flex;
+}
+
+.logo {
+  max-width: 450px;
+  max-height: 65px;
+  margin-bottom: 4rem;
+}
+
+.background-image {
+  background-image: url(@background-image);
+  width: 600px;
+  min-height: 100vh;
+  background-position: top;
+  background-repeat: no-repeat;
+  @media (max-width: 600px) {
+    width: 0;
+  }
+}
+
+.form {
+  width: 50%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.ant-form {
+  width: 50%;
+  margin-top: 3rem;
+  @media (max-width: 600px) {
+    width: 90%;
+  }
+}
+
+.ant-input {
+  border-radius: 1px;
+}
+
+.link-back {
+  display: flex;
+  padding-top: 0.5rem;
+  p {
+    padding-right: 0.5rem;
+  }
+  .link {
+    color: #2a5c8d;
+  }
+}
+
+.h2styles {
+  font-size: 1.8rem;
+}
+
+button.buttonStyles {
+  color: #ffffff;
+  background-color: #bd5a27;
+  margin-top: 3%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1px;
+  padding: 1.5rem;
+  &:hover {
+    background-color: #ffffff;
+    color: #bd5a27;
+    border: 1px solid #bd5a27;
+    border-radius: 1px;
+  }
+}
