@@ -39,7 +39,9 @@
   width: 100%;
   min-height: 90vh;
   height: 100%;
-  margin: 0 4rem 4rem 0;
+  margin: 3rem 4rem 4rem 4rem;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
+  border: none!important;
 }
 
 .caseTableGridContainer {
@@ -47,7 +49,8 @@
   flex-direction: column;
   justify-content: center;
   align-content: center;
-  width: 90%;
+  width: 98%;
+  margin-left: -3rem;
 }
 
 .caseTableContainer {
@@ -57,8 +60,8 @@
   align-items: flex-start;
   align-content: flex-start;
   width: 100%;
-  margin-top: 6%;
-  padding: 2rem;
+  /* margin-top: 6%;
+  padding: 2rem; */
 }
 
 /* caseTable drawer styles */
