@@ -5,10 +5,20 @@
   display: flex;
 }
 
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  margin: 0 auto;
+  @media (max-width: 600px) {
+    width: 70%;
+  }
+}
 .logo {
-  max-width: 450px;
+  max-width: 350px;
   max-height: 65px;
-  margin-bottom: 4rem;
 }
 
 .background-image {
@@ -22,25 +32,18 @@
   }
 }
 
-.form {
-  width: 50%;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
 .ant-form {
   width: 50%;
   margin-top: 3rem;
   @media (max-width: 600px) {
-    width: 90%;
+    width: 80%;
   }
 }
 
 .ant-input {
   border-radius: 1px;
+  line-height: 22px;
+  padding: 6px 8px;
 }
 
 .link-back {

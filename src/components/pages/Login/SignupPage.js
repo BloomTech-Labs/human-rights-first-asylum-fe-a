@@ -44,7 +44,7 @@ const SignupPage = () => {
       />
       <div className="form">
         <div className="logo">
-          <img src={logo} alt="logo" />
+          <img src={logo} alt="logo" width="350px" />
         </div>
         <h2 className="h2styles">Register for Access</h2>
         <Form onSubmit={onSubmit} layout="vertical">
