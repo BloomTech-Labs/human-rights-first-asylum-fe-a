@@ -44,7 +44,7 @@ function SideDrawer() {
 
       <Menu
         defaultSelectedKeys={['none']}
-        defaultOpenKeys={['saved']}
+        defaultOpenKeys={['saved', 'admin-tools']}
         mode="inline"
         theme="dark"
         inlineCollapsed={collapsed}
@@ -63,30 +63,27 @@ function SideDrawer() {
           <Menu.Item key="/saved-cases">Saved Cases</Menu.Item>
           <Menu.Item key="/saved-judges">Saved Judges</Menu.Item>
         </SubMenu>
-      </Menu>
-      {role === 'moderator' || role === 'admin' ? (
-        <Menu
-          defaultSelectedKeys={['1']}
-          defaultOpenKeys={['sub2']}
-          mode="inline"
-          theme="dark"
-          inlineCollapsed={collapsed}
-          onClick={handleRoute}
-        >
-          <SubMenu key="sub2" icon={<ToolOutlined />} title="Admin Tools">
-            <Menu.Item key="/add-users">Add Users</Menu.Item>
-            <Menu.Item key="/manage-users">Manage Users</Menu.Item>
-            <Menu.Item key="/add-faq">Add FAQ</Menu.Item>
-            <Menu.Item key="/manage-faq">Manage FAQ</Menu.Item>
-            <Menu.Item key="/manage-requested">
-              Review Requested Users
+        {role === 'moderator' || role === 'admin' ? (
+          <>
+            <SubMenu
+              key="admin-tools"
+              icon={<ToolOutlined />}
+              title="Admin Tools"
+            >
+              <Menu.Item key="/add-users">Add Users</Menu.Item>
+              <Menu.Item key="/manage-users">Manage Users</Menu.Item>
+              <Menu.Item key="/add-faq">Add FAQ</Menu.Item>
+              <Menu.Item key="/manage-faq">Manage FAQ</Menu.Item>
+              <Menu.Item key="/manage-requested">
+                Review Requested Users
+              </Menu.Item>
+            </SubMenu>
+            <Menu.Item key="/manage-cases" icon={<FileDoneOutlined />}>
+              Review Cases
             </Menu.Item>
-          </SubMenu>
-          <Menu.Item key="/manage-cases" icon={<FileDoneOutlined />}>
-            Review Cases
-          </Menu.Item>
-        </Menu>
-      ) : null}
+          </>
+        ) : null}
+      </Menu>
     </div>
   );
 }
