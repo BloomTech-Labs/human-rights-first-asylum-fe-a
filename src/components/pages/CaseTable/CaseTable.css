@@ -39,7 +39,7 @@
   width: 100%;
   min-height: 90vh;
   height: 100%;
-  margin: 3rem 4rem 4rem 4rem;
+  margin: -2rem 4rem 4rem 4rem;
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
   border: none!important;
 }
@@ -211,4 +211,18 @@ button.ant-btn.columnsBtn {
 button.ant-btn.columnsBtn:hover {
   padding: 0;
   margin: 0;
+}
+
+/* Chart Container Adjustments */
+
+.chartContainer {
+  display: flex;
+}
+
+.divider {
+  width: 2px;
+  height: 200px;
+  background-color: grey;
+  border: 1px solid black;
+  margin-top: 2rem;
 }

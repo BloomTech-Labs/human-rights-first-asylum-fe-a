@@ -402,7 +402,10 @@ export default function CaseTable(props) {
           <GridToolbarExport />
         </Menu.Item>
         <Menu.Item key="2" icon={<FeatherIcon icon="download" />}>
-          <PDFExportButton caseData={filter(caseData)} viz={<PieChart />} />
+          <PDFExportButton
+            caseData={filter(caseData)}
+            viz={<DecisionRateChart />}
+          />
         </Menu.Item>
         <Menu.Item key="3" icon={<FeatherIcon icon="download" />}>
           Download all as PDF
@@ -467,7 +470,71 @@ export default function CaseTable(props) {
 
   const data = searching ? filter(caseData) : caseData;
 
-  const PieChart = () => {
+  const DecisionRateChart = () => {
+    let denied = 0;
+    let granted = 0;
+    let remanded = 0;
+    let sustained = 0;
+    let terminated = 0;
+
+    data.map(eachCase => {
+      if (eachCase.case_outcome === 'Denied') {
+        denied += 1;
+      }
+      if (eachCase.case_outcome === 'Granted') {
+        granted += 1;
+      }
+      if (eachCase.case_outcome === 'Remanded') {
+        remanded += 1;
+      }
+      if (eachCase.case_outcome === 'Sustained') {
+        sustained += 1;
+      }
+      if (eachCase.case_outcome === 'Terminated') {
+        terminated += 1;
+      }
+      return null;
+    });
+
+    return (
+      // <Plot
+      //   data={[
+      //     {
+      //       type: 'pie',
+      //       values: [granted, denied, remanded, sustained, terminated],
+      //       labels: [
+      //         'Granted',
+      //         'Denied',
+      //         'Remanded',
+      //         'Sustained',
+      //         'Terminated',
+      //       ],
+      //       textinfo: 'label+percent',
+      //       textposition: 'outside',
+      //       automargin: true,
+      //     },
+      //   ]}
+      //   layout={{
+      //     height: 300,
+      //     width: 300,
+      //     showlegend: false,
+      //     title: 'Decision Rate',
+      //   }}
+      // />
+      <Plot
+        data={[
+          {
+            type: 'bar',
+            x: ['Granted', 'Denied', 'Remanded', 'Sustained', 'Terminated'],
+            y: [granted, denied, remanded, sustained, terminated],
+          },
+        ]}
+        layout={{ width: 500, height: 300, title: 'Decision Rate' }}
+      />
+    );
+  };
+
+  const CaseDataChart = () => {
     let denied = 0;
     let granted = 0;
     let remanded = 0;
@@ -497,26 +564,12 @@ export default function CaseTable(props) {
       <Plot
         data={[
           {
-            type: 'pie',
-            values: [granted, denied, remanded, sustained, terminated],
-            labels: [
-              'Granted',
-              'Denied',
-              'Remanded',
-              'Sustained',
-              'Terminated',
-            ],
-            textinfo: 'label+percent',
-            textposition: 'outside',
-            automargin: true,
+            type: 'bar',
+            x: ['Granted', 'Denied', 'Remanded', 'Sustained', 'Terminated'],
+            y: [granted, denied, remanded, sustained, terminated],
           },
         ]}
-        layout={{
-          height: 300,
-          width: 300,
-          showlegend: false,
-          title: 'Decision Rate',
-        }}
+        layout={{ width: 500, height: 300, title: 'Case Data' }}
       />
     );
   };
@@ -572,7 +625,11 @@ export default function CaseTable(props) {
 
   return (
     <div className="caseTableContainer">
-      <PieChart />
+      <div className="chartContainer">
+        <DecisionRateChart />
+        <div className="divider"></div>
+        <CaseDataChart />
+      </div>
       <div className="caseTableCard">
         {searching && (
           <div>
