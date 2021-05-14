@@ -222,7 +222,7 @@ function RenderHomePage(props) {
 
   return (
     <>
-      <MainHeader />
+      <MainHeader logout={logout} />
       <div className={classes.container}>
         <ThemeProvider theme={theme}>
           <SideDrawer
