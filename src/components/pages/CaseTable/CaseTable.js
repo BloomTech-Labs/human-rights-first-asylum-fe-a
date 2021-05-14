@@ -25,7 +25,7 @@ import {
   Dropdown,
   message,
 } from 'antd';
-import './CaseTable.css';
+import './CaseTable.less';
 
 import FeatherIcon from 'feather-icons-react';
 
@@ -95,7 +95,7 @@ export default function CaseTable(props) {
         <>
           <Link
             to={`/judge/${params.value.split(' ').join('%20')}`}
-            style={{ color: '#215589' }}
+            style={{ color: '#3582cf' }}
           >
             {params.value}
           </Link>
