@@ -554,9 +554,11 @@ export default function CaseTable(props) {
       color: '#215589',
       height: 48,
       zIndex: 1,
+      fontSize: 5,
     },
     tabIndicator: {
       backgroundColor: '#c95202',
+      height: 4,
     },
     tabPanel: {
       width: '100%',
@@ -617,7 +619,7 @@ export default function CaseTable(props) {
             className="caseTable"
             loading={caseData ? false : true}
             checkboxSelection={true}
-            showCellRightBorder={true}
+            showCellRightBorder={false}
             pageSize={25}
             disableColumnMenu={true}
             components={{ Toolbar: CustomToolbar }}
@@ -636,7 +638,7 @@ export default function CaseTable(props) {
             className="caseTable"
             loading={caseData ? false : true}
             checkboxSelection={true}
-            showCellRightBorder={true}
+            showCellRightBorder={false}
             pageSize={25}
             disableColumnMenu={true}
             components={{ Toolbar: CustomToolbar }}
