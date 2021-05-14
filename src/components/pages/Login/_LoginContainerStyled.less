@@ -1,0 +1,124 @@
+@background-image: '../../../styles/statueOfLiberty.jpg';
+@font: 'Lato', sans-serif;
+@font-color: #262626;
+@button: #bd5a27;
+
+.root {
+  width: 100%;
+  display: flex;
+}
+.form {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  // max-height: 100vh;
+  .logo {
+    max-width: 450px;
+    max-height: 65px;
+    margin-bottom: 2rem;
+  }
+  .background-image {
+    background-image: url(@background-image);
+    width: 600px;
+    min-height: 100vh;
+    background-position: top;
+    background-repeat: no-repeat;
+    @media (max-width: 600px) {
+      width: 0;
+    }
+  }
+
+  .login-page {
+    // width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+
+    .link-styles {
+      font-family: @font;
+      color: #2a5c8d;
+    }
+  }
+
+  #sign-in-widget {
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+    font-family: @font;
+
+    #okta-sign-in {
+      border-radius: 1px;
+    }
+    #okta-sign-in.auth-container.main-container {
+      font-family: 'Lato' sans-serif;
+      margin: 0;
+      border: none;
+      box-shadow: none;
+      color: @font-color;
+
+      label {
+        font-family: 'Lato', sans-serif;
+        color: @font-color;
+        padding-bottom: 1rem;
+      }
+      .button-primary {
+        background: @button;
+      }
+      .okta-form-input-field input {
+        font-family: @font;
+      }
+      h2 {
+        color: @font-color;
+      }
+    }
+
+    .o-form {
+      .o-form-head {
+        font-size: 1.8rem;
+        font-family: @font;
+        margin-top: 0;
+      }
+      .o-form-input-name-username {
+        border-radius: 1px;
+      }
+      .o-form-input-name-password {
+        border-radius: 1px;
+      }
+      .o-form-label {
+        padding-top: 1rem;
+      }
+    }
+
+    .auth-header {
+      display: none;
+
+      .auth-org-logo {
+        border: red 1px solid;
+        display: none;
+      }
+
+      .auth-footer {
+        border-bottom: none;
+        font-family: @font;
+      }
+    }
+
+    .button-primary {
+      background: @button;
+      border: none;
+      border-radius: 1px;
+      &:hover {
+        background: #ffffff;
+        border: 1px solid @button;
+        color: @button;
+      }
+      &::selection {
+        background: @button;
+      }
+    }
+  }
+}

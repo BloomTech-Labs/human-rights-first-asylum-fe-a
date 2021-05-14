@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { StyledLogin } from './LoginContainerStyled';
+// import { StyledLogin } from './LoginContainerStyled';
+import './_LoginContainerStyled.less';
 import OktaSignIn from '@okta/okta-signin-widget';
 import '@okta/okta-signin-widget/dist/css/okta-sign-in.min.css';
-import Button from '@material-ui/core/Button';
 // Below is the Human Rights logo
-import hrfLogo from '../../../styles/hrf-logo.png';
+import logo from '../../../styles/hrf-logo.png';
 
 import { config } from '../../../utils/oktaConfig';
 
@@ -20,7 +20,6 @@ const LoginContainer = () => {
       registration: {},
       features: { registration: false },
       // turning this feature on allows your widget to use Okta for user registration
-      logo: `${hrfLogo}`, // Import any logo you want to display at the top of the login widget
       i18n: {
         en: {
           'primaryauth.title': 'Log in to Continue',
@@ -50,20 +49,23 @@ const LoginContainer = () => {
   }, []);
 
   return (
-    <StyledLogin>
+    <div className="root">
       <div
         className="background-image"
         aria-label="cosmetic background image"
       />
-      <div className="login-page">
-        <div id="sign-in-widget" aria-label="login form" />
-        <Button className="buttonStyles">
-          <Link to="/signup">
-            <p>Request to join</p>
+      <div className="form">
+        <div className="logo">
+          <img src={logo} alt="logo" width="350px" />
+        </div>
+        <div className="login-page">
+          <div id="sign-in-widget" aria-label="login form" />
+          <Link className="link-styles" to="/signup">
+            <p>Don't have an account? Register here</p>
           </Link>
-        </Button>
+        </div>
       </div>
-    </StyledLogin>
+    </div>
   );
 };
 
