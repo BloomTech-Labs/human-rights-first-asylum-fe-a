@@ -22,6 +22,9 @@ const LoginContainer = () => {
       i18n: {
         en: {
           'primaryauth.title': 'Log in to Continue',
+          'primaryauth.username.placeholder': 'Email Address',
+          'password.forgot.email.or.username.placeholder': 'Email Address',
+          'password.forgot.email.or.username.tooltip': ' ',
           // change title for your app
         },
       },
