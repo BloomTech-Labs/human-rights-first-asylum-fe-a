@@ -77,8 +77,8 @@ const theme = createMuiTheme({
 });
 
 function RenderHomePage(props) {
-  const { uploadCase } = props;
   const [caseData, setCaseData] = useState([]);
+  const [myCases, setMyCases] = useState([]);
   const [judgeData, setJudgeData] = useState([]);
   const [savedCases, setSavedCases] = useState([]);
   const [savedJudges, setSavedJudges] = useState([]);
@@ -101,6 +101,30 @@ function RenderHomePage(props) {
       // )
       .then(res => {
         setCaseData(
+          res.data.map(eachCase => {
+            return {
+              ...eachCase,
+              id: eachCase.case_number,
+            };
+          })
+        );
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, [user.authState.idToken.idToken]);
+  useEffect(() => {
+    trackPromise(
+      // Tracks the axios call and implements spinning loader while executing
+      axios.get(`${process.env.REACT_APP_API_URI}/cases`, {
+        // .get(`${process.env.REACT_APP_API_URI}/pendingCases/:${user.userInfo.sub}`, {
+        headers: {
+          Authorization: 'Bearer ' + user.authState.idToken.idToken,
+        },
+      })
+    )
+      .then(res => {
+        setMyCases(
           res.data.map(eachCase => {
             return {
               ...eachCase,
@@ -235,9 +259,13 @@ function RenderHomePage(props) {
             deleteSavedJudge={deleteSavedJudge}
           />
           <div className={classes.subContainer}>
-            <UploadCase uploadCase={uploadCase} authState={user.authState} />
+            <UploadCase authState={user.authState} />
             <Route exact path="/my-cases">
-              <MyCases />
+              <MyCases
+                authState={user.authState}
+                caseData={myCases}
+                userInfo={user.userInfo}
+              />
             </Route>
             <Route exact path="/saved-cases">
               <SavedCases
