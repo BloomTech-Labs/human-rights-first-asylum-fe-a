@@ -1,3 +1,4 @@
+import { red } from 'kleur';
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
@@ -61,12 +62,16 @@ table {
 *::-webkit-scrollbar {
   display: none;
 }
+*::selection {
+  background: none;
+}
 
 /* Hide scrollbar for IE, Edge and Firefox */
 * {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+
 
 #root .MuiButton-root {
   box-shadow: 0px;

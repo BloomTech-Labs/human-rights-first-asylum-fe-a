@@ -1,0 +1,106 @@
+@save-icon: '../../../styles/icons/save.svg';
+@tool-icon: '../../../styles/icons/tool.svg';
+@case-icon: '../../../styles/icons/case.svg';
+@case-blue: '../../../styles/icons/case-blue.svg';
+@judge-icon: '../../../styles/icons/gavel.svg';
+@myCases-icon: '../../../styles/icons/my-cases.svg';
+@review-cases-icon: '../../../styles/icons/review-case.svg';
+
+@selected-color: #2a5c8d;
+
+.ant-menu
+  .ant-menu-light
+  .ant-menu-inline-collapsed
+  .ant-menu--root
+  .ant-menu-vertical {
+  background-color: #f4f6f7;
+  height: 100vh;
+}
+
+.saved-submenu {
+  background: url(@save-icon) no-repeat left top 10px !important;
+  margin-left: 1.6rem;
+  padding-left: 0.4rem;
+}
+
+.admin-tools-submenu {
+  background: url(@tool-icon) no-repeat left top 10px !important;
+  margin-left: 1.2rem;
+  padding-left: 0.8rem;
+}
+
+.cases {
+  background: url(@case-icon) no-repeat left 20px center !important;
+  padding-left: 3.5rem !important;
+  // this works of the hover, added new blue svg in icons, need to find solution to keep blue when active
+  &:hover {
+    background: url(@case-blue) no-repeat left 20px center !important;
+  }
+}
+
+.judges {
+  background: url(@judge-icon) no-repeat left 20px center !important;
+  padding-left: 3.5rem !important;
+}
+
+.my-cases {
+  background: url(@myCases-icon) no-repeat left 20px center !important;
+  padding-left: 3.5rem !important;
+}
+
+.review-cases {
+  background: url(@review-cases-icon) no-repeat left 20px center !important;
+  padding-left: 3.5rem !important;
+}
+
+.ant-menu-root.ant-menu-inline {
+  background-color: #f4f6f7;
+}
+
+.ant-menu-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: left;
+  &:hover {
+    color: @selected-color;
+  }
+}
+
+.ant-menu-submenu-title {
+  &:hover {
+    color: @selected-color;
+  }
+}
+
+.ant-btn-primary {
+  color: @selected-color;
+}
+
+li {
+  .ant-menu-inline-collapsed-noicon {
+    display: none;
+  }
+  .ant-menu-inline-collapsed-selected {
+    border: none;
+  }
+}
+
+.ant-menu-item-selected {
+  color: @selected-color;
+}
+
+.ant-menu-submenu-selected {
+  color: @selected-color;
+}
+
+.ant-menu-inline .ant-menu-item::after {
+  border-right: none;
+}
+.ant-menu-inline .ant-menu-item::after {
+  border-right: none;
+}
+
+.ant-menu-vertical .ant-menu-item::after {
+  border-right: none;
+}

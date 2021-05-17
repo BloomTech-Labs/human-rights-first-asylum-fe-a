@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-// import { StyledLogin } from './LoginContainerStyled';
 import './_LoginContainerStyled.less';
 import OktaSignIn from '@okta/okta-signin-widget';
 import '@okta/okta-signin-widget/dist/css/okta-sign-in.min.css';
@@ -23,6 +22,9 @@ const LoginContainer = () => {
       i18n: {
         en: {
           'primaryauth.title': 'Log in to Continue',
+          'primaryauth.username.placeholder': 'Email Address',
+          'password.forgot.email.or.username.placeholder': 'Email Address',
+          'password.forgot.email.or.username.tooltip': ' ',
           // change title for your app
         },
       },
