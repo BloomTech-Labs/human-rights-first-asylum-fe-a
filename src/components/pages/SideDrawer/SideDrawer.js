@@ -22,9 +22,9 @@ function SideDrawer() {
   };
 
   return (
-    <div style={{ width: 246 }}>
+    <div style={{ width: 246, height: '100vh' }}>
       <Menu
-        defaultSelectedKeys={['none']}
+        defaultSelectedKeys={['/']}
         mode="inline"
         theme="light"
         inlineCollapsed={collapsed}
@@ -46,7 +46,11 @@ function SideDrawer() {
           )}
         </Button>
 
-        <Menu.Item className="cases" key="/">
+        <Menu.Item className="home" key="/">
+          Home
+        </Menu.Item>
+
+        <Menu.Item className="cases" key="/cases">
           Cases
         </Menu.Item>
 
@@ -62,7 +66,7 @@ function SideDrawer() {
           key="saved"
           className="saved-submenu"
           title="Saved"
-          style={{ backgroundColor: '#F4F6F7' }}
+          style={{ backgroundColor: '#F4F6F7', paddingRight: 30 }}
         >
           <Menu.Item key="/saved-cases">Saved Cases</Menu.Item>
           <Menu.Item key="/saved-judges">Saved Judges</Menu.Item>
@@ -74,6 +78,7 @@ function SideDrawer() {
               key="admin-tools"
               title="Admin Tools"
               className="admin-tools-submenu"
+              style={{ backgroundColor: '#F4F6F7', paddingRight: 30 }}
             >
               <Menu.Item key="/add-users">Add Users</Menu.Item>
               <Menu.Item key="/manage-users">Manage Users</Menu.Item>
