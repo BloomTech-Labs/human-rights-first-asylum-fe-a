@@ -82,7 +82,7 @@ const DataHub = props => {
             y: [granted, denied, remanded, sustained, terminated],
           },
         ]}
-        layout={{ width: 1000, height: 400, title: 'Case Data' }}
+        layout={{ width: 1100, height: 400, title: 'Case Data' }}
       />
     );
   };
