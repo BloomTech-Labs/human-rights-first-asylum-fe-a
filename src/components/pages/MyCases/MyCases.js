@@ -145,9 +145,7 @@ export default function MyCases(props) {
             e.preventDefault();
             onDelete(params.row.pending_case_id);
           }}
-        >
-          {console.log(params)}
-        </Button>
+        ></Button>
       ),
     },
   ];
