@@ -13,36 +13,14 @@ import './MyCases.less';
 export default function MyCases(props) {
   const { Title } = Typography;
   const [tabValue, setTabValue] = useState(0);
-  const { user } = props;
+  const { user, myPendingCases, getPendingCases } = props;
   const [myApprovedCases, setMyApprovedCases] = useState([]);
-  const [myPendingCases, setMyPendingCases] = useState([]);
   const [selectedTab, setSelectedTab] = useState(true);
 
   useEffect(() => {
-    trackPromise(
-      axios.get(
-        `${process.env.REACT_APP_API_URI}/pendingCases/:${user.userInfo.sub}`,
-        {
-          headers: {
-            Authorization: 'Bearer ' + user.authState.idToken.idToken,
-          },
-        }
-      )
-    )
-      .then(res => {
-        setMyPendingCases(
-          res.data.map(eachCase => {
-            return {
-              ...eachCase,
-              id: eachCase.case_number,
-            };
-          })
-        );
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }, [user.authState.idToken.idToken]);
+    getPendingCases();
+    // eslint-disable-next-line
+  }, []);
   useEffect(() => {
     trackPromise(
       axios.get(
@@ -67,7 +45,8 @@ export default function MyCases(props) {
       .catch(err => {
         console.log(err);
       });
-  }, [user.authState.idToken.idToken]);
+    // eslint-disable-next-line
+  }, []);
   const pendingColumns = [
     {
       field: 'case_number',
@@ -87,7 +66,7 @@ export default function MyCases(props) {
       flex: 1,
     },
     {
-      field: 'pdf',
+      field: 'case_url',
       renderHeader: params => <strong>{'View PDF'}</strong>,
       headerName: 'PDF',
       headerAlign: 'center',
@@ -108,6 +87,9 @@ export default function MyCases(props) {
               />
             </svg>
           }
+          onClick={e => {
+            e.preventDefault();
+          }}
         ></Button>
       ),
     },
@@ -259,7 +241,9 @@ export default function MyCases(props) {
         },
       })
     )
-      .then(res => {})
+      .then(res => {
+        getPendingCases();
+      })
       .catch(err => {
         console.log(err);
       });

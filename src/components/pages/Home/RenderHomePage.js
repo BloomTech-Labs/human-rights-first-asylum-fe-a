@@ -83,7 +83,7 @@ function RenderHomePage(props) {
   const [savedJudges, setSavedJudges] = useState([]);
   const [selectedRows, setSelectedRows] = useState({});
   const [hrfUserInfo, setHrfUserInfo] = useState([]);
-
+  const [myPendingCases, setMyPendingCases] = useState([]);
   const user = useContext(UserContext);
 
   // should move these API calls into a separate index folder at some point
@@ -156,7 +156,31 @@ function RenderHomePage(props) {
     // savedCases.length,
     // savedJudges.length,
   ]);
-
+  const getPendingCases = () => {
+    trackPromise(
+      axios.get(
+        `${process.env.REACT_APP_API_URI}/pendingCases/:${user.userInfo.sub}`,
+        {
+          headers: {
+            Authorization: 'Bearer ' + user.authState.idToken.idToken,
+          },
+        }
+      )
+    )
+      .then(res => {
+        setMyPendingCases(
+          res.data.map(eachCase => {
+            return {
+              ...eachCase,
+              id: eachCase.case_number,
+            };
+          })
+        );
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
   const deleteFromStateById = (id, state, setState) => {
     // i made this function non case specific but now I'm remembering that cases get deleted by name
     let index = state.findIndex(item => item.id === id);
@@ -234,9 +258,16 @@ function RenderHomePage(props) {
             deleteSavedJudge={deleteSavedJudge}
           />
           <div className={classes.subContainer}>
-            <UploadCase authState={user.authState} />
+            <UploadCase
+              authState={user.authState}
+              getPendingCases={getPendingCases}
+            />
             <Route exact path="/my-cases">
-              <MyCases user={user} />
+              <MyCases
+                user={user}
+                myPendingCases={myPendingCases}
+                getPendingCases={getPendingCases}
+              />
             </Route>
             <Route exact path="/saved-cases">
               <SavedCases

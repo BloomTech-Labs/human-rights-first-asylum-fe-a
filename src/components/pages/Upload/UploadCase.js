@@ -83,7 +83,7 @@ const HRFBlueLoader = withStyles(() => ({
   },
 }))(CircularProgress);
 
-const UploadCase = ({ authState }) => {
+const UploadCase = ({ authState, getPendingCases }) => {
   const [formValues, setFormValues] = useState(initialFormValues);
   const [formValueQueue, setFormValueQueue] = useState([]);
   const classes = useStyles();
@@ -94,6 +94,7 @@ const UploadCase = ({ authState }) => {
   const [nextPost, setNextPost] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const successNotification = () => {
+    getPendingCases();
     notification.open({
       message: 'Upload Status',
       description: 'Case uploaded successfully!',
