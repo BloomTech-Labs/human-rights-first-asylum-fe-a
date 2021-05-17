@@ -108,12 +108,13 @@
 
     .button-primary {
       background: @button;
-      border: none;
-      border-radius: 1px;
+      border: none !important;
+      border-radius: 1px !important;
       &:hover {
-        background: #ffffff;
-        border: 1px solid @button;
+        background-color: white !important;
+        border: 1px solid @button !important;
         color: @button;
+        border-radius: 1px;
       }
       &::selection {
         background: @button;
