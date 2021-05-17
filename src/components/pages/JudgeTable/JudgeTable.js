@@ -11,7 +11,7 @@ import FeatherIcon from 'feather-icons-react';
 
 export default function JudgeTable(props) {
   const { judgeData, userInfo, savedJudges, setSavedJudges, authState } = props;
-  const [selectedRows, setSelectedRows] = useState({});
+  const [selectionModel, setSelectionModel] = useState([]);
 
   const columns = [
     {
@@ -68,17 +68,18 @@ export default function JudgeTable(props) {
   ];
 
   judgeData.forEach((item, idx) => {
-    item.id = idx; //no?
+    item.id = idx;
   }); // this is VERY hacky, but the table doesn't take data without ids
 
   const findRowByID = (rowID, rowData) => {
     for (let i = 0; i < rowData.length; i++) {
       let currentRow = rowData[i];
-      if (currentRow.name === rowID) {
+      let adjustedRowID = parseInt(rowID) + 1;
+      if (currentRow.judge_id === adjustedRowID.toString()) {
         return currentRow;
       }
     }
-    return 'Row does not exist ID';
+    return 'This judge could not be identified';
   };
 
   const findRowByJudgeName = (judgeName, rowData) => {
@@ -100,7 +101,7 @@ export default function JudgeTable(props) {
   const postJudge = rowToPost => {
     axios
       .post(
-        `${process.env.REACT_APP_API_URI}/profile/${
+        `${process.env.REACT_APP_API_URI}/profiles/${
           userInfo.sub
         }/judge/${formatJudgeName(rowToPost.name)}`,
         rowToPost,
@@ -110,6 +111,7 @@ export default function JudgeTable(props) {
           },
         }
       )
+
       .then(res => {
         let justAdded = res.data.judge_bookmarks.slice(-1);
         let justAddedName = justAdded[0].name;
@@ -131,10 +133,12 @@ export default function JudgeTable(props) {
     // need to reference rows by id, as that is all that selection stores
     // need to account for duplicates as well
     let bookmarks = [];
-    if (targetRows) {
+    if (targetRows.length > 0) {
       for (let i = 0; i < targetRows.length; i++) {
         bookmarks.push(findRowByID(targetRows[i], judgeData));
       }
+
+      // savedNames might be redundant. just loop through savedJudges - check functionality once POST works
       let savedNames = [];
       for (let i = 0; i < savedJudges.length; i++) {
         savedNames.push(savedJudges[i].name);
@@ -148,12 +152,10 @@ export default function JudgeTable(props) {
           postJudge(bookmarks[i]);
         }
       }
+    } else {
+      alert('Please selected judge(s) to be saved');
     }
     alert('Judges Successfully Saved');
-  };
-
-  const onCheckboxSelect = selections => {
-    setSelectedRows(selections);
   };
 
   const Toolbar = () => {
@@ -171,7 +173,7 @@ export default function JudgeTable(props) {
           </Button>
           <Button
             onClick={() => {
-              bookmarkJudges(selectedRows);
+              bookmarkJudges(selectionModel);
             }}
           >
             <FeatherIcon icon="bookmark" />
@@ -300,7 +302,10 @@ export default function JudgeTable(props) {
           autoHeight={true}
           loading={judgeData ? false : true}
           checkboxSelection={true}
-          onSelectionModelChange={onCheckboxSelect}
+          onSelectionModelChange={newSelection => {
+            setSelectionModel(newSelection.selectionModel);
+          }}
+          selectionModel={selectionModel}
           showCellRightBorder={false}
           showColumnRightBorder={false}
           components={{ Toolbar: Toolbar }}
