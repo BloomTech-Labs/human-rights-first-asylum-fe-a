@@ -1,12 +1,21 @@
 @save-icon: '../../../styles/icons/save.svg';
+@save-blue: '../../../styles/icons/save-blue.svg';
 @tool-icon: '../../../styles/icons/tool.svg';
+@tool-blue: '../../../styles/icons/tool-blue.svg';
 @case-icon: '../../../styles/icons/case.svg';
 @case-blue: '../../../styles/icons/case-blue.svg';
 @judge-icon: '../../../styles/icons/gavel.svg';
-@myCases-icon: '../../../styles/icons/my-cases.svg';
+@judge-blue: '../../../styles/icons/gavel-blue.svg';
+@my-cases-icon: '../../../styles/icons/my-cases.svg';
+@my-cases-blue: '../../../styles/icons/my-cases-blue.svg';
 @review-cases-icon: '../../../styles/icons/review-case.svg';
+@review-cases-blue: '../../../styles/icons/review-cases-blue.svg';
+@home-icon: '../../../styles/icons/home.svg';
+@home-blue: '../../../styles/icons/home-blue.svg';
 
 @selected-color: #2a5c8d;
+@gray: #cacccf;
+@light-blue: #a0c5dd;
 
 .ant-menu
   .ant-menu-light
@@ -14,43 +23,68 @@
   .ant-menu--root
   .ant-menu-vertical {
   background-color: #f4f6f7;
-  height: 100vh;
+  min-height: 100vh !important;
 }
 
 .saved-submenu {
-  background: url(@save-icon) no-repeat left top 10px !important;
-  margin-left: 1.6rem;
-  padding-left: 0.4rem;
+  background: url(@save-icon) no-repeat left 26px top 10px !important;
+  &:hover {
+    background: url(@save-blue) no-repeat left 26px top 10px !important;
+    background-color: white !important;
+  }
 }
 
 .admin-tools-submenu {
-  background: url(@tool-icon) no-repeat left top 10px !important;
-  margin-left: 1.2rem;
-  padding-left: 0.8rem;
+  background: url(@tool-icon) no-repeat left 20px top 10px !important;
+  &:hover {
+    background: url(@tool-blue) no-repeat left 20px top 10px !important;
+    background-color: white !important;
+  }
+}
+
+.home {
+  background: url(@home-icon) no-repeat left 20px center !important;
+  padding-left: 3.5rem !important;
+  &:hover {
+    background: url(@home-blue) no-repeat left 20px center !important;
+    background-color: white !important;
+  }
 }
 
 .cases {
   background: url(@case-icon) no-repeat left 20px center !important;
   padding-left: 3.5rem !important;
-  // this works of the hover, added new blue svg in icons, need to find solution to keep blue when active
   &:hover {
     background: url(@case-blue) no-repeat left 20px center !important;
+    background-color: white !important;
   }
 }
 
 .judges {
   background: url(@judge-icon) no-repeat left 20px center !important;
   padding-left: 3.5rem !important;
+  &:hover {
+    background: url(@judge-blue) no-repeat left 20px center !important;
+    background-color: white !important;
+  }
 }
 
 .my-cases {
-  background: url(@myCases-icon) no-repeat left 20px center !important;
+  background: url(@my-cases-icon) no-repeat left 20px center !important;
   padding-left: 3.5rem !important;
+  &:hover {
+    background: url(@my-cases-blue) no-repeat left 20px center !important;
+    background-color: white !important;
+  }
 }
 
 .review-cases {
   background: url(@review-cases-icon) no-repeat left 20px center !important;
   padding-left: 3.5rem !important;
+  &:hover {
+    background: url(@review-cases-blue) no-repeat left 20px center !important;
+    background-color: white !important;
+  }
 }
 
 .ant-menu-root.ant-menu-inline {
@@ -62,22 +96,33 @@
   flex-direction: row;
   align-items: center;
   justify-content: left;
+  color: @gray;
   &:hover {
-    color: @selected-color;
+    color: @light-blue;
+    background-color: white;
   }
 }
 
 .ant-menu-submenu-title {
+  color: @gray;
   &:hover {
-    color: @selected-color;
+    color: @light-blue;
   }
+  // margin-left: 2rem;
+  margin-right: 0;
+  padding-left: 3.5rem !important;
 }
 
 .ant-btn-primary {
   color: @selected-color;
+  &:hover {
+    color: @light-blue;
+  }
 }
 
 li {
+  padding-right: 0 !important;
+  // padding-left: 0 !important;
   .ant-menu-inline-collapsed-noicon {
     display: none;
   }
@@ -86,17 +131,20 @@ li {
   }
 }
 
+// l.drop-down-item {
+//   padding-right: 0 !important;
+// }
+
 .ant-menu-item-selected {
-  color: @selected-color;
+  color: @gray;
+  background-color: @selected-color !important;
 }
 
 .ant-menu-submenu-selected {
-  color: @selected-color;
+  color: @gray;
+  background-color: @selected-color !important;
 }
 
-.ant-menu-inline .ant-menu-item::after {
-  border-right: none;
-}
 .ant-menu-inline .ant-menu-item::after {
   border-right: none;
 }
@@ -104,3 +152,7 @@ li {
 .ant-menu-vertical .ant-menu-item::after {
   border-right: none;
 }
+
+// .ant-menu-inline .ant-menu-submenu-title {
+//   padding-right: 10px !important;
+// }
