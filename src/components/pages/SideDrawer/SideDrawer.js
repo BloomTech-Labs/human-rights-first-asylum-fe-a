@@ -46,7 +46,11 @@ function SideDrawer() {
           )}
         </Button>
 
-        <Menu.Item className="cases" key="/">
+        <Menu.Item className="home" key="/">
+          Home
+        </Menu.Item>
+
+        <Menu.Item className="cases" key="/cases">
           Cases
         </Menu.Item>
 
