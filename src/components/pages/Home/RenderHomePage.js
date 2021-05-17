@@ -77,7 +77,6 @@ const theme = createMuiTheme({
 });
 
 function RenderHomePage(props) {
-  const { uploadCase } = props;
   const [caseData, setCaseData] = useState([]);
   const [judgeData, setJudgeData] = useState([]);
   const [savedCases, setSavedCases] = useState([]);
@@ -235,9 +234,9 @@ function RenderHomePage(props) {
             deleteSavedJudge={deleteSavedJudge}
           />
           <div className={classes.subContainer}>
-            <UploadCase uploadCase={uploadCase} authState={user.authState} />
+            <UploadCase authState={user.authState} />
             <Route exact path="/my-cases">
-              <MyCases />
+              <MyCases user={user} />
             </Route>
             <Route exact path="/saved-cases">
               <SavedCases

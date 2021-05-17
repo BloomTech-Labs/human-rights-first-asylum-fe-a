@@ -1,33 +1,26 @@
-.manageCasesContainer {
-    position: absolute;
-    width: 75%;
-    height: 500px;
-    top: 78px;
-    left: 265px;
-}
 
-#acceptCaseButton {
-    color: #ffffff;
-    background-color:#215589;
-    padding: 10% 20%;
+.myCaseTableContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  .myCaseTableGridContainer {
+    width: 98%;
+    margin-left: -3rem;
+    margin-top: 3rem;
+  }
+  .myCaseTable {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 15px;
-}
-
-#rejectCaseButton {
-    color: #ffffff;
-    background-color:#215589;
-    padding: 10% 20%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 15px;
-}
-
-.manageCasesTitle {
-    color: #215589 !important;
-    text-align: center;
-    margin-top: 2%;
+    width: 100%;
+    min-height: 90vh;
+    height: 100%;
+    margin: -2rem 4rem 4rem 4rem;
+    .MuiDataGrid-row {
+      background-color: aliceblue;
+    }
+    .MuiDataGrid-cell {
+      justify-content: center;
+      align-content: center;
+      text-align: center;
+    }
+  }
 }
