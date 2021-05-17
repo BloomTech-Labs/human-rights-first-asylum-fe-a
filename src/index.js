@@ -68,6 +68,11 @@ function App() {
           component={() => <HomePage LoadingComponent={LoadingComponent} />}
         />
         <SecureRoute
+          path="/cases"
+          // exact
+          component={() => <HomePage LoadingComponent={LoadingComponent} />}
+        />
+        <SecureRoute
           path="/judges"
           // exact
           component={() => <HomePage LoadingComponent={LoadingComponent} />}

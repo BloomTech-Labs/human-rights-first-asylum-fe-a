@@ -7,6 +7,7 @@ import MainHeader from '../Home/MainHeader';
 import JudgePage from '../JudgePage/JudgePage';
 import CaseOverview from '../CaseOverview/CaseOverview';
 import MyCases from '../MyCases/MyCases';
+import DataHub from '../DataHub/DataHub';
 import { Route } from 'react-router-dom';
 import {
   makeStyles,
@@ -309,6 +310,10 @@ function RenderHomePage(props) {
             </Route>
 
             <Route exact path="/">
+              <DataHub caseData={caseData} />
+            </Route>
+
+            <Route exact path="/cases">
               <>
                 <CaseTable
                   caseData={caseData}
@@ -322,6 +327,7 @@ function RenderHomePage(props) {
                 <Loader promiseTracker={usePromiseTracker} />
               </>
             </Route>
+
             <Route exact path="/judges">
               <>
                 <JudgeTable
