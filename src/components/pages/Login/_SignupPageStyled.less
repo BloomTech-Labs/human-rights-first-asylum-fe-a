@@ -1,4 +1,5 @@
 @background-image: '../../../styles/statueOfLiberty.jpg';
+@button: #bd5a27;
 
 .root {
   width: 100%;
@@ -63,7 +64,7 @@
 
 button.buttonStyles {
   color: #ffffff;
-  background-color: #bd5a27;
+  background-color: @button;
   margin-top: 3%;
   display: flex;
   align-items: center;
@@ -72,8 +73,8 @@ button.buttonStyles {
   padding: 1.5rem;
   &:hover {
     background-color: #ffffff;
-    color: #bd5a27;
-    border: 1px solid #bd5a27;
+    color: @button;
+    border: 1px solid @button;
     border-radius: 1px;
   }
 }
