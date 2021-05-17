@@ -1,20 +1,9 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Menu, Button } from 'antd';
+import './_SideDrawer.less';
 
-import {
-  DotChartOutlined,
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-  PieChartOutlined,
-  FileDoneOutlined,
-  ToolOutlined,
-  FolderOpenOutlined,
-  HistoryOutlined,
-} from '@ant-design/icons';
-
-// example path to images
-import CaseIcon from '../../../styles/icons/case.svg';
+import { DoubleRightOutlined, DoubleLeftOutlined } from '@ant-design/icons';
 
 const { SubMenu } = Menu;
 
@@ -33,42 +22,58 @@ function SideDrawer() {
   };
 
   return (
-    <div style={{ width: 256 }}>
-      <Button
-        type="primary"
-        onClick={toggleCollapsed}
-        style={{ marginBottom: 16 }}
-      >
-        {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined)}
-      </Button>
-
+    <div style={{ width: 246 }}>
       <Menu
         defaultSelectedKeys={['none']}
-        defaultOpenKeys={['saved', 'admin-tools']}
         mode="inline"
-        theme="dark"
+        theme="light"
         inlineCollapsed={collapsed}
         onClick={handleRoute}
+        style={{ backgroundColor: '#F4F6F7', height: '100vh' }}
       >
-        <Menu.Item key="/" icon={<DotChartOutlined />}>
+        <Button
+          type="primary"
+          onClick={toggleCollapsed}
+          style={{
+            marginBottom: 16,
+            backgroundColor: '#f4f6f7',
+            marginLeft: 16,
+            color: '#2a5c8d',
+          }}
+        >
+          {React.createElement(
+            collapsed ? DoubleRightOutlined : DoubleLeftOutlined
+          )}
+        </Button>
+
+        <Menu.Item className="cases" key="/">
           Cases
         </Menu.Item>
-        <Menu.Item key="/judges" icon={<PieChartOutlined />}>
+
+        <Menu.Item className="judges" key="/judges">
           Judges
         </Menu.Item>
-        <Menu.Item key="/my-cases" icon={<FolderOpenOutlined />}>
+
+        <Menu.Item className="my-cases" key="/my-cases">
           My Cases
         </Menu.Item>
-        <SubMenu key="saved" icon={<HistoryOutlined />} title="Saved">
+
+        <SubMenu
+          key="saved"
+          className="saved-submenu"
+          title="Saved"
+          style={{ backgroundColor: '#F4F6F7' }}
+        >
           <Menu.Item key="/saved-cases">Saved Cases</Menu.Item>
           <Menu.Item key="/saved-judges">Saved Judges</Menu.Item>
         </SubMenu>
+
         {role === 'moderator' || role === 'admin' ? (
           <>
             <SubMenu
               key="admin-tools"
-              icon={<ToolOutlined />}
               title="Admin Tools"
+              className="admin-tools-submenu"
             >
               <Menu.Item key="/add-users">Add Users</Menu.Item>
               <Menu.Item key="/manage-users">Manage Users</Menu.Item>
@@ -78,7 +83,8 @@ function SideDrawer() {
                 Review Requested Users
               </Menu.Item>
             </SubMenu>
-            <Menu.Item key="/manage-cases" icon={<FileDoneOutlined />}>
+
+            <Menu.Item className="review-cases" key="/manage-cases">
               Review Cases
             </Menu.Item>
           </>
