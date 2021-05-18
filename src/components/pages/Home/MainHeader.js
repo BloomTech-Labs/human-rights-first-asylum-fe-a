@@ -2,7 +2,6 @@ import React from 'react';
 import HRFLogo from './HRFlogo.png';
 import './_MainHeader.less';
 import { Menu, Dropdown } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
 
 import Icon from '@ant-design/icons';
@@ -35,7 +34,7 @@ export default function MainHeader(props) {
   );
   return (
     <div className="site-page-header">
-      <img src={HRFLogo} alt="HRF Logo" />
+      <img src={HRFLogo} alt="HRF Logo" width="350px" />
       <Dropdown className="drop-down" overlay={menu}>
         <ul className="ant-dropdown-link" onClick={e => e.preventDefault()}>
           <div className="user-button">
