@@ -139,24 +139,6 @@ const UploadCase = ({ authState, getPendingCases }) => {
     }
   }, [nextPost]);
 
-  // Might need this later depending on design changes
-  // useEffect(() => {
-  //   if (formValueQueue && isEditing) {
-  //     let nextForm = formValueQueue[0];
-  //     let currentForm = formValues;
-  //     for (const values in nextForm) {
-  //       if (values in currentForm) {
-  //         if (nextForm[values] === null) {
-  //           currentForm[values] = '';
-  //         } else {
-  //           currentForm[values] = nextForm[values];
-  //         }
-  //       }
-  //     }
-  //     setFormValues(currentForm);
-  //   }
-  // }, [formValueQueue]);
-
   return (
     <div className="uploadPage">
       <div className="uploadButton">

@@ -101,9 +101,7 @@ export default function JudgeTable(props) {
   const postJudge = rowToPost => {
     axios
       .post(
-        `${process.env.REACT_APP_API_URI}/profiles/${
-          userInfo.sub
-        }/judge/${formatJudgeName(rowToPost.name)}`,
+        `${process.env.REACT_APP_API_URI}/profiles/${userInfo.sub}/judge/${rowToPost.judge_id}`,
         rowToPost,
         {
           headers: {
@@ -119,7 +117,7 @@ export default function JudgeTable(props) {
         console.log(wholeAddedRow);
         let reformattedJudge = {
           user_id: userInfo.sub,
-          judge: wholeAddedRow.name,
+          judge_id: wholeAddedRow.name,
         };
         setSavedJudges([...savedJudges, reformattedJudge]);
       })
