@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-// import Button from '@material-ui/core/Button';
-// import { makeStyles, withStyles } from '@material-ui/core/styles';
 // import UploadCaseForm from './UploadCaseForm';
-// import CircularProgress from '@material-ui/core/CircularProgress';
 import { notification, Upload, Modal, Button, Spin } from 'antd';
 import {
   CheckCircleOutlined,
@@ -17,54 +14,6 @@ import './_UploadCase.less';
 import Icon from '@ant-design/icons';
 import UploadCaseBox from '../../../styles/icons/upload-box.svg';
 import OrangeLine from '../../../styles/orange-line.svg';
-
-// const useStyles = makeStyles(theme => ({
-//   root: {
-//     '& .MuiTextField-root': {
-//       margin: theme.spacing(2),
-//       width: '30rem',
-//       textAlign: 'center',
-//     },
-//   },
-
-//   uploadPage: {
-//     display: 'flex',
-//     padding: '1%',
-//     margin: '0 auto',
-//     width: '100%',
-//     justifyContent: 'flex-end',
-//     marginLeft: '-4rem',
-//   },
-
-//   pdfUpload: {
-//     marginTop: '15%',
-//     display: 'flex',
-//     marginRight: '7.5%',
-//     width: '100%',
-//     justifyContent: 'center',
-//     flexDirection: 'column',
-//   },
-
-//   h1Styles: {
-//     fontSize: '2rem',
-//     marginBottom: '2.5rem',
-//   },
-
-//   h2Styles: {
-//     fontSize: '1.3rem',
-//     marginBottom: '2.5rem',
-//     width: '100%',
-//   },
-
-//   buttonStyles: {
-//     color: '#ffffff',
-//     backgroundColor: '#215589',
-//     marginTop: '3%',
-//     display: 'flex',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// }));
 
 // const initialFormValues = {
 //   date: '',
@@ -84,19 +33,9 @@ import OrangeLine from '../../../styles/orange-line.svg';
 //   credible: false,
 // };
 
-// This could be removed since it was more relevant with the older design
-// const HRFBlueLoader = withStyles(() => ({
-//   root: {
-//     '& .MuiCircularProgress-circle': {
-//       color: '#215589',
-//     },
-//   },
-// }))(CircularProgress);
-
 const UploadCase = ({ authState }) => {
   // const [formValues, setFormValues] = useState(initialFormValues);
   const [formValueQueue, setFormValueQueue] = useState([]);
-  // const classes = useStyles();
   const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const { Dragger } = Upload;
@@ -157,11 +96,13 @@ const UploadCase = ({ authState }) => {
       onFileChange(fileList);
     },
   };
+
   // Might need this later depending on design changes
   // const onInputChange = e => {
   //   const { name, value } = e.target;
   //   setFormValues({ ...formValues, [name]: value });
   // };
+
   useEffect(() => {
     if (!nextPost && postQueue.length !== 0) {
       console.log('test', postQueue, !nextPost);
@@ -198,6 +139,7 @@ const UploadCase = ({ authState }) => {
         });
     }
   }, [nextPost]);
+
   // Might need this later depending on design changes
   // useEffect(() => {
   //   if (formValueQueue && isEditing) {
@@ -219,21 +161,7 @@ const UploadCase = ({ authState }) => {
   return (
     <div className="uploadPage">
       <div className="uploadButton">
-        {/* This is a MUI button, we could get rid of this and just use AntD */}
-
         <Button className="upload-btn" onClick={showModal}>
-          {/* <svg
-            width="20"
-            height="20"
-            viewBox="0 0 22 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M11 3L19 12L13 12L13 24L9 24L9 12L3 12L11 3ZM2 4L2 2L20 2L20 4L22 4L22 0L-2.09815e-06 1.9233e-06L-1.74846e-06 4L2 4Z"
-              fill="white"
-            />
-          </svg> */}
           <span>Upload A Case</span>
         </Button>
         <Modal
