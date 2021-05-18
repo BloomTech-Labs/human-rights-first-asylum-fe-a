@@ -9,40 +9,19 @@ import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import { DataGrid, GridColumnsToolbarButton } from '@material-ui/data-grid';
 import { Button, Typography } from 'antd';
+import { ReloadOutlined } from '@ant-design/icons';
 import './MyCases.less';
 export default function MyCases(props) {
   const { Title } = Typography;
   const [tabValue, setTabValue] = useState(0);
-  const { user } = props;
+  const { user, myPendingCases, getPendingCases } = props;
   const [myApprovedCases, setMyApprovedCases] = useState([]);
-  const [myPendingCases, setMyPendingCases] = useState([]);
   const [selectedTab, setSelectedTab] = useState(true);
 
   useEffect(() => {
-    trackPromise(
-      axios.get(
-        `${process.env.REACT_APP_API_URI}/pendingCases/:${user.userInfo.sub}`,
-        {
-          headers: {
-            Authorization: 'Bearer ' + user.authState.idToken.idToken,
-          },
-        }
-      )
-    )
-      .then(res => {
-        setMyPendingCases(
-          res.data.map(eachCase => {
-            return {
-              ...eachCase,
-              id: eachCase.case_number,
-            };
-          })
-        );
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }, [user.authState.idToken.idToken]);
+    getPendingCases();
+    // eslint-disable-next-line
+  }, []);
   useEffect(() => {
     trackPromise(
       axios.get(
@@ -67,7 +46,8 @@ export default function MyCases(props) {
       .catch(err => {
         console.log(err);
       });
-  }, [user.authState.idToken.idToken]);
+    // eslint-disable-next-line
+  }, []);
   const pendingColumns = [
     {
       field: 'case_number',
@@ -87,7 +67,7 @@ export default function MyCases(props) {
       flex: 1,
     },
     {
-      field: 'pdf',
+      field: 'case_url',
       renderHeader: params => <strong>{'View PDF'}</strong>,
       headerName: 'PDF',
       headerAlign: 'center',
@@ -108,6 +88,9 @@ export default function MyCases(props) {
               />
             </svg>
           }
+          onClick={e => {
+            e.preventDefault();
+          }}
         ></Button>
       ),
     },
@@ -117,6 +100,8 @@ export default function MyCases(props) {
       headerName: 'Status',
       headerAlign: 'center',
       flex: 1,
+      // current there is a bug with status where having two cases with the same Case Number will change every status
+      // this will be fixed once we figure out what to do with Case Number
     },
     {
       field: 'pending_case_id',
@@ -234,6 +219,7 @@ export default function MyCases(props) {
           }
         </Title>
         <div className="buttonContainer">
+          <Button icon={<ReloadOutlined />} onClick={handleRefresh}></Button>
           <GridColumnsToolbarButton onClick={e => e.preventDefault()} />
           <svg
             width="20"
@@ -259,7 +245,9 @@ export default function MyCases(props) {
         },
       })
     )
-      .then(res => {})
+      .then(res => {
+        getPendingCases();
+      })
       .catch(err => {
         console.log(err);
       });
@@ -268,7 +256,9 @@ export default function MyCases(props) {
     setTabValue(newTabValue);
     setSelectedTab(!selectedTab);
   };
-
+  const handleRefresh = () => {
+    getPendingCases();
+  };
   function TabPanel(props) {
     const { children, value, index, ...other } = props;
 

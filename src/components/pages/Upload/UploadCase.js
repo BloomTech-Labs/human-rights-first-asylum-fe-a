@@ -33,7 +33,7 @@ import OrangeLine from '../../../styles/orange-line.svg';
 //   credible: false,
 // };
 
-const UploadCase = ({ authState }) => {
+const UploadCase = ({ authState, getPendingCases }) => {
   // const [formValues, setFormValues] = useState(initialFormValues);
   const [formValueQueue, setFormValueQueue] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -46,6 +46,7 @@ const UploadCase = ({ authState }) => {
   const spinner = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   const successNotification = () => {
+    getPendingCases();
     notification.open({
       message: 'Upload Status',
       description: 'Case uploaded successfully!',
@@ -105,11 +106,9 @@ const UploadCase = ({ authState }) => {
 
   useEffect(() => {
     if (!nextPost && postQueue.length !== 0) {
-      console.log('test', postQueue, !nextPost);
       const copy = postQueue;
       setNextPost(copy.shift());
       setPostQueue(copy);
-      console.log(postQueue, nextPost);
     }
   }, [postQueue]);
 
@@ -139,24 +138,6 @@ const UploadCase = ({ authState }) => {
         });
     }
   }, [nextPost]);
-
-  // Might need this later depending on design changes
-  // useEffect(() => {
-  //   if (formValueQueue && isEditing) {
-  //     let nextForm = formValueQueue[0];
-  //     let currentForm = formValues;
-  //     for (const values in nextForm) {
-  //       if (values in currentForm) {
-  //         if (nextForm[values] === null) {
-  //           currentForm[values] = '';
-  //         } else {
-  //           currentForm[values] = nextForm[values];
-  //         }
-  //       }
-  //     }
-  //     setFormValues(currentForm);
-  //   }
-  // }, [formValueQueue]);
 
   return (
     <div className="uploadPage">
