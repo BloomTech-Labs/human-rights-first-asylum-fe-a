@@ -1,98 +1,111 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Button from '@material-ui/core/Button';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
-import UploadCaseForm from './UploadCaseForm';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { notification, Upload, Modal } from 'antd';
-import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
-import { InboxOutlined } from '@ant-design/icons';
+// import Button from '@material-ui/core/Button';
+// import { makeStyles, withStyles } from '@material-ui/core/styles';
+// import UploadCaseForm from './UploadCaseForm';
+// import CircularProgress from '@material-ui/core/CircularProgress';
+import { notification, Upload, Modal, Button, Spin } from 'antd';
+import {
+  CheckCircleOutlined,
+  CloseCircleOutlined,
+  LoadingOutlined,
+} from '@ant-design/icons';
 import './CaseForm.css';
+import './_UploadCase.less';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    '& .MuiTextField-root': {
-      margin: theme.spacing(2),
-      width: '30rem',
-      textAlign: 'center',
-    },
-  },
+// Icons for modal
+import Icon from '@ant-design/icons';
+import UploadCaseBox from '../../../styles/icons/upload-box.svg';
+import OrangeLine from '../../../styles/orange-line.svg';
 
-  uploadPage: {
-    display: 'flex',
-    padding: '1%',
-    margin: '0 auto',
-    width: '100%',
-    justifyContent: 'flex-end',
-    marginLeft: '-4rem',
-  },
+// const useStyles = makeStyles(theme => ({
+//   root: {
+//     '& .MuiTextField-root': {
+//       margin: theme.spacing(2),
+//       width: '30rem',
+//       textAlign: 'center',
+//     },
+//   },
 
-  pdfUpload: {
-    marginTop: '15%',
-    display: 'flex',
-    marginRight: '7.5%',
-    width: '100%',
-    justifyContent: 'center',
-    flexDirection: 'column',
-  },
+//   uploadPage: {
+//     display: 'flex',
+//     padding: '1%',
+//     margin: '0 auto',
+//     width: '100%',
+//     justifyContent: 'flex-end',
+//     marginLeft: '-4rem',
+//   },
 
-  h1Styles: {
-    fontSize: '2rem',
-    marginBottom: '2.5rem',
-  },
+//   pdfUpload: {
+//     marginTop: '15%',
+//     display: 'flex',
+//     marginRight: '7.5%',
+//     width: '100%',
+//     justifyContent: 'center',
+//     flexDirection: 'column',
+//   },
 
-  h2Styles: {
-    fontSize: '1.3rem',
-    marginBottom: '2.5rem',
-    width: '100%',
-  },
+//   h1Styles: {
+//     fontSize: '2rem',
+//     marginBottom: '2.5rem',
+//   },
 
-  buttonStyles: {
-    color: '#ffffff',
-    backgroundColor: '#215589',
-    marginTop: '3%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-}));
+//   h2Styles: {
+//     fontSize: '1.3rem',
+//     marginBottom: '2.5rem',
+//     width: '100%',
+//   },
 
-const initialFormValues = {
-  date: '',
-  judge: '',
-  case_outcome: '',
-  country_of_origin: '',
-  protected_grounds: '',
-  application_type: '',
-  case_origin_city: '',
-  case_origin_state: '',
-  gender: '',
-  applicant_language: '',
-  indigenous_group: '',
-  type_of_violence: '',
-  initial_or_appellate: false,
-  filed_in_one_year: false,
-  credible: false,
-};
+//   buttonStyles: {
+//     color: '#ffffff',
+//     backgroundColor: '#215589',
+//     marginTop: '3%',
+//     display: 'flex',
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//   },
+// }));
 
-const HRFBlueLoader = withStyles(() => ({
-  root: {
-    '& .MuiCircularProgress-circle': {
-      color: '#215589',
-    },
-  },
-}))(CircularProgress);
+// const initialFormValues = {
+//   date: '',
+//   judge: '',
+//   case_outcome: '',
+//   country_of_origin: '',
+//   protected_grounds: '',
+//   application_type: '',
+//   case_origin_city: '',
+//   case_origin_state: '',
+//   gender: '',
+//   applicant_language: '',
+//   indigenous_group: '',
+//   type_of_violence: '',
+//   initial_or_appellate: false,
+//   filed_in_one_year: false,
+//   credible: false,
+// };
+
+// This could be removed since it was more relevant with the older design
+// const HRFBlueLoader = withStyles(() => ({
+//   root: {
+//     '& .MuiCircularProgress-circle': {
+//       color: '#215589',
+//     },
+//   },
+// }))(CircularProgress);
 
 const UploadCase = ({ authState }) => {
-  const [formValues, setFormValues] = useState(initialFormValues);
+  // const [formValues, setFormValues] = useState(initialFormValues);
   const [formValueQueue, setFormValueQueue] = useState([]);
-  const classes = useStyles();
+  // const classes = useStyles();
   const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const { Dragger } = Upload;
   const [postQueue, setPostQueue] = useState([]);
   const [nextPost, setNextPost] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const spinner = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+
   const successNotification = () => {
     notification.open({
       message: 'Upload Status',
@@ -158,6 +171,7 @@ const UploadCase = ({ authState }) => {
       console.log(postQueue, nextPost);
     }
   }, [postQueue]);
+
   useEffect(() => {
     if (nextPost) {
       axios
@@ -203,15 +217,12 @@ const UploadCase = ({ authState }) => {
   // }, [formValueQueue]);
 
   return (
-    <div className={classes.uploadPage}>
-      <div className={classes.uploadButton}>
-        <Button
-          className={classes.buttonStyles}
-          variant="outlined"
-          component="span"
-          onClick={showModal}
-        >
-          <svg
+    <div className="uploadPage">
+      <div className="uploadButton">
+        {/* This is a MUI button, we could get rid of this and just use AntD */}
+
+        <Button className="upload-btn" onClick={showModal}>
+          {/* <svg
             width="20"
             height="20"
             viewBox="0 0 22 24"
@@ -222,7 +233,7 @@ const UploadCase = ({ authState }) => {
               d="M11 3L19 12L13 12L13 24L9 24L9 12L3 12L11 3ZM2 4L2 2L20 2L20 4L22 4L22 0L-2.09815e-06 1.9233e-06L-1.74846e-06 4L2 4Z"
               fill="white"
             />
-          </svg>
+          </svg> */}
           <span>Upload A Case</span>
         </Button>
         <Modal
@@ -231,39 +242,59 @@ const UploadCase = ({ authState }) => {
           onOk={handleOk}
           onCancel={handleCancel}
           footer={[
-            <Button key="back" onClick={handleCancel}>
-              Not Now
-            </Button>,
-            <Button onClick={handleOk}>Review Cases</Button>,
+            <div className="footer-btn">
+              <Button className="not-now-btn" key="back" onClick={handleCancel}>
+                Not Now
+              </Button>
+              <Button className="review-btn" onClick={handleOk}>
+                Review Cases
+              </Button>
+            </div>,
           ]}
         >
-          <div className={classes.pdfUpload}>
-            <h1 className={classes.h1Styles}>Upload Cases</h1>
-            <h2 className={classes.h2Styles}>
-              Select a case PDF to upload. Once the case finishes uploading,
-              please make any necessary corrections before submitting.
-            </h2>
-            <form>
-              <div className="pdf-upload">
-                <Dragger {...DragProps}>
-                  <p className="ant-upload-drag-icon">
-                    <InboxOutlined />
-                  </p>
-                  <p className="ant-upload-text">
-                    Click here or drag files to this area to upload
-                  </p>
-                </Dragger>
-                <>
-                  {isLoading ? (
-                    <div className="spinner_container">
-                      <HRFBlueLoader />
-                    </div>
-                  ) : (
-                    <p />
-                  )}
-                </>
-              </div>
-            </form>
+          <div className="pdf-container">
+            <div>
+              <h1 className="h1Styles">Upload Cases</h1>
+              <p className="divider">
+                <Icon
+                  component={() => <img src={OrangeLine} alt="divider icon" />}
+                />
+              </p>
+            </div>
+            <div className="pdfUpload">
+              <h2 className="h2Styles">
+                Select the PDF case files that you wish to upload.
+              </h2>
+              <h2 className="h2Styles">
+                Once your files have finished uploading, please make any
+                necessary corrections to the fields before submitting.
+              </h2>
+              <form>
+                <div className="pdf-upload">
+                  <Dragger {...DragProps}>
+                    <p className="ant-upload-drag-icon">
+                      <Icon
+                        component={() => (
+                          <img src={UploadCaseBox} alt="uplaod case icon" />
+                        )}
+                      />
+                    </p>
+                    <p className="ant-upload-text">
+                      Click here or drag files to this area to upload
+                    </p>
+                  </Dragger>
+                  <>
+                    {isLoading ? (
+                      <div className="spinner_container">
+                        <Spin indicator={spinner} />
+                      </div>
+                    ) : (
+                      <p />
+                    )}
+                  </>
+                </div>
+              </form>
+            </div>
           </div>
           {
             // Might need this later depending on design changes
