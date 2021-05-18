@@ -224,7 +224,7 @@ const UploadCase = ({ authState, getPendingCases }) => {
               fill="white"
             />
           </svg>
-          <span>Upload A Case</span>
+          <span style={{ margin: '.2em' }}>Upload A Case</span>
         </Button>
         <Modal
           title=""
@@ -233,9 +233,8 @@ const UploadCase = ({ authState, getPendingCases }) => {
           onCancel={handleCancel}
           footer={[
             <Button key="back" onClick={handleCancel}>
-              Not Now
+              Cancel
             </Button>,
-            <Button onClick={handleOk}>Review Cases</Button>,
           ]}
         >
           <div className={classes.pdfUpload}>
