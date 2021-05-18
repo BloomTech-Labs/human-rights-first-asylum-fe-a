@@ -9,6 +9,7 @@ import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import { DataGrid, GridColumnsToolbarButton } from '@material-ui/data-grid';
 import { Button, Typography } from 'antd';
+import { ReloadOutlined } from '@ant-design/icons';
 import './MyCases.less';
 export default function MyCases(props) {
   const { Title } = Typography;
@@ -218,6 +219,7 @@ export default function MyCases(props) {
           }
         </Title>
         <div className="buttonContainer">
+          <Button icon={<ReloadOutlined />} onClick={handleRefresh}></Button>
           <GridColumnsToolbarButton onClick={e => e.preventDefault()} />
           <svg
             width="20"
@@ -254,7 +256,9 @@ export default function MyCases(props) {
     setTabValue(newTabValue);
     setSelectedTab(!selectedTab);
   };
-
+  const handleRefresh = () => {
+    getPendingCases();
+  };
   function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
