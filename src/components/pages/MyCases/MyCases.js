@@ -99,12 +99,8 @@ export default function MyCases(props) {
       headerName: 'Status',
       headerAlign: 'center',
       flex: 1,
-      renderCell: params => (
-        <div>
-          {console.log(params)}
-          <span>{params.row.status}</span>
-        </div>
-      ),
+      // current there is a bug with status where having two cases with the same Case Number will change every status
+      // this will be fixed once we figure out what to do with Case Number
     },
     {
       field: 'pending_case_id',
@@ -301,7 +297,6 @@ export default function MyCases(props) {
     <div className="myCaseTableContainer">
       <TabPanel className={classes.tabPanel} value={tabValue} index={0}>
         <div className="myCaseTableGridContainer">
-          {console.log('test')}
           <DataGrid
             rows={myPendingCases}
             columns={pendingColumns}

@@ -152,11 +152,9 @@ const UploadCase = ({ authState, getPendingCases }) => {
   // };
   useEffect(() => {
     if (!nextPost && postQueue.length !== 0) {
-      console.log('test', postQueue, !nextPost);
       const copy = postQueue;
       setNextPost(copy.shift());
       setPostQueue(copy);
-      console.log(postQueue, nextPost);
     }
   }, [postQueue]);
   useEffect(() => {
