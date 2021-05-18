@@ -153,9 +153,9 @@ export default function JudgeTable(props) {
         }
       }
     } else {
-      alert('Please selected judge(s) to be saved');
+      alert('Please select judge(s) to be saved');
     }
-    alert('Judges Successfully Saved');
+    alert('Judge(s) Successfully Saved');
   };
 
   const Toolbar = () => {
