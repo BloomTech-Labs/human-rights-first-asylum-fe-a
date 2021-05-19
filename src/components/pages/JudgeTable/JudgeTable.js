@@ -15,7 +15,7 @@ export default function JudgeTable(props) {
 
   const columns = [
     {
-      field: 'name',
+      field: 'first_name',
       renderHeader: params => <strong>{'Judge'}</strong>,
       width: 170,
       headerName: 'Name',
