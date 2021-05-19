@@ -68,7 +68,6 @@ export default function JudgePage(props) {
           },
         })
         .then(res => {
-          console.log(res.data);
           setJudge(res.data);
         })
         .catch(err => {

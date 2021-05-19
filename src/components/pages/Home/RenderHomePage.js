@@ -87,11 +87,7 @@ function RenderHomePage(props) {
   const [myPendingCases, setMyPendingCases] = useState([]);
   const user = useContext(UserContext);
 
-  // should move these API calls into a separate index folder at some point
-
   useEffect(() => {
-    // trackPromise(
-    // Tracks the axios call and implements spinning loader while executing
     axios
       .get(`${process.env.REACT_APP_API_URI}/cases`, {
         headers: {
@@ -146,7 +142,7 @@ function RenderHomePage(props) {
         window.localStorage.setItem('role', res.data.role);
         setHrfUserInfo(res.data);
         // setSavedCases(res.data.case_bookmarks);
-        // setSavedJudges(res.data.judge_bookmarks);
+        setSavedJudges(res.data.judge_bookmarks);
       })
       .catch(err => {
         console.log(err);
@@ -154,9 +150,10 @@ function RenderHomePage(props) {
   }, [
     user.authState.idToken.idToken,
     user.userInfo.sub,
+    savedJudges.length,
     // savedCases.length,
-    // savedJudges.length,
   ]);
+
   const getPendingCases = () => {
     trackPromise(
       axios.get(
@@ -207,22 +204,10 @@ function RenderHomePage(props) {
       });
   };
 
-  const deleteFromStateByName = (name, state, setState) => {
-    let index = state.findIndex(item => item.judge === name);
-    return setState(state.slice(0, index).concat(state.slice(index + 1)));
-  };
-
-  const formatJudgeName = name => {
-    // Used in order to format the judge so it can be used in the API call
-    return name.split(' ').join('%20');
-  };
-
-  const deleteSavedJudge = name => {
+  const deleteSavedJudge = judge_id => {
     axios
       .delete(
-        `${process.env.REACT_APP_API_URI}/profile/${
-          user.userInfo.sub
-        }/judge/${formatJudgeName(name)}`,
+        `${process.env.REACT_APP_API_URI}/profile/${user.userInfo.sub}/judge/${judge_id}`,
         {
           headers: {
             Authorization: 'Bearer ' + user.authState.idToken.idToken,
@@ -230,7 +215,7 @@ function RenderHomePage(props) {
         }
       )
       .then(res => {
-        deleteFromStateByName(name, savedJudges, setSavedJudges);
+        setSavedJudges(res.data.judge_bookmarks);
       })
       .catch(err => {
         console.log(err);
