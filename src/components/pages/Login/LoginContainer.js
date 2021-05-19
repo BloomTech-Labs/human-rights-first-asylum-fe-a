@@ -62,9 +62,12 @@ const LoginContainer = () => {
         </div>
         <div className="login-page">
           <div id="sign-in-widget" aria-label="login form" />
-          <Link className="link-styles" to="/signup">
-            <p>Don't have an account? Register here</p>
-          </Link>
+          <p className="register">
+            Don't have an account?{' '}
+            <Link className="link-styles" to="/signup">
+              <span>Register here</span>
+            </Link>
+          </p>
         </div>
       </div>
     </div>
