@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import { DataGrid } from '@material-ui/data-grid';
@@ -18,16 +18,16 @@ function SavedJudges({ savedJudges, deleteSavedJudge }) {
       options: {
         filter: true,
       },
-      //Link to individual judge page
       renderCell: params => (
         <>
-          <Link
+          {/* <Link
             to={`/judge/${params.value.split(' ').join('%20')}`}
             className="savedJudgeLink"
-          >
-            <span>{params.value}</span>
-          </Link>
+          > */}
+          <span>{params.value}</span>
+          {/* </Link> */}
         </>
+        // ^^produces error after judge is deleted - bug
       ),
     },
     {
@@ -61,8 +61,6 @@ function SavedJudges({ savedJudges, deleteSavedJudge }) {
       width: 140,
     },
     // this field "remove_judge" does not exist in the migration data
-    // it is an idea to delete a saved case from this table using "deleteSavedJudge()"
-    // "deleteSavedJudge()" is from the RenderHomePage.js component
     {
       field: 'remove_judge',
       renderHeader: params => <strong>{'Remove'}</strong>,
@@ -73,7 +71,7 @@ function SavedJudges({ savedJudges, deleteSavedJudge }) {
           <FeatherIcon
             icon="delete"
             onClick={() => {
-              deleteSavedJudge(params.row.name);
+              deleteSavedJudge(params.row.judge_id);
             }}
           />
         </Button>
@@ -84,7 +82,6 @@ function SavedJudges({ savedJudges, deleteSavedJudge }) {
   savedJudges.forEach((item, idx) => {
     item.id = idx;
   }); // this is VERY hacky, but the table doesn't take data without ids
-  console.log(savedJudges);
 
   const Toolbar = () => {
     const { Title } = Typography;
@@ -177,7 +174,7 @@ function SavedJudges({ savedJudges, deleteSavedJudge }) {
 
   return (
     <div className="savedJudgeContainer">
-      {savedJudges ? (
+      {savedJudges.length == 0 ? (
         <div className="savedJudgeCard">
           <h1>No Saved Judges</h1>
           <br />
@@ -186,7 +183,6 @@ function SavedJudges({ savedJudges, deleteSavedJudge }) {
           </Link>
         </div>
       ) : (
-        // This is so the top part only displays when there are no cases, but also displays the empty table below
         <></>
       )}
       <Drawer
