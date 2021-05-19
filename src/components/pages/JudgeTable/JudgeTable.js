@@ -92,12 +92,6 @@ export default function JudgeTable(props) {
     return 'Row does not exist NAME';
   };
 
-  const formatJudgeName = name => {
-    if (name !== undefined || name != null) {
-      return name.split(' ').join('%20');
-    }
-  };
-
   const postJudge = rowToPost => {
     axios
       .post(
@@ -111,15 +105,7 @@ export default function JudgeTable(props) {
       )
 
       .then(res => {
-        let justAdded = res.data.judge_bookmarks.slice(-1);
-        let justAddedName = justAdded[0].name;
-        let wholeAddedRow = findRowByJudgeName(justAddedName, judgeData);
-        console.log(wholeAddedRow);
-        let reformattedJudge = {
-          user_id: userInfo.sub,
-          judge_id: wholeAddedRow.name,
-        };
-        setSavedJudges([...savedJudges, reformattedJudge]);
+        setSavedJudges(res.data.judge_bookmarks);
       })
       .catch(err => {
         console.log(err);
@@ -127,16 +113,14 @@ export default function JudgeTable(props) {
   };
 
   const bookmarkJudges = targetRows => {
-    // loop through currently selected cases and do post requests
-    // need to reference rows by id, as that is all that selection stores
-    // need to account for duplicates as well
     let bookmarks = [];
-    if (targetRows.length > 0) {
+    if (targetRows.length === 0) {
+      alert('Please select judge(s) to be saved');
+    } else {
       for (let i = 0; i < targetRows.length; i++) {
         bookmarks.push(findRowByID(targetRows[i], judgeData));
       }
 
-      // savedNames might be redundant. just loop through savedJudges - check functionality once POST works
       let savedNames = [];
       for (let i = 0; i < savedJudges.length; i++) {
         savedNames.push(savedJudges[i].name);
@@ -150,10 +134,8 @@ export default function JudgeTable(props) {
           postJudge(bookmarks[i]);
         }
       }
-    } else {
-      alert('Please select judge(s) to be saved');
+      alert('Judge(s) Successfully Saved');
     }
-    alert('Judge(s) Successfully Saved');
   };
 
   const Toolbar = () => {
