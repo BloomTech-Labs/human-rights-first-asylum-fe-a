@@ -675,7 +675,6 @@ export default function CaseTable(props) {
             disableColumnMenu={true}
             components={{ Toolbar: CustomToolbar }}
             onSelectionModelChange={newSelection => {
-              console.log(newSelection);
               setSelection(newSelection.selectionModel);
             }}
             selectedRows={selection}
