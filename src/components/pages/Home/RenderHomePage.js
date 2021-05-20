@@ -141,7 +141,7 @@ function RenderHomePage(props) {
       .then(res => {
         window.localStorage.setItem('role', res.data.role);
         setHrfUserInfo(res.data);
-        // setSavedCases(res.data.case_bookmarks);
+        setSavedCases(res.data.case_bookmarks);
         setSavedJudges(res.data.judge_bookmarks);
       })
       .catch(err => {

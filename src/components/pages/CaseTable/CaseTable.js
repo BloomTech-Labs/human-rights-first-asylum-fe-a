@@ -5,7 +5,6 @@ import Plot from 'react-plotly.js';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import AppBar from '@material-ui/core/AppBar';
-// import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -49,6 +48,7 @@ export default function CaseTable(props) {
 
   // State for PDF Modal
   const [showPdf, setShowPdf] = useState(false);
+  const [selection, setSelection] = useState([]);
 
   const pdfData = () => {
     axios
@@ -219,11 +219,11 @@ export default function CaseTable(props) {
     },
   ];
 
-  // the need for idParamName arose from case_id and id being used in different scenarios
   const findRowByID = (rowID, rowData) => {
+    console.log('inside findRowByID', rowID, rowData);
     for (let i = 0; i < rowData.length; i++) {
       let currentRow = rowData[i];
-      if (currentRow.case_number === rowID) {
+      if (rowData[i].case_number === rowID) {
         return currentRow;
       }
     }
@@ -231,9 +231,10 @@ export default function CaseTable(props) {
   };
 
   const postBookmark = rowToPost => {
+    console.log('in postBookmark', rowToPost); // in postBookmark
     axios
       .post(
-        `${process.env.REACT_APP_API_URI}/profile/${userInfo.sub}/case/${rowToPost.case_number}`,
+        `${process.env.REACT_APP_API_URI}/profile/${userInfo.sub}/case/${rowToPost}`,
         rowToPost,
         {
           headers: {
@@ -242,10 +243,8 @@ export default function CaseTable(props) {
         }
       )
       .then(res => {
-        let justAdded = res.data.case_bookmarks.slice(-1); // response comes back as array of all existing bookmarks
-        let justAddedID = justAdded[0].case_number;
-        let wholeAddedRow = findRowByID(justAddedID, caseData);
-        setSavedCases([...savedCases, wholeAddedRow]);
+        console.log(res.data);
+        setSavedCases(res.data.case_bookmarks);
       })
       .catch(err => {
         console.log(err);
@@ -253,34 +252,29 @@ export default function CaseTable(props) {
   };
 
   const bookmarkCases = targetRows => {
-    // loop through currently selected cases and do post requests
-    // need to reference rows by id, as that is all that selection stores
-    // need to account for duplicates as well
+    console.log('inside bookmarkCases', targetRows); // inside bookmarkCses
     let bookmarks = [];
-    if (targetRows) {
+    if (targetRows.length === 0) {
+      alert('Please select cases(s) to be saved');
+    } else {
       for (let i = 0; i < targetRows.length; i++) {
         bookmarks.push(findRowByID(targetRows[i], caseData));
       }
       let savedIds = [];
       for (let i = 0; i < savedCases.length; i++) {
-        savedIds.push(savedCases[i].case_number);
+        savedIds.push(savedCases[i].case_id);
       }
 
       for (let i = 0; i < bookmarks.length; i++) {
-        if (savedIds.includes(bookmarks[i].case_number)) {
+        if (savedIds.includes(bookmarks[i].case_id)) {
           console.log('Case already saved to bookmarks');
           continue;
         } else {
-          postBookmark(bookmarks[i]);
+          postBookmark(bookmarks[i].case_id);
         }
       }
+      alert('Cases Successfully Saved');
     }
-    alert('Cases Successfully Saved');
-  };
-
-  // eslint-disable-next-line no-unused-vars
-  const onCheckboxSelect = selections => {
-    setSelectedRows(selections);
   };
 
   const [queryValues, setQueryValues] = useState({
@@ -454,7 +448,7 @@ export default function CaseTable(props) {
 
           <Button
             onClick={() => {
-              bookmarkCases(selectedRows);
+              bookmarkCases(selection);
             }}
           >
             <FeatherIcon icon="bookmark" />
@@ -497,30 +491,6 @@ export default function CaseTable(props) {
     });
 
     return (
-      // <Plot
-      //   data={[
-      //     {
-      //       type: 'pie',
-      //       values: [granted, denied, remanded, sustained, terminated],
-      //       labels: [
-      //         'Granted',
-      //         'Denied',
-      //         'Remanded',
-      //         'Sustained',
-      //         'Terminated',
-      //       ],
-      //       textinfo: 'label+percent',
-      //       textposition: 'outside',
-      //       automargin: true,
-      //     },
-      //   ]}
-      //   layout={{
-      //     height: 300,
-      //     width: 300,
-      //     showlegend: false,
-      //     title: 'Decision Rate',
-      //   }}
-      // />
       <Plot
         data={[
           {
@@ -680,6 +650,9 @@ export default function CaseTable(props) {
             pageSize={25}
             disableColumnMenu={true}
             components={{ Toolbar: CustomToolbar }}
+            onSelectionModelChange={newSelection => {
+              setSelection(newSelection.selectionModel);
+            }}
           />
         </div>
       </TabPanel>
@@ -699,6 +672,10 @@ export default function CaseTable(props) {
             pageSize={25}
             disableColumnMenu={true}
             components={{ Toolbar: CustomToolbar }}
+            onSelectionModelChange={newSelection => {
+              setSelection(newSelection.selectionModel);
+            }}
+            selectedRows={selection}
           />
         </div>
       </TabPanel>

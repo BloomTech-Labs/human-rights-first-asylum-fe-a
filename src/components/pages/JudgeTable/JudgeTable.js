@@ -75,21 +75,11 @@ export default function JudgeTable(props) {
     for (let i = 0; i < rowData.length; i++) {
       let currentRow = rowData[i];
       let adjustedRowID = parseInt(rowID) + 1;
-      if (currentRow.judge_id === adjustedRowID.toString()) {
+      if (currentRow.judge_id === adjustedRowID) {
         return currentRow;
       }
     }
     return 'This judge could not be identified';
-  };
-
-  const findRowByJudgeName = (judgeName, rowData) => {
-    for (let i = 0; i < rowData.length; i++) {
-      let currentRow = rowData[i];
-      if (currentRow.name === judgeName) {
-        return currentRow;
-      }
-    }
-    return 'Row does not exist NAME';
   };
 
   const postJudge = rowToPost => {
