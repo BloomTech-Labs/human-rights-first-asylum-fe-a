@@ -1,0 +1,54 @@
+@gray: #cacccf;
+@blue: #2a5c8d;
+@light-blue: #a0c5dd;
+@white: #ffffff;
+
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.faq-header {
+  font-size: 1.8rem;
+}
+
+.buttons {
+  display: flex;
+  margin-top: 1rem;
+}
+
+.btn-style {
+  color: @white !important;
+  background-color: @blue;
+  &:visited {
+    background: @blue;
+    color: @white;
+  }
+  &:focus {
+    background: @blue;
+    color: @white;
+  }
+  &:active {
+    background: @blue;
+    color: @white;
+  }
+  &:hover {
+    background: @light-blue;
+    color: @white;
+  }
+}
+
+.q-header {
+  font-size: 1rem;
+}
+
+.answer {
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.ant-collapse-header {
+  font-size: 1.2rem;
+}

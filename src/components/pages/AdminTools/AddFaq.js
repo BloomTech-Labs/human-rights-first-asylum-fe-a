@@ -73,7 +73,7 @@ const AddFaq = props => {
           onCancel={handleCancel}
           footer={[
             <div className="submit-button">
-              <Button onClick={onSubmit} className="btn-style">
+              <Button onClick={onSubmit} className="add-faq-btn">
                 <span>Submit</span>
               </Button>
             </div>,

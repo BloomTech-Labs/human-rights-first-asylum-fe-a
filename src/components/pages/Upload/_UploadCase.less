@@ -28,9 +28,9 @@
   width: 100%;
 }
 
-button.upload-btn {
-  color: @white;
-  background-color: #215589 !important;
+.upload-btn {
+  color: @white !important;
+  background-color: @blue;
   margin-top: 3%;
   display: flex;
   align-items: center;
@@ -38,6 +38,11 @@ button.upload-btn {
   padding: 1.3rem;
   &:hover {
     color: @light-blue;
+    background-color: @gray;
+  }
+  &:focus {
+    color: @white;
+    background-color: @blue;
   }
 }
 
