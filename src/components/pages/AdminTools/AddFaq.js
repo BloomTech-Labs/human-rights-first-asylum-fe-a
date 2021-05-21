@@ -1,54 +1,14 @@
 import React, { useState } from 'react';
-// import { makeStyles } from '@material-ui/core/styles';
-// import TextField from '@material-ui/core/TextField';
-// import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { Form, Input, Button, Modal } from 'antd';
 
 import './_FaqStyles.less';
-import { set } from 'date-fns';
 
 import Icon from '@ant-design/icons';
 import OrangeLine from '../../../styles/orange-line.svg';
 
 const { TextArea } = Input;
-// const useStyles = makeStyles(theme => ({
-//   root: {
-//     marginTop: '7%',
-//     width: '100%',
-//     display: 'flex',
-//     justifyContent: 'space-around',
-//   },
-//   form: {
-//     width: '50%',
-//   },
-//   h1Styles: {
-//     fontSize: '2rem',
-//     marginBottom: '2.5rem',
-//   },
-//   h2Styles: {
-//     fontSize: '1.3rem',
-//     marginBottom: '2.5rem',
-//     width: '100%',
-//   },
-//   textField: {
-//     width: '100%',
-//     margin: '1% auto',
-//   },
-//   buttonStyles: {
-//     color: '#ffffff',
-//     backgroundColor: '#215589',
-//     marginTop: '3%',
-//     display: 'flex',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-//   radio: {
-//     margin: '8%',
-//     fontSize: '1.5rem',
-//   },
-// }));
 
 const initialFormValues = {
   question: '',
@@ -60,7 +20,6 @@ const AddFaq = props => {
   const { authState } = props;
   const history = useHistory();
 
-  // My added code for modal
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const showModal = () => {
