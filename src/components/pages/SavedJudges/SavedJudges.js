@@ -81,7 +81,7 @@ function SavedJudges({ savedJudges, deleteSavedJudge }) {
 
   savedJudges.forEach((item, idx) => {
     item.id = idx;
-  }); // this is VERY hacky, but the table doesn't take data without ids
+  });
 
   const Toolbar = () => {
     const { Title } = Typography;
