@@ -34,16 +34,7 @@ function SideDrawer() {
         onClick={handleRoute}
         style={{ backgroundColor: '#F4F6F7', height: '100vh' }}
       >
-        <Button
-          onClick={toggleCollapsed}
-          type="primary"
-          style={{
-            marginBottom: 16,
-            backgroundColor: '#f4f6f7',
-            marginLeft: 16,
-            color: '#2a5c8d',
-          }}
-        >
+        <Button type="primary" onClick={toggleCollapsed}>
           {React.createElement(
             collapsed ? DoubleRightOutlined : DoubleLeftOutlined
           )}
