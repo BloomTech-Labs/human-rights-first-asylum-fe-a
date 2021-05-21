@@ -14,15 +14,16 @@
 @home-blue: '../../../styles/icons/home-blue.svg';
 
 @selected-color: #2a5c8d;
-@gray: #cacccf;
+@gray: #939292;
+@light-gray: #cacccf;
 @light-blue: #a0c5dd;
+@white: #ffffff;
 
 .ant-menu
   .ant-menu-light
   .ant-menu-inline-collapsed
   .ant-menu--root
   .ant-menu-vertical {
-  background-color: #f4f6f7;
   min-height: 100vh !important;
 }
 
@@ -30,7 +31,7 @@
   background: url(@save-icon) no-repeat left 26px top 10px !important;
   &:hover {
     background: url(@save-blue) no-repeat left 26px top 10px !important;
-    background-color: white !important;
+    background-color: @white !important;
   }
 }
 
@@ -38,7 +39,7 @@
   background: url(@tool-icon) no-repeat left 20px top 10px !important;
   &:hover {
     background: url(@tool-blue) no-repeat left 20px top 10px !important;
-    background-color: white !important;
+    background-color: @white !important;
   }
 }
 
@@ -47,7 +48,7 @@
   padding-left: 3.5rem !important;
   &:hover {
     background: url(@home-blue) no-repeat left 20px center !important;
-    background-color: white !important;
+    background-color: @white !important;
   }
 }
 
@@ -56,7 +57,7 @@
   padding-left: 3.5rem !important;
   &:hover {
     background: url(@case-blue) no-repeat left 20px center !important;
-    background-color: white !important;
+    background-color: @white !important;
   }
 }
 
@@ -65,7 +66,7 @@
   padding-left: 3.5rem !important;
   &:hover {
     background: url(@judge-blue) no-repeat left 20px center !important;
-    background-color: white !important;
+    background-color: @white !important;
   }
 }
 
@@ -74,16 +75,7 @@
   padding-left: 3.5rem !important;
   &:hover {
     background: url(@my-cases-blue) no-repeat left 20px center !important;
-    background-color: white !important;
-  }
-}
-
-.review-cases {
-  background: url(@review-cases-icon) no-repeat left 20px center !important;
-  padding-left: 3.5rem !important;
-  &:hover {
-    background: url(@review-cases-blue) no-repeat left 20px center !important;
-    background-color: white !important;
+    background-color: @white !important;
   }
 }
 
@@ -99,7 +91,7 @@
   color: @gray;
   &:hover {
     color: @light-blue;
-    background-color: white;
+    background-color: @white;
   }
 }
 
@@ -108,7 +100,10 @@
   &:hover {
     color: @light-blue;
   }
-  // margin-left: 2rem;
+  &:active {
+    color: @light-blue;
+    background-color: @selected-color;
+  }
   margin-right: 0;
   padding-left: 3.5rem !important;
 }
@@ -122,7 +117,6 @@
 
 li {
   padding-right: 0 !important;
-  // padding-left: 0 !important;
   .ant-menu-inline-collapsed-noicon {
     display: none;
   }
@@ -131,18 +125,16 @@ li {
   }
 }
 
-// l.drop-down-item {
-//   padding-right: 0 !important;
-// }
-
 .ant-menu-item-selected {
-  color: @gray;
+  color: @white;
   background-color: @selected-color !important;
 }
 
 .ant-menu-submenu-selected {
-  color: @gray;
   background-color: @selected-color !important;
+}
+.ant-menu-submenu-title-selected {
+  color: @white !important;
 }
 
 .ant-menu-inline .ant-menu-item::after {
@@ -153,6 +145,19 @@ li {
   border-right: none;
 }
 
-// .ant-menu-inline .ant-menu-submenu-title {
-//   padding-right: 10px !important;
-// }
+.ant-menu-submenu-arrow {
+  color: @light-gray;
+  &:active {
+    color: @light-blue;
+  }
+  &:hover {
+    color: @light-blue;
+  }
+}
+
+.ant-btn {
+  margin-bottom: 1rem;
+  background-color: #f4f6f7;
+  margin-left: 1rem;
+  color: #2a5c8d;
+}
