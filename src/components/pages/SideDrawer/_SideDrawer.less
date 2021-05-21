@@ -112,6 +112,11 @@
   color: @selected-color;
   &:hover {
     color: @light-blue;
+    background: none;
+  }
+  &:focus {
+    background: none;
+    color: @selected-color;
   }
 }
 
@@ -160,4 +165,10 @@ li {
   background-color: #f4f6f7;
   margin-left: 1rem;
   color: #2a5c8d;
+  &:active {
+    background-color: #f4f6f7;
+  }
+  &:hover {
+    background-color: #f4f6f7;
+  }
 }
