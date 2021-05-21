@@ -321,7 +321,7 @@ function RenderHomePage(props) {
             <Route exact path="/manage-faq">
               <ManageFaqPage authState={user.authState} />
             </Route>
-            <Route exact path="/edit-faq/:id">
+            <Route exact path="/edit-faq/:faq_id">
               <EditFaqPage authState={user.authState} />
             </Route>
 

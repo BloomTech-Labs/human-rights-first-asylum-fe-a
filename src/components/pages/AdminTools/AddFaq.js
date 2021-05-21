@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -49,6 +50,7 @@ const initialFormValues = {
 const AddFaq = props => {
   const [formValues, setFormValues] = useState(initialFormValues);
   const { authState } = props;
+  const history = useHistory();
 
   const classes = useStyles();
 
@@ -75,6 +77,7 @@ const AddFaq = props => {
       answer: formValues.answer.trim(),
     };
     postNewQuestion(question);
+    history.push('/manage-faq');
   };
 
   return (

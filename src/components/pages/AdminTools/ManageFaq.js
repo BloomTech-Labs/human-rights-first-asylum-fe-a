@@ -56,14 +56,14 @@ const ManageFaqPage = props => {
 
   const deleteFaq = faq => {
     axios
-      .delete(`${process.env.REACT_APP_API_URI}/faq/${faq.id}`, {
+      .delete(`${process.env.REACT_APP_API_URI}/faq/${faq.faq_id}`, {
         headers: {
           Authorization: 'Bearer ' + authState.idToken.idToken,
         },
       })
       .then(res => {
-        alert(`${faq.question}'s FAQ was deleted`);
-        console.log(res.data);
+        alert(`'Deleted Question: ${faq.question}'`);
+        window.location.reload();
       })
       .catch(err => {
         console.log(err);
@@ -82,7 +82,7 @@ const ManageFaqPage = props => {
               <Panel header={`Q: ${item.question}`}>
                 A: {item.answer}
                 <div className={classes.buttons}>
-                  <Link to={`edit-faq/${item.id}`}>
+                  <Link to={`edit-faq/${item.faq_id}`}>
                     <Button className={classes.buttonStyles}>Edit</Button>
                   </Link>
                   <Button

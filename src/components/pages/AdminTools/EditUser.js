@@ -120,7 +120,7 @@ const EditUserPage = props => {
               variant="outlined"
               onChange={onChange}
               className={classes.textField}
-              value={formValues.firstName}
+              value={formValues.first_name || ''}
             />
           </label>
           <label htmlFor="lastName">
@@ -130,9 +130,10 @@ const EditUserPage = props => {
               type="text"
               name="lastName"
               variant="outlined"
+              placeholder="Last Name"
               onChange={onChange}
               className={classes.textField}
-              value={formValues.lastName}
+              value={formValues.last_name || ''}
             />
           </label>
           <label htmlFor="email">
