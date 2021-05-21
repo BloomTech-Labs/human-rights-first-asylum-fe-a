@@ -18,7 +18,7 @@ const AccountPage = props => {
         </p>
         <p>
           <strong>Name:</strong>{' '}
-          {`${hrfUserInfo.firstName} ${hrfUserInfo.lastName}`}
+          {`${hrfUserInfo.first_name} ${hrfUserInfo.last_name}`}
         </p>
         <p>
           <strong>Date joined:</strong>{' '}
@@ -30,7 +30,7 @@ const AccountPage = props => {
         <p>
           <strong>Role:</strong> {hrfUserInfo.role}
         </p>
-        <Link to={`edit-user/${hrfUserInfo.id}`}>
+        <Link to={`edit-user/${hrfUserInfo.user_id}`}>
           <Button className="buttonStyles">Edit</Button>
         </Link>
       </Card>
