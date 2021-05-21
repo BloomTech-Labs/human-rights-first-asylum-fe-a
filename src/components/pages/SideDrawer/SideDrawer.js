@@ -17,8 +17,11 @@ function SideDrawer() {
   };
 
   const history = useHistory();
+
   const handleRoute = ({ key }) => {
-    history.push(`${key}`);
+    if (key) {
+      history.push(`${key}`);
+    }
   };
 
   return (
@@ -31,7 +34,16 @@ function SideDrawer() {
         onClick={handleRoute}
         style={{ backgroundColor: '#F4F6F7', height: '100vh' }}
       >
-        <Button type="primary" onClick={toggleCollapsed}>
+        <Button
+          onClick={toggleCollapsed}
+          type="primary"
+          style={{
+            marginBottom: 16,
+            backgroundColor: '#f4f6f7',
+            marginLeft: 16,
+            color: '#2a5c8d',
+          }}
+        >
           {React.createElement(
             collapsed ? DoubleRightOutlined : DoubleLeftOutlined
           )}
