@@ -74,10 +74,11 @@ export default function JudgeTable(props) {
   const findRowByID = (rowID, rowData) => {
     for (let i = 0; i < rowData.length; i++) {
       let currentRow = rowData[i];
-      let adjustedRowID = parseInt(rowID) + 1;
-      if (currentRow.judge_id === adjustedRowID.toString()) {
-        return currentRow;
-      }
+      // let adjustedRowID = parseInt(rowID) + 1;
+      // if (currentRow.judge_id === adjustedRowID) {
+      //   return currentRow;
+      // }
+      return currentRow;
     }
     return 'This judge could not be identified';
   };
@@ -123,11 +124,11 @@ export default function JudgeTable(props) {
 
       let savedNames = [];
       for (let i = 0; i < savedJudges.length; i++) {
-        savedNames.push(savedJudges[i].name);
+        savedNames.push(savedJudges[i].first_name);
       }
 
       for (let i = 0; i < bookmarks.length; i++) {
-        if (savedNames.includes(bookmarks[i].name)) {
+        if (savedNames.includes(bookmarks[i].first_name)) {
           console.log('Judge already saved to bookmarks');
           continue;
         } else {
