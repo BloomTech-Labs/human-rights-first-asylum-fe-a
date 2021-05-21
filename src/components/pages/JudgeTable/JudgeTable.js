@@ -26,10 +26,7 @@ export default function JudgeTable(props) {
 
       renderCell: params => (
         <>
-          <Link
-            to={`/judge/${params.value.split(' ').join('%20')}`}
-            className="judgeTableLink"
-          >
+          <Link to={`/judge/${params.row.judge_id}`} className="judgeTableLink">
             <span>{params.value}</span>
           </Link>
         </>

@@ -267,7 +267,7 @@ function RenderHomePage(props) {
                 deleteSavedJudge={deleteSavedJudge}
               />
             </Route>
-            <Route exact path="/judge/:name">
+            <Route exact path="/judge/:judge_id">
               <JudgePage
                 // clicking on a Judge should bring you to a url with their name in it
                 // get request to get details of that judge

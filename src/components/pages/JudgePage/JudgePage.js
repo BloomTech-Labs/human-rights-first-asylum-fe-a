@@ -14,7 +14,25 @@ import FeatherIcon from 'feather-icons-react';
 export default function JudgePage(props) {
   const { authState } = props;
   const [judge, setJudge] = useState();
-  const { name } = useParams();
+  const [vizData, setVizData] = useState({});
+  const { judge_id } = useParams();
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/judges/${judge_id}/cases`, {
+        headers: {
+          Authorization: 'Bearer ' + authState.idToken.idToken,
+        },
+      })
+      .then(res => {
+        console.log(res.data.judge_cases);
+        setVizData(res.data.judge_cases);
+      });
+  }, [judge_id, authState.idToken]);
+
+  const TestDataChart = () => {
+    return <Plot data={vizData.data} layout={vizData.layout} />;
+  };
 
   const columns = [
     {
@@ -62,7 +80,7 @@ export default function JudgePage(props) {
   useEffect(() => {
     async function fetchJudge() {
       axios
-        .get(`${process.env.REACT_APP_API_URI}/judge/${name}`, {
+        .get(`${process.env.REACT_APP_API_URI}/judges/${judge_id}`, {
           headers: {
             Authorization: 'Bearer ' + authState.idToken.idToken,
           },
@@ -75,7 +93,7 @@ export default function JudgePage(props) {
         });
     }
     fetchJudge();
-  }, [name, authState.idToken]);
+  }, [judge_id, authState.idToken]);
 
   const Toolbar = () => {
     const { Title } = Typography;
@@ -121,7 +139,7 @@ export default function JudgePage(props) {
           matchedHits.push(k);
         }
       });
-      return matchedHits.length === searchedKeys.length;
+      // return matchedHits.length === searchedKeys.length;
     });
     return filteredData;
   };
@@ -170,10 +188,16 @@ export default function JudgePage(props) {
           <div className="imgBox">
             <div>
               <Avatar shape="square" size={200} icon={<UserOutlined />} />
-              <h1>{judge.name}</h1>
+              <h1>
+                {judge.first_name +
+                  ' ' +
+                  judge.middle_initial +
+                  ' ' +
+                  judge.last_name}
+              </h1>
             </div>
             <Card className="judgePageCard" title="Judge Info">
-              <p>Birthdate: {judge.birth_date}</p>
+              {judge.birthdate ? <p>Birthdate: {judge.birthdate}</p> : null}
               <p>Appointed: {judge.date_appointed}</p>
               <p>Appointed By: {judge.appointed_by}</p>
               <p>County: {judge.judge_county}</p>
@@ -196,16 +220,20 @@ export default function JudgePage(props) {
             {drawerContent()}
           </Drawer>
 
+          <div>
+            <TestDataChart />
+          </div>
+
           <div className="judgePageGridContainer">
             {/* Cases: "A section including relevant information/table of active
             cases" */}
-            <DataGrid
+            {/* <DataGrid
               rows={searching ? filter(judge.case_data) : judge.case_data}
               columns={columns}
               className="judgePageTable"
               autoHeight={true}
               components={{ Toolbar: Toolbar }}
-            />
+            /> */}
           </div>
 
           <div>
