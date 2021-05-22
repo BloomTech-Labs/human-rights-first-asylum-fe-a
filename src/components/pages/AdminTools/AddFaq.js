@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import { Form, Input, Button, Modal } from 'antd';
 
 import './_FaqStyles.less';
@@ -8,7 +8,7 @@ import './_FaqStyles.less';
 import Icon from '@ant-design/icons';
 import OrangeLine from '../../../styles/orange-line.svg';
 
-const { TextArea } = Input;
+// const { TextArea } = Input;
 
 const initialFormValues = {
   question: '',
@@ -18,7 +18,7 @@ const initialFormValues = {
 const AddFaq = props => {
   const [formValues, setFormValues] = useState(initialFormValues);
   const { authState } = props;
-  const history = useHistory();
+  // const history = useHistory();
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -57,7 +57,8 @@ const AddFaq = props => {
       answer: formValues.answer.trim(),
     };
     postNewQuestion(question);
-    history.push('/manage-faq');
+    setIsModalVisible(false);
+    // history.push('/manage-faq');
   };
 
   return (
@@ -73,13 +74,17 @@ const AddFaq = props => {
           onCancel={handleCancel}
           footer={[
             <div className="submit-button">
-              <Button onClick={onSubmit} className="add-faq-btn">
+              <Button
+                htmlType="submit"
+                className="add-faq-btn"
+                onClick={onSubmit}
+              >
                 <span>Submit</span>
               </Button>
             </div>,
           ]}
         >
-          <Form onSubmit={onSubmit} layout="vertical" className="faq-form">
+          <Form layout="vertical" className="faq-form" onFinish={onSubmit}>
             <h2 className="h1Styles">Add a FAQ</h2>
             <p className="divider">
               <Icon
@@ -87,23 +92,24 @@ const AddFaq = props => {
               />
             </p>
             <Form.Item label="Question">
-              <TextArea
+              <Input
                 id="question"
                 type="text"
                 name="question"
-                autoSize={{ minRows: 2, maxRows: 8 }}
+                // autoSize={{ minRows: 2, maxRows: 8 }}
                 onChange={onChange}
                 className="text-field"
                 value={formValues.question}
               />
             </Form.Item>
             <Form.Item label="Answer">
-              <TextArea
+              <Input
                 id="answer"
                 type="text"
                 name="answer"
-                autoSize={{ minRows: 4, maxRows: 10 }}
+                // autoSize={{ minRows: 4, maxRows: 10 }}
                 onChange={onChange}
+                // onValuesChange={onChange}
                 className="text-field"
                 value={formValues.answer}
               />
