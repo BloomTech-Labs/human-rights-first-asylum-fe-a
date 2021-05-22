@@ -26,10 +26,7 @@ export default function JudgeTable(props) {
 
       renderCell: params => (
         <>
-          <Link
-            to={`/judge/${params.value.split(' ').join('%20')}`}
-            className="judgeTableLink"
-          >
+          <Link to={`/judge/${params.row.judge_id}`} className="judgeTableLink">
             <span>{params.value}</span>
           </Link>
         </>
@@ -74,6 +71,7 @@ export default function JudgeTable(props) {
   const findRowByID = (rowID, rowData) => {
     for (let i = 0; i < rowData.length; i++) {
       let currentRow = rowData[i];
+
       let adjustedRowID = parseInt(rowID) + 1;
       if (currentRow.judge_id === adjustedRowID) {
         return currentRow;
@@ -113,11 +111,11 @@ export default function JudgeTable(props) {
 
       let savedNames = [];
       for (let i = 0; i < savedJudges.length; i++) {
-        savedNames.push(savedJudges[i].name);
+        savedNames.push(savedJudges[i].first_name);
       }
 
       for (let i = 0; i < bookmarks.length; i++) {
-        if (savedNames.includes(bookmarks[i].name)) {
+        if (savedNames.includes(bookmarks[i].first_name)) {
           console.log('Judge already saved to bookmarks');
           continue;
         } else {

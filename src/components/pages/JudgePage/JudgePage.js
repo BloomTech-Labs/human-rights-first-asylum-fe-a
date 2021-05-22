@@ -7,14 +7,32 @@ import { DataGrid } from '@material-ui/data-grid';
 
 import { UserOutlined } from '@ant-design/icons';
 import { Button, Typography, Input, Card, Drawer, Avatar } from 'antd';
-import './JudgePage.css';
+import './JudgePage.less';
 
 import FeatherIcon from 'feather-icons-react';
 
 export default function JudgePage(props) {
   const { authState } = props;
   const [judge, setJudge] = useState();
-  const { name } = useParams();
+  const [vizData, setVizData] = useState({});
+  const { judge_id } = useParams();
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/judges/${judge_id}/cases`, {
+        headers: {
+          Authorization: 'Bearer ' + authState.idToken.idToken,
+        },
+      })
+      .then(res => {
+        console.log(res.data.judge_cases);
+        setVizData(res.data.judge_cases);
+      });
+  }, [judge_id, authState.idToken]);
+
+  const TestDataChart = () => {
+    return <Plot data={vizData.data} layout={vizData.layout} />;
+  };
 
   const columns = [
     {
@@ -62,7 +80,7 @@ export default function JudgePage(props) {
   useEffect(() => {
     async function fetchJudge() {
       axios
-        .get(`${process.env.REACT_APP_API_URI}/judge/${name}`, {
+        .get(`${process.env.REACT_APP_API_URI}/judges/${judge_id}`, {
           headers: {
             Authorization: 'Bearer ' + authState.idToken.idToken,
           },
@@ -75,7 +93,7 @@ export default function JudgePage(props) {
         });
     }
     fetchJudge();
-  }, [name, authState.idToken]);
+  }, [judge_id, authState.idToken]);
 
   const Toolbar = () => {
     const { Title } = Typography;
@@ -121,7 +139,7 @@ export default function JudgePage(props) {
           matchedHits.push(k);
         }
       });
-      return matchedHits.length === searchedKeys.length;
+      // return matchedHits.length === searchedKeys.length;
     });
     return filteredData;
   };
@@ -168,70 +186,54 @@ export default function JudgePage(props) {
       {judge && (
         <div>
           <div className="imgBox">
-            <div>
-              <Avatar shape="square" size={200} icon={<UserOutlined />} />
-              <h1>{judge.name}</h1>
-            </div>
-            <Card className="judgePageCard" title="Judge Info">
-              <p>Birthdate: {judge.birth_date}</p>
-              <p>Appointed: {judge.date_appointed}</p>
-              <p>Appointed By: {judge.appointed_by}</p>
-              <p>County: {judge.judge_county}</p>
-              <a
-                className="judgePageLink"
-                href={judge.biography}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Biography
-              </a>
-            </Card>
+            <h1>
+              {judge.first_name +
+                ' ' +
+                judge.middle_initial +
+                ' ' +
+                judge.last_name}
+            </h1>
+            {judge.birthdate ? <p>Birthdate: {judge.birthdate}</p> : null}
+            {/* <p>Appointed: {judge.date_appointed}</p>
+              <p>Appointed By: {judge.appointed_by}</p> */}
+            <p>County: {judge.judge_county}</p>
+            <a
+              className="judgePageLink"
+              href={judge.biography}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Biography
+            </a>
           </div>
-          <Drawer
+          {/* <Drawer
             visible={new_search}
             onClose={toggleSearch}
             width={'25%'}
             style={{ marginTop: '4rem' }}
           >
             {drawerContent()}
-          </Drawer>
+          </Drawer> */}
 
-          <div className="judgePageGridContainer">
-            {/* Cases: "A section including relevant information/table of active
+          <div className="judgeStatsVizDiv">
+            <TestDataChart />
+          </div>
+
+          {/* <div className="judgePageGridContainer"> */}
+          {/* Cases: "A section including relevant information/table of active
             cases" */}
-            <DataGrid
+          {/* <DataGrid
               rows={searching ? filter(judge.case_data) : judge.case_data}
               columns={columns}
               className="judgePageTable"
               autoHeight={true}
               components={{ Toolbar: Toolbar }}
-            />
-          </div>
+            /> */}
+          {/* </div> */}
+          {/* // * The above is left commented on the off chance we want to reroute and still render this info */}
 
-          <div>
-            <div className="judgePagePlotDiv">
-              {
-                //* values are granted: value, denial: value, other: value
-              }
-              <Plot
-                data={[
-                  {
-                    type: 'pie',
-                    values: [judge.approval_rate, judge.denial_rate],
-                    labels: ['Granted', 'Denial'],
-                    textinfo: 'label+percent',
-                    textposition: 'outside',
-                    automargin: true,
-                  },
-                ]}
-                layout={{
-                  height: 600,
-                  width: 600,
-                  showlegend: false,
-                  title: 'Decision Rate',
-                }}
-              />
-
+          <div className="judgePageSubPlots">
+            <div className="judgePagePlotDiv1">
               {
                 //*y = number of negative uses, x = number of positive uses
                 //* Text keyword, size = number of total uses - marker size: number of total uses * 10
@@ -273,7 +275,7 @@ export default function JudgePage(props) {
                 }}
               />
             </div>
-            <div className="judgePagePlotDiv">
+            <div className="judgePagePlotDiv2">
               {
                 //* x = country_origin/application_type /protected_ground, y = granted: value / denial:value / other value
               }

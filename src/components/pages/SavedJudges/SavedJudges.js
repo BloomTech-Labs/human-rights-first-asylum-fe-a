@@ -11,7 +11,7 @@ import FeatherIcon from 'feather-icons-react';
 function SavedJudges({ savedJudges, deleteSavedJudge }) {
   const columns = [
     {
-      field: 'name',
+      field: 'first_name',
       renderHeader: params => <strong>{'Judge'}</strong>,
       headerName: 'Judge',
       width: 130,
@@ -102,7 +102,7 @@ function SavedJudges({ savedJudges, deleteSavedJudge }) {
   };
 
   const [queryValues, setQueryValues] = useState({
-    name: '',
+    first_name: '',
     judge_county: '',
     date_appointed: '',
     appointed_by: '',
@@ -134,7 +134,7 @@ function SavedJudges({ savedJudges, deleteSavedJudge }) {
   };
 
   const searchOptions = [
-    { id: 'name', label: 'Judge' },
+    { id: 'first_name', label: 'Judge' },
     { id: 'judge_county', label: 'Court Location' },
     { id: 'date_appointed', label: 'Date Appointed' },
     { id: 'appointed_by', label: 'Appointed By' },
