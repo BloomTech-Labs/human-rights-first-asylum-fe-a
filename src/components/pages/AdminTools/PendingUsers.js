@@ -1,39 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
-import Button from '@material-ui/core/Button';
-import { Typography, Collapse } from 'antd';
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    marginTop: '7%',
-    margin: '5% 0',
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-  p: {
-    margin: '1%',
-  },
-  panal: {
-    width: '50%',
-  },
-  buttonStyles: {
-    color: '#ffffff',
-    backgroundColor: '#215589',
-    marginTop: '1%',
-    marginLeft: '1%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buttons: {
-    display: 'flex',
-    alignItems: 'flex-end',
-    justifyContent: 'flex-start',
-  },
-}));
+import { Typography, Collapse, Descriptions } from 'antd';
+import { Button as AntDButton } from 'antd';
 
 const PendingUsersPage = props => {
   const { Title } = Typography;
@@ -91,53 +59,43 @@ const PendingUsersPage = props => {
       });
   };
 
-  const classes = useStyles();
-
   return (
-    <div className={classes.root}>
-      <div className={classes.panal}>
-        <Title level={2}> Manage Requested Users </Title>
-        <Collapse defaultActiveKey={['0']} accordion>
-          {pendingProfiles.map(item => {
-            return (
-              <Panel header={`${item.firstName} ${item.lastName}`}>
-                <p>
-                  <strong>Name:</strong> {`${item.firstName} ${item.lastName}`}
-                </p>
-                <p>
-                  <strong>Email:</strong> {item.email}
-                </p>
-                <p>
-                  <strong>Role:</strong> (Defaults to User){' '}
-                </p>
-                <p>
-                  <strong>Date requested:</strong>{' '}
+    <>
+      <Title level={2}> Manage Pending Users </Title>
+      <Collapse defaultActiveKey={['0']} accordion>
+        {pendingProfiles.map(item => {
+          return (
+            <Panel header={`${item.firstName} ${item.lastName}`}>
+              <Descriptions title="User Info">
+                <Descriptions.Item label="Name">
+                  {`${item.firstName} ${item.lastName}`}
+                </Descriptions.Item>
+                <Descriptions.Item label="Role"> </Descriptions.Item>
+                <Descriptions.Item label="Date Requsted">
                   {String(item.created_at).slice(0, 10)}
-                </p>
-                <div className={classes.buttons}>
-                  <Button
-                    className={classes.buttonStyles}
-                    onClick={() => {
-                      approveUser(item);
-                    }}
-                  >
-                    Approve
-                  </Button>
-                  <Button
-                    className={classes.buttonStyles}
-                    onClick={() => {
-                      rejectUser(item);
-                    }}
-                  >
-                    Reject
-                  </Button>
-                </div>
-              </Panel>
-            );
-          })}
-        </Collapse>
-      </div>
-    </div>
+                </Descriptions.Item>
+              </Descriptions>
+              <AntDButton
+                className="add-user-btn"
+                onClick={() => {
+                  approveUser(item);
+                }}
+              >
+                Approve
+              </AntDButton>
+              <AntDButton
+                className="add-user-btn"
+                onClick={() => {
+                  rejectUser(item);
+                }}
+              >
+                Reject
+              </AntDButton>
+            </Panel>
+          );
+        })}
+      </Collapse>
+    </>
   );
 };
 

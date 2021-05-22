@@ -34,16 +34,7 @@ function SideDrawer() {
         onClick={handleRoute}
         style={{ backgroundColor: '#F4F6F7', height: '100vh' }}
       >
-        <Button
-          onClick={toggleCollapsed}
-          type="primary"
-          style={{
-            marginBottom: 16,
-            backgroundColor: '#f4f6f7',
-            marginLeft: 16,
-            color: '#2a5c8d',
-          }}
-        >
+        <Button type="primary" className="toggle-btn" onClick={toggleCollapsed}>
           {React.createElement(
             collapsed ? DoubleRightOutlined : DoubleLeftOutlined
           )}
@@ -83,18 +74,12 @@ function SideDrawer() {
               className="admin-tools-submenu"
               style={{ backgroundColor: '#F4F6F7', paddingRight: 30 }}
             >
-              <Menu.Item key="/add-users">Add Users</Menu.Item>
               <Menu.Item key="/manage-users">Manage Users</Menu.Item>
-              <Menu.Item key="/add-faq">Add FAQ</Menu.Item>
               <Menu.Item key="/manage-faq">Manage FAQ</Menu.Item>
-              <Menu.Item key="/manage-requested">
-                Review Requested Users
+              <Menu.Item className="review-cases" key="/manage-cases">
+                Review Cases
               </Menu.Item>
             </SubMenu>
-
-            <Menu.Item className="review-cases" key="/manage-cases">
-              Review Cases
-            </Menu.Item>
           </>
         ) : null}
       </Menu>
