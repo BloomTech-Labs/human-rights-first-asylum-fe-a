@@ -4,7 +4,7 @@ import Plot from 'react-plotly.js';
 import axios from 'axios';
 
 const DataHub = props => {
-  const { caseData } = props;
+  const { caseData, authState } = props;
   const [vizData, setVizData] = useState({});
 
   const data = caseData;
@@ -13,9 +13,7 @@ const DataHub = props => {
     axios
       .get('http://localhost:8080/judges/2/cases', {
         headers: {
-          Authorization:
-            'Bearer ' +
-            'eyJraWQiOiJrMjJwZmRidEJsZlk1cGE0U1BMa1luWHp0SkVVY2MzS2hUbHJtZlRKNWxBIiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiIwMHVsemRyaXpFMnl6eFRvSDVkNiIsIm5hbWUiOiJUZXN0IEFkbWluIDAwMSIsImVtYWlsIjoibGxhbWEwMDFAbWFpbGRyb3AuY2MiLCJ2ZXIiOjEsImlzcyI6Imh0dHBzOi8vZGV2LTQxMzI3Nzg2Lm9rdGEuY29tL29hdXRoMi9kZWZhdWx0IiwiYXVkIjoiMG9hYmJxbW92SG5RVG9SQlA1ZDYiLCJpYXQiOjE2MjE2MDk3NTcsImV4cCI6MTYyMTYxMzM1NywianRpIjoiSUQuS1Npa2lJLWxueFlmNTNXZzA0aFFrNkNDVTgyU3NHWVItd1ptY3FwV2pIWSIsImFtciI6WyJwd2QiXSwiaWRwIjoiMDBvYmJzY2wyYlM3YzdjRkQ1ZDYiLCJub25jZSI6ImJwSFQ1TGg0Tmp0YlFWWkZzOWZScXg2WE9wTGlBVWhSZWxLdnpZcVBTTHdDUWQ3VXRCZkxHOUVjakJOZVM5cWEiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJsbGFtYTAwMUBtYWlsZHJvcC5jYyIsImF1dGhfdGltZSI6MTYyMTYwOTc1MiwiYXRfaGFzaCI6IjNpazdMRWwyZjFDRVJoek5fb0NodVEifQ.Wn7ZQLCXCdvpehBKnTHwmCiWqNLg_X6WL0dr2RyaFNSKGVk_3u08vIKVHD0bPQVidgEb-G8PZ0kMH5gA4aaLotMdk6Ml4RV8B_z4l-1GYIWA2G5eJNg4c3C2CQOB3KobwNeg2PZArhXjPibFJwz0A6nOvwiWBz5A9C7GMv5ulgYVMlZRuOAB4UQLhnBpEwruJ3H6G06ISzJ7492kBlYe0jTDf8KwUQ9FMtHoSD5XexN6Mf6gUPOEjlOM2_MTf9N7jJHEVXgli2uI2HDAPV2WPwCdhQSKS2XIUNlc5sBu1jBVkMDWl8RA3suJnQsQvdcGOJFa3VCSPoxmuIELor89Pg',
+          Authorization: 'Bearer ' + authState.idToken.idToken,
         },
       })
       .then(res => {
