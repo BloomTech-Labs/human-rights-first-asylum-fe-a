@@ -28,9 +28,6 @@ import CaseUpdate from '../CaseOverview/CaseUpdate';
 import ManageCases from '../ManageCases/ManageCases';
 import AccountPage from '../AccountPage/AccountPage';
 import SupportPage from '../SupportPage/SupportPage';
-import AdminToolsPage from '../AdminTools/AdminTools';
-import AddUsersPage from '../AdminTools/AddUsers';
-import PendingUsers from '../AdminTools/PendingUsers';
 import ManageUsersPage from '../AdminTools/ManageUsers';
 import EditUserPage from '../AdminTools/EditUser';
 import AddFaq from '../AdminTools/AddFaq';
@@ -94,7 +91,6 @@ function RenderHomePage(props) {
           Authorization: 'Bearer ' + user.authState.idToken.idToken,
         },
       })
-      // )
       .then(res => {
         setCaseData(
           res.data.map(eachCase => {
@@ -299,15 +295,6 @@ function RenderHomePage(props) {
             </Route>
             <Route exact path="/support">
               <SupportPage authState={user.authState} userInfo={hrfUserInfo} />
-            </Route>
-            <Route exact path="/admin-tools">
-              <AdminToolsPage authState={user.authState} />
-            </Route>
-            <Route exact path="/add-users">
-              <AddUsersPage authState={user.authState} />
-            </Route>
-            <Route exact path="/manage-requested">
-              <PendingUsers authState={user.authState} />
             </Route>
             <Route exact path="/manage-users">
               <ManageUsersPage authState={user.authState} />
