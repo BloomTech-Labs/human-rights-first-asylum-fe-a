@@ -34,7 +34,7 @@ function SideDrawer() {
         onClick={handleRoute}
         style={{ backgroundColor: '#F4F6F7', height: '100vh' }}
       >
-        <Button type="primary" onClick={toggleCollapsed}>
+        <Button type="primary" className="toggle-btn" onClick={toggleCollapsed}>
           {React.createElement(
             collapsed ? DoubleRightOutlined : DoubleLeftOutlined
           )}
@@ -75,7 +75,6 @@ function SideDrawer() {
               style={{ backgroundColor: '#F4F6F7', paddingRight: 30 }}
             >
               <Menu.Item key="/manage-users">Manage Users</Menu.Item>
-              <Menu.Item key="/add-faq">Add FAQ</Menu.Item>
               <Menu.Item key="/manage-faq">Manage FAQ</Menu.Item>
               <Menu.Item className="review-cases" key="/manage-cases">
                 Review Cases

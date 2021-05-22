@@ -1,44 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
-import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import { Typography, Collapse } from 'antd';
+import { Collapse } from 'antd';
+import { Form, Input, Button as AntDButton, Modal } from 'antd';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    marginTop: '7%',
-    margin: '5% 0',
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-  buttons: {
-    display: 'flex',
-    alignItems: 'flex-end',
-    justifyContent: 'flex-start',
-  },
-  p: {
-    margin: '1%',
-  },
-  buttonStyles: {
-    color: '#ffffff',
-    backgroundColor: '#215589',
-    marginTop: '3%',
-    marginLeft: '1%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-}));
+import './_FaqStyles.less';
+import './_ManageFaqStyles.less';
+import Icon from '@ant-design/icons';
+import OrangeLine from '../../../styles/orange-line.svg';
 
+const initialFormValues = {
+  question: '',
+  answer: '',
+};
 const ManageFaqPage = props => {
-  const { Title } = Typography;
   const { Panel } = Collapse;
   const { authState } = props;
   const [faq, setFaq] = useState([]);
-
+  const [formValues, setFormValues] = useState(initialFormValues);
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_API_URI}/faq`, {
@@ -53,7 +32,6 @@ const ManageFaqPage = props => {
         console.log(err);
       });
   }, [authState.idToken.idToken]);
-
   const deleteFaq = faq => {
     axios
       .delete(`${process.env.REACT_APP_API_URI}/faq/${faq.faq_id}`, {
@@ -70,37 +48,125 @@ const ManageFaqPage = props => {
       });
   };
 
-  const classes = useStyles();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+  const onChange = e => {
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
+  };
+
+  const postNewQuestion = question => {
+    axios
+      .post(`${process.env.REACT_APP_API_URI}/faq/`, question, {
+        headers: {
+          Authorization: 'Bearer ' + authState.idToken.idToken,
+        },
+      })
+      .catch(err => console.log(err));
+    setFormValues(initialFormValues);
+  };
+
+  const onSubmit = e => {
+    e.preventDefault();
+    const question = {
+      question: formValues.question.trim(),
+      answer: formValues.answer.trim(),
+    };
+    postNewQuestion(question);
+    setIsModalVisible(false);
+  };
 
   return (
-    <div className={classes.root}>
+    <div className="root">
       <div className="faq">
-        <Title level={2}> Manage FAQ </Title>
-        <Collapse defaultActiveKey={['0']} accordion>
+        <h2 className="faq-header"> Manage FAQ </h2>
+        <p className="divider">
+          <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
+        </p>
+        <Collapse accordion>
           {faq.map(item => {
             return (
-              <Panel header={`Q: ${item.question}`}>
-                A: {item.answer}
-                <div className={classes.buttons}>
+              <Panel className="q-header" header={`${item.question}`}>
+                <p className="answer">Answer: </p>
+                <span>{item.answer}</span>
+                <div className="buttons">
                   <Link to={`edit-faq/${item.faq_id}`}>
-                    <Button className={classes.buttonStyles}>Edit</Button>
+                    <AntDButton className="btn-style">Edit</AntDButton>
                   </Link>
-                  <Button
-                    className={classes.buttonStyles}
+                  <AntDButton
+                    className="btn-style"
                     onClick={() => {
                       deleteFaq(item);
                     }}
                   >
                     Delete
-                  </Button>
+                  </AntDButton>
                 </div>
               </Panel>
             );
           })}
         </Collapse>
       </div>
+      <div className="add-faq-btn-container">
+        <AntDButton className="add-faq-btn" onClick={showModal}>
+          Add a FAQ
+        </AntDButton>
+        <Modal
+          title=""
+          visible={isModalVisible}
+          onOk={handleOk}
+          onCancel={handleCancel}
+          footer={[
+            <div className="submit-button">
+              <AntDButton
+                htmlType="submit"
+                className="add-faq-btn"
+                onClick={onSubmit}
+              >
+                <span>Submit</span>
+              </AntDButton>
+            </div>,
+          ]}
+        >
+          <Form layout="vertical" className="faq-form" onFinish={onSubmit}>
+            <h2 className="h1Styles">Add a FAQ</h2>
+            <p className="divider">
+              <Icon
+                component={() => <img src={OrangeLine} alt="divider icon" />}
+              />
+            </p>
+            <Form.Item label="Question">
+              <Input
+                id="question"
+                type="text"
+                name="question"
+                onChange={onChange}
+                className="text-field"
+                value={formValues.question}
+              />
+            </Form.Item>
+            <Form.Item label="Answer">
+              <Input
+                id="answer"
+                type="text"
+                name="answer"
+                onChange={onChange}
+                className="text-field"
+                value={formValues.answer}
+              />
+            </Form.Item>
+          </Form>
+        </Modal>
+      </div>
     </div>
   );
 };
-
 export default ManageFaqPage;
