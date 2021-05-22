@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-// import { useHistory } from 'react-router-dom';
 import { Form, Input, Button, Modal } from 'antd';
 
 import './_FaqStyles.less';
 
 import Icon from '@ant-design/icons';
 import OrangeLine from '../../../styles/orange-line.svg';
-
-// const { TextArea } = Input;
 
 const initialFormValues = {
   question: '',
@@ -18,8 +15,6 @@ const initialFormValues = {
 const AddFaq = props => {
   const [formValues, setFormValues] = useState(initialFormValues);
   const { authState } = props;
-  // const history = useHistory();
-
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const showModal = () => {
@@ -58,7 +53,6 @@ const AddFaq = props => {
     };
     postNewQuestion(question);
     setIsModalVisible(false);
-    // history.push('/manage-faq');
   };
 
   return (
@@ -96,7 +90,6 @@ const AddFaq = props => {
                 id="question"
                 type="text"
                 name="question"
-                // autoSize={{ minRows: 2, maxRows: 8 }}
                 onChange={onChange}
                 className="text-field"
                 value={formValues.question}
@@ -107,9 +100,7 @@ const AddFaq = props => {
                 id="answer"
                 type="text"
                 name="answer"
-                // autoSize={{ minRows: 4, maxRows: 10 }}
                 onChange={onChange}
-                // onValuesChange={onChange}
                 className="text-field"
                 value={formValues.answer}
               />
