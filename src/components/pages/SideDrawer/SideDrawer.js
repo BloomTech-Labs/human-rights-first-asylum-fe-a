@@ -76,7 +76,6 @@ function SideDrawer() {
             >
               <Menu.Item key="/add-users">Add Users</Menu.Item>
               <Menu.Item key="/manage-users">Manage Users</Menu.Item>
-              <Menu.Item key="/add-faq">Add FAQ</Menu.Item>
               <Menu.Item key="/manage-faq">Manage FAQ</Menu.Item>
               <Menu.Item key="/manage-requested">
                 Review Requested Users
