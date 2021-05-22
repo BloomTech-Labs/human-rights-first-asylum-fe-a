@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './DataHub.less';
 import Plot from 'react-plotly.js';
 import axios from 'axios';
+import { UserContext } from '../../../context/UserContext';
 
 const DataHub = props => {
   const { caseData, authState } = props;
   const [vizData, setVizData] = useState({});
+  const user = useContext(UserContext);
 
   const data = caseData;
 
@@ -13,14 +15,14 @@ const DataHub = props => {
     axios
       .get('http://localhost:8080/judges/2/cases', {
         headers: {
-          Authorization: 'Bearer ' + authState.idToken.idToken,
+          Authorization: 'Bearer ' + user.authState.idToken.idToken,
         },
       })
       .then(res => {
         console.log(res.data.judge_cases);
         setVizData(res.data.judge_cases);
       });
-  }, []);
+  }, [user.authState.idToken.idToken]);
 
   const TestDataChart = () => {
     return <Plot data={vizData.data} layout={vizData.layout} />;
