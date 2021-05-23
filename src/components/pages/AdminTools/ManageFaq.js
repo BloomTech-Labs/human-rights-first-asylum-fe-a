@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Collapse } from 'antd';
-import { Form, Input, Button as AntDButton, Modal } from 'antd';
+import { Form, Input, Button as AntDButton, Modal, Collapse } from 'antd';
 
-import './_FaqStyles.less';
+// Styling and Icons
+import './_AddFaqStyles.less';
 import './_ManageFaqStyles.less';
 import Icon from '@ant-design/icons';
 import OrangeLine from '../../../styles/orange-line.svg';
