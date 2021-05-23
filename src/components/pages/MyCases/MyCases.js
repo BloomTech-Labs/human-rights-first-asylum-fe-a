@@ -37,7 +37,6 @@ export default function MyCases(props) {
   const [selectedTab, setSelectedTab] = useState(true);
   const [formValues, setFormValues] = useState(initialFormValues);
   const [visible, setVisible] = useState(false);
-  const role = window.localStorage.getItem('role');
   const [currentId, setCurrentId] = useState();
   const onInputChange = e => {
     const { name, value } = e.target;

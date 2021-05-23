@@ -85,7 +85,7 @@ const useStyles = makeStyles(theme => ({
     },
   },
 }));
-
+const role = window.localStorage.getItem('role');
 const ReviewCaseForm = props => {
   const {
     formValues,
@@ -115,15 +115,27 @@ const ReviewCaseForm = props => {
 
   const onSubmit = evt => {
     evt.preventDefault();
-    axiosWithAuth()
-      .post(`/upload/${currentId}`, formValues)
-      .then(res => {
-        getPendingCases();
-        setVisible(false);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    if (role === 'user') {
+      axiosWithAuth()
+        .post(`/upload/${currentId}`, formValues)
+        .then(res => {
+          getPendingCases();
+          setVisible(false);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } else if (role === 'admin') {
+      axiosWithAuth()
+        .post(`/pendingCases/approve/${currentId}`, formValues)
+        .then(res => {
+          getPendingCases();
+          setVisible(false);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
   };
 
   return (
