@@ -166,7 +166,7 @@ function RenderHomePage(props) {
           res.data.map(eachCase => {
             return {
               ...eachCase,
-              id: eachCase.case_number,
+              id: eachCase.pending_case_id,
             };
           })
         );

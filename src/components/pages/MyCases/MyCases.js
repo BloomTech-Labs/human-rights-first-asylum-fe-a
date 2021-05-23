@@ -66,7 +66,7 @@ export default function MyCases(props) {
   }, []);
   const pendingColumns = [
     {
-      field: 'case_number',
+      field: 'file_name',
       renderHeader: params => <strong>{'File Name'}</strong>,
       headerName: 'file_name',
       flex: 1,
