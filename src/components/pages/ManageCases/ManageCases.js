@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axiosWithAuth from '../../../utils/axiosWithAuth';
 import './ManageCases.css';
 
 import { Typography, Table, Button } from 'antd';
@@ -47,12 +47,12 @@ export default function ManageCases(props) {
   let filteredData = [];
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/cases`)
+    axiosWithAuth()
+      .get(`/pendingCases`)
       .then(res => {
         filteredData.push(
           res.data.filter(caseStatus => {
-            return caseStatus.status === 'pending';
+            return caseStatus.status === 'Pending';
             //currently, there is only one pending case in the seed data. If you want to test multiple case objects, try setting "status" to case_outcome and "pending" to "remanded" or "denied"
           })
         );

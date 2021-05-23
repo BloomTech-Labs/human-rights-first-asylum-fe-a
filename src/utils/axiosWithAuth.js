@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const axiosWithAuth = () => {
+const axiosWithAuth = () => {
   const token = localStorage.getItem('okta-token-storage');
   const parsedToken = JSON.parse(token);
 
@@ -11,3 +11,5 @@ export const axiosWithAuth = () => {
     },
   });
 };
+
+export default axiosWithAuth;

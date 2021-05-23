@@ -166,7 +166,7 @@ function RenderHomePage(props) {
           res.data.map(eachCase => {
             return {
               ...eachCase,
-              id: eachCase.case_number,
+              id: eachCase.pending_case_id,
             };
           })
         );
@@ -240,10 +240,7 @@ function RenderHomePage(props) {
             deleteSavedJudge={deleteSavedJudge}
           />
           <div className={classes.subContainer}>
-            <UploadCase
-              authState={user.authState}
-              getPendingCases={getPendingCases}
-            />
+            <UploadCase getPendingCases={getPendingCases} />
             <Route exact path="/my-cases">
               <MyCases
                 user={user}
