@@ -16,7 +16,7 @@ import {
 } from '@material-ui/core/styles';
 import { UserContext } from '../../../context/UserContext';
 
-import axios from 'axios';
+import axiosWithAuth from '../../../utils/axiosWithAuth';
 import SavedCases from '../SavedCases/SavedCases';
 import SavedJudges from '../SavedJudges/SavedJudges';
 
@@ -85,8 +85,8 @@ function RenderHomePage(props) {
   const user = useContext(UserContext);
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/cases`, {
+    axiosWithAuth()
+      .get(`/cases`, {
         headers: {
           Authorization: 'Bearer ' + user.authState.idToken.idToken,
         },
@@ -109,7 +109,7 @@ function RenderHomePage(props) {
   useEffect(() => {
     trackPromise(
       // Tracks the axios call and implements spinning loader while executing
-      axios.get(`${process.env.REACT_APP_API_URI}/judge`, {
+      axiosWithAuth().get(`/judge`, {
         headers: {
           Authorization: 'Bearer ' + user.authState.idToken.idToken,
         },
@@ -125,14 +125,11 @@ function RenderHomePage(props) {
 
   useEffect(() => {
     trackPromise(
-      axios.get(
-        `${process.env.REACT_APP_API_URI}/profile/${user.userInfo.sub}`,
-        {
-          headers: {
-            Authorization: 'Bearer ' + user.authState.idToken.idToken,
-          },
-        }
-      )
+      axiosWithAuth().get(`/profile/${user.userInfo.sub}`, {
+        headers: {
+          Authorization: 'Bearer ' + user.authState.idToken.idToken,
+        },
+      })
     )
       .then(res => {
         window.localStorage.setItem('role', res.data.role);
@@ -152,14 +149,11 @@ function RenderHomePage(props) {
 
   const getPendingCases = () => {
     trackPromise(
-      axios.get(
-        `${process.env.REACT_APP_API_URI}/pendingCases/:${user.userInfo.sub}`,
-        {
-          headers: {
-            Authorization: 'Bearer ' + user.authState.idToken.idToken,
-          },
-        }
-      )
+      axiosWithAuth().get(`/pendingCases/:${user.userInfo.sub}`, {
+        headers: {
+          Authorization: 'Bearer ' + user.authState.idToken.idToken,
+        },
+      })
     )
       .then(res => {
         setMyPendingCases(
@@ -183,15 +177,12 @@ function RenderHomePage(props) {
 
   const deleteBookmark = caseID => {
     // only works for cases, judge requires name instead of ID to delete
-    axios
-      .delete(
-        `${process.env.REACT_APP_API_URI}/profile/${user.userInfo.sub}/case/${caseID}`,
-        {
-          headers: {
-            Authorization: 'Bearer ' + user.authState.idToken.idToken,
-          },
-        }
-      )
+    axiosWithAuth()
+      .delete(`/profile/${user.userInfo.sub}/case/${caseID}`, {
+        headers: {
+          Authorization: 'Bearer ' + user.authState.idToken.idToken,
+        },
+      })
       .then(res => {
         deleteFromStateById(caseID, savedCases, setSavedCases);
       })
@@ -201,15 +192,12 @@ function RenderHomePage(props) {
   };
 
   const deleteSavedJudge = judge_id => {
-    axios
-      .delete(
-        `${process.env.REACT_APP_API_URI}/profile/${user.userInfo.sub}/judge/${judge_id}`,
-        {
-          headers: {
-            Authorization: 'Bearer ' + user.authState.idToken.idToken,
-          },
-        }
-      )
+    axiosWithAuth()
+      .delete(`/profile/${user.userInfo.sub}/judge/${judge_id}`, {
+        headers: {
+          Authorization: 'Bearer ' + user.authState.idToken.idToken,
+        },
+      })
       .then(res => {
         setSavedJudges(res.data.judge_bookmarks);
       })
