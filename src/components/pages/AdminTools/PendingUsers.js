@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Typography, Collapse, Descriptions } from 'antd';
-import { Button as AntDButton } from 'antd';
+import { axiosWithAuth } from '../../../utils/axiosWithAuth';
+import { Button as AntDButton, Collapse, Descriptions } from 'antd';
 
 const PendingUsersPage = props => {
-  const { Title } = Typography;
   const { Panel } = Collapse;
   const { authState } = props;
   const [pendingProfiles, setPendingProfiles] = useState([]);
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/profiles/pending`, {
+    axiosWithAuth()
+      .get(`/profiles/pending`, {
         headers: {
           Authorization: 'Bearer ' + authState.idToken.idToken,
         },
@@ -25,8 +23,8 @@ const PendingUsersPage = props => {
   }, [authState.idToken.idToken]);
 
   const approveUser = profile => {
-    axios
-      .post(`${process.env.REACT_APP_API_URI}/profile/`, profile, {
+    axiosWithAuth()
+      .post(`/profile/`, profile, {
         headers: {
           Authorization: 'Bearer ' + authState.idToken.idToken,
         },
@@ -41,15 +39,12 @@ const PendingUsersPage = props => {
   };
 
   const rejectUser = profile => {
-    axios
-      .delete(
-        `${process.env.REACT_APP_API_URI}/profiles/pending/${profile.id}`,
-        {
-          headers: {
-            Authorization: 'Bearer ' + authState.idToken.idToken,
-          },
-        }
-      )
+    axiosWithAuth()
+      .delete(`/profiles/pending/${profile.id}`, {
+        headers: {
+          Authorization: 'Bearer ' + authState.idToken.idToken,
+        },
+      })
       .then(res => {
         alert(`Profile request from ${profile.email} was rejected`);
         console.log(res.data);
@@ -61,7 +56,7 @@ const PendingUsersPage = props => {
 
   return (
     <>
-      <Title level={2}> Manage Pending Users </Title>
+      <h2> Manage Pending Users </h2>
       <Collapse defaultActiveKey={['0']} accordion>
         {pendingProfiles.map(item => {
           return (

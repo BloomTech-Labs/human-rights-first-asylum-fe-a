@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { axiosWithAuth } from '../../../utils/axiosWithAuth';
 import { Link } from 'react-router-dom';
 import {
   Form,
@@ -31,8 +31,8 @@ const ManageUsersPage = props => {
   const [formValues, setFormValues] = useState(initialFormValues);
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/profiles`, {
+    axiosWithAuth()
+      .get(`/profiles`, {
         headers: {
           Authorization: 'Bearer ' + authState.idToken.idToken,
         },
@@ -46,8 +46,8 @@ const ManageUsersPage = props => {
   }, [authState.idToken.idToken]);
 
   const deleteUser = profile => {
-    axios
-      .delete(`${process.env.REACT_APP_API_URI}/profiles/${profile.user_id}`, {
+    axiosWithAuth()
+      .delete(`/profiles/${profile.user_id}`, {
         headers: {
           Authorization: 'Bearer ' + authState.idToken.idToken,
         },
@@ -77,8 +77,8 @@ const ManageUsersPage = props => {
   };
 
   const postNewUser = newUser => {
-    axios
-      .post(`${process.env.REACT_APP_API_URI}/profile/`, newUser, {
+    axiosWithAuth()
+      .post(`/profile/`, newUser, {
         headers: {
           Authorization: 'Bearer ' + authState.idToken.idToken,
         },

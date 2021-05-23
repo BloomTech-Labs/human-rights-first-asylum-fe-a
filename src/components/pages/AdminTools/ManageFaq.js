@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { axiosWithAuth } from '../../../utils/axiosWithAuth';
 import { Link } from 'react-router-dom';
 import { Form, Input, Button as AntDButton, Modal, Collapse } from 'antd';
 
@@ -18,9 +18,10 @@ const ManageFaqPage = props => {
   const { authState } = props;
   const [faq, setFaq] = useState([]);
   const [formValues, setFormValues] = useState(initialFormValues);
+
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/faq`, {
+    axiosWithAuth()
+      .get(`/faq`, {
         headers: {
           Authorization: 'Bearer ' + authState.idToken.idToken,
         },
@@ -32,9 +33,10 @@ const ManageFaqPage = props => {
         console.log(err);
       });
   }, [authState.idToken.idToken]);
+
   const deleteFaq = faq => {
-    axios
-      .delete(`${process.env.REACT_APP_API_URI}/faq/${faq.faq_id}`, {
+    axiosWithAuth()
+      .delete(`/faq/${faq.faq_id}`, {
         headers: {
           Authorization: 'Bearer ' + authState.idToken.idToken,
         },
@@ -64,14 +66,17 @@ const ManageFaqPage = props => {
   };
 
   const postNewQuestion = question => {
-    axios
-      .post(`${process.env.REACT_APP_API_URI}/faq/`, question, {
+    axiosWithAuth()
+      .post(`/faq/`, question, {
         headers: {
           Authorization: 'Bearer ' + authState.idToken.idToken,
         },
       })
+      .then(res => {
+        setFormValues(initialFormValues);
+        window.location.reload();
+      })
       .catch(err => console.log(err));
-    setFormValues(initialFormValues);
   };
 
   const onSubmit = e => {
