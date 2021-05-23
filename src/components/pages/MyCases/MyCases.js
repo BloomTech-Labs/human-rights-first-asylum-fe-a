@@ -53,7 +53,7 @@ export default function MyCases(props) {
           res.data.map(eachCase => {
             return {
               ...eachCase,
-              id: eachCase.case_number,
+              id: eachCase.case_id,
             };
           })
         );
