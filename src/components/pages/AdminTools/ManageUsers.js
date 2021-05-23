@@ -6,9 +6,9 @@ import {
   Input,
   Button as AntDButton,
   Modal,
-  Select,
   Collapse,
   Descriptions,
+  Radio,
 } from 'antd';
 import PendingUsers from './PendingUsers';
 
@@ -23,8 +23,6 @@ const initialFormValues = {
   email: '',
   role: '',
 };
-
-const { Option } = Select;
 
 const ManageUsersPage = props => {
   const { Panel } = Collapse;
@@ -219,13 +217,15 @@ const ManageUsersPage = props => {
                 value={formValues.email}
               />
             </Form.Item>
-            <Form.Item name="role" label="Role">
-              <Select placeholder="Select a role" onChange={onChange}>
-                <Option value="user">User</Option>
-                <Option value="moderator">Moderator</Option>
-                <Option value="admin">Admin</Option>
-              </Select>
-            </Form.Item>
+            <Radio.Group
+              onChange={onChange}
+              name="role"
+              value={formValues.role}
+            >
+              <Radio value="user">User</Radio>
+              <Radio value="moderator">Moderator</Radio>
+              <Radio value="admin">Admin</Radio>
+            </Radio.Group>
           </Form>
         </Modal>
       </div>
