@@ -85,7 +85,6 @@ const useStyles = makeStyles(theme => ({
     },
   },
 }));
-const role = window.localStorage.getItem('role');
 const ReviewCaseForm = props => {
   const {
     formValues,
@@ -96,7 +95,7 @@ const ReviewCaseForm = props => {
   } = props;
 
   const classes = useStyles();
-
+  const role = window.localStorage.getItem('role');
   // This implements the switch functionality on the form
   const [state, setState] = useState({
     filed_in_one_year: false,

@@ -240,10 +240,7 @@ function RenderHomePage(props) {
             deleteSavedJudge={deleteSavedJudge}
           />
           <div className={classes.subContainer}>
-            <UploadCase
-              authState={user.authState}
-              getPendingCases={getPendingCases}
-            />
+            <UploadCase getPendingCases={getPendingCases} />
             <Route exact path="/my-cases">
               <MyCases
                 user={user}

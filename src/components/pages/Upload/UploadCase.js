@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useHistory } from 'react-router-dom';
+import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { notification, Upload, Modal, Button, Spin } from 'antd';
 import {
   CheckCircleOutlined,
@@ -12,13 +13,16 @@ import './_UploadCase.less';
 import Icon from '@ant-design/icons';
 import UploadCaseBox from '../../../styles/icons/upload-box.svg';
 import OrangeLine from '../../../styles/orange-line.svg';
-const UploadCase = ({ authState, getPendingCases }) => {
+const UploadCase = ({ getPendingCases }) => {
+  const history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
   const { Dragger } = Upload;
   const [postQueue, setPostQueue] = useState([]);
   const [nextPost, setNextPost] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
-
+  const [scrapQueue, setScrapQueue] = useState([]);
+  const [nextScrap, setNextScrap] = useState(null);
+  const [isReady, setIsReady] = useState(false);
   const spinner = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   const successNotification = () => {
@@ -58,6 +62,7 @@ const UploadCase = ({ authState, getPendingCases }) => {
 
   const handleOk = () => {
     setIsModalVisible(false);
+    history.push('/my-cases');
   };
 
   const handleCancel = () => {
@@ -81,23 +86,21 @@ const UploadCase = ({ authState, getPendingCases }) => {
       setPostQueue(copy);
     }
   }, [postQueue]);
-
   useEffect(() => {
     if (nextPost) {
-      axios
-        .post(`${process.env.REACT_APP_API_URI}/upload`, nextPost, {
-          headers: {
-            Authorization: 'Bearer ' + authState.idToken.idToken,
-          },
-        })
+      axiosWithAuth()
+        .post(`/upload`, nextPost)
         .then(res => {
           setIsLoading(false);
           successNotification();
-          setNextPost(null);
-          if (postQueue) {
+          setScrapQueue(prev => [...prev, res.data.id]);
+          if (postQueue.length !== 0) {
             const copy = postQueue;
             setNextPost(copy.shift());
             setPostQueue(copy);
+          } else {
+            setNextPost(null);
+            setIsReady(true);
           }
         })
         .catch(() => {
@@ -106,7 +109,33 @@ const UploadCase = ({ authState, getPendingCases }) => {
         });
     }
   }, [nextPost]);
-
+  useEffect(() => {
+    if (nextScrap) {
+      axiosWithAuth()
+        .post(`/upload/scrap/${nextScrap}`)
+        .then(res => {
+          getPendingCases();
+          if (scrapQueue.length !== 0) {
+            const copy = scrapQueue;
+            setNextScrap(copy.shift());
+            setScrapQueue(copy);
+          } else {
+            setNextScrap(null);
+            setIsReady(false);
+          }
+        })
+        .catch(() => {
+          failNotification();
+        });
+    }
+  }, [nextScrap]);
+  useEffect(() => {
+    if (!nextScrap && scrapQueue.length !== 0 && isReady) {
+      const copy = scrapQueue;
+      setNextScrap(copy.shift());
+      setScrapQueue(copy);
+    }
+  }, [scrapQueue, isReady]);
   return (
     <div className="uploadPage">
       <div className="uploadButton">

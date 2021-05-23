@@ -13,7 +13,7 @@ import { ReloadOutlined, ExclamationCircleTwoTone } from '@ant-design/icons';
 import './MyCases.less';
 import ReviewCaseForm from './ReviewCaseForm';
 const initialFormValues = {
-  date: 'new Date()',
+  date: new Date(),
   judge: '',
   case_outcome: '',
   country_of_origin: '',
