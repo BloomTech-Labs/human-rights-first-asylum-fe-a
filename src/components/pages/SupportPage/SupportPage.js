@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { Typography, Collapse } from 'antd';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -33,8 +33,8 @@ const SupportPage = props => {
   };
 
   const postNewMessage = message => {
-    axios
-      .post(`${process.env.REACT_APP_API_URI}/faq/contact/`, message, {
+    axiosWithAuth()
+      .post(`/faq/contact/`, message, {
         headers: {
           Authorization: 'Bearer ' + authState.idToken.idToken,
         },
@@ -55,8 +55,8 @@ const SupportPage = props => {
   };
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/faq`, {
+    axiosWithAuth()
+      .get(`/faq`, {
         headers: {
           Authorization: 'Bearer ' + authState.idToken.idToken,
         },
