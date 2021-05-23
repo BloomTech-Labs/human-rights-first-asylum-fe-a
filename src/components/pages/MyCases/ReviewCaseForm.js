@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -88,30 +88,30 @@ const useStyles = makeStyles(theme => ({
 const ReviewCaseForm = props => {
   const {
     formValues,
-    onInputChange,
     currentId,
     getPendingCases,
     setVisible,
+    isVisible,
   } = props;
-
+  const [editedFormValues, setEditedFormValues] = useState(formValues);
+  useEffect(() => {
+    setEditedFormValues(formValues);
+  }, [formValues, isVisible]);
+  const onInputChange = e => {
+    const { name, value, checked } = e.target;
+    if (
+      name === 'filed_in_one_year' ||
+      name === 'initial_or_appellate' ||
+      name === 'credible'
+    ) {
+      setEditedFormValues({ ...editedFormValues, [name]: checked });
+    } else {
+      setEditedFormValues({ ...editedFormValues, [name]: value });
+    }
+  };
   const classes = useStyles();
   const role = window.localStorage.getItem('role');
-  // This implements the switch functionality on the form
-  const [state, setState] = useState({
-    filed_in_one_year: false,
-    credible: false,
-    initial_or_appellate: false,
-  });
-
-  const handleChange = e => {
-    setState({
-      ...state,
-      [e.target.name]: e.target.checked,
-    });
-  };
-
   const { handleSubmit } = useForm();
-
   const onSubmit = evt => {
     evt.preventDefault();
     if (role === 'user') {
@@ -149,7 +149,7 @@ const ReviewCaseForm = props => {
                   label="Hearing Date"
                   type="date"
                   variant="outlined"
-                  defaultValue={formValues.date}
+                  defaultValue={editedFormValues.case_date}
                   className={classes.textField}
                   InputLabelProps={{
                     shrink: true,
@@ -166,7 +166,7 @@ const ReviewCaseForm = props => {
                   variant="outlined"
                   name="judge"
                   onChange={onInputChange}
-                  value={formValues.judge}
+                  value={editedFormValues.judge}
                 />
               </label>
             </div>
@@ -178,7 +178,7 @@ const ReviewCaseForm = props => {
                   variant="outlined"
                   name="case_outcome"
                   onChange={onInputChange}
-                  value={formValues.case_outcome}
+                  value={editedFormValues.case_outcome}
                 />
               </label>
             </div>
@@ -191,7 +191,7 @@ const ReviewCaseForm = props => {
                   placeholder="Nation of Origin"
                   name="country_of_origin"
                   onChange={onInputChange}
-                  value={formValues.country_of_origin}
+                  value={editedFormValues.country_of_origin}
                 />
               </label>
             </div>
@@ -203,7 +203,7 @@ const ReviewCaseForm = props => {
                   name="protected_grounds"
                   placeholder="Protected Ground"
                   onChange={onInputChange}
-                  value={formValues.protected_grounds}
+                  value={editedFormValues.protected_grounds}
                 />
               </label>
             </div>
@@ -216,7 +216,7 @@ const ReviewCaseForm = props => {
                   placeholder="Application Type"
                   name="application_type"
                   onChange={onInputChange}
-                  value={formValues.application_type}
+                  value={editedFormValues.application_type}
                 />
               </label>
             </div>
@@ -229,7 +229,7 @@ const ReviewCaseForm = props => {
                   placeholder="Case Origin City"
                   name="case_origin_city"
                   onChange={onInputChange}
-                  value={formValues.case_origin_city}
+                  value={editedFormValues.case_origin_city}
                 />
               </label>
             </div>
@@ -242,7 +242,7 @@ const ReviewCaseForm = props => {
                   placeholder="Case Origin State"
                   name="case_origin_state"
                   onChange={onInputChange}
-                  value={formValues.case_origin_state}
+                  value={editedFormValues.case_origin_state}
                 />
               </label>
             </div>
@@ -254,7 +254,7 @@ const ReviewCaseForm = props => {
                   placeholder="Applicant Gender"
                   name="gender"
                   onChange={onInputChange}
-                  value={formValues.gender}
+                  value={editedFormValues.gender}
                 />
               </label>
             </div>
@@ -266,7 +266,7 @@ const ReviewCaseForm = props => {
                   placeholder="Applicant Language"
                   name="applicant_language"
                   onChange={onInputChange}
-                  value={formValues.applicant_language}
+                  value={editedFormValues.applicant_language}
                 />
               </label>
             </div>
@@ -279,7 +279,7 @@ const ReviewCaseForm = props => {
                   placeholder="Applicant Indigenous Group"
                   name="indigenous_group"
                   onChange={onInputChange}
-                  value={formValues.indigenous_group}
+                  value={editedFormValues.indigenous_group}
                 />
               </label>
             </div>
@@ -292,7 +292,7 @@ const ReviewCaseForm = props => {
                   placeholder="Type of Violence Experienced"
                   name="type_of_violence"
                   onChange={onInputChange}
-                  value={formValues.type_of_violence}
+                  value={editedFormValues.type_of_violence}
                 />
               </label>
             </div>
@@ -303,8 +303,8 @@ const ReviewCaseForm = props => {
                   control={
                     <Checkbox
                       className={classes.checkbox}
-                      checked={state.initial_or_appellate}
-                      onChange={handleChange}
+                      checked={editedFormValues.initial_or_appellate}
+                      onChange={onInputChange}
                       name="initial_or_appellate"
                     />
                   }
@@ -317,8 +317,8 @@ const ReviewCaseForm = props => {
                   control={
                     <Checkbox
                       className={classes.checkbox}
-                      checked={state.filed_in_one_year}
-                      onChange={handleChange}
+                      checked={editedFormValues.filed_in_one_year}
+                      onChange={onInputChange}
                       name="filed_in_one_year"
                     />
                   }
@@ -331,8 +331,8 @@ const ReviewCaseForm = props => {
                   control={
                     <Checkbox
                       className={classes.checkbox}
-                      checked={state.credible}
-                      onChange={handleChange}
+                      checked={editedFormValues.credible}
+                      onChange={onInputChange}
                       name="credible"
                     />
                   }

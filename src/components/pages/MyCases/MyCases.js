@@ -13,7 +13,7 @@ import { ReloadOutlined, ExclamationCircleTwoTone } from '@ant-design/icons';
 import './MyCases.less';
 import ReviewCaseForm from './ReviewCaseForm';
 const initialFormValues = {
-  date: new Date(),
+  case_date: new Date(),
   judge: '',
   case_outcome: '',
   country_of_origin: '',
@@ -38,10 +38,7 @@ export default function MyCases(props) {
   const [formValues, setFormValues] = useState(initialFormValues);
   const [visible, setVisible] = useState(false);
   const [currentId, setCurrentId] = useState();
-  const onInputChange = e => {
-    const { name, value } = e.target;
-    setFormValues({ ...formValues, [name]: value });
-  };
+
   useEffect(() => {
     getPendingCases();
     // eslint-disable-next-line
@@ -362,10 +359,10 @@ export default function MyCases(props) {
       >
         <ReviewCaseForm
           formValues={formValues}
-          onInputChange={onInputChange}
           currentId={currentId}
           getPendingCases={getPendingCases}
           setVisible={setVisible}
+          isVisible={visible}
         />
       </Modal>
     </div>
