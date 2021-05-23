@@ -8,10 +8,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-left: 3rem;
 }
 
 .users {
   width: 80%;
+  margin-bottom: 1rem;
 }
 
 .users-header {
@@ -34,4 +36,36 @@
 }
 .detail {
   margin-left: 2rem;
+}
+
+// Add User Modal
+.user-form {
+  margin-left: 2rem;
+}
+
+.add-user-btn {
+  background: @blue !important;
+  color: @white !important;
+  &:visited {
+    background: @blue;
+    color: @white;
+  }
+  &:focus {
+    background: @blue;
+    color: @white;
+  }
+}
+
+.radio {
+  display: flex;
+}
+
+// Pending Users
+.pending-users-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 80%;
+  margin-top: 1.5rem;
 }

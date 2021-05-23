@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { axiosWithAuth } from '../../../utils/axiosWithAuth';
 import { Button as AntDButton, Collapse, Descriptions } from 'antd';
 
+// Styles and Icons
+import Icon from '@ant-design/icons';
+import OrangeLine from '../../../styles/orange-line.svg';
+
 const PendingUsersPage = props => {
   const { Panel } = Collapse;
   const { authState } = props;
@@ -55,42 +59,63 @@ const PendingUsersPage = props => {
   };
 
   return (
-    <>
-      <h2> Manage Pending Users </h2>
-      <Collapse defaultActiveKey={['0']} accordion>
+    <div className="users">
+      <h2 className="users-header"> Pending Users </h2>
+      <p className="divider">
+        <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
+      </p>
+      <Collapse accordion>
         {pendingProfiles.map(item => {
           return (
-            <Panel header={`${item.firstName} ${item.lastName}`}>
-              <Descriptions title="User Info">
-                <Descriptions.Item label="Name">
-                  {`${item.firstName} ${item.lastName}`}
+            <Panel
+              className="item-name"
+              header={`${item.firstName} ${item.lastName}`}
+            >
+              <Descriptions className="user-info-title" title="User Info">
+                <Descriptions.Item className="user-details" label="Name">
+                  <p className="detail">{`${item.firstName} ${item.lastName}`}</p>
                 </Descriptions.Item>
-                <Descriptions.Item label="Role"> </Descriptions.Item>
-                <Descriptions.Item label="Date Requsted">
-                  {String(item.created_at).slice(0, 10)}
+
+                <Descriptions.Item className="user-details" label="Email">
+                  <p className="detail">{item.email}</p>
+                </Descriptions.Item>
+
+                <Descriptions.Item className="user-details" label="Role">
+                  <p className="detail">{item.role}</p>
+                </Descriptions.Item>
+
+                <Descriptions.Item
+                  className="user-details"
+                  label="Date Requsted"
+                >
+                  <p className="detail">
+                    {String(item.created_at).slice(0, 10)}
+                  </p>
                 </Descriptions.Item>
               </Descriptions>
-              <AntDButton
-                className="add-user-btn"
-                onClick={() => {
-                  approveUser(item);
-                }}
-              >
-                Approve
-              </AntDButton>
-              <AntDButton
-                className="add-user-btn"
-                onClick={() => {
-                  rejectUser(item);
-                }}
-              >
-                Reject
-              </AntDButton>
+              <div className="buttons">
+                <AntDButton
+                  className="btn-style"
+                  onClick={() => {
+                    approveUser(item);
+                  }}
+                >
+                  Approve
+                </AntDButton>
+                <AntDButton
+                  className="btn-style"
+                  onClick={() => {
+                    rejectUser(item);
+                  }}
+                >
+                  Reject
+                </AntDButton>
+              </div>
             </Panel>
           );
         })}
       </Collapse>
-    </>
+    </div>
   );
 };
 

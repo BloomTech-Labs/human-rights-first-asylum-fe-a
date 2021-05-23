@@ -152,10 +152,6 @@ const ManageUsersPage = props => {
         </Collapse>
       </div>
 
-      <div className="pending-users-container">
-        <PendingUsers authState={authState} />
-      </div>
-
       <div className="add-user-btn-container">
         <AntDButton className="add-user-btn" onClick={showModal}>
           Add a User
@@ -221,6 +217,7 @@ const ManageUsersPage = props => {
               onChange={onChange}
               name="role"
               value={formValues.role}
+              className="radio"
             >
               <Radio value="user">User</Radio>
               <Radio value="moderator">Moderator</Radio>
@@ -228,6 +225,10 @@ const ManageUsersPage = props => {
             </Radio.Group>
           </Form>
         </Modal>
+      </div>
+
+      <div className="pending-users-container">
+        <PendingUsers authState={authState} />
       </div>
     </div>
   );
