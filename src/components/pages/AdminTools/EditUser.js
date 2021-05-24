@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
+import axiosWithAuth from '../../../utils/axiosWithAuth';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -62,14 +63,9 @@ const EditUserPage = props => {
   const role = window.localStorage.getItem('role');
 
   const classes = useStyles();
-
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/profiles/${id}`, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken.idToken,
-        },
-      })
+    axiosWithAuth()
+      .get(`/profiles/${id}`)
       .then(res => {
         setFormValues(res.data);
       })
@@ -79,12 +75,8 @@ const EditUserPage = props => {
   }, [authState.idToken.idToken, id]);
 
   const postNewUser = editedUser => {
-    axios
-      .put(`${process.env.REACT_APP_API_URI}/profile/${id}`, editedUser, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken.idToken,
-        },
-      })
+    axiosWithAuth()
+      .put(`/profile/${id}`, editedUser)
       .catch(err => console.log(err));
     setFormValues(initialFormValues);
   };
@@ -102,7 +94,6 @@ const EditUserPage = props => {
       email: formValues.email.trim(),
       role: formValues.role.trim(),
     };
-    console.log(editedUser);
     postNewUser(editedUser);
   };
 
