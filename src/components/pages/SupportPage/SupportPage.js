@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { Collapse, Input, Button, Modal, Form } from 'antd';
-// import TextField from '@material-ui/core/TextField';
-// import Button from '@material-ui/core/Button';
 import './_SupportPageStyles.less';
 import Icon from '@ant-design/icons';
 import OrangeLine from '../../../styles/orange-line.svg';
@@ -83,15 +81,19 @@ const SupportPage = props => {
 
   return (
     <div className="support-container">
-      <div className="faq">
+      <div className="faqs">
         <h2 className="faq-title"> FAQ </h2>
         <p className="divider">
           <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
         </p>
-        <Collapse defaultActiveKey={['0']} accordion>
+        <Collapse accordion>
           {FAQ.map(item => {
             return (
-              <Panel key={item.id} header={`${item.question}`}>
+              <Panel
+                className="q-header"
+                key={item.id}
+                header={`${item.question}`}
+              >
                 <p className="answer">Answer: </p>
                 <span>{item.answer}</span>
               </Panel>
@@ -100,10 +102,12 @@ const SupportPage = props => {
         </Collapse>
       </div>
       <div className="support-form">
-        <h2 className="support-header"> Need Additional Assistance? </h2>
-        <Button className="support-btn" onClick={showModal}>
-          Contact Us
-        </Button>
+        <div className="contact-btn-div">
+          <h2 className="support-header"> Need Additional Assistance? </h2>
+          <p className="support-btn" onClick={showModal}>
+            Contact Us
+          </p>
+        </div>
         <Modal
           title=""
           visible={isModalVisible}
@@ -118,17 +122,14 @@ const SupportPage = props => {
           ]}
         >
           <Form layout="vertical" className="contact-form" onFinish={onSubmit}>
-            <h2 className="h1Styles">Contact Us:</h2>
+            <h2 className="h1Styles">Contact Us</h2>
             <p className="divider">
               <Icon
                 component={() => <img src={OrangeLine} alt="divider icon" />}
               />
             </p>
-            <Form.Item label="Message">
+            <Form.Item name="message" label="Message">
               <Input.TextArea
-                id="message"
-                type="text"
-                name="message"
                 onChange={onChange}
                 className="text-field"
                 value={formValues.message}
@@ -136,30 +137,6 @@ const SupportPage = props => {
             </Form.Item>
           </Form>
         </Modal>
-        {/* <form onSubmit={onSubmit}>
-          <label htmlFor="message">
-
-            <Input
-              id="message"
-              label="Message"
-              type="text"
-              name="message"
-              variant="outlined"
-              multiline={true}
-              onChange={onChange}
-              className="textField"
-              value={formValues.message}
-            />
-          </label>
-          <Button
-            onClick={onSubmit}
-            id="buttonStyles"
-            variant="contained"
-            component="span"
-          >
-            Submit
-          </Button>
-        </form> */}
       </div>
     </div>
   );
