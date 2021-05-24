@@ -37,16 +37,16 @@ const SignupPage = () => {
   };
 
   return (
-    <div className="root">
+    <div className="signup-root">
       <div
-        className="background-image"
+        className="background-image-signup"
         aria-label=" cosmetic background image"
       />
-      <div className="form">
+      <div className="signup-form">
         <div className="logo">
           <img src={logo} alt="logo" width="350px" />
         </div>
-        <h2 className="h2styles">Register for Access</h2>
+        <h2 className="h2-signup">Register for Access</h2>
         <Form onSubmit={onSubmit} layout="vertical">
           <Form.Item label="First Name">
             <Input

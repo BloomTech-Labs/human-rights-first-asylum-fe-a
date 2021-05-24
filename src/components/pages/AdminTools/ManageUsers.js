@@ -1,11 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { Link } from 'react-router-dom';
-import { Typography, Collapse, Descriptions } from 'antd';
-import { Form, Input, Button as AntDButton, Modal, Select } from 'antd';
+import {
+  Form,
+  Input,
+  Button as AntDButton,
+  Modal,
+  Collapse,
+  Descriptions,
+  Radio,
+} from 'antd';
+import PendingUsers from './PendingUsers';
+
+// Styling and Icons
+import './_ManageUsersStyles.less';
 import Icon from '@ant-design/icons';
 import OrangeLine from '../../../styles/orange-line.svg';
-import PendingUsers from './PendingUsers';
 
 const initialFormValues = {
   first_name: '',
@@ -14,23 +24,15 @@ const initialFormValues = {
   role: '',
 };
 
-const { Option } = Select;
-
 const ManageUsersPage = props => {
-  const { Title } = Typography;
   const { Panel } = Collapse;
   const { authState } = props;
   const [profiles, setProfiles] = useState([]);
-
   const [formValues, setFormValues] = useState(initialFormValues);
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/profiles`, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken.idToken,
-        },
-      })
+    axiosWithAuth()
+      .get(`/profiles`)
       .then(res => {
         setProfiles(res.data);
       })
@@ -40,12 +42,8 @@ const ManageUsersPage = props => {
   }, [authState.idToken.idToken]);
 
   const deleteUser = profile => {
-    axios
-      .delete(`${process.env.REACT_APP_API_URI}/profiles/${profile.user_id}`, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken.idToken,
-        },
-      })
+    axiosWithAuth()
+      .delete(`/profiles/${profile.user_id}`)
       .then(res => {
         alert(`${profile.first_name}'s profile was deleted`);
         console.log(res.data);
@@ -59,27 +57,20 @@ const ManageUsersPage = props => {
   const showModal = () => {
     setIsModalVisible(true);
   };
-
   const handleOk = () => {
     setIsModalVisible(false);
   };
-
   const handleCancel = () => {
     setIsModalVisible(false);
   };
-
   const onChange = e => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
   };
 
   const postNewUser = newUser => {
-    axios
-      .post(`${process.env.REACT_APP_API_URI}/profile/`, newUser, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken.idToken,
-        },
-      })
+    axiosWithAuth()
+      .post(`/profile/`, newUser)
       .catch(err => console.log(err));
     setFormValues(initialFormValues);
   };
@@ -94,42 +85,61 @@ const ManageUsersPage = props => {
     };
     console.log(newUser);
     postNewUser(newUser);
+    setIsModalVisible(false);
   };
 
   return (
-    <>
-      <Title level={2}> Manage Users </Title>
-      <Collapse defaultActiveKey={['0']} accordion>
-        {profiles.map(item => {
-          return (
-            <Panel header={`${item.first_name} ${item.last_name}`}>
-              <Descriptions title="User Info">
-                <Descriptions.Item label="Name">
-                  {`${item.first_name} ${item.last_name}`}
-                </Descriptions.Item>
-                <Descriptions.Item label="Email">
-                  {item.email}
-                </Descriptions.Item>
-                <Descriptions.Item label="Role">{item.role}</Descriptions.Item>
-                <Descriptions.Item label="Joined">
-                  {String(item.created_at).slice(0, 10)}
-                </Descriptions.Item>
-              </Descriptions>
-              <Link to={`edit-user/${item.user_id}`}>
-                <AntDButton>Edit</AntDButton>
-              </Link>
-              <AntDButton
-                onClick={() => {
-                  deleteUser(item);
-                }}
+    <div className="users-container">
+      <div className="users">
+        <h2 className="users-header"> Manage Users </h2>
+        <p className="divider">
+          <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
+        </p>
+        <Collapse accordion>
+          {profiles.map(item => {
+            return (
+              <Panel
+                className="item-name"
+                header={`${item.first_name} ${item.last_name}`}
               >
-                Delete
-              </AntDButton>
-            </Panel>
-          );
-        })}
-      </Collapse>
-      <PendingUsers authState={authState} />
+                <Descriptions className="user-info-title" title="User Info">
+                  <Descriptions.Item className="user-details" label="Name">
+                    <p className="detail">{`${item.first_name} ${item.last_name}`}</p>
+                  </Descriptions.Item>
+
+                  <Descriptions.Item className="user-details" label="Email">
+                    <p className="detail">{item.email}</p>
+                  </Descriptions.Item>
+
+                  <Descriptions.Item className="user-details" label="Role">
+                    <p className="detail">{item.role}</p>
+                  </Descriptions.Item>
+
+                  <Descriptions.Item className="user-details" label="Joined">
+                    <p className="detail">
+                      {String(item.created_at).slice(0, 10)}
+                    </p>
+                  </Descriptions.Item>
+                </Descriptions>
+                <div className="buttons">
+                  <Link to={`edit-user/${item.user_id}`}>
+                    <AntDButton className="btn-style">Edit</AntDButton>
+                  </Link>
+                  <AntDButton
+                    className="btn-style"
+                    onClick={() => {
+                      deleteUser(item);
+                    }}
+                  >
+                    Delete
+                  </AntDButton>
+                </div>
+              </Panel>
+            );
+          })}
+        </Collapse>
+      </div>
+
       <div className="add-user-btn-container">
         <AntDButton className="add-user-btn" onClick={showModal}>
           Add a User
@@ -191,18 +201,24 @@ const ManageUsersPage = props => {
                 value={formValues.email}
               />
             </Form.Item>
-
-            <Form.Item name="role" label="Role">
-              <Select placeholder="Select a role" onChange={onChange}>
-                <Option value="user">User</Option>
-                <Option value="moderator">Moderator</Option>
-                <Option value="admin">Admin</Option>
-              </Select>
-            </Form.Item>
+            <Radio.Group
+              onChange={onChange}
+              name="role"
+              value={formValues.role}
+              className="radio"
+            >
+              <Radio value="user">User</Radio>
+              <Radio value="moderator">Moderator</Radio>
+              <Radio value="admin">Admin</Radio>
+            </Radio.Group>
           </Form>
         </Modal>
       </div>
-    </>
+
+      <div className="pending-users-container">
+        <PendingUsers authState={authState} />
+      </div>
+    </div>
   );
 };
 

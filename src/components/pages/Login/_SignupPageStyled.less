@@ -1,30 +1,31 @@
 @background-image: '../../../styles/statueOfLiberty.jpg';
 @button: #bd5a27;
 
-.root {
+.signup-root {
   width: 100%;
   display: flex;
 }
 
-.form {
+.signup-form {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 40%;
+  width: 32%;
   margin: 0 auto;
   @media (max-width: 600px) {
     width: 70%;
   }
 }
+
 .logo {
   max-width: 350px;
   max-height: 65px;
 }
 
-.background-image {
+.background-image-signup {
   background-image: url(@background-image);
-  width: 600px;
+  width: 500px;
   min-height: 100vh;
   background-position: top;
   background-repeat: no-repeat;
@@ -35,7 +36,7 @@
 
 .ant-form {
   width: 50%;
-  margin-top: 3rem;
+  margin-top: 1.5rem;
   @media (max-width: 600px) {
     width: 80%;
   }
@@ -49,7 +50,9 @@
 
 .link-back {
   display: flex;
+  justify-content: center;
   padding-top: 0.5rem;
+  font-size: 1rem;
   p {
     padding-right: 0.5rem;
   }
@@ -58,14 +61,15 @@
   }
 }
 
-.h2styles {
+.h2-signup {
   font-size: 1.4rem;
+  margin-top: 3.5rem;
 }
 
 button.buttonStyles {
   color: #ffffff;
   background-color: @button;
-  margin-top: 3%;
+  margin: 0.8rem 0rem;
   display: flex;
   align-items: center;
   justify-content: center;

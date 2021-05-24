@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { Link } from 'react-router-dom';
-import { Collapse } from 'antd';
-import { Form, Input, Button as AntDButton, Modal } from 'antd';
+import { Form, Input, Button as AntDButton, Modal, Collapse } from 'antd';
 
-import './_FaqStyles.less';
+// Styling and Icons
+import './_AddFaqStyles.less';
 import './_ManageFaqStyles.less';
 import Icon from '@ant-design/icons';
 import OrangeLine from '../../../styles/orange-line.svg';
@@ -18,13 +18,10 @@ const ManageFaqPage = props => {
   const { authState } = props;
   const [faq, setFaq] = useState([]);
   const [formValues, setFormValues] = useState(initialFormValues);
+
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/faq`, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken.idToken,
-        },
-      })
+    axiosWithAuth()
+      .get(`/faq`)
       .then(res => {
         setFaq(res.data);
       })
@@ -32,13 +29,10 @@ const ManageFaqPage = props => {
         console.log(err);
       });
   }, [authState.idToken.idToken]);
+
   const deleteFaq = faq => {
-    axios
-      .delete(`${process.env.REACT_APP_API_URI}/faq/${faq.faq_id}`, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken.idToken,
-        },
-      })
+    axiosWithAuth()
+      .delete(`/faq/${faq.faq_id}`)
       .then(res => {
         alert(`'Deleted Question: ${faq.question}'`);
         window.location.reload();
@@ -64,14 +58,13 @@ const ManageFaqPage = props => {
   };
 
   const postNewQuestion = question => {
-    axios
-      .post(`${process.env.REACT_APP_API_URI}/faq/`, question, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken.idToken,
-        },
+    axiosWithAuth()
+      .post(`/faq/`, question)
+      .then(res => {
+        setFormValues(initialFormValues);
+        window.location.reload();
       })
       .catch(err => console.log(err));
-    setFormValues(initialFormValues);
   };
 
   const onSubmit = e => {

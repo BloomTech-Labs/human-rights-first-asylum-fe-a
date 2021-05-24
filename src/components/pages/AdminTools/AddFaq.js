@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Form, Input, Button, Modal } from 'antd';
 
-import './_FaqStyles.less';
+import './_AddFaqStyles.less';
 
 import Icon from '@ant-design/icons';
 import OrangeLine from '../../../styles/orange-line.svg';
