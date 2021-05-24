@@ -86,11 +86,7 @@ function RenderHomePage(props) {
 
   useEffect(() => {
     axiosWithAuth()
-      .get(`/cases`, {
-        headers: {
-          Authorization: 'Bearer ' + user.authState.idToken.idToken,
-        },
-      })
+      .get(`/cases`)
       .then(res => {
         setCaseData(
           res.data.map(eachCase => {
@@ -109,11 +105,7 @@ function RenderHomePage(props) {
   useEffect(() => {
     trackPromise(
       // Tracks the axios call and implements spinning loader while executing
-      axiosWithAuth().get(`/judge`, {
-        headers: {
-          Authorization: 'Bearer ' + user.authState.idToken.idToken,
-        },
-      })
+      axiosWithAuth().get(`/judge`)
     )
       .then(res => {
         setJudgeData(res.data);
@@ -124,13 +116,7 @@ function RenderHomePage(props) {
   }, [user.authState.idToken.idToken]);
 
   useEffect(() => {
-    trackPromise(
-      axiosWithAuth().get(`/profile/${user.userInfo.sub}`, {
-        headers: {
-          Authorization: 'Bearer ' + user.authState.idToken.idToken,
-        },
-      })
-    )
+    trackPromise(axiosWithAuth().get(`/profile/${user.userInfo.sub}`))
       .then(res => {
         window.localStorage.setItem('role', res.data.role);
         setHrfUserInfo(res.data);
@@ -148,13 +134,7 @@ function RenderHomePage(props) {
   ]);
 
   const getPendingCases = () => {
-    trackPromise(
-      axiosWithAuth().get(`/pendingCases/:${user.userInfo.sub}`, {
-        headers: {
-          Authorization: 'Bearer ' + user.authState.idToken.idToken,
-        },
-      })
-    )
+    trackPromise(axiosWithAuth().get(`/pendingCases/:${user.userInfo.sub}`))
       .then(res => {
         setMyPendingCases(
           res.data.map(eachCase => {
@@ -178,11 +158,7 @@ function RenderHomePage(props) {
   const deleteBookmark = caseID => {
     // only works for cases, judge requires name instead of ID to delete
     axiosWithAuth()
-      .delete(`/profile/${user.userInfo.sub}/case/${caseID}`, {
-        headers: {
-          Authorization: 'Bearer ' + user.authState.idToken.idToken,
-        },
-      })
+      .delete(`/profile/${user.userInfo.sub}/case/${caseID}`)
       .then(res => {
         deleteFromStateById(caseID, savedCases, setSavedCases);
       })
@@ -193,11 +169,7 @@ function RenderHomePage(props) {
 
   const deleteSavedJudge = judge_id => {
     axiosWithAuth()
-      .delete(`/profile/${user.userInfo.sub}/judge/${judge_id}`, {
-        headers: {
-          Authorization: 'Bearer ' + user.authState.idToken.idToken,
-        },
-      })
+      .delete(`/profile/${user.userInfo.sub}/judge/${judge_id}`)
       .then(res => {
         setSavedJudges(res.data.judge_bookmarks);
       })
