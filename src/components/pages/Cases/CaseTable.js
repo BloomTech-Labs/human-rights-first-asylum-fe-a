@@ -595,10 +595,14 @@ export default function CaseTable(props) {
 
   return (
     <div className="caseTableContainer">
-      <div className="chartContainer">
-        <DecisionRateChart />
-        <div className="divider"></div>
-        <CaseDataChart />
+      <div className="viz-container">
+        <div className="viz-card">
+          <DecisionRateChart />
+        </div>
+        <div className="viz-card">
+          <CaseDataChart />
+        </div>
+        {/* <div className="divider"></div> */}
       </div>
       <div className="caseTableCard">
         {searching && (

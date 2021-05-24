@@ -25,14 +25,18 @@ function SideDrawer() {
   };
 
   return (
-    <div style={{ width: 246, height: '100vh' }}>
+    <div style={{ width: '200px', height: '100vh', position: 'fixed' }}>
       <Menu
         defaultSelectedKeys={[window.location.pathname]}
         mode="inline"
         theme="light"
         inlineCollapsed={collapsed}
         onClick={handleRoute}
-        style={{ backgroundColor: '#F4F6F7', height: '100vh' }}
+        style={{
+          backgroundColor: '#F4F6F7',
+          height: '100vh',
+          position: 'sticky',
+        }}
       >
         <Button type="primary" className="toggle-btn" onClick={toggleCollapsed}>
           {React.createElement(
