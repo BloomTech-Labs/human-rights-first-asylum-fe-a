@@ -94,10 +94,10 @@ export default function CaseTable(props) {
       renderCell: params => (
         <>
           <Link
-            to={`/judge/${params.value.split(' ').join('%20')}`}
+            to={`/judge/${params.row.judge_id}`}
             style={{ color: '#3582cf' }}
           >
-            {params.value}
+            {params.row.first_name + ' ' + params.row.last_name}
           </Link>
         </>
       ),
