@@ -170,6 +170,7 @@ const DataHub = props => {
 
   return (
     <div className="dataHubContainer">
+      <h1>Approvals VS Denials Nationwide</h1>
       <div className="mainChartContainer">
         <TestDataChart />
       </div>
