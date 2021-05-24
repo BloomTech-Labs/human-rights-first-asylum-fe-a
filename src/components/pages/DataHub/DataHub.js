@@ -25,7 +25,6 @@ const DataHub = props => {
   }, [user.authState.idToken.idToken]);
 
   const TestDataChart = () => {
-    console.log(vizData.layout);
     return (
       <Plot
         data={vizData.data}
