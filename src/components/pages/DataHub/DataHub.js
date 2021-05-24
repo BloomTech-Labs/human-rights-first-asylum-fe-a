@@ -25,7 +25,30 @@ const DataHub = props => {
   }, [user.authState.idToken.idToken]);
 
   const TestDataChart = () => {
-    return <Plot data={vizData.data} layout={vizData.layout} />;
+    return (
+      <Plot
+        data={vizData.data}
+        layout={vizData.layout}
+        config={{
+          modeBarButtonsToRemove: [
+            'toImage',
+            'zoom2d',
+            'pan2d',
+            'select2d',
+            'lasso2d',
+            'drawclosedpath',
+            'drawopenpath',
+            'zoomIn2d',
+            'zoomOut2d',
+            'autoScale2d',
+            'hoverClosestCartesian',
+            'hoverCompareCartesian',
+            'toggleSpikelines',
+          ],
+          displaylogo: false,
+        }}
+      />
+    );
   };
 
   const CaseDataChart = () => {
@@ -64,6 +87,24 @@ const DataHub = props => {
           },
         ]}
         layout={{ width: 500, height: 300, title: 'Case Data' }}
+        config={{
+          modeBarButtonsToRemove: [
+            'toImage',
+            'zoom2d',
+            'pan2d',
+            'select2d',
+            'lasso2d',
+            'drawclosedpath',
+            'drawopenpath',
+            'zoomIn2d',
+            'zoomOut2d',
+            'autoScale2d',
+            'hoverClosestCartesian',
+            'hoverCompareCartesian',
+            'toggleSpikelines',
+          ],
+          displaylogo: false,
+        }}
       />
     );
   };
@@ -104,12 +145,31 @@ const DataHub = props => {
           },
         ]}
         layout={{ width: 1100, height: 400, title: 'Case Data' }}
+        config={{
+          modeBarButtonsToRemove: [
+            'toImage',
+            'zoom2d',
+            'pan2d',
+            'select2d',
+            'lasso2d',
+            'drawclosedpath',
+            'drawopenpath',
+            'zoomIn2d',
+            'zoomOut2d',
+            'autoScale2d',
+            'hoverClosestCartesian',
+            'hoverCompareCartesian',
+            'toggleSpikelines',
+          ],
+          displaylogo: false,
+        }}
       />
     );
   };
 
   return (
     <div className="dataHubContainer">
+      <h1>Approvals VS Denials Nationwide</h1>
       <div className="mainChartContainer">
         <TestDataChart />
       </div>
