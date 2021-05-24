@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { DataGrid } from '@material-ui/data-grid';
 
 import { Button, Input, Card, Drawer, Typography } from 'antd';
-import './JudgeTable.css';
+import './_JudgeTableStyles.less';
 
 import FeatherIcon from 'feather-icons-react';
 

@@ -602,7 +602,6 @@ export default function CaseTable(props) {
         <div className="viz-card">
           <CaseDataChart />
         </div>
-        {/* <div className="divider"></div> */}
       </div>
       <div className="caseTableCard">
         {searching && (
