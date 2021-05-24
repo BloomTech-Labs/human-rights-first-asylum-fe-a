@@ -7,7 +7,7 @@ import {
   View,
   StyleSheet,
 } from '@react-pdf/renderer';
-import hrfLogo from '../../Home/HRFlogo.png';
+import hrfLogo from '../../../../styles/HRFlogo.png';
 
 const styles = StyleSheet.create({
   page: {

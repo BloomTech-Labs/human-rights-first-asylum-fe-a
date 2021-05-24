@@ -1,11 +1,11 @@
 import React from 'react';
-import HRFLogo from './HRFlogo.png';
 import './_MainHeader.less';
 import { Menu, Dropdown } from 'antd';
 import { useHistory } from 'react-router-dom';
 
 import Icon from '@ant-design/icons';
 import Profile from '../../../styles/icons/profile.svg';
+import HRFLogo from '../../../styles/HRFlogo.png';
 
 export default function MainHeader(props) {
   const { logout } = props;
