@@ -2,14 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import axios from 'axios';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -59,13 +58,14 @@ const EditUserPage = props => {
   const [formValues, setFormValues] = useState(initialFormValues);
   const { authState } = props;
   const { id } = useParams();
+  const history = useHistory();
 
   const role = window.localStorage.getItem('role');
 
   const classes = useStyles();
   useEffect(() => {
     axiosWithAuth()
-      .get(`/profiles/${id}`)
+      .get(`${process.env.REACT_APP_API_URI}/profiles/${id}`)
       .then(res => {
         setFormValues(res.data);
       })
@@ -74,11 +74,12 @@ const EditUserPage = props => {
       });
   }, [authState.idToken.idToken, id]);
 
-  const postNewUser = editedUser => {
+  const editNewUser = editedUser => {
     axiosWithAuth()
-      .put(`/profile/${id}`, editedUser)
+      .put(`${process.env.REACT_APP_API_URI}/profile/${id}`, editedUser)
       .catch(err => console.log(err));
     setFormValues(initialFormValues);
+    history.push('/manage-users');
   };
 
   const onChange = e => {
@@ -89,12 +90,13 @@ const EditUserPage = props => {
   const onSubmit = e => {
     e.preventDefault();
     const editedUser = {
-      firstName: formValues.firstName.trim(),
-      lastName: formValues.lastName.trim(),
+      first_name: formValues.first_name.trim(),
+      last_name: formValues.last_name.trim(),
       email: formValues.email.trim(),
       role: formValues.role.trim(),
     };
-    postNewUser(editedUser);
+    console.log(editedUser);
+    editNewUser(editedUser);
   };
 
   return (
@@ -104,22 +106,22 @@ const EditUserPage = props => {
         <form onSubmit={onSubmit}>
           <label htmlFor="firstName">
             <TextField
-              id="firstName"
+              id="first_name"
               label="First Name"
               type="text"
-              name="firstName"
+              name="first_name"
               variant="outlined"
               onChange={onChange}
               className={classes.textField}
               value={formValues.first_name || ''}
             />
           </label>
-          <label htmlFor="lastName">
+          <label htmlFor="last_name">
             <TextField
               id="lastName"
               label="Last Name"
               type="text"
-              name="lastName"
+              name="last_name"
               variant="outlined"
               placeholder="Last Name"
               onChange={onChange}
@@ -131,7 +133,7 @@ const EditUserPage = props => {
             <TextField
               id="email"
               label="Email"
-              type="text"
+              type="email"
               name="email"
               variant="outlined"
               onChange={onChange}
