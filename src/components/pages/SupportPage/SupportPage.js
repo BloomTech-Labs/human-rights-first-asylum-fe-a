@@ -43,11 +43,7 @@ const SupportPage = props => {
 
   const postNewMessage = message => {
     axiosWithAuth()
-      .post(`/faq/contact/`, message, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken.idToken,
-        },
-      })
+      .post(`/faq/contact/`, message)
       .catch(err => console.log(err));
     setFormValues(initialFormValues);
   };
@@ -66,11 +62,7 @@ const SupportPage = props => {
 
   useEffect(() => {
     axiosWithAuth()
-      .get(`/faq`, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken.idToken,
-        },
-      })
+      .get(`/faq`)
       .then(res => {
         setFaq(res.data);
       })
