@@ -81,7 +81,7 @@ export default function CaseTable(props) {
       ),
     },
     {
-      field: 'date',
+      field: 'case_date',
       renderHeader: params => <strong>{'Date'}</strong>,
       headerName: 'Date',
       width: 110,
@@ -279,7 +279,7 @@ export default function CaseTable(props) {
 
   const [queryValues, setQueryValues] = useState({
     case_number: '',
-    date: '',
+    case_date: '',
     judge: '',
     case_origin_city: '',
     case_origin_state: '',
@@ -334,7 +334,7 @@ export default function CaseTable(props) {
 
   const searchOptions = [
     { id: 'case_number', label: 'Case Number' },
-    { id: 'date', label: 'Date' },
+    { id: 'case_date', label: 'Date' },
     { id: 'judge', label: 'Judge' },
     { id: 'case_origin_city', label: 'Origin City' },
     { id: 'case_origin_state', label: 'Origin State' },
