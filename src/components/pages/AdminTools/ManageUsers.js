@@ -70,11 +70,7 @@ const ManageUsersPage = props => {
 
   const postNewUser = newUser => {
     axiosWithAuth()
-      .post(`/profile/`, newUser, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken.idToken,
-        },
-      })
+      .post(`/profile/`, newUser)
       .catch(err => console.log(err));
     setFormValues(initialFormValues);
   };
