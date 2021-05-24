@@ -79,7 +79,7 @@ const SignupPage = () => {
             />
           </Form.Item>
           <div className="submit-button">
-            <Button onClick={onSubmit} className="buttonStyles">
+            <Button onClick={onSubmit} className="request-btn">
               Request Access
             </Button>
           </div>
