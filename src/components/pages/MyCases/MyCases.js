@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { trackPromise } from 'react-promise-tracker';
 import { Link } from 'react-router-dom';
 import Tabs from '@material-ui/core/Tabs';
@@ -8,37 +8,49 @@ import AppBar from '@material-ui/core/AppBar';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import { DataGrid, GridColumnsToolbarButton } from '@material-ui/data-grid';
-import { Button, Typography } from 'antd';
-import { ReloadOutlined } from '@ant-design/icons';
+import { Modal, Button, Typography } from 'antd';
+import { ReloadOutlined, ExclamationCircleTwoTone } from '@ant-design/icons';
 import './MyCases.less';
+import ReviewCaseForm from './ReviewCaseForm';
+const initialFormValues = {
+  case_date: new Date(),
+  judge: '',
+  case_outcome: '',
+  country_of_origin: '',
+  protected_grounds: '',
+  application_type: '',
+  case_origin_city: '',
+  case_origin_state: '',
+  gender: '',
+  applicant_language: '',
+  indigenous_group: '',
+  type_of_violence: '',
+  initial_or_appellate: false,
+  filed_in_one_year: false,
+  credible: false,
+};
 export default function MyCases(props) {
   const { Title } = Typography;
   const [tabValue, setTabValue] = useState(0);
   const { user, myPendingCases, getPendingCases } = props;
   const [myApprovedCases, setMyApprovedCases] = useState([]);
   const [selectedTab, setSelectedTab] = useState(true);
+  const [formValues, setFormValues] = useState(initialFormValues);
+  const [visible, setVisible] = useState(false);
+  const [currentId, setCurrentId] = useState();
 
   useEffect(() => {
     getPendingCases();
     // eslint-disable-next-line
   }, []);
   useEffect(() => {
-    trackPromise(
-      axios.get(
-        `${process.env.REACT_APP_API_URI}/cases/user/:${user.userInfo.sub}`,
-        {
-          headers: {
-            Authorization: 'Bearer ' + user.authState.idToken.idToken,
-          },
-        }
-      )
-    )
+    trackPromise(axiosWithAuth().get(`/cases/user/:${user.userInfo.sub}`))
       .then(res => {
         setMyApprovedCases(
           res.data.map(eachCase => {
             return {
               ...eachCase,
-              id: eachCase.case_number,
+              id: eachCase.case_id,
             };
           })
         );
@@ -50,9 +62,9 @@ export default function MyCases(props) {
   }, []);
   const pendingColumns = [
     {
-      field: 'case_number',
-      renderHeader: params => <strong>{'Case Number'}</strong>,
-      headerName: 'Case Number',
+      field: 'file_name',
+      renderHeader: params => <strong>{'File Name'}</strong>,
+      headerName: 'file_name',
       flex: 1,
       headerAlign: 'center',
       options: {
@@ -100,8 +112,25 @@ export default function MyCases(props) {
       headerName: 'Status',
       headerAlign: 'center',
       flex: 1,
-      // current there is a bug with status where having two cases with the same Case Number will change every status
-      // this will be fixed once we figure out what to do with Case Number
+      renderCell: params =>
+        params.row.status !== 'Review' ? (
+          params.row.status
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'row' }}>
+            <Button
+              size="small"
+              style={{ backgroundColor: '#2a5c8d', color: 'white' }}
+              onClick={e => {
+                e.preventDefault();
+                showModal(params.row);
+                setCurrentId(params.row.pending_case_id);
+              }}
+            >
+              Review
+            </Button>
+            <ExclamationCircleTwoTone twoToneColor="red" />
+          </div>
+        ),
     },
     {
       field: 'pending_case_id',
@@ -187,6 +216,15 @@ export default function MyCases(props) {
       renderCell: params => <span>Approved</span>,
     },
   ];
+
+  const showModal = values => {
+    setVisible(true);
+    setFormValues(values);
+  };
+
+  const handleCancel = () => {
+    setVisible(false);
+  };
   const CustomToolbar = () => {
     return (
       <div className="menuContainer">
@@ -206,14 +244,8 @@ export default function MyCases(props) {
                   indicator: classes.tabIndicator,
                 }}
               >
-                <Tab
-                  label="My Pending Cases"
-                  style={{ fontSize: selectedTab ? '4em' : '2.5em' }}
-                />
-                <Tab
-                  label="My Approved Cases"
-                  style={{ fontSize: !selectedTab ? '4em' : '2.5em' }}
-                />
+                <Tab label="My Pending Cases" />
+                <Tab label="My Approved Cases" />
               </Tabs>
             </AppBar>
           }
@@ -238,13 +270,7 @@ export default function MyCases(props) {
     );
   };
   const onDelete = case_id => {
-    trackPromise(
-      axios.delete(`${process.env.REACT_APP_API_URI}/pendingCases/${case_id}`, {
-        headers: {
-          Authorization: 'Bearer ' + user.authState.idToken.idToken,
-        },
-      })
-    )
+    trackPromise(axiosWithAuth().delete(`/pendingCases/${case_id}`))
       .then(res => {
         getPendingCases();
       })
@@ -325,6 +351,20 @@ export default function MyCases(props) {
           />
         </div>
       </TabPanel>
+      <Modal
+        title="Review Case Details"
+        visible={visible}
+        onCancel={handleCancel}
+        footer={[]}
+      >
+        <ReviewCaseForm
+          formValues={formValues}
+          currentId={currentId}
+          getPendingCases={getPendingCases}
+          setVisible={setVisible}
+          isVisible={visible}
+        />
+      </Modal>
     </div>
   );
 }

@@ -1,0 +1,66 @@
+@blue: #2a5c8d;
+@light-blue: #a0c5dd;
+@white: #ffffff;
+
+.account-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.account-card {
+  width: 80%;
+  border: none;
+}
+
+.ant-card-head-title {
+  font-size: 1.5rem;
+}
+
+.card {
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
+  width: 65%;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-contents {
+  display: flex;
+  align-items: center;
+  margin-left: 1rem;
+  margin-bottom: 1rem;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
+  margin-left: 2rem;
+}
+
+.info-line {
+  display: flex;
+}
+.p-1 {
+  width: 7rem;
+  color: @blue;
+}
+
+.edit-btn {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.edit-button {
+  background: @blue !important;
+  color: @white !important;
+  &:visited {
+    background: @blue;
+    color: @white;
+  }
+  &:focus {
+    background: @blue;
+    color: @white;
+  }
+}
