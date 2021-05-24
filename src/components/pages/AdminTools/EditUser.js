@@ -63,7 +63,6 @@ const EditUserPage = props => {
   const role = window.localStorage.getItem('role');
 
   const classes = useStyles();
-
   useEffect(() => {
     axiosWithAuth()
       .get(`${process.env.REACT_APP_API_URI}/profiles/${id}`)
