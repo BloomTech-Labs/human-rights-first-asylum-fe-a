@@ -47,6 +47,7 @@ const ManageUsersPage = props => {
       .then(res => {
         alert(`${profile.first_name}'s profile was deleted`);
         console.log(res.data);
+        window.location.reload();
       })
       .catch(err => {
         console.log(err);
@@ -73,6 +74,7 @@ const ManageUsersPage = props => {
       .post(`/profile/`, newUser)
       .catch(err => console.log(err));
     setFormValues(initialFormValues);
+    window.location.reload();
   };
 
   const onSubmit = e => {
