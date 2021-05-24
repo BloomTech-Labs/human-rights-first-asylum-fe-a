@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { Form, Input, Button, Modal } from 'antd';
 
 import './_AddFaqStyles.less';
@@ -35,12 +36,8 @@ const AddFaq = props => {
   };
 
   const postNewQuestion = question => {
-    axios
-      .post(`${process.env.REACT_APP_API_URI}/faq/`, question, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken.idToken,
-        },
-      })
+    axiosWithAuth()
+      .post(`/faq/`, question)
       .catch(err => console.log(err));
     setFormValues(initialFormValues);
   };
