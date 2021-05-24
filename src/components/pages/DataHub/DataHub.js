@@ -25,7 +25,31 @@ const DataHub = props => {
   }, [user.authState.idToken.idToken]);
 
   const TestDataChart = () => {
-    return <Plot data={vizData.data} layout={vizData.layout} />;
+    console.log(vizData.layout);
+    return (
+      <Plot
+        data={vizData.data}
+        layout={vizData.layout}
+        config={{
+          modeBarButtonsToRemove: [
+            'toImage',
+            'zoom2d',
+            'pan2d',
+            'select2d',
+            'lasso2d',
+            'drawclosedpath',
+            'drawopenpath',
+            'zoomIn2d',
+            'zoomOut2d',
+            'autoScale2d',
+            'hoverClosestCartesian',
+            'hoverCompareCartesian',
+            'toggleSpikelines',
+          ],
+          displaylogo: false,
+        }}
+      />
+    );
   };
 
   const CaseDataChart = () => {
