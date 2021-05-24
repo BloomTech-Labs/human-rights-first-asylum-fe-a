@@ -27,7 +27,7 @@ function SideDrawer() {
   return (
     <div style={{ width: 246, height: '100vh' }}>
       <Menu
-        defaultSelectedKeys={['/']}
+        defaultSelectedKeys={[window.location.pathname]}
         mode="inline"
         theme="light"
         inlineCollapsed={collapsed}
