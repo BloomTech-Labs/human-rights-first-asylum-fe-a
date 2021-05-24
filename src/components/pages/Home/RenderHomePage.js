@@ -187,7 +187,7 @@ function RenderHomePage(props) {
 
   return (
     <>
-      <MainHeader logout={logout} />
+      <MainHeader logout={logout} getPendingCases={getPendingCases} />
       <div className={classes.container}>
         <ThemeProvider theme={theme}>
           <SideDrawer
@@ -200,7 +200,6 @@ function RenderHomePage(props) {
             deleteSavedJudge={deleteSavedJudge}
           />
           <div className={classes.subContainer}>
-            <UploadCase getPendingCases={getPendingCases} />
             <Route exact path="/my-cases">
               <MyCases
                 user={user}
