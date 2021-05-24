@@ -2,13 +2,13 @@ import React from 'react';
 import './_MainHeader.less';
 import { Menu, Dropdown } from 'antd';
 import { useHistory } from 'react-router-dom';
-
+import UploadCase from '../Upload/UploadCase';
 import Icon from '@ant-design/icons';
 import Profile from '../../../styles/icons/profile.svg';
 import HRFLogo from '../../../styles/HRFlogo.png';
 
 export default function MainHeader(props) {
-  const { logout } = props;
+  const { logout, getPendingCases } = props;
   const history = useHistory();
 
   const onClick = ({ key }) => {
@@ -35,6 +35,7 @@ export default function MainHeader(props) {
   return (
     <div className="site-page-header">
       <img src={HRFLogo} alt="HRF Logo" width="350px" />
+      <UploadCase getPendingCases={getPendingCases} />
       <Dropdown className="drop-down" overlay={menu}>
         <ul className="ant-dropdown-link" onClick={e => e.preventDefault()}>
           <div className="user-button">
