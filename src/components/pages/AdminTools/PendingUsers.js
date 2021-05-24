@@ -8,7 +8,7 @@ import OrangeLine from '../../../styles/orange-line.svg';
 
 const PendingUsersPage = props => {
   const { Panel } = Collapse;
-  const { authState } = props;
+  const { authState, setProfiles } = props;
   const [pendingProfiles, setPendingProfiles] = useState([]);
 
   useEffect(() => {
@@ -23,11 +23,18 @@ const PendingUsersPage = props => {
   }, [authState.idToken.idToken]);
 
   const approveUser = profile => {
+    console.log(profile);
     axiosWithAuth()
       .post(`/profile/`, profile)
       .then(res => {
         alert(`Profile request from ${profile.email} was approved`);
         console.log(res.data);
+        setProfiles(res.data.profile);
+        setPendingProfiles(
+          pendingProfiles.filter(
+            pendingProfile => pendingProfile.user_id !== profile.user_id
+          )
+        );
       })
       .catch(err => {
         console.log(err);
@@ -40,6 +47,11 @@ const PendingUsersPage = props => {
       .then(res => {
         alert(`Profile request from ${profile.email} was rejected`);
         console.log(res.data);
+        setPendingProfiles(
+          pendingProfiles.filter(
+            pendingProfile => pendingProfile.user_id !== profile.user_id
+          )
+        );
       })
       .catch(err => {
         console.log(err);
@@ -85,6 +97,7 @@ const PendingUsersPage = props => {
                 <AntDButton
                   className="btn-style"
                   onClick={() => {
+                    console.log(item);
                     approveUser(item);
                   }}
                 >
