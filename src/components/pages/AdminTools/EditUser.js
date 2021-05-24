@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import axios from 'axios';
+import axiosWithAuth from '../../../utils/axiosWithAuth';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -65,12 +65,8 @@ const EditUserPage = props => {
   const classes = useStyles();
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/profiles/${id}`, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken.idToken,
-        },
-      })
+    axiosWithAuth()
+      .get(`${process.env.REACT_APP_API_URI}/profiles/${id}`)
       .then(res => {
         setFormValues(res.data);
       })
@@ -80,12 +76,8 @@ const EditUserPage = props => {
   }, [authState.idToken.idToken, id]);
 
   const editNewUser = editedUser => {
-    axios
-      .put(`${process.env.REACT_APP_API_URI}/profile/${id}`, editedUser, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken.idToken,
-        },
-      })
+    axiosWithAuth()
+      .put(`${process.env.REACT_APP_API_URI}/profile/${id}`, editedUser)
       .catch(err => console.log(err));
     setFormValues(initialFormValues);
     history.push('/manage-users');
@@ -142,7 +134,7 @@ const EditUserPage = props => {
             <TextField
               id="email"
               label="Email"
-              type="text"
+              type="email"
               name="email"
               variant="outlined"
               onChange={onChange}
