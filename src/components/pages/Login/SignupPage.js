@@ -5,8 +5,8 @@ import './_SignupPageStyled.less';
 import logo from '../../../styles/hrf-logo.png';
 
 const initialFormValues = {
-  firstName: '',
-  lastName: '',
+  first_name: '',
+  last_name: '',
   email: '',
 };
 
@@ -28,8 +28,8 @@ const SignupPage = () => {
   const onSubmit = e => {
     e.preventDefault();
     const newUser = {
-      firstName: formValues.firstName.trim(),
-      lastName: formValues.lastName.trim(),
+      first_name: formValues.first_name.trim(),
+      last_name: formValues.last_name.trim(),
       email: formValues.email.trim(),
     };
     console.log(newUser);
@@ -47,25 +47,25 @@ const SignupPage = () => {
           <img src={logo} alt="logo" width="350px" />
         </div>
         <h2 className="h2-signup">Register for Access</h2>
-        <Form onSubmit={onSubmit} layout="vertical">
+        <Form onFinish={onSubmit} layout="vertical">
           <Form.Item label="First Name">
             <Input
-              id="firstname"
+              id="first_name"
               type="text"
-              name="firstname"
+              name="first_name"
               onChange={onChange}
               className="textfield"
-              value={formValues.firstName}
+              value={formValues.first_name}
             />
           </Form.Item>
           <Form.Item label="Last Name">
             <Input
-              id="lastname"
+              id="last_name"
               type="text"
-              name="lastname"
+              name="last_name"
               onChange={onChange}
               className="textfield"
-              value={formValues.lastName}
+              value={formValues.last_name}
             />
           </Form.Item>
           <Form.Item label="Email Address">

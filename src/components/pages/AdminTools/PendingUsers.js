@@ -57,11 +57,11 @@ const PendingUsersPage = props => {
           return (
             <Panel
               className="item-name"
-              header={`${item.firstName} ${item.lastName}`}
+              header={`${item.first_name} ${item.last_name}`}
             >
               <Descriptions className="user-info-title" title="User Info">
                 <Descriptions.Item className="user-details" label="Name">
-                  <p className="detail">{`${item.firstName} ${item.lastName}`}</p>
+                  <p className="detail">{`${item.first_name} ${item.last_name}`}</p>
                 </Descriptions.Item>
 
                 <Descriptions.Item className="user-details" label="Email">
@@ -74,7 +74,7 @@ const PendingUsersPage = props => {
 
                 <Descriptions.Item
                   className="user-details"
-                  label="Date Requsted"
+                  label="Date Requested"
                 >
                   <p className="detail">
                     {String(item.created_at).slice(0, 10)}
