@@ -1,0 +1,59 @@
+@blue: #2a5c8d;
+@light-blue: #a0c5dd;
+@white: #ffffff;
+
+.support-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-self: center;
+}
+
+.faqs {
+  width: 80%;
+}
+
+.faq-title {
+  font-size: 1.8rem;
+}
+
+.contact-btn-div {
+  display: flex;
+  justify-self: center;
+  align-items: center;
+  margin-top: 1rem;
+  .support-header {
+    font-size: 1.4rem;
+    padding: 0.5rem;
+  }
+  .support-btn {
+    padding: 0.5rem;
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: @blue;
+  }
+}
+
+.contact-form {
+  margin-left: 1.2rem;
+}
+
+.send-button {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.send-btn {
+  background: @blue !important;
+  color: @white !important;
+  margin-bottom: 1rem;
+  &:visited {
+    background: @blue;
+    color: @white;
+  }
+  &:focus {
+    background: @blue;
+    color: @white;
+  }
+}
