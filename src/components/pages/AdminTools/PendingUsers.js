@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { axiosWithAuth } from '../../../utils/axiosWithAuth';
+import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { Button as AntDButton, Collapse, Descriptions } from 'antd';
 
 // Styles and Icons
@@ -13,11 +13,7 @@ const PendingUsersPage = props => {
 
   useEffect(() => {
     axiosWithAuth()
-      .get(`/profiles/pending`, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken.idToken,
-        },
-      })
+      .get(`/profiles/pending`)
       .then(res => {
         setPendingProfiles(res.data);
       })
@@ -28,11 +24,7 @@ const PendingUsersPage = props => {
 
   const approveUser = profile => {
     axiosWithAuth()
-      .post(`/profile/`, profile, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken.idToken,
-        },
-      })
+      .post(`/profile/`, profile)
       .then(res => {
         alert(`Profile request from ${profile.email} was approved`);
         console.log(res.data);
@@ -44,11 +36,7 @@ const PendingUsersPage = props => {
 
   const rejectUser = profile => {
     axiosWithAuth()
-      .delete(`/profiles/pending/${profile.id}`, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken.idToken,
-        },
-      })
+      .delete(`/profiles/pending/${profile.id}`)
       .then(res => {
         alert(`Profile request from ${profile.email} was rejected`);
         console.log(res.data);

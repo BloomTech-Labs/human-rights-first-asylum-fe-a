@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { axiosWithAuth } from '../../../utils/axiosWithAuth';
+import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { Link } from 'react-router-dom';
 import {
   Form,
@@ -32,11 +32,7 @@ const ManageUsersPage = props => {
 
   useEffect(() => {
     axiosWithAuth()
-      .get(`/profiles`, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken.idToken,
-        },
-      })
+      .get(`/profiles`)
       .then(res => {
         setProfiles(res.data);
       })
@@ -47,11 +43,7 @@ const ManageUsersPage = props => {
 
   const deleteUser = profile => {
     axiosWithAuth()
-      .delete(`/profiles/${profile.user_id}`, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken.idToken,
-        },
-      })
+      .delete(`/profiles/${profile.user_id}`)
       .then(res => {
         alert(`${profile.first_name}'s profile was deleted`);
         console.log(res.data);

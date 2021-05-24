@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { axiosWithAuth } from '../../../utils/axiosWithAuth';
+import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { Link } from 'react-router-dom';
 import { Form, Input, Button as AntDButton, Modal, Collapse } from 'antd';
 
@@ -21,11 +21,7 @@ const ManageFaqPage = props => {
 
   useEffect(() => {
     axiosWithAuth()
-      .get(`/faq`, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken.idToken,
-        },
-      })
+      .get(`/faq`)
       .then(res => {
         setFaq(res.data);
       })
@@ -36,11 +32,7 @@ const ManageFaqPage = props => {
 
   const deleteFaq = faq => {
     axiosWithAuth()
-      .delete(`/faq/${faq.faq_id}`, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken.idToken,
-        },
-      })
+      .delete(`/faq/${faq.faq_id}`)
       .then(res => {
         alert(`'Deleted Question: ${faq.question}'`);
         window.location.reload();
@@ -67,11 +59,7 @@ const ManageFaqPage = props => {
 
   const postNewQuestion = question => {
     axiosWithAuth()
-      .post(`/faq/`, question, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken.idToken,
-        },
-      })
+      .post(`/faq/`, question)
       .then(res => {
         setFormValues(initialFormValues);
         window.location.reload();
