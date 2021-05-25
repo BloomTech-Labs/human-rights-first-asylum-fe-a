@@ -1,4 +1,3 @@
-import { red } from 'kleur';
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
@@ -63,7 +62,7 @@ table {
   display: none;
 }
 *::selection {
-  background: none;
+  background: #a0c5dd;
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import CaseTable from '../CaseTable/CaseTable';
+import CaseTable from '../Cases/CaseTable';
 import JudgeTable from '../JudgeTable/JudgeTable';
 import UploadCase from '../Upload/UploadCase';
 import SideDrawer from '../SideDrawer/SideDrawer';
@@ -16,7 +16,7 @@ import {
 } from '@material-ui/core/styles';
 import { UserContext } from '../../../context/UserContext';
 
-import axios from 'axios';
+import axiosWithAuth from '../../../utils/axiosWithAuth';
 import SavedCases from '../SavedCases/SavedCases';
 import SavedJudges from '../SavedJudges/SavedJudges';
 
@@ -28,11 +28,7 @@ import CaseUpdate from '../CaseOverview/CaseUpdate';
 import ManageCases from '../ManageCases/ManageCases';
 import AccountPage from '../AccountPage/AccountPage';
 import SupportPage from '../SupportPage/SupportPage';
-import AdminToolsPage from '../AdminTools/AdminTools';
-import AddUsersPage from '../AdminTools/AddUsers';
-import PendingUsers from '../AdminTools/PendingUsers';
 import ManageUsersPage from '../AdminTools/ManageUsers';
-import EditUserPage from '../AdminTools/EditUser';
 import AddFaq from '../AdminTools/AddFaq';
 import ManageFaqPage from '../AdminTools/ManageFaq';
 import EditFaqPage from '../AdminTools/EditFaq';
@@ -88,13 +84,8 @@ function RenderHomePage(props) {
   const user = useContext(UserContext);
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/cases`, {
-        headers: {
-          Authorization: 'Bearer ' + user.authState.idToken.idToken,
-        },
-      })
-      // )
+    axiosWithAuth()
+      .get(`/cases`)
       .then(res => {
         setCaseData(
           res.data.map(eachCase => {
@@ -113,11 +104,7 @@ function RenderHomePage(props) {
   useEffect(() => {
     trackPromise(
       // Tracks the axios call and implements spinning loader while executing
-      axios.get(`${process.env.REACT_APP_API_URI}/judge`, {
-        headers: {
-          Authorization: 'Bearer ' + user.authState.idToken.idToken,
-        },
-      })
+      axiosWithAuth().get(`/judge`)
     )
       .then(res => {
         setJudgeData(res.data);
@@ -128,20 +115,11 @@ function RenderHomePage(props) {
   }, [user.authState.idToken.idToken]);
 
   useEffect(() => {
-    trackPromise(
-      axios.get(
-        `${process.env.REACT_APP_API_URI}/profile/${user.userInfo.sub}`,
-        {
-          headers: {
-            Authorization: 'Bearer ' + user.authState.idToken.idToken,
-          },
-        }
-      )
-    )
+    trackPromise(axiosWithAuth().get(`/profile/${user.userInfo.sub}`))
       .then(res => {
         window.localStorage.setItem('role', res.data.role);
         setHrfUserInfo(res.data);
-        // setSavedCases(res.data.case_bookmarks);
+        setSavedCases(res.data.case_bookmarks);
         setSavedJudges(res.data.judge_bookmarks);
       })
       .catch(err => {
@@ -155,22 +133,13 @@ function RenderHomePage(props) {
   ]);
 
   const getPendingCases = () => {
-    trackPromise(
-      axios.get(
-        `${process.env.REACT_APP_API_URI}/pendingCases/:${user.userInfo.sub}`,
-        {
-          headers: {
-            Authorization: 'Bearer ' + user.authState.idToken.idToken,
-          },
-        }
-      )
-    )
+    trackPromise(axiosWithAuth().get(`/pendingCases/:${user.userInfo.sub}`))
       .then(res => {
         setMyPendingCases(
           res.data.map(eachCase => {
             return {
               ...eachCase,
-              id: eachCase.case_number,
+              id: eachCase.pending_case_id,
             };
           })
         );
@@ -187,15 +156,8 @@ function RenderHomePage(props) {
 
   const deleteBookmark = caseID => {
     // only works for cases, judge requires name instead of ID to delete
-    axios
-      .delete(
-        `${process.env.REACT_APP_API_URI}/profile/${user.userInfo.sub}/case/${caseID}`,
-        {
-          headers: {
-            Authorization: 'Bearer ' + user.authState.idToken.idToken,
-          },
-        }
-      )
+    axiosWithAuth()
+      .delete(`/profile/${user.userInfo.sub}/case/${caseID}`)
       .then(res => {
         deleteFromStateById(caseID, savedCases, setSavedCases);
       })
@@ -205,15 +167,8 @@ function RenderHomePage(props) {
   };
 
   const deleteSavedJudge = judge_id => {
-    axios
-      .delete(
-        `${process.env.REACT_APP_API_URI}/profile/${user.userInfo.sub}/judge/${judge_id}`,
-        {
-          headers: {
-            Authorization: 'Bearer ' + user.authState.idToken.idToken,
-          },
-        }
-      )
+    axiosWithAuth()
+      .delete(`/profile/${user.userInfo.sub}/judge/${judge_id}`)
       .then(res => {
         setSavedJudges(res.data.judge_bookmarks);
       })
@@ -231,7 +186,7 @@ function RenderHomePage(props) {
 
   return (
     <>
-      <MainHeader logout={logout} />
+      <MainHeader logout={logout} getPendingCases={getPendingCases} />
       <div className={classes.container}>
         <ThemeProvider theme={theme}>
           <SideDrawer
@@ -244,10 +199,6 @@ function RenderHomePage(props) {
             deleteSavedJudge={deleteSavedJudge}
           />
           <div className={classes.subContainer}>
-            <UploadCase
-              authState={user.authState}
-              getPendingCases={getPendingCases}
-            />
             <Route exact path="/my-cases">
               <MyCases
                 user={user}
@@ -267,7 +218,7 @@ function RenderHomePage(props) {
                 deleteSavedJudge={deleteSavedJudge}
               />
             </Route>
-            <Route exact path="/judge/:name">
+            <Route exact path="/judge/:judge_id">
               <JudgePage
                 // clicking on a Judge should bring you to a url with their name in it
                 // get request to get details of that judge
@@ -300,20 +251,8 @@ function RenderHomePage(props) {
             <Route exact path="/support">
               <SupportPage authState={user.authState} userInfo={hrfUserInfo} />
             </Route>
-            <Route exact path="/admin-tools">
-              <AdminToolsPage authState={user.authState} />
-            </Route>
-            <Route exact path="/add-users">
-              <AddUsersPage authState={user.authState} />
-            </Route>
-            <Route exact path="/manage-requested">
-              <PendingUsers authState={user.authState} />
-            </Route>
             <Route exact path="/manage-users">
               <ManageUsersPage authState={user.authState} />
-            </Route>
-            <Route exact path="/edit-user/:id">
-              <EditUserPage authState={user.authState} />
             </Route>
             <Route exact path="/add-faq">
               <AddFaq authState={user.authState} />
@@ -321,7 +260,7 @@ function RenderHomePage(props) {
             <Route exact path="/manage-faq">
               <ManageFaqPage authState={user.authState} />
             </Route>
-            <Route exact path="/edit-faq/:id">
+            <Route exact path="/edit-faq/:faq_id">
               <EditFaqPage authState={user.authState} />
             </Route>
 

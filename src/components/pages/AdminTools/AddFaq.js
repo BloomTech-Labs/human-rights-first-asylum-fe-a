@@ -1,45 +1,11 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import axios from 'axios';
+import axiosWithAuth from '../../../utils/axiosWithAuth';
+import { Form, Input, Button, Modal } from 'antd';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    marginTop: '7%',
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'space-around',
-  },
-  form: {
-    width: '50%',
-  },
-  h1Styles: {
-    fontSize: '2rem',
-    marginBottom: '2.5rem',
-  },
-  h2Styles: {
-    fontSize: '1.3rem',
-    marginBottom: '2.5rem',
-    width: '100%',
-  },
-  textField: {
-    width: '100%',
-    margin: '1% auto',
-  },
-  buttonStyles: {
-    color: '#ffffff',
-    backgroundColor: '#215589',
-    marginTop: '3%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  radio: {
-    margin: '8%',
-    fontSize: '1.5rem',
-  },
-}));
+import './_AddFaqStyles.less';
+
+import Icon from '@ant-design/icons';
+import OrangeLine from '../../../styles/orange-line.svg';
 
 const initialFormValues = {
   question: '',
@@ -49,8 +15,19 @@ const initialFormValues = {
 const AddFaq = props => {
   const [formValues, setFormValues] = useState(initialFormValues);
   const { authState } = props;
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const classes = useStyles();
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
 
   const onChange = e => {
     const { name, value } = e.target;
@@ -58,12 +35,8 @@ const AddFaq = props => {
   };
 
   const postNewQuestion = question => {
-    axios
-      .post(`${process.env.REACT_APP_API_URI}/faq/`, question, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken.idToken,
-        },
-      })
+    axiosWithAuth()
+      .post(`/faq/`, question)
       .catch(err => console.log(err));
     setFormValues(initialFormValues);
   };
@@ -75,50 +48,61 @@ const AddFaq = props => {
       answer: formValues.answer.trim(),
     };
     postNewQuestion(question);
+    setIsModalVisible(false);
   };
 
   return (
-    <div className={classes.root}>
-      <div className={classes.form}>
-        <h2 className={classes.h1Styles}> Add Question </h2>
-        <form onSubmit={onSubmit}>
-          <label htmlFor="question">
-            <TextField
-              id="question"
-              label="Question"
-              type="text"
-              name="question"
-              variant="outlined"
-              multiline={true}
-              onChange={onChange}
-              className={classes.textField}
-              value={formValues.question}
-            />
-          </label>
-          <label htmlFor="answer">
-            <TextField
-              id="answer"
-              label="Answer"
-              type="text"
-              name="answer"
-              variant="outlined"
-              multiline={true}
-              onChange={onChange}
-              className={classes.textField}
-              value={formValues.answer}
-            />
-          </label>
-          <div className="submit-button">
-            <Button
-              onClick={onSubmit}
-              className={classes.buttonStyles}
-              variant="contained"
-              component="span"
-            >
-              Submit
-            </Button>
-          </div>
-        </form>
+    <div className="root">
+      <div className="add-faq-btn-container">
+        <Button className="add-faq-btn" onClick={showModal}>
+          Add a FAQ
+        </Button>
+        <Modal
+          title=""
+          visible={isModalVisible}
+          onOk={handleOk}
+          onCancel={handleCancel}
+          footer={[
+            <div className="submit-button">
+              <Button
+                htmlType="submit"
+                className="add-faq-btn"
+                onClick={onSubmit}
+              >
+                <span>Submit</span>
+              </Button>
+            </div>,
+          ]}
+        >
+          <Form layout="vertical" className="faq-form" onFinish={onSubmit}>
+            <h2 className="h1Styles">Add a FAQ</h2>
+            <p className="divider">
+              <Icon
+                component={() => <img src={OrangeLine} alt="divider icon" />}
+              />
+            </p>
+            <Form.Item label="Question">
+              <Input
+                id="question"
+                type="text"
+                name="question"
+                onChange={onChange}
+                className="text-field"
+                value={formValues.question}
+              />
+            </Form.Item>
+            <Form.Item label="Answer">
+              <Input
+                id="answer"
+                type="text"
+                name="answer"
+                onChange={onChange}
+                className="text-field"
+                value={formValues.answer}
+              />
+            </Form.Item>
+          </Form>
+        </Modal>
       </div>
     </div>
   );

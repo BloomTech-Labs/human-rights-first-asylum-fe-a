@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import { Link, useParams } from 'react-router-dom';
+import axiosWithAuth from '../../../utils/axiosWithAuth';
+import { Link } from 'react-router-dom';
 import Plot from 'react-plotly.js';
 import Highlighter from 'react-highlight-words';
 import {
@@ -10,19 +10,8 @@ import {
 } from '@ant-design/icons';
 import FeatherIcon from 'feather-icons-react';
 
-import {
-  Table,
-  Space,
-  Button,
-  Input,
-  Radio,
-  Divider,
-  Menu,
-  message,
-  Tabs,
-} from 'antd';
+import { Table, Space, Button, Input, Menu, message, Tabs } from 'antd';
 import './CaseTable.less';
-import { MenuItem } from '@material-ui/core';
 
 export default function CaseTable(props) {
   const [state, setState] = useState({
@@ -32,15 +21,7 @@ export default function CaseTable(props) {
     current: 'iCase',
   });
 
-  const {
-    caseData,
-    userInfo,
-    savedCases,
-    setSavedCases,
-    authState,
-    setSelectedRows,
-    selectedRows,
-  } = props;
+  const { caseData, userInfo, savedCases, setSavedCases } = props;
 
   let casesData = caseData.map(cases => ({
     judge_name:
@@ -55,7 +36,7 @@ export default function CaseTable(props) {
 
   const { TabPane } = Tabs;
 
-  const { searchText, searchedColumn, selectedRowID, current } = state;
+  const { searchText, searchedColumn, selectedRowID } = state;
 
   const onSelectChange = selectedRowID => {
     console.log('selectedRowID changed: ', selectedRowID);
@@ -293,21 +274,17 @@ export default function CaseTable(props) {
   };
 
   const postBookmark = rowToPost => {
-    axios
-      .post(
-        `${process.env.REACT_APP_API_URI}/profile/${userInfo.sub}/case/${rowToPost.case_id}`,
-        rowToPost,
-        {
-          headers: {
-            Authorization: 'Bearer ' + authState.idToken.idToken,
-          },
-        }
-      )
+    axiosWithAuth()
+      .post(`/profile/${userInfo.sub}/case/${rowToPost}`, rowToPost)
+      // .then(res => {
+      //   let justAdded = res.data.case_bookmarks.slice(-1); // response comes back as array of all existing bookmarks
+      //   let justAddedID = justAdded[0].case_id;
+      //   let wholeAddedRow = findRowByID(justAddedID, caseData);
+      //   setSavedCases([...savedCases, wholeAddedRow]);
+
       .then(res => {
-        let justAdded = res.data.case_bookmarks.slice(-1); // response comes back as array of all existing bookmarks
-        let justAddedID = justAdded[0].case_id;
-        let wholeAddedRow = findRowByID(justAddedID, caseData);
-        setSavedCases([...savedCases, wholeAddedRow]);
+        console.log(res.data);
+        setSavedCases(res.data.case_bookmarks);
       })
       .catch(err => {
         console.log(err);
@@ -319,10 +296,13 @@ export default function CaseTable(props) {
     // need to reference rows by id, as that is all that selection stores
     // need to account for duplicates as well
     let bookmarks = [];
-    let savedIds = [];
-    if (selectedRowID) {
+    if (selectedRowID.length === 0) {
+      alert('Please select cases(s) to be saved');
+    } else {
       selectedRowID.forEach(row => bookmarks.push(findRowByID(row, caseData)));
     }
+
+    let savedIds = [];
     if (savedCases) {
       savedCases.forEach(id => savedIds.push(id.case_id));
     }
@@ -336,14 +316,9 @@ export default function CaseTable(props) {
     alert('Cases Successfully Saved');
   };
 
-  // eslint-disable-next-line no-unused-vars
-  const onCheckboxSelect = selections => {
-    setSelectedRows(selections);
-  };
-
   const [queryValues, setQueryValues] = useState({
     case_number: '',
-    date: '',
+    case_date: '',
     judge: '',
     case_origin_city: '',
     case_origin_state: '',
@@ -528,47 +503,43 @@ export default function CaseTable(props) {
   const nonAppCases = casesData.filter(item => item.appellate === false);
   const appCases = casesData.filter(item => item.appellate === true);
 
-  const handleClick = e => {
-    console.log('click ', e);
-    setState({ current: e.key });
-  };
+  // const handleClick = e => {
+  //   console.log('click ', e);
+  //   setState({ current: e.key });
+  // };
 
-  const [tabValue, setTabValue] = useState(0);
+  // const [tabValue, setTabValue] = useState(0);
 
-  const onChange = (e, newTabValue) => {
-    setTabValue(newTabValue);
-  };
+  // const onChange = (e, newTabValue) => {
+  //   setTabValue(newTabValue);
+  // };
 
   return (
-    console.log(caseData),
-    console.log(casesData),
-    (
-      <div className="caseTableContainer">
-        <div className="chartContainer">
-          <DecisionRateChart />
-          <div className="divider"></div>
-          <CaseDataChart />
-        </div>
-        <div>
-          <CustomToolbar />
-          <Table
-            className="cases_table iCases"
-            rowSelection={rowSelection}
-            rowKey={record => record.case_id}
-            columns={columns}
-            dataSource={nonAppCases}
-            onChange={changeSorter}
-          />
-          <Table
-            className="cases_table appCases"
-            rowSelection={rowSelection}
-            rowKey={record => record.case_id}
-            columns={columns}
-            dataSource={appCases}
-            onChange={changeSorter}
-          />
-        </div>
+    <div className="caseTableContainer">
+      <div className="chartContainer">
+        <DecisionRateChart />
+        <div className="divider"></div>
+        <CaseDataChart />
       </div>
-    )
+      <div>
+        <CustomToolbar />
+        <Table
+          className="cases_table iCases"
+          rowSelection={rowSelection}
+          rowKey={record => record.case_id}
+          columns={columns}
+          dataSource={nonAppCases}
+          onChange={changeSorter}
+        />
+        <Table
+          className="cases_table appCases"
+          rowSelection={rowSelection}
+          rowKey={record => record.case_id}
+          columns={columns}
+          dataSource={appCases}
+          onChange={changeSorter}
+        />
+      </div>
+    </div>
   );
 }

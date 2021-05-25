@@ -2,32 +2,27 @@
 @font: 'Lato', sans-serif;
 @font-color: #262626;
 @button: #bd5a27;
+@blue: #2a5c8d;
+@white: #ffffff;
 
-.root {
+.login-container {
   width: 100%;
   display: flex;
 }
-.form {
+.login-form {
   display: flex;
-  width: 100%;
+  width: 60vw;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  @media (max-width: 600px) {
+    width: 100%;
+  }
 
   .logo {
     max-width: 450px;
     max-height: 65px;
     margin-bottom: 2rem;
-  }
-  .background-image {
-    background-image: url(@background-image);
-    width: 600px;
-    min-height: 100vh;
-    background-position: top;
-    background-repeat: no-repeat;
-    @media (max-width: 600px) {
-      width: 0;
-    }
   }
 
   .login-page {
@@ -39,7 +34,7 @@
 
     .link-styles {
       font-family: @font;
-      color: #2a5c8d;
+      color: @blue;
     }
   }
 
@@ -52,6 +47,7 @@
     #okta-sign-in {
       border-radius: 1px;
     }
+
     #okta-sign-in.auth-container.main-container {
       font-family: 'Lato' sans-serif;
       margin: 0;
@@ -108,7 +104,6 @@
       display: none;
 
       .auth-org-logo {
-        border: red 1px solid;
         display: none;
       }
 
@@ -123,7 +118,7 @@
       border: none !important;
       border-radius: 1px !important;
       &:hover {
-        background-color: white !important;
+        background-color: @white !important;
         border: 1px solid @button !important;
         color: @button;
         border-radius: 1px;

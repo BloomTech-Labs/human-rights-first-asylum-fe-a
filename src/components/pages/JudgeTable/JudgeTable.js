@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { Link } from 'react-router-dom';
 
 import { DataGrid } from '@material-ui/data-grid';
 
 import { Button, Input, Card, Drawer, Typography } from 'antd';
-import './JudgeTable.css';
+import './_JudgeTableStyles.less';
 
 import FeatherIcon from 'feather-icons-react';
 
@@ -26,10 +26,7 @@ export default function JudgeTable(props) {
 
       renderCell: params => (
         <>
-          <Link
-            to={`/judge/${params.value.split(' ').join('%20')}`}
-            className="judgeTableLink"
-          >
+          <Link to={`/judge/${params.row.judge_id}`} className="judgeTableLink">
             <span>{params.value}</span>
           </Link>
         </>
@@ -74,35 +71,18 @@ export default function JudgeTable(props) {
   const findRowByID = (rowID, rowData) => {
     for (let i = 0; i < rowData.length; i++) {
       let currentRow = rowData[i];
+
       let adjustedRowID = parseInt(rowID) + 1;
-      if (currentRow.judge_id === adjustedRowID.toString()) {
+      if (currentRow.judge_id === adjustedRowID) {
         return currentRow;
       }
     }
     return 'This judge could not be identified';
   };
 
-  const findRowByJudgeName = (judgeName, rowData) => {
-    for (let i = 0; i < rowData.length; i++) {
-      let currentRow = rowData[i];
-      if (currentRow.name === judgeName) {
-        return currentRow;
-      }
-    }
-    return 'Row does not exist NAME';
-  };
-
   const postJudge = rowToPost => {
-    axios
-      .post(
-        `${process.env.REACT_APP_API_URI}/profiles/${userInfo.sub}/judge/${rowToPost.judge_id}`,
-        rowToPost,
-        {
-          headers: {
-            Authorization: 'Bearer ' + authState.idToken.idToken,
-          },
-        }
-      )
+    axiosWithAuth()
+      .post(`/profiles/${userInfo.sub}/judge/${rowToPost.judge_id}`, rowToPost)
 
       .then(res => {
         setSavedJudges(res.data.judge_bookmarks);
@@ -123,11 +103,11 @@ export default function JudgeTable(props) {
 
       let savedNames = [];
       for (let i = 0; i < savedJudges.length; i++) {
-        savedNames.push(savedJudges[i].name);
+        savedNames.push(savedJudges[i].first_name);
       }
 
       for (let i = 0; i < bookmarks.length; i++) {
-        if (savedNames.includes(bookmarks[i].name)) {
+        if (savedNames.includes(bookmarks[i].first_name)) {
           console.log('Judge already saved to bookmarks');
           continue;
         } else {

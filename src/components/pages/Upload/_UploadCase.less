@@ -1,14 +1,14 @@
 @gray: #cacccf;
 @blue: #2a5c8d;
 @light-blue: #a0c5dd;
+@white: #ffffff;
 
 .uploadPage {
   display: flex;
-  padding: 1%;
+  padding-top:.4%;
   margin: 0 auto;
   width: 100%;
   justify-content: flex-end;
-  margin-left: -4rem;
 }
 
 .pdf-container {
@@ -27,16 +27,21 @@
   width: 100%;
 }
 
-button.upload-btn {
-  color: #ffffff;
-  background-color: #215589 !important;
+.upload-btn {
+  color: @white !important;
+  background-color: @blue;
   margin-top: 3%;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.3rem;
+  padding: 1rem;
   &:hover {
     color: @light-blue;
+    background-color: @gray;
+  }
+  &:focus {
+    color: @white;
+    background-color: @blue;
   }
 }
 
@@ -52,7 +57,7 @@ button.upload-btn {
 
 .not-now-btn {
   background: @gray;
-  color: white !important;
+  color: @white !important;
   padding: 1rem;
   &:hover {
     background-color: @light-blue;
@@ -61,7 +66,7 @@ button.upload-btn {
 
 .review-btn {
   background: @blue;
-  color: white !important;
+  color: @white !important;
   padding: 1rem;
   &:hover {
     background-color: @light-blue;
@@ -70,4 +75,14 @@ button.upload-btn {
 
 .divider {
   margin-bottom: 1.5rem;
+}
+
+.button-text {
+  color: white;
+}
+
+.spinner_container {
+  display: flex;
+  justify-content: center;
+  margin: 24px;
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { Link } from 'react-router-dom';
 import { Card, Skeleton } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
@@ -14,15 +14,9 @@ const CaseOverview = props => {
   const { id } = useParams();
 
   useEffect(() => {
-    const parsedToken = JSON.parse(token);
-
     async function fetchCase() {
-      axios
-        .get(`${process.env.REACT_APP_API_URI}/case/${id}`, {
-          headers: {
-            Authorization: 'Bearer ' + parsedToken.idToken.value,
-          },
-        })
+      axiosWithAuth()
+        .get(`/case/${id}`)
         .then(res => {
           setCaseData(res.data);
           setLoading(false);
@@ -38,7 +32,7 @@ const CaseOverview = props => {
   }, [id]);
 
   return (
-    <>
+    <div className="case-container">
       <Card
         style={{ width: 500, fontWeight: 'normal', margin: '10% 15% 0% 22%' }}
         actions={[
@@ -105,7 +99,7 @@ const CaseOverview = props => {
           )}
         </Skeleton>
       </Card>
-    </>
+    </div>
   );
 };
 

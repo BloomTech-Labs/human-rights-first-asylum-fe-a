@@ -1,11 +1,202 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './DataHub.less';
 import Plot from 'react-plotly.js';
+import axios from 'axios';
+import { UserContext } from '../../../context/UserContext';
 
 const DataHub = props => {
-  const { caseData } = props;
+  const { caseData, authState } = props;
+  const [vizData, setVizData] = useState({});
+  const user = useContext(UserContext);
 
   const data = caseData;
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:8080/judges/2/cases', {
+        headers: {
+          Authorization: 'Bearer ' + user.authState.idToken.idToken,
+        },
+      })
+      .then(res => {
+        setVizData(res.data.judge_cases);
+      });
+  }, [user.authState.idToken.idToken]);
+
+  // const TestDataChart = () => {
+  //   return (
+  //     <Plot
+  //       data={vizData.data}
+  //       layout={vizData.layout}
+  //       config={{
+  //         modeBarButtonsToRemove: [
+  //           'toImage',
+  //           'zoom2d',
+  //           'pan2d',
+  //           'select2d',
+  //           'lasso2d',
+  //           'drawclosedpath',
+  //           'drawopenpath',
+  //           'zoomIn2d',
+  //           'zoomOut2d',
+  //           'autoScale2d',
+  //           'hoverClosestCartesian',
+  //           'hoverCompareCartesian',
+  //           'toggleSpikelines',
+  //         ],
+  //         displaylogo: false,
+  //       }}
+  //     />
+  //   );
+  // };
+
+  const TestDataChart = () => {
+    let trace1 = {
+      x: [
+        'AL',
+        'AK',
+        'AZ',
+        'AR',
+        'CA',
+        'CO',
+        'CT',
+        'DE',
+        'FL',
+        'GA',
+        'HI',
+        'ID',
+        'IL',
+        'IN',
+        'IA',
+        'KS',
+        'KY',
+        'LA',
+        'ME',
+        'MD',
+        'MA',
+        'MI',
+        'MN',
+        'MS',
+        'MO',
+        'MT',
+        'NE',
+        'NV',
+        'NH',
+        'NJ',
+        'NM',
+        'NY',
+        'NC',
+        'ND',
+        'OH',
+        'OK',
+        'PA',
+        'RI',
+        'SC',
+        'SD',
+        'TN',
+        'TX',
+        'UT',
+        'VT',
+        'VA',
+        'WA',
+        'WV',
+        'WI',
+        'WY',
+      ],
+      y: [],
+      name: 'Approvals',
+      type: 'bar',
+    };
+
+    let trace2 = {
+      x: [
+        'AL',
+        'AK',
+        'AZ',
+        'AR',
+        'CA',
+        'CO',
+        'CT',
+        'DE',
+        'FL',
+        'GA',
+        'HI',
+        'ID',
+        'IL',
+        'IN',
+        'IA',
+        'KS',
+        'KY',
+        'LA',
+        'ME',
+        'MD',
+        'MA',
+        'MI',
+        'MN',
+        'MS',
+        'MO',
+        'MT',
+        'NE',
+        'NV',
+        'NH',
+        'NJ',
+        'NM',
+        'NY',
+        'NC',
+        'ND',
+        'OH',
+        'OK',
+        'PA',
+        'RI',
+        'SC',
+        'SD',
+        'TN',
+        'TX',
+        'UT',
+        'VT',
+        'VA',
+        'WA',
+        'WV',
+        'WI',
+        'WY',
+      ],
+      y: [],
+      name: 'Denials',
+      type: 'bar',
+    };
+
+    for (let i = 0; i < 50; i++) {
+      trace1.y.push(Math.round(Math.random() * (150 - 1)) + 1);
+      trace2.y.push(Math.round(Math.random() * (150 - 1)) + 1);
+    }
+
+    return (
+      <Plot
+        data={[trace1, trace2]}
+        layout={{ barmode: 'stack' }}
+        useResizeHandler={true}
+        config={{
+          modeBarButtonsToRemove: [
+            'toImage',
+            'zoom2d',
+            'pan2d',
+            'select2d',
+            'lasso2d',
+            'drawclosedpath',
+            'drawopenpath',
+            'zoomIn2d',
+            'zoomOut2d',
+            'autoScale2d',
+            'hoverClosestCartesian',
+            'hoverCompareCartesian',
+            'toggleSpikelines',
+          ],
+          displaylogo: false,
+        }}
+        style={{ width: '95%' }}
+      />
+    );
+  };
 
   const CaseDataChart = () => {
     let denied = 0;
@@ -43,6 +234,24 @@ const DataHub = props => {
           },
         ]}
         layout={{ width: 500, height: 300, title: 'Case Data' }}
+        config={{
+          modeBarButtonsToRemove: [
+            'toImage',
+            'zoom2d',
+            'pan2d',
+            'select2d',
+            'lasso2d',
+            'drawclosedpath',
+            'drawopenpath',
+            'zoomIn2d',
+            'zoomOut2d',
+            'autoScale2d',
+            'hoverClosestCartesian',
+            'hoverCompareCartesian',
+            'toggleSpikelines',
+          ],
+          displaylogo: false,
+        }}
       />
     );
   };
@@ -83,15 +292,51 @@ const DataHub = props => {
           },
         ]}
         layout={{ width: 1100, height: 400, title: 'Case Data' }}
+        config={{
+          modeBarButtonsToRemove: [
+            'toImage',
+            'zoom2d',
+            'pan2d',
+            'select2d',
+            'lasso2d',
+            'drawclosedpath',
+            'drawopenpath',
+            'zoomIn2d',
+            'zoomOut2d',
+            'autoScale2d',
+            'hoverClosestCartesian',
+            'hoverCompareCartesian',
+            'toggleSpikelines',
+          ],
+          displaylogo: false,
+        }}
       />
     );
   };
 
+  function findApprovalRatio() {
+    let total = data.length;
+    let granted = 0;
+
+    data.map(eachCase => {
+      if (eachCase.case_outcome === 'Granted') {
+        granted += 1;
+      }
+      return null;
+    });
+
+    return total / granted;
+  }
+
+  let grantedRatio = Math.round(findApprovalRatio());
+
   return (
     <div className="dataHubContainer">
+      <h1>Approvals VS Denials Nationwide</h1>
       <div className="mainChartContainer">
-        <MainDataChart />
+        <TestDataChart />
       </div>
+      <h2>Ratio of Cases Resulting In Granted Asylum: {grantedRatio}%</h2>
 
       <div className="subChartsContainer">
         <CaseDataChart />

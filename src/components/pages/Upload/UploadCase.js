@@ -1,48 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-// import UploadCaseForm from './UploadCaseForm';
+import { useHistory } from 'react-router-dom';
+import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { notification, Upload, Modal, Button, Spin } from 'antd';
 import {
   CheckCircleOutlined,
   CloseCircleOutlined,
   LoadingOutlined,
 } from '@ant-design/icons';
-import './CaseForm.css';
 import './_UploadCase.less';
 
 // Icons for modal
 import Icon from '@ant-design/icons';
 import UploadCaseBox from '../../../styles/icons/upload-box.svg';
 import OrangeLine from '../../../styles/orange-line.svg';
-
-// const initialFormValues = {
-//   date: '',
-//   judge: '',
-//   case_outcome: '',
-//   country_of_origin: '',
-//   protected_grounds: '',
-//   application_type: '',
-//   case_origin_city: '',
-//   case_origin_state: '',
-//   gender: '',
-//   applicant_language: '',
-//   indigenous_group: '',
-//   type_of_violence: '',
-//   initial_or_appellate: false,
-//   filed_in_one_year: false,
-//   credible: false,
-// };
-
-const UploadCase = ({ authState, getPendingCases }) => {
-  // const [formValues, setFormValues] = useState(initialFormValues);
-  const [formValueQueue, setFormValueQueue] = useState([]);
+const UploadCase = ({ getPendingCases }) => {
+  const history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
   const { Dragger } = Upload;
   const [postQueue, setPostQueue] = useState([]);
   const [nextPost, setNextPost] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
-
+  const [scrapQueue, setScrapQueue] = useState([]);
+  const [nextScrap, setNextScrap] = useState(null);
+  const [isReady, setIsReady] = useState(false);
   const spinner = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   const successNotification = () => {
@@ -82,6 +62,7 @@ const UploadCase = ({ authState, getPendingCases }) => {
 
   const handleOk = () => {
     setIsModalVisible(false);
+    history.push('/my-cases');
   };
 
   const handleCancel = () => {
@@ -98,12 +79,6 @@ const UploadCase = ({ authState, getPendingCases }) => {
     },
   };
 
-  // Might need this later depending on design changes
-  // const onInputChange = e => {
-  //   const { name, value } = e.target;
-  //   setFormValues({ ...formValues, [name]: value });
-  // };
-
   useEffect(() => {
     if (!nextPost && postQueue.length !== 0) {
       const copy = postQueue;
@@ -111,25 +86,21 @@ const UploadCase = ({ authState, getPendingCases }) => {
       setPostQueue(copy);
     }
   }, [postQueue]);
-
   useEffect(() => {
     if (nextPost) {
-      axios
-        .post(`${process.env.REACT_APP_API_URI}/upload`, nextPost, {
-          headers: {
-            Authorization: 'Bearer ' + authState.idToken.idToken,
-          },
-        })
+      axiosWithAuth()
+        .post(`/upload`, nextPost)
         .then(res => {
-          setFormValueQueue([...formValueQueue, res.data]);
           setIsLoading(false);
-          setIsEditing(true);
           successNotification();
-          setNextPost(null);
-          if (postQueue) {
+          setScrapQueue(prev => [...prev, res.data.id]);
+          if (postQueue.length !== 0) {
             const copy = postQueue;
             setNextPost(copy.shift());
             setPostQueue(copy);
+          } else {
+            setNextPost(null);
+            setIsReady(true);
           }
         })
         .catch(() => {
@@ -138,7 +109,33 @@ const UploadCase = ({ authState, getPendingCases }) => {
         });
     }
   }, [nextPost]);
-
+  useEffect(() => {
+    if (nextScrap) {
+      axiosWithAuth()
+        .post(`/upload/scrap/${nextScrap}`)
+        .then(res => {
+          getPendingCases();
+          if (scrapQueue.length !== 0) {
+            const copy = scrapQueue;
+            setNextScrap(copy.shift());
+            setScrapQueue(copy);
+          } else {
+            setNextScrap(null);
+            setIsReady(false);
+          }
+        })
+        .catch(() => {
+          failNotification();
+        });
+    }
+  }, [nextScrap]);
+  useEffect(() => {
+    if (!nextScrap && scrapQueue.length !== 0 && isReady) {
+      const copy = scrapQueue;
+      setNextScrap(copy.shift());
+      setScrapQueue(copy);
+    }
+  }, [scrapQueue, isReady]);
   return (
     <div className="uploadPage">
       <div className="uploadButton">
@@ -205,14 +202,6 @@ const UploadCase = ({ authState, getPendingCases }) => {
               </form>
             </div>
           </div>
-          {
-            // Might need this later depending on design changes
-            /* <UploadCaseForm
-        formValues={formValues}
-        onInputChange={onInputChange}
-        formValueQueue={formValueQueue}
-      /> */
-          }
         </Modal>
       </div>
     </div>

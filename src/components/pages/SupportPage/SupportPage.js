@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Typography, Collapse } from 'antd';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import './SupportPage.css';
+import axiosWithAuth from '../../../utils/axiosWithAuth';
+import { Collapse, Input, Button, Modal, Form } from 'antd';
+import './_SupportPageStyles.less';
+import Icon from '@ant-design/icons';
+import OrangeLine from '../../../styles/orange-line.svg';
 
 const initialFormValues = {
   message: '',
@@ -12,10 +12,8 @@ const initialFormValues = {
 };
 
 const SupportPage = props => {
-  const { Title } = Typography;
   const { Panel } = Collapse;
   const { authState, userInfo } = props;
-
   const [FAQ, setFaq] = useState([]);
   const [formValues, setFormValues] = useState(initialFormValues);
 
@@ -27,18 +25,25 @@ const SupportPage = props => {
     });
   }, [userInfo]);
 
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
   const onChange = e => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
   };
 
   const postNewMessage = message => {
-    axios
-      .post(`${process.env.REACT_APP_API_URI}/faq/contact/`, message, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken.idToken,
-        },
-      })
+    axiosWithAuth()
+      .post(`/faq/contact/`, message)
       .catch(err => console.log(err));
     setFormValues(initialFormValues);
   };
@@ -52,15 +57,12 @@ const SupportPage = props => {
     };
     alert('Message sent');
     postNewMessage(message);
+    setIsModalVisible(false);
   };
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/faq`, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken.idToken,
-        },
-      })
+    axiosWithAuth()
+      .get(`/faq`)
       .then(res => {
         setFaq(res.data);
       })
@@ -70,44 +72,63 @@ const SupportPage = props => {
   }, [authState.idToken.idToken]);
 
   return (
-    <div className="supportRoot">
-      <div className="form">
-        <Title level={2}> Contact Us </Title>
-        <form onSubmit={onSubmit}>
-          <label htmlFor="message">
-            <TextField
-              id="message"
-              label="Message"
-              type="text"
-              name="message"
-              variant="outlined"
-              multiline={true}
-              onChange={onChange}
-              className="textField"
-              value={formValues.message}
-            />
-          </label>
-          <Button
-            onClick={onSubmit}
-            id="buttonStyles"
-            variant="contained"
-            component="span"
-          >
-            Submit
-          </Button>
-        </form>
-      </div>
-      <div className="faq">
-        <Title level={2}> FAQ </Title>
-        <Collapse defaultActiveKey={['0']} accordion>
+    <div className="support-container">
+      <div className="faqs">
+        <h2 className="faq-title"> FAQ </h2>
+        <p className="divider">
+          <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
+        </p>
+        <Collapse accordion>
           {FAQ.map(item => {
             return (
-              <Panel key={item.id} header={`Q: ${item.question}`}>
-                A: {item.answer}
+              <Panel
+                className="q-header"
+                key={item.id}
+                header={`${item.question}`}
+              >
+                <p className="answer">Answer: </p>
+                <span>{item.answer}</span>
               </Panel>
             );
           })}
         </Collapse>
+      </div>
+      <div className="support-form">
+        <div className="contact-btn-div">
+          <h2 className="support-header"> Need Additional Assistance? </h2>
+          <p className="support-btn" onClick={showModal}>
+            Contact Us
+          </p>
+        </div>
+        <Modal
+          title=""
+          visible={isModalVisible}
+          onOk={handleOk}
+          onCancel={handleCancel}
+          footer={[
+            <div className="send-button">
+              <Button htmlType="send" className="send-btn" onClick={onSubmit}>
+                <span>Send</span>
+              </Button>
+            </div>,
+          ]}
+        >
+          <Form layout="vertical" className="contact-form" onFinish={onSubmit}>
+            <h2 className="h1Styles">Contact Us</h2>
+            <p className="divider">
+              <Icon
+                component={() => <img src={OrangeLine} alt="divider icon" />}
+              />
+            </p>
+            <Form.Item name="message" label="Message">
+              <Input.TextArea
+                onChange={onChange}
+                className="text-field"
+                value={formValues.message}
+              />
+            </Form.Item>
+          </Form>
+        </Modal>
       </div>
     </div>
   );

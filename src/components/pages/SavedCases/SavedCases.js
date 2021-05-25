@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { DataGrid } from '@material-ui/data-grid';
 
 import { Button, Input, Drawer, Typography } from 'antd';
-import './SavedCases.css';
+import './_SavedCasesStyles.less';
 
 import FeatherIcon from 'feather-icons-react';
 
@@ -85,8 +85,6 @@ function SavedCases({ savedCases, deleteBookmark }) {
     //   ),
     // },
 
-    // this field "remove_case" does not exist in the migration data
-    // it is an idea to delete a saved case from this table using "deleteBookmark()"
     {
       field: 'remove_case',
       renderHeader: params => <strong>{'Remove Case'}</strong>,
@@ -97,14 +95,16 @@ function SavedCases({ savedCases, deleteBookmark }) {
           <FeatherIcon
             icon="delete"
             onClick={() => {
-              deleteBookmark(params.row.id); //maybe?
+              deleteBookmark(params.row.id);
             }}
           />
         </Button>
       ),
     },
   ];
-
+  savedCases.forEach((item, idx) => {
+    item.id = idx;
+  });
   const Toolbar = () => {
     const { Title } = Typography;
     return (

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import axiosWithAuth from '../../../utils/axiosWithAuth';
+import { useParams, useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -50,32 +50,24 @@ const initialFormValues = {
 const EditFaqPage = props => {
   const [formValues, setFormValues] = useState(initialFormValues);
   const { authState } = props;
-  const { id } = useParams();
+  const { faq_id } = useParams();
+  const history = useHistory();
 
   const classes = useStyles();
-
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/faq/${id}`, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken.idToken,
-        },
-      })
+    axiosWithAuth()
+      .get(`/faq/${faq_id}`)
       .then(res => {
         setFormValues(res.data);
       })
       .catch(err => {
         console.log(err);
       });
-  }, [authState.idToken.idToken, id]);
+  }, [authState.idToken.idToken, faq_id]);
 
   const updateQuestion = editedFaq => {
-    axios
-      .put(`${process.env.REACT_APP_API_URI}/faq/${id}`, editedFaq, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken.idToken,
-        },
-      })
+    axiosWithAuth()
+      .put(`/faq/${faq_id}`, editedFaq)
       .catch(err => console.log(err));
     setFormValues(initialFormValues);
   };
@@ -92,6 +84,7 @@ const EditFaqPage = props => {
       answer: formValues.answer.trim(),
     };
     updateQuestion(editedFaq);
+    history.push('/manage-faq');
   };
 
   return (

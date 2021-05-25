@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import axios from 'axios';
+import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { Form, Input, Button, Checkbox, DatePicker, Select } from 'antd';
 import moment from 'moment';
 const { Option } = Select;
@@ -12,12 +12,8 @@ const CaseUpdate = props => {
   const { authState, caseData } = props;
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/judges`, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken.value,
-        },
-      })
+    axiosWithAuth()
+      .get(`/judges`)
       .then(res => setJudges(res.data))
       .catch(error => console.log(error));
   }, []);
@@ -36,12 +32,8 @@ const CaseUpdate = props => {
     delete newCase['judge_name'];
 
     console.log(newCase);
-    axios
-      .put(`${process.env.REACT_APP_API_URI}/case/${id}`, fieldsValue, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken.value,
-        },
-      })
+    axiosWithAuth()
+      .put(`${process.env.REACT_APP_API_URI}/case/${id}`, fieldsValue)
       .then(res => {
         delete caseData['protected_ground'];
         delete caseData['social_group_type'];

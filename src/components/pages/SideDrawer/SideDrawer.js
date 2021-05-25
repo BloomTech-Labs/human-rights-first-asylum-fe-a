@@ -17,30 +17,28 @@ function SideDrawer() {
   };
 
   const history = useHistory();
+
   const handleRoute = ({ key }) => {
-    history.push(`${key}`);
+    if (key) {
+      history.push(`${key}`);
+    }
   };
 
   return (
-    <div style={{ width: 246, height: '100vh' }}>
+    <div style={{ width: '200px', height: '100vh', position: 'fixed' }}>
       <Menu
-        defaultSelectedKeys={['/']}
+        defaultSelectedKeys={[window.location.pathname]}
         mode="inline"
         theme="light"
         inlineCollapsed={collapsed}
         onClick={handleRoute}
-        style={{ backgroundColor: '#F4F6F7', height: '100vh' }}
+        style={{
+          backgroundColor: '#F4F6F7',
+          height: '100vh',
+          position: 'sticky',
+        }}
       >
-        <Button
-          type="primary"
-          onClick={toggleCollapsed}
-          style={{
-            marginBottom: 16,
-            backgroundColor: '#f4f6f7',
-            marginLeft: 16,
-            color: '#2a5c8d',
-          }}
-        >
+        <Button type="primary" className="toggle-btn" onClick={toggleCollapsed}>
           {React.createElement(
             collapsed ? DoubleRightOutlined : DoubleLeftOutlined
           )}
@@ -80,18 +78,12 @@ function SideDrawer() {
               className="admin-tools-submenu"
               style={{ backgroundColor: '#F4F6F7', paddingRight: 30 }}
             >
-              <Menu.Item key="/add-users">Add Users</Menu.Item>
               <Menu.Item key="/manage-users">Manage Users</Menu.Item>
-              <Menu.Item key="/add-faq">Add FAQ</Menu.Item>
               <Menu.Item key="/manage-faq">Manage FAQ</Menu.Item>
-              <Menu.Item key="/manage-requested">
-                Review Requested Users
+              <Menu.Item className="review-cases" key="/manage-cases">
+                Review Cases
               </Menu.Item>
             </SubMenu>
-
-            <Menu.Item className="review-cases" key="/manage-cases">
-              Review Cases
-            </Menu.Item>
           </>
         ) : null}
       </Menu>

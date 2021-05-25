@@ -1,53 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import axios from 'axios';
-import Button from '@material-ui/core/Button';
-import { Typography, Collapse } from 'antd';
+import axiosWithAuth from '../../../utils/axiosWithAuth';
+import { Button as AntDButton, Collapse, Descriptions } from 'antd';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    marginTop: '7%',
-    margin: '5% 0',
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-  p: {
-    margin: '1%',
-  },
-  panal: {
-    width: '50%',
-  },
-  buttonStyles: {
-    color: '#ffffff',
-    backgroundColor: '#215589',
-    marginTop: '1%',
-    marginLeft: '1%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buttons: {
-    display: 'flex',
-    alignItems: 'flex-end',
-    justifyContent: 'flex-start',
-  },
-}));
+// Styles and Icons
+import Icon from '@ant-design/icons';
+import OrangeLine from '../../../styles/orange-line.svg';
 
 const PendingUsersPage = props => {
-  const { Title } = Typography;
   const { Panel } = Collapse;
-  const { authState } = props;
+  const { authState, setProfiles } = props;
   const [pendingProfiles, setPendingProfiles] = useState([]);
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/profiles/pending`, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken.idToken,
-        },
-      })
+    axiosWithAuth()
+      .get(`/profiles/pending`)
       .then(res => {
         setPendingProfiles(res.data);
       })
@@ -57,15 +23,17 @@ const PendingUsersPage = props => {
   }, [authState.idToken.idToken]);
 
   const approveUser = profile => {
-    axios
-      .post(`${process.env.REACT_APP_API_URI}/profile/`, profile, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken.idToken,
-        },
-      })
+    console.log(profile);
+    axiosWithAuth()
+      .post(`/profile/`, profile)
       .then(res => {
         alert(`Profile request from ${profile.email} was approved`);
-        console.log(res.data);
+        setProfiles(res.data.profile);
+        setPendingProfiles(
+          pendingProfiles.filter(
+            pendingProfile => pendingProfile.user_id !== profile.user_id
+          )
+        );
       })
       .catch(err => {
         console.log(err);
@@ -73,70 +41,79 @@ const PendingUsersPage = props => {
   };
 
   const rejectUser = profile => {
-    axios
-      .delete(
-        `${process.env.REACT_APP_API_URI}/profiles/pending/${profile.id}`,
-        {
-          headers: {
-            Authorization: 'Bearer ' + authState.idToken.idToken,
-          },
-        }
-      )
+    axiosWithAuth()
+      .delete(`/profiles/pending/${profile.id}`)
       .then(res => {
         alert(`Profile request from ${profile.email} was rejected`);
-        console.log(res.data);
+        setPendingProfiles(
+          pendingProfiles.filter(
+            pendingProfile => pendingProfile.user_id !== profile.user_id
+          )
+        );
       })
       .catch(err => {
         console.log(err);
       });
   };
 
-  const classes = useStyles();
-
   return (
-    <div className={classes.root}>
-      <div className={classes.panal}>
-        <Title level={2}> Manage Requested Users </Title>
-        <Collapse defaultActiveKey={['0']} accordion>
-          {pendingProfiles.map(item => {
-            return (
-              <Panel header={`${item.firstName} ${item.lastName}`}>
-                <p>
-                  <strong>Name:</strong> {`${item.firstName} ${item.lastName}`}
-                </p>
-                <p>
-                  <strong>Email:</strong> {item.email}
-                </p>
-                <p>
-                  <strong>Role:</strong> (Defaults to User){' '}
-                </p>
-                <p>
-                  <strong>Date requested:</strong>{' '}
-                  {String(item.created_at).slice(0, 10)}
-                </p>
-                <div className={classes.buttons}>
-                  <Button
-                    className={classes.buttonStyles}
-                    onClick={() => {
-                      approveUser(item);
-                    }}
-                  >
-                    Approve
-                  </Button>
-                  <Button
-                    className={classes.buttonStyles}
-                    onClick={() => {
-                      rejectUser(item);
-                    }}
-                  >
-                    Reject
-                  </Button>
-                </div>
-              </Panel>
-            );
-          })}
-        </Collapse>
-      </div>
+    <div className="users">
+      <h2 className="users-header"> Pending Users </h2>
+      <p className="divider">
+        <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
+      </p>
+      <Collapse accordion>
+        {pendingProfiles.map(item => {
+          return (
+            <Panel
+              className="item-name"
+              header={`${item.first_name} ${item.last_name}`}
+            >
+              <Descriptions className="user-info-title" title="User Info">
+                <Descriptions.Item className="user-details" label="Name">
+                  <p className="detail">{`${item.first_name} ${item.last_name}`}</p>
+                </Descriptions.Item>
+
+                <Descriptions.Item className="user-details" label="Email">
+                  <p className="detail">{item.email}</p>
+                </Descriptions.Item>
+
+                <Descriptions.Item className="user-details" label="Role">
+                  <p className="detail">{item.role}</p>
+                </Descriptions.Item>
+
+                <Descriptions.Item
+                  className="user-details"
+                  label="Date Requested"
+                >
+                  <p className="detail">
+                    {String(item.created_at).slice(0, 10)}
+                  </p>
+                </Descriptions.Item>
+              </Descriptions>
+              <div className="buttons">
+                <AntDButton
+                  className="btn-style"
+                  onClick={() => {
+                    console.log(item);
+                    approveUser(item);
+                  }}
+                >
+                  Approve
+                </AntDButton>
+                <AntDButton
+                  className="btn-style"
+                  onClick={() => {
+                    rejectUser(item);
+                  }}
+                >
+                  Reject
+                </AntDButton>
+              </div>
+            </Panel>
+          );
+        })}
+      </Collapse>
     </div>
   );
 };

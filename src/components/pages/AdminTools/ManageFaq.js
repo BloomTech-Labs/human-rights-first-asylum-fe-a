@@ -1,51 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import axios from 'axios';
-import Button from '@material-ui/core/Button';
+import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { Link } from 'react-router-dom';
-import { Typography, Collapse } from 'antd';
+import { Form, Input, Button as AntDButton, Modal, Collapse } from 'antd';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    marginTop: '7%',
-    margin: '5% 0',
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-  buttons: {
-    display: 'flex',
-    alignItems: 'flex-end',
-    justifyContent: 'flex-start',
-  },
-  p: {
-    margin: '1%',
-  },
-  buttonStyles: {
-    color: '#ffffff',
-    backgroundColor: '#215589',
-    marginTop: '3%',
-    marginLeft: '1%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-}));
+// Styling and Icons
+import './_AddFaqStyles.less';
+import './_ManageFaqStyles.less';
+import Icon from '@ant-design/icons';
+import OrangeLine from '../../../styles/orange-line.svg';
 
+const initialFormValues = {
+  question: '',
+  answer: '',
+};
 const ManageFaqPage = props => {
-  const { Title } = Typography;
   const { Panel } = Collapse;
   const { authState } = props;
   const [faq, setFaq] = useState([]);
+  const [formValues, setFormValues] = useState(initialFormValues);
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/faq`, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken.idToken,
-        },
-      })
+    axiosWithAuth()
+      .get(`/faq`)
       .then(res => {
         setFaq(res.data);
       })
@@ -55,52 +31,135 @@ const ManageFaqPage = props => {
   }, [authState.idToken.idToken]);
 
   const deleteFaq = faq => {
-    axios
-      .delete(`${process.env.REACT_APP_API_URI}/faq/${faq.id}`, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken.idToken,
-        },
-      })
+    axiosWithAuth()
+      .delete(`/faq/${faq.faq_id}`)
       .then(res => {
-        alert(`${faq.question}'s FAQ was deleted`);
-        console.log(res.data);
+        alert(`'Deleted Question: ${faq.question}'`);
+        window.location.reload();
       })
       .catch(err => {
         console.log(err);
       });
   };
 
-  const classes = useStyles();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+  const onChange = e => {
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
+  };
+
+  const postNewQuestion = question => {
+    axiosWithAuth()
+      .post(`/faq/`, question)
+      .then(res => {
+        setFormValues(initialFormValues);
+        window.location.reload();
+      })
+      .catch(err => console.log(err));
+  };
+
+  const onSubmit = e => {
+    e.preventDefault();
+    const question = {
+      question: formValues.question.trim(),
+      answer: formValues.answer.trim(),
+    };
+    postNewQuestion(question);
+    setIsModalVisible(false);
+  };
 
   return (
-    <div className={classes.root}>
+    <div className="manage-faq-container">
       <div className="faq">
-        <Title level={2}> Manage FAQ </Title>
-        <Collapse defaultActiveKey={['0']} accordion>
+        <h2 className="faq-header"> Manage FAQ </h2>
+        <p className="divider">
+          <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
+        </p>
+        <Collapse accordion>
           {faq.map(item => {
             return (
-              <Panel header={`Q: ${item.question}`}>
-                A: {item.answer}
-                <div className={classes.buttons}>
-                  <Link to={`edit-faq/${item.id}`}>
-                    <Button className={classes.buttonStyles}>Edit</Button>
+              <Panel className="q-header" header={`${item.question}`}>
+                <p className="answer">Answer: </p>
+                <span>{item.answer}</span>
+                <div className="buttons">
+                  <Link to={`edit-faq/${item.faq_id}`}>
+                    <AntDButton className="btn-style">Edit</AntDButton>
                   </Link>
-                  <Button
-                    className={classes.buttonStyles}
+                  <AntDButton
+                    className="btn-style"
                     onClick={() => {
                       deleteFaq(item);
                     }}
                   >
                     Delete
-                  </Button>
+                  </AntDButton>
                 </div>
               </Panel>
             );
           })}
         </Collapse>
       </div>
+      <div className="add-faq-btn-container">
+        <AntDButton className="add-faq-btn" onClick={showModal}>
+          Add a FAQ
+        </AntDButton>
+        <Modal
+          title=""
+          visible={isModalVisible}
+          onOk={handleOk}
+          onCancel={handleCancel}
+          footer={[
+            <div className="submit-button">
+              <AntDButton
+                htmlType="submit"
+                className="add-faq-btn"
+                onClick={onSubmit}
+              >
+                <span>Submit</span>
+              </AntDButton>
+            </div>,
+          ]}
+        >
+          <Form layout="vertical" className="faq-form" onFinish={onSubmit}>
+            <h2 className="h1Styles">Add a FAQ</h2>
+            <p className="divider">
+              <Icon
+                component={() => <img src={OrangeLine} alt="divider icon" />}
+              />
+            </p>
+            <Form.Item label="Question">
+              <Input
+                id="question"
+                type="text"
+                name="question"
+                onChange={onChange}
+                className="text-field"
+                value={formValues.question}
+              />
+            </Form.Item>
+            <Form.Item label="Answer">
+              <Input
+                id="answer"
+                type="text"
+                name="answer"
+                onChange={onChange}
+                className="text-field"
+                value={formValues.answer}
+              />
+            </Form.Item>
+          </Form>
+        </Modal>
+      </div>
     </div>
   );
 };
-
 export default ManageFaqPage;
