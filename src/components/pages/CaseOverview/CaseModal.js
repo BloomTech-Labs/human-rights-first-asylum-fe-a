@@ -57,13 +57,18 @@ const CaseModal = props => {
 
   const onEditSubmit = e => {
     e.preventDefault();
-    axiosWithAuth().put(`/case/${caseId}`, formValues);
+    // axiosWithAuth().put(`/case/${caseId}`, formValues);
+    console.log(formValues);
     setIsEditModalVisible(false);
   };
 
   const onChange = e => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
+  };
+  const onCheck = e => {
+    console.log(formValues.credible);
+    setFormValues({ ...formValues, credible: !e.target.checked });
   };
 
   return (
@@ -96,7 +101,6 @@ const CaseModal = props => {
             name="hearing_date"
             onChange={onChange}
             className="text-field"
-            placeholder="Hearing Date"
             value={formValues.hearing_date}
           />
         </Form.Item>
@@ -107,7 +111,7 @@ const CaseModal = props => {
             name="judge_id"
             onChange={onChange}
             className="text-field"
-            placeholder="Judge"
+            placeholder="judge name"
             value={formValues.judge_id}
           />
         </Form.Item>
@@ -199,7 +203,12 @@ const CaseModal = props => {
             value={formValues.applicant_language}
           />
         </Form.Item>
-        <Checkbox id="credible" name="credible" checked={formValues.credible}>
+        <Checkbox
+          id="credible"
+          name="credible"
+          value={formValues.credible}
+          onClick={onCheck}
+        >
           Credible
         </Checkbox>
       </Form>
