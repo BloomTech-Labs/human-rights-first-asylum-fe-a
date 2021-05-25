@@ -46,6 +46,17 @@ export default function CaseTable(props) {
 
   const { id } = useParams();
 
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
   // State for PDF Modal
   const [showPdf, setShowPdf] = useState(false);
   const [selection, setSelection] = useState([]);
