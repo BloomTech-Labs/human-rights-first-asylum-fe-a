@@ -33,7 +33,11 @@ export default function CaseTable(props) {
       ' ' +
       cases.middle_initial +
       '.',
-    one_year: cases.filed_in_one_year.toString(),
+    one_year:
+      cases.filed_in_one_year
+        .toString()
+        .charAt(0)
+        .toUpperCase() + cases.filed_in_one_year.toString().slice(1),
     ...cases,
   }));
 
