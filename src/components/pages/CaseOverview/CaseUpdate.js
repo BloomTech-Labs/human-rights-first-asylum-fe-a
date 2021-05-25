@@ -13,7 +13,7 @@ const CaseUpdate = props => {
 
   useEffect(() => {
     axiosWithAuth()
-      .get(`${process.env.REACT_APP_API_URI}/judges`)
+      .get(`/judges`)
       .then(res => setJudges(res.data))
       .catch(error => console.log(error));
   }, []);

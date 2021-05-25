@@ -16,7 +16,7 @@ const CaseOverview = props => {
   useEffect(() => {
     async function fetchCase() {
       axiosWithAuth()
-        .get(`${process.env.REACT_APP_API_URI}/case/${id}`)
+        .get(`/case/${id}`)
         .then(res => {
           setCaseData(res.data);
           setLoading(false);

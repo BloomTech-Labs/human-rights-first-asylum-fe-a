@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { Link, useParams } from 'react-router-dom';
 import Plot from 'react-plotly.js';
 import Tabs from '@material-ui/core/Tabs';
@@ -34,15 +34,7 @@ import PDFExportButton from './PDFOverviewExport/PDFExportButton';
 export default function CaseTable(props) {
   const { Title } = Typography;
 
-  const {
-    caseData,
-    userInfo,
-    savedCases,
-    setSavedCases,
-    authState,
-    setSelectedRows,
-    selectedRows,
-  } = props;
+  const { caseData, userInfo, savedCases, setSavedCases, authState } = props;
 
   const { id } = useParams();
 
@@ -51,8 +43,8 @@ export default function CaseTable(props) {
   const [selection, setSelection] = useState([]);
 
   const pdfData = () => {
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/case/${id}`)
+    axiosWithAuth()
+      .get(`/case/${id}`)
       .then(res => {
         setShowPdf(res.data);
       })
@@ -232,16 +224,8 @@ export default function CaseTable(props) {
 
   const postBookmark = rowToPost => {
     console.log('in postBookmark', rowToPost); // in postBookmark
-    axios
-      .post(
-        `${process.env.REACT_APP_API_URI}/profile/${userInfo.sub}/case/${rowToPost}`,
-        rowToPost,
-        {
-          headers: {
-            Authorization: 'Bearer ' + authState.idToken.idToken,
-          },
-        }
-      )
+    axiosWithAuth()
+      .post(`/profile/${userInfo.sub}/case/${rowToPost}`, rowToPost)
       .then(res => {
         console.log(res.data);
         setSavedCases(res.data.case_bookmarks);
