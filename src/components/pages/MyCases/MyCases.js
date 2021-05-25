@@ -8,7 +8,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import { DataGrid, GridColumnsToolbarButton } from '@material-ui/data-grid';
-import { Modal, Button, Typography } from 'antd';
+import { Modal, Button, Typography, Progress } from 'antd';
 import { ReloadOutlined, ExclamationCircleTwoTone } from '@ant-design/icons';
 import './MyCases.less';
 import ReviewCaseForm from './ReviewCaseForm';
@@ -60,6 +60,7 @@ export default function MyCases(props) {
       });
     // eslint-disable-next-line
   }, []);
+
   const pendingColumns = [
     {
       field: 'file_name',
@@ -113,9 +114,7 @@ export default function MyCases(props) {
       headerAlign: 'center',
       flex: 1,
       renderCell: params =>
-        params.row.status !== 'Review' ? (
-          params.row.status
-        ) : (
+        params.row.status === 'Review' ? (
           <div style={{ display: 'flex', flexDirection: 'row' }}>
             <Button
               size="small"
@@ -130,6 +129,19 @@ export default function MyCases(props) {
             </Button>
             <ExclamationCircleTwoTone twoToneColor="red" />
           </div>
+        ) : (
+          <>
+            {params.row.status}
+            <div style={{ width: 100, margin: 5 }}>
+              {params.row.status === 'Processing' ? (
+                <Progress percent={30} size="small" status="active" />
+              ) : params.row.status === 'Error' || 'Rejected' ? (
+                <Progress percent={50} size="small" status="exception" />
+              ) : params.row.status === 'Pending' ? (
+                <Progress percent={80} size="small" />
+              ) : null}
+            </div>
+          </>
         ),
     },
     {

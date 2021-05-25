@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
-import { Link } from 'react-router-dom';
 import {
   Form,
   Input,
@@ -46,7 +45,7 @@ const ManageUsersPage = props => {
       .delete(`/profiles/${profile.user_id}`)
       .then(res => {
         alert(`${profile.first_name}'s profile was deleted`);
-        console.log(res.data);
+        setProfiles(res.data.profiles);
       })
       .catch(err => {
         console.log(err);
@@ -63,14 +62,48 @@ const ManageUsersPage = props => {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
+
   const onChange = e => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
   };
 
+  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+  const showEditModal = id => {
+    axiosWithAuth()
+      .get(`/profile/${id}`)
+      .then(res => {
+        console.log(res.data);
+        const { first_name, last_name, role, email, user_id } = res.data;
+        setFormValues({ first_name, last_name, role, email, user_id });
+        setIsEditModalVisible(true);
+      });
+  };
+
+  const handleEditOk = () => {
+    setIsEditModalVisible(false);
+  };
+  const handleEditCancel = () => {
+    setFormValues(initialFormValues);
+    setIsEditModalVisible(false);
+  };
+
   const postNewUser = newUser => {
     axiosWithAuth()
       .post(`/profile/`, newUser)
+      .then(res => {
+        setProfiles(res.data.profile);
+      })
+      .catch(err => console.log(err));
+    setFormValues(initialFormValues);
+  };
+
+  const updateUser = updatedUser => {
+    axiosWithAuth()
+      .put(`/profile/${updatedUser.user_id}`, updatedUser)
+      .then(res => {
+        setProfiles(res.data.profiles);
+      })
       .catch(err => console.log(err));
     setFormValues(initialFormValues);
   };
@@ -83,9 +116,21 @@ const ManageUsersPage = props => {
       email: formValues.email.trim(),
       role: formValues.role.trim(),
     };
-    console.log(newUser);
     postNewUser(newUser);
     setIsModalVisible(false);
+  };
+
+  const onEditSubmit = e => {
+    e.preventDefault();
+    const updatedUser = {
+      first_name: formValues.first_name.trim(),
+      last_name: formValues.last_name.trim(),
+      email: formValues.email.trim(),
+      role: formValues.role.trim(),
+      user_id: formValues.user_id.trim(),
+    };
+    updateUser(updatedUser);
+    setIsEditModalVisible(false);
   };
 
   return (
@@ -122,9 +167,87 @@ const ManageUsersPage = props => {
                   </Descriptions.Item>
                 </Descriptions>
                 <div className="buttons">
-                  <Link to={`edit-user/${item.user_id}`}>
-                    <AntDButton className="btn-style">Edit</AntDButton>
-                  </Link>
+                  <AntDButton
+                    className="btn-style"
+                    onClick={() => showEditModal(item.user_id)}
+                  >
+                    Edit
+                  </AntDButton>
+                  <Modal
+                    title=""
+                    visible={isEditModalVisible}
+                    onOk={handleEditOk}
+                    onCancel={handleEditCancel}
+                    footer={[
+                      <div className="submit-button">
+                        <AntDButton
+                          htmlType="submit"
+                          className="add-user-btn"
+                          onClick={onEditSubmit}
+                        >
+                          <span>Submit</span>
+                        </AntDButton>
+                      </div>,
+                    ]}
+                  >
+                    <Form
+                      layout="vertical"
+                      className="user-form"
+                      onFinish={onSubmit}
+                    >
+                      <h2 className="h1Styles">Edit User</h2>
+                      <p className="divider">
+                        <Icon
+                          component={() => (
+                            <img src={OrangeLine} alt="divider icon" />
+                          )}
+                        />
+                      </p>
+                      <Form.Item label="First Name">
+                        <Input
+                          id="first_name"
+                          type="text"
+                          name="first_name"
+                          onChange={onChange}
+                          className="text-field"
+                          placeholder="First Name"
+                          value={formValues.first_name}
+                        />
+                      </Form.Item>
+                      <Form.Item label="Last Name">
+                        <Input
+                          id="last_name"
+                          type="text"
+                          name="last_name"
+                          onChange={onChange}
+                          className="text-field"
+                          placeholder="Last Name"
+                          value={formValues.last_name}
+                        />
+                      </Form.Item>
+                      <Form.Item label="Email">
+                        <Input
+                          id="email"
+                          type="email"
+                          name="email"
+                          placeholder="Email"
+                          onChange={onChange}
+                          className="text-field"
+                          value={formValues.email}
+                        />
+                      </Form.Item>
+                      <Radio.Group
+                        onChange={onChange}
+                        name="role"
+                        value={formValues.role}
+                        className="radio"
+                      >
+                        <Radio value="user">User</Radio>
+                        <Radio value="moderator">Moderator</Radio>
+                        <Radio value="admin">Admin</Radio>
+                      </Radio.Group>
+                    </Form>
+                  </Modal>
                   <AntDButton
                     className="btn-style"
                     onClick={() => {
@@ -216,7 +339,7 @@ const ManageUsersPage = props => {
       </div>
 
       <div className="pending-users-container">
-        <PendingUsers authState={authState} />
+        <PendingUsers authState={authState} setProfiles={setProfiles} />
       </div>
     </div>
   );

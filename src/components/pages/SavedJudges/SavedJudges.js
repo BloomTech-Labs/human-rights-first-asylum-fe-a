@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { DataGrid } from '@material-ui/data-grid';
 
 import { Button, Input, Drawer, Typography } from 'antd';
-import './SavedJudges.css';
+import './_SavedJudgesStyles.less';
 
 import FeatherIcon from 'feather-icons-react';
 
@@ -174,7 +174,7 @@ function SavedJudges({ savedJudges, deleteSavedJudge }) {
 
   return (
     <div className="savedJudgeContainer">
-      {savedJudges.length == 0 ? (
+      {savedJudges.length === 0 ? (
         <div className="savedJudgeCard">
           <h1>No Saved Judges</h1>
           <br />

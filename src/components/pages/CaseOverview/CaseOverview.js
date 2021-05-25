@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { Link } from 'react-router-dom';
 import { Card, Skeleton } from 'antd';
@@ -33,7 +32,7 @@ const CaseOverview = props => {
   }, [id]);
 
   return (
-    <>
+    <div className="case-container">
       <Card
         style={{ width: 500, fontWeight: 'normal', margin: '10% 15% 0% 22%' }}
         actions={[
@@ -100,7 +99,7 @@ const CaseOverview = props => {
           )}
         </Skeleton>
       </Card>
-    </>
+    </div>
   );
 };
 
