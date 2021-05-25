@@ -55,13 +55,15 @@
     display: flex;
   }
 
-  .caseTableGridContainer {
+  .caseTableContainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-content: center;
-    width: 98%;
+    width: 90%;
     margin-left: -3rem;
+    margin: 0;
+    border: 1px solid red;
   }
 
   .caseTable {
@@ -191,6 +193,14 @@ li.ant-dropdown-menu-item:hover {
   font-family: 'Lato', sans-serif;
 }
 
+.appCases {
+  display: none;
+}
+
+.iCases {
+  display: flex;
+}
+
 .exportBtn svg.MuiSvgIcon-root {
   font-size: 0%;
 }
@@ -224,4 +234,10 @@ button.ant-btn.columnsBtn {
 button.ant-btn.columnsBtn:hover {
   padding: 0;
   margin: 0;
+}
+
+.newTable {
+  display: flex;
+  width: 100%;
+  height: 50vh;
 }

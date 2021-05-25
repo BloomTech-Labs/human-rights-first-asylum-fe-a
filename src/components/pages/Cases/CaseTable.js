@@ -1,231 +1,287 @@
 import React, { useState } from 'react';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Plot from 'react-plotly.js';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import AppBar from '@material-ui/core/AppBar';
-import Box from '@material-ui/core/Box';
-import { makeStyles } from '@material-ui/core/styles';
-
+import Highlighter from 'react-highlight-words';
 import {
-  DataGrid,
-  GridColumnsToolbarButton,
-  GridToolbarExport,
-} from '@material-ui/data-grid';
-
-import {
-  Button,
-  Typography,
-  Drawer,
-  Input,
-  Card,
-  Menu,
-  Dropdown,
-  message,
-} from 'antd';
-import './CaseTable.less';
-
+  SearchOutlined,
+  FileTextOutlined,
+  FilePdfOutlined,
+} from '@ant-design/icons';
 import FeatherIcon from 'feather-icons-react';
 
-import PDFViewer from '../PDFViewer/PDFViewer';
-import PDFExportButton from './PDFOverviewExport/PDFExportButton';
+import { Table, Space, Button, Input, Menu, message, Tabs } from 'antd';
+import './CaseTable.less';
 
 export default function CaseTable(props) {
-  const { Title } = Typography;
+  const [state, setState] = useState({
+    searchText: '',
+    searchedColumn: '',
+    selectedRowID: [],
+    current: 'iCase',
+  });
 
-  const { caseData, userInfo, savedCases, setSavedCases, authState } = props;
+  const { caseData, userInfo, savedCases, setSavedCases } = props;
 
-  const { id } = useParams();
+  let casesData = caseData.map(cases => ({
+    judge_name:
+      cases.last_name +
+      ', ' +
+      cases.first_name +
+      ' ' +
+      cases.middle_initial +
+      '.',
+    ...cases,
+  }));
 
-  // State for PDF Modal
-  const [showPdf, setShowPdf] = useState(false);
-  const [selection, setSelection] = useState([]);
+  const { TabPane } = Tabs;
 
-  const pdfData = () => {
-    axiosWithAuth()
-      .get(`/case/${id}`)
-      .then(res => {
-        setShowPdf(res.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+  const { searchText, searchedColumn, selectedRowID } = state;
+
+  const onSelectChange = selectedRowID => {
+    console.log('selectedRowID changed: ', selectedRowID);
+    setState({ selectedRowID });
   };
+
+  const getColumnSearchProps = dataIndex => ({
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters,
+    }) => (
+      <div style={{ padding: 8 }}>
+        <Input
+          type="text"
+          id="searchInput"
+          placeholder={`Search ${dataIndex}`}
+          value={selectedKeys[0]}
+          onChange={e =>
+            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          }
+          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+          style={{ marginBottom: 8, display: 'block' }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+            icon={<SearchOutlined />}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Search
+          </Button>
+          <Button
+            onClick={() => handleReset(clearFilters)}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Reset
+          </Button>
+          <Button
+            type="link"
+            size="small"
+            onClick={() => {
+              confirm({ closeDropdown: false });
+              setState({
+                searchText: selectedKeys[0],
+                searchedColumn: dataIndex,
+              });
+            }}
+          >
+            Filter
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: filtered => (
+      <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />
+    ),
+    onFilter: (value, record) =>
+      record[dataIndex]
+        ? record[dataIndex]
+            .toString()
+            .toLowerCase()
+            .includes(value.toLowerCase())
+        : '',
+    onFilterDropdownVisibleChange: visible => {
+      if (visible) {
+        //setTimeout(() => searchInput.select(), 100);
+      }
+    },
+    render: text =>
+      searchedColumn === dataIndex ? (
+        <Highlighter
+          highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+          searchWords={[searchText]}
+          autoEscape
+          textToHighlight={text ? text.toString() : ''}
+        />
+      ) : (
+        text
+      ),
+  });
+
+  const handleSearch = (selectedKeys, confirm, dataIndex) => {
+    confirm();
+    setState({
+      searchText: selectedKeys[0],
+      searchedColumn: dataIndex,
+    });
+  };
+
+  const handleReset = clearFilters => {
+    clearFilters();
+    setState({ searchText: '' });
+  };
+
+  function formatDate(text) {
+    var todayTime = text;
+    var year = text.slice(0, 4);
+    var month = text.slice(5, 7);
+    var day = text.slice(8, 10);
+    return month + '/' + day + '/' + year;
+  }
+
+  function changeSorter(sorter) {
+    console.log(sorter);
+  }
 
   const columns = [
     {
-      field: 'case_number',
-      renderHeader: params => <strong>{'Case Number'}</strong>,
-      headerName: 'Case Number',
-      width: 130,
-      options: {
-        filter: true,
-      },
-      //link to individual case page
-
-      renderCell: params => (
-        <>
-          <Link to={`/case/${params.value}`} className="caseTableLink">
-            <span> {params.row['case_number']}</span>
-          </Link>
-        </>
+      title: 'Case Details',
+      dataIndex: '',
+      key: 'x',
+      render: () => (
+        <Link>
+          {' '}
+          <FileTextOutlined />{' '}
+        </Link>
       ),
     },
     {
-      field: 'case_date',
-      renderHeader: params => <strong>{'Date'}</strong>,
-      headerName: 'Date',
-      width: 110,
+      title: 'Case Date',
+      dataIndex: 'case_date',
+      key: 'case_date',
+      sorter: (a, b) => a.case_date.length - b.case_date.length,
+      sortDirections: ['descend', 'ascend'],
+      ...getColumnSearchProps('case_date'),
+      render: text => formatDate(text),
     },
     {
-      field: 'judge_name',
-      renderHeader: params => <strong>{'Judge'}</strong>,
-      headerName: 'Judge',
-      width: 160,
-      renderCell: params => (
-        <>
-          <Link
-            to={`/judge/${params.row.judge_id}`}
-            style={{ color: '#3582cf' }}
-          >
-            {params.row.first_name + ' ' + params.row.last_name}
-          </Link>
-        </>
+      title: 'Judge Name',
+      dataIndex: 'judge_name',
+      key: 'judge_name',
+      sorter: (a, b) => a.last_name.length - b.last_name.length,
+      sortDirections: ['descend', 'ascend'],
+      ...getColumnSearchProps('judge_name'),
+      render: text => <Link>{text}</Link>,
+    },
+    {
+      title: 'Origin City',
+      dataIndex: 'case_origin_city',
+      key: 'case_origin_city',
+      sorter: (a, b) => a.case_origin_city.length - b.case_origin_city.length,
+      sortDirections: ['descend', 'ascend'],
+      ...getColumnSearchProps('case_origin_city'),
+    },
+    {
+      title: 'Origin State',
+      dataIndex: 'case_origin_state',
+      key: 'case_origin_state',
+      sorter: (a, b) => a.case_origin_state.length - b.case_origin_state.length,
+      sortDirections: ['descend', 'ascend'],
+      ...getColumnSearchProps('case_origin_state'),
+    },
+    {
+      title: 'File in 1 Year',
+      dataIndex: 'filed_in_one_year',
+      key: 'filed_in_one_year',
+      sorter: (a, b) => a.filed_in_one_year.length - b.filed_in_one_year.length,
+      sortDirections: ['descend', 'ascend'],
+      ...getColumnSearchProps('filed_in_one_year'),
+    },
+    {
+      title: 'Protected Grounds',
+      dataIndex: 'protected_grounds',
+      key: 'protected_grounds',
+      sorter: (a, b) => a.protected_grounds.length - b.protected_grounds.length,
+      sortDirections: ['descend', 'ascend'],
+      ...getColumnSearchProps('protected_grounds'),
+    },
+    {
+      title: 'Outcome',
+      dataIndex: 'case_outcome',
+      key: 'case_outcome',
+      sorter: (a, b) => a.case_outcome.length - b.case_outcome.length,
+      sortDirections: ['descend', 'ascend'],
+      ...getColumnSearchProps('case_outcome'),
+    },
+    {
+      title: 'Country of Origin',
+      dataIndex: 'country_of_origin',
+      key: 'country_of_origin',
+      sorter: (a, b) => a.country_of_origin.length - b.country_of_origin.length,
+      sortDirections: ['descend', 'ascend'],
+      ...getColumnSearchProps('country_of_origin'),
+    },
+    {
+      title: 'Applicant Gender',
+      dataIndex: 'gender',
+      key: 'gender',
+      sorter: (a, b) => a.gender.length - b.gender.length,
+      sortDirections: ['descend', 'ascend'],
+      ...getColumnSearchProps('gender'),
+    },
+    {
+      title: 'Violence Experienced',
+      dataIndex: 'type_of_violence',
+      key: 'type_of_violence',
+      sorter: (a, b) => a.type_of_violence.length - b.type_of_violence.length,
+      sortDirections: ['descend', 'ascend'],
+      ...getColumnSearchProps('type_of_violence'),
+    },
+    {
+      title: 'Applicant Language',
+      dataIndex: 'applicant_language',
+      key: 'applicant_language',
+      sorter: (a, b) =>
+        a.applicant_language.length - b.applicant_language.length,
+      sortDirections: ['descend', 'ascend'],
+      ...getColumnSearchProps('applicant_language'),
+    },
+    {
+      title: 'Download PDF',
+      dataIndex: 'case_url',
+      key: 'case_url',
+      render: text => (
+        <a href={text}>
+          {' '}
+          <FilePdfOutlined />
+        </a>
       ),
-    },
-    {
-      field: 'case_origin_city',
-      renderHeader: params => <strong>{'Origin City'}</strong>,
-      headerName: 'Origin City',
-      width: 160,
-    },
-    {
-      field: 'case_origin_state',
-      renderHeader: params => <strong>{'Origin State'}</strong>,
-      headerName: 'Origin State',
-      width: 120,
-    },
-    {
-      field: 'filed_in_one_year',
-      renderHeader: params => <strong>{'Filed in 1 Year'}</strong>,
-      headerName: 'Filed in 1 Year',
-      width: 145,
-    },
-    {
-      field: 'protected_grounds',
-      renderHeader: params => <strong>{'Protected Grounds'}</strong>,
-      headerName: 'Protected Grounds',
-      width: 155,
-    },
-    {
-      field: 'case_outcome',
-      renderHeader: params => <strong>{'Outcome'}</strong>,
-      headerName: 'Outcome',
-      width: 110,
-    },
-    {
-      field: 'country_of_origin',
-      renderHeader: params => <strong>{'Country of Origin'}</strong>,
-      headerName: 'Country of Origin',
-      width: 140,
-    },
-    {
-      field: 'gender',
-      renderHeader: params => <strong>{'Applicant Gender'}</strong>,
-      headerName: 'Applicant Gender',
-      width: 155,
-    },
-    {
-      field: 'type_of_violence',
-      renderHeader: params => <strong>{'Violence Experienced'}</strong>,
-      headerName: 'Violence Experienced',
-      width: 185,
-    },
-    {
-      field: 'application_type',
-      renderHeader: params => <strong>{'Application Type'}</strong>,
-      headerName: 'Application Type',
-      width: 140,
-      hide: true,
-    },
-    {
-      field: 'indigenous_group',
-      renderHeader: params => <strong>{'Indigenous Group'}</strong>,
-      headerName: 'Indigenous Group',
-      width: 150,
-      hide: true,
-    },
-    {
-      field: 'applicant_language',
-      renderHeader: params => <strong>{'Applicant Language'}</strong>,
-      headerName: 'Applicant Language',
-      width: 160,
-      hide: true,
-    },
-    {
-      field: 'credible',
-      renderHeader: params => <strong>{'Credible Applicant'}</strong>,
-      headerName: 'Credible Applicant',
-      width: 160,
-      hide: true,
-    },
-    // MODAL for PDFs / to be removed?
-
-    {
-      field: 'view_pdf',
-      headerName: 'View PDF',
-      width: 100,
-      hide: true,
-      renderCell: params => (
-        // Hook to control whether or not to show the PDF Modal
-        <>
-          <div className="pdfView">
-            <PDFViewer
-              pdf={pdfData} // this will be set to viewPdf when endpoint is available
-              onCancel={() => setShowPdf(false)}
-              visible={showPdf}
-            />
-            <Button onClick={setShowPdf}>PDF</Button>
-          </div>
-        </>
-      ),
-    },
-    {
-      field: 'download',
-      headerName: 'Download',
-      width: 100,
-      hide: true,
-      renderCell: params => {
-        return (
-          <div>
-            <a
-              style={{ color: '#215589' }}
-              href={`${process.env.REACT_APP_API_URI}/case/${params.row.id}/download-pdf`}
-            >
-              PDF
-            </a>
-          </div>
-        );
-      },
     },
   ];
-
-  const findRowByID = (rowID, rowData) => {
-    console.log('inside findRowByID', rowID, rowData);
-    for (let i = 0; i < rowData.length; i++) {
-      let currentRow = rowData[i];
-      if (rowData[i].case_number === rowID) {
-        return currentRow;
+  const findRowByID = (selectedRowID, caseData) => {
+    caseData.forEach(row => {
+      if (row.case_id === selectedRowID) {
+        return row;
+      } else {
+        return 'Please select row to save.';
       }
-    }
-    return 'Row does not exist';
+    });
   };
 
   const postBookmark = rowToPost => {
-    console.log('in postBookmark', rowToPost); // in postBookmark
     axiosWithAuth()
       .post(`/profile/${userInfo.sub}/case/${rowToPost}`, rowToPost)
+      // .then(res => {
+      //   let justAdded = res.data.case_bookmarks.slice(-1); // response comes back as array of all existing bookmarks
+      //   let justAddedID = justAdded[0].case_id;
+      //   let wholeAddedRow = findRowByID(justAddedID, caseData);
+      //   setSavedCases([...savedCases, wholeAddedRow]);
+
       .then(res => {
         console.log(res.data);
         setSavedCases(res.data.case_bookmarks);
@@ -235,30 +291,29 @@ export default function CaseTable(props) {
       });
   };
 
-  const bookmarkCases = targetRows => {
-    console.log('inside bookmarkCases', targetRows); // inside bookmarkCses
+  const bookmarkCases = selectedRowID => {
+    // loop through currently selected cases and do post requests
+    // need to reference rows by id, as that is all that selection stores
+    // need to account for duplicates as well
     let bookmarks = [];
-    if (targetRows.length === 0) {
+    if (selectedRowID.length === 0) {
       alert('Please select cases(s) to be saved');
     } else {
-      for (let i = 0; i < targetRows.length; i++) {
-        bookmarks.push(findRowByID(targetRows[i], caseData));
-      }
-      let savedIds = [];
-      for (let i = 0; i < savedCases.length; i++) {
-        savedIds.push(savedCases[i].case_id);
-      }
-
-      for (let i = 0; i < bookmarks.length; i++) {
-        if (savedIds.includes(bookmarks[i].case_id)) {
-          console.log('Case already saved to bookmarks');
-          continue;
-        } else {
-          postBookmark(bookmarks[i].case_id);
-        }
-      }
-      alert('Cases Successfully Saved');
+      selectedRowID.forEach(row => bookmarks.push(findRowByID(row, caseData)));
     }
+
+    let savedIds = [];
+    if (savedCases) {
+      savedCases.forEach(id => savedIds.push(id.case_id));
+    }
+    bookmarks.forEach(b => {
+      if (savedIds.includes(b.case_id)) {
+        console.log('Case already saved to bookmarks');
+      } else {
+        postBookmark(b);
+      }
+    });
+    alert('Cases Successfully Saved');
   };
 
   const [queryValues, setQueryValues] = useState({
@@ -316,54 +371,9 @@ export default function CaseTable(props) {
     return filteredData;
   };
 
-  const searchOptions = [
-    { id: 'case_number', label: 'Case Number' },
-    { id: 'case_date', label: 'Date' },
-    { id: 'judge', label: 'Judge' },
-    { id: 'case_origin_city', label: 'Origin City' },
-    { id: 'case_origin_state', label: 'Origin State' },
-    { id: 'filed_in_one_year', label: 'Case Filed Within One Year' },
-    { id: 'application_type', label: 'Application Type' },
-    { id: 'protected_grounds', label: 'Protected Grounds' },
-    { id: 'case_outcome', label: 'Case Outcome' },
-    { id: 'country_of_origin', label: 'Country of Origin' },
-    { id: 'gender', label: 'Applicant Gender' },
-    { id: 'type_of_violence', label: 'Violence Experienced' },
-    { id: 'indigenous_group', label: 'Indigenous Applicant' },
-    { id: 'applicant_language', label: 'Applicant Language' },
-    {
-      id: 'credible',
-      label: 'Credible Applicant',
-    },
-  ];
-  const drawerContent = () => {
-    return (
-      <div className="caseTableDrawer">
-        {searchOptions.map(value => {
-          return (
-            <div key={value.id}>
-              <p>{value.label}</p>
-              <Input
-                placeholder={'search query'}
-                variant="outlined"
-                size="medium"
-                value={queryValues[value.id]}
-                onChange={e => {
-                  setQueryValues({
-                    ...queryValues,
-                    [value.id]: e.target.value,
-                  });
-                  setSearching(true);
-                }}
-                type="text"
-                className="caseTableSearchInput"
-              />
-            </div>
-          );
-        })}
-      </div>
-    );
-  };
+  function callback(key) {
+    console.log(key);
+  }
 
   const CustomToolbar = () => {
     const menuClick = ({ key }) => {
@@ -376,71 +386,28 @@ export default function CaseTable(props) {
           key="1"
           className="exportBtn"
           icon={<FeatherIcon icon="download" />}
-        >
-          <GridToolbarExport />
-        </Menu.Item>
-        <Menu.Item key="2" icon={<FeatherIcon icon="download" />}>
-          <PDFExportButton
-            caseData={filter(caseData)}
-            viz={<DecisionRateChart />}
-          />
-        </Menu.Item>
-        <Menu.Item key="3" icon={<FeatherIcon icon="download" />}>
-          Download all as PDF
-        </Menu.Item>
+        />
       </Menu>
     );
     return (
       <div className="menuContainer">
-        <Title level={2}>
-          {
-            <AppBar
-              position="static"
-              classes={{ root: classes.root }}
-              elevation={0}
-            >
-              <Tabs
-                value={tabValue}
-                onChange={onChange}
-                aria-label="Types of Cases"
-                classes={{
-                  root: classes.root,
-                  indicator: classes.tabIndicator,
-                }}
-              >
-                <Tab label="Initial Cases" />
-                <Tab label="Appellate Cases" />
-              </Tabs>
-            </AppBar>
-          }
-        </Title>
+        <Tabs defaultActiveKey="1" onChange={callback}>
+          <TabPane tab="Initial Cases" key="1"></TabPane>
+          <TabPane tab="Appellate Cases" key="2" />
+        </Tabs>
         <div className="buttonContainer">
-          <Dropdown.Button
+          <Button
             icon={<FeatherIcon icon="download" />}
             onClick={e => e.preventDefault()}
             overlay={menu}
             trigger={['click']}
-          ></Dropdown.Button>
-
+          />
           <Button
             onClick={() => {
-              toggleSearch();
+              bookmarkCases(rowSelection);
             }}
-          >
-            <FeatherIcon icon="search" />
-          </Button>
-
-          <Button
-            onClick={() => {
-              bookmarkCases(selection);
-            }}
-          >
-            <FeatherIcon icon="bookmark" />
-          </Button>
-
-          <Button className="columnsBtn">
-            <GridColumnsToolbarButton onClick={e => e.preventDefault()} />
-          </Button>
+            icon={<FeatherIcon icon="bookmark" />}
+          />
         </div>
       </div>
     );
@@ -528,144 +495,51 @@ export default function CaseTable(props) {
     );
   };
 
-  const [tabValue, setTabValue] = useState(0);
-
-  const onChange = (e, newTabValue) => {
-    setTabValue(newTabValue);
+  const rowSelection = {
+    selectedRowID,
+    onChange: onSelectChange,
   };
 
-  function TabPanel(props) {
-    const { children, value, index, ...other } = props;
+  const nonAppCases = casesData.filter(item => item.appellate === false);
+  const appCases = casesData.filter(item => item.appellate === true);
 
-    return (
-      <div
-        className="tabPanel"
-        role="tabpanel"
-        hidden={value !== index}
-        id={`simple-tabpanel-${index}`}
-        aria-labelledby={`simple-tab-${index}`}
-        {...other}
-      >
-        {value === index && (
-          <Box p={3}>
-            <Typography>{children}</Typography>
-          </Box>
-        )}
-      </div>
-    );
-  }
+  // const handleClick = e => {
+  //   console.log('click ', e);
+  //   setState({ current: e.key });
+  // };
 
-  const useStyles = makeStyles(theme => ({
-    root: {
-      background: '#fff',
-      color: '#215589',
-      height: 48,
-      zIndex: 1,
-      fontSize: 5,
-    },
-    tabIndicator: {
-      backgroundColor: '#c95202',
-      height: 4,
-    },
-    tabPanel: {
-      width: '100%',
-    },
-  }));
+  // const [tabValue, setTabValue] = useState(0);
 
-  const classes = useStyles();
-  const sampleAppellateCases = [];
-  caseData.forEach(item => sampleAppellateCases.unshift(item));
-  // Conditional rendering needs to be applied to render initial and appellate cases to their respective tabs
+  // const onChange = (e, newTabValue) => {
+  //   setTabValue(newTabValue);
+  // };
 
   return (
     <div className="caseTableContainer">
-      <div className="viz-container">
-        <div className="viz-card">
-          <DecisionRateChart />
-        </div>
-        <div className="viz-card">
-          <CaseDataChart />
-        </div>
+      <div className="chartContainer">
+        <DecisionRateChart />
+        <div className="divider"></div>
+        <CaseDataChart />
       </div>
-      <div className="caseTableCard">
-        {searching && (
-          <div>
-            {searchOptions.map(option => {
-              if (queryValues[option.id] !== '') {
-                return (
-                  <Card
-                    key={option.id}
-                    label={`${option.label}: "${queryValues[option.id]}"`}
-                    onDelete={() => {
-                      setQueryValues({
-                        ...queryValues,
-                        [option.id]: '',
-                      });
-                    }}
-                    style={{ marginRight: 5 }}
-                  />
-                );
-              } else {
-                return null;
-              }
-            })}
-          </div>
-        )}
-        <Drawer
-          visible={new_search}
-          onClose={toggleSearch}
-          width={'25%'}
-          style={{ marginTop: '4rem' }}
-        >
-          {drawerContent()}
-        </Drawer>
+      <div>
+        <CustomToolbar />
+        <Table
+          className="cases_table iCases"
+          rowSelection={rowSelection}
+          rowKey={record => record.case_id}
+          columns={columns}
+          dataSource={nonAppCases}
+          onChange={changeSorter}
+        />
+        <Table
+          className="cases_table appCases"
+          rowSelection={rowSelection}
+          rowKey={record => record.case_id}
+          columns={columns}
+          dataSource={appCases}
+          onChange={changeSorter}
+        />
       </div>
-
-      <TabPanel className={classes.tabPanel} value={tabValue} index={0}>
-        <div className="caseTableGridContainer">
-          <DataGrid
-            rows={
-              caseData
-                ? filter(caseData.filter(item => item.appellate === false))
-                : caseData.filter(item => item.appellate === false)
-            }
-            columns={columns}
-            className="caseTable"
-            loading={caseData ? false : true}
-            checkboxSelection={true}
-            showCellRightBorder={false}
-            pageSize={25}
-            disableColumnMenu={true}
-            components={{ Toolbar: CustomToolbar }}
-            onSelectionModelChange={newSelection => {
-              setSelection(newSelection.selectionModel);
-            }}
-          />
-        </div>
-      </TabPanel>
-      <TabPanel className={classes.tabPanel} value={tabValue} index={1}>
-        <div className="caseTableGridContainer">
-          <DataGrid
-            rows={
-              caseData
-                ? filter(caseData.filter(item => item.appellate === true))
-                : caseData.filter(item => item.appellate === true)
-            }
-            columns={columns}
-            className="caseTable"
-            loading={caseData ? false : true}
-            checkboxSelection={true}
-            showCellRightBorder={false}
-            pageSize={25}
-            disableColumnMenu={true}
-            components={{ Toolbar: CustomToolbar }}
-            onSelectionModelChange={newSelection => {
-              setSelection(newSelection.selectionModel);
-            }}
-            selectedRows={selection}
-          />
-        </div>
-      </TabPanel>
     </div>
   );
 }
