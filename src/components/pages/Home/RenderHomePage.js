@@ -29,7 +29,6 @@ import ManageCases from '../ManageCases/ManageCases';
 import AccountPage from '../AccountPage/AccountPage';
 import SupportPage from '../SupportPage/SupportPage';
 import ManageUsersPage from '../AdminTools/ManageUsers';
-import EditUserPage from '../AdminTools/EditUser';
 import AddFaq from '../AdminTools/AddFaq';
 import ManageFaqPage from '../AdminTools/ManageFaq';
 import EditFaqPage from '../AdminTools/EditFaq';
@@ -254,9 +253,6 @@ function RenderHomePage(props) {
             </Route>
             <Route exact path="/manage-users">
               <ManageUsersPage authState={user.authState} />
-            </Route>
-            <Route exact path="/edit-user/:id">
-              <EditUserPage authState={user.authState} />
             </Route>
             <Route exact path="/add-faq">
               <AddFaq authState={user.authState} />
