@@ -86,7 +86,6 @@ const ManageUsersPage = props => {
       email: formValues.email.trim(),
       role: formValues.role.trim(),
     };
-    console.log(newUser);
     postNewUser(newUser);
     setIsModalVisible(false);
   };

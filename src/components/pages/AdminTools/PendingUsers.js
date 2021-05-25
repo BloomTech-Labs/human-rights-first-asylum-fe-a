@@ -28,7 +28,6 @@ const PendingUsersPage = props => {
       .post(`/profile/`, profile)
       .then(res => {
         alert(`Profile request from ${profile.email} was approved`);
-        console.log(res.data);
         setProfiles(res.data.profile);
         setPendingProfiles(
           pendingProfiles.filter(
@@ -46,7 +45,6 @@ const PendingUsersPage = props => {
       .delete(`/profiles/pending/${profile.id}`)
       .then(res => {
         alert(`Profile request from ${profile.email} was rejected`);
-        console.log(res.data);
         setPendingProfiles(
           pendingProfiles.filter(
             pendingProfile => pendingProfile.user_id !== profile.user_id
