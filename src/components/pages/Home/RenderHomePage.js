@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import CaseTable from '../CaseTable/CaseTable';
+import CaseTable from '../Cases/CaseTable';
 import JudgeTable from '../JudgeTable/JudgeTable';
 import UploadCase from '../Upload/UploadCase';
 import SideDrawer from '../SideDrawer/SideDrawer';

@@ -78,7 +78,7 @@ const ManageFaqPage = props => {
   };
 
   return (
-    <div className="root">
+    <div className="manage-faq-container">
       <div className="faq">
         <h2 className="faq-header"> Manage FAQ </h2>
         <p className="divider">

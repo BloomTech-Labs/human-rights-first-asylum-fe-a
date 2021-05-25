@@ -62,7 +62,7 @@ table {
   display: none;
 }
 *::selection {
-  background: none;
+  background: #a0c5dd;
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */

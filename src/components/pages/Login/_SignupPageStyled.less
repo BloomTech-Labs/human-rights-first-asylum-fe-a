@@ -1,5 +1,6 @@
 @background-image: '../../../styles/statueOfLiberty.jpg';
 @button: #bd5a27;
+@white: #ffffff;
 
 .signup-root {
   width: 100%;
@@ -29,6 +30,7 @@
   min-height: 100vh;
   background-position: top;
   background-repeat: no-repeat;
+  background-size: cover;
   @media (max-width: 600px) {
     width: 0;
   }
@@ -66,8 +68,8 @@
   margin-top: 3.5rem;
 }
 
-button.buttonStyles {
-  color: #ffffff;
+.request-btn {
+  color: @white !important;
   background-color: @button;
   margin: 0.8rem 0rem;
   display: flex;
@@ -75,10 +77,19 @@ button.buttonStyles {
   justify-content: center;
   border-radius: 1px;
   padding: 1.5rem;
+  width: 100%;
   &:hover {
-    background-color: #ffffff;
-    color: @button;
-    border: 1px solid @button;
+    background-color: @white !important;
+    color: @button !important;
+    border: 1px solid @button !important;
     border-radius: 1px;
+  }
+  &:active {
+    color: @white;
+    background-color: @button;
+  }
+  &:focus {
+    color: @white;
+    background-color: @button;
   }
 }

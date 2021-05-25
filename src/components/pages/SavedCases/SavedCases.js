@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { DataGrid } from '@material-ui/data-grid';
 
 import { Button, Input, Drawer, Typography } from 'antd';
-import './SavedCases.css';
+import './_SavedCasesStyles.less';
 
 import FeatherIcon from 'feather-icons-react';
 

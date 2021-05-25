@@ -38,7 +38,7 @@ const CaseOverview = props => {
   }, [id]);
 
   return (
-    <>
+    <div className="case-container">
       <Card
         style={{ width: 500, fontWeight: 'normal', margin: '10% 15% 0% 22%' }}
         actions={[
@@ -105,7 +105,7 @@ const CaseOverview = props => {
           )}
         </Skeleton>
       </Card>
-    </>
+    </div>
   );
 };
 

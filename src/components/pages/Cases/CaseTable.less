@@ -27,23 +27,24 @@
 .caseTableContainer {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  align-content: flex-start;
-  width: 100%;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  width: 80vw;
+  margin-left: 12rem;
 
   /* Chart Container Adjustments */
 
-  .chartContainer {
+  .viz-container {
     display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80vw;
+    overflow-y: hidden;
+    margin-left: 1.5rem;
   }
-
-  .divider {
-    width: 2px;
-    height: 200px;
-    background-color: grey;
-    border: 1px solid black;
-    margin-top: 2rem;
+  .user-select-none .svg-container {
+    width: 40vw;
   }
 
   .caseTableLink {
@@ -72,7 +73,7 @@
     height: 100%;
     margin: -2rem 4rem 4rem 4rem;
     box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
-    border: none!important;
+    border: none !important;
   }
 }
 
@@ -224,4 +225,3 @@ button.ant-btn.columnsBtn:hover {
   padding: 0;
   margin: 0;
 }
-
