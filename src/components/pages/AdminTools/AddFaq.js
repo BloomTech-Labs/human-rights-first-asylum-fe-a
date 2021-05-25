@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { Form, Input, Button, Modal } from 'antd';
 
