@@ -7,11 +7,20 @@ import {
   SearchOutlined,
   FileTextOutlined,
   FilePdfOutlined,
-  TagOutlined,
 } from '@ant-design/icons';
 import FeatherIcon from 'feather-icons-react';
 
-import { Table, Space, Button, Input, Radio, Divider, Menu } from 'antd';
+import {
+  Table,
+  Space,
+  Button,
+  Input,
+  Radio,
+  Divider,
+  Menu,
+  message,
+  Tabs,
+} from 'antd';
 import './CaseTable.less';
 import { MenuItem } from '@material-ui/core';
 
@@ -43,6 +52,8 @@ export default function CaseTable(props) {
       '.',
     ...cases,
   }));
+
+  const { TabPane } = Tabs;
 
   const { searchText, searchedColumn, selectedRowID, current } = state;
 
@@ -152,7 +163,7 @@ export default function CaseTable(props) {
     return month + '/' + day + '/' + year;
   }
 
-  function onChange(sorter) {
+  function changeSorter(sorter) {
     console.log(sorter);
   }
 
@@ -385,26 +396,47 @@ export default function CaseTable(props) {
     return filteredData;
   };
 
-  const searchOptions = [
-    { id: 'case_number', label: 'Case Number' },
-    { id: 'date', label: 'Date' },
-    { id: 'judge', label: 'Judge' },
-    { id: 'case_origin_city', label: 'Origin City' },
-    { id: 'case_origin_state', label: 'Origin State' },
-    { id: 'filed_in_one_year', label: 'Case Filed Within One Year' },
-    { id: 'application_type', label: 'Application Type' },
-    { id: 'protected_grounds', label: 'Protected Grounds' },
-    { id: 'case_outcome', label: 'Case Outcome' },
-    { id: 'country_of_origin', label: 'Country of Origin' },
-    { id: 'gender', label: 'Applicant Gender' },
-    { id: 'type_of_violence', label: 'Violence Experienced' },
-    { id: 'indigenous_group', label: 'Indigenous Applicant' },
-    { id: 'applicant_language', label: 'Applicant Language' },
-    {
-      id: 'credible',
-      label: 'Credible Applicant',
-    },
-  ];
+  function callback(key) {
+    console.log(key);
+  }
+
+  const CustomToolbar = () => {
+    const menuClick = ({ key }) => {
+      message.info(`Click on item ${key}`);
+    };
+
+    const menu = (
+      <Menu onClick={menuClick}>
+        <Menu.Item
+          key="1"
+          className="exportBtn"
+          icon={<FeatherIcon icon="download" />}
+        />
+      </Menu>
+    );
+    return (
+      <div className="menuContainer">
+        <Tabs defaultActiveKey="1" onChange={callback}>
+          <TabPane tab="Initial Cases" key="1"></TabPane>
+          <TabPane tab="Appellate Cases" key="2" />
+        </Tabs>
+        <div className="buttonContainer">
+          <Button
+            icon={<FeatherIcon icon="download" />}
+            onClick={e => e.preventDefault()}
+            overlay={menu}
+            trigger={['click']}
+          />
+          <Button
+            onClick={() => {
+              bookmarkCases(rowSelection);
+            }}
+            icon={<FeatherIcon icon="bookmark" />}
+          />
+        </div>
+      </div>
+    );
+  };
 
   const data = searching ? filter(caseData) : caseData;
 
@@ -435,30 +467,6 @@ export default function CaseTable(props) {
     });
 
     return (
-      // <Plot
-      //   data={[
-      //     {
-      //       type: 'pie',
-      //       values: [granted, denied, remanded, sustained, terminated],
-      //       labels: [
-      //         'Granted',
-      //         'Denied',
-      //         'Remanded',
-      //         'Sustained',
-      //         'Terminated',
-      //       ],
-      //       textinfo: 'label+percent',
-      //       textposition: 'outside',
-      //       automargin: true,
-      //     },
-      //   ]}
-      //   layout={{
-      //     height: 300,
-      //     width: 300,
-      //     showlegend: false,
-      //     title: 'Decision Rate',
-      //   }}
-      // />
       <Plot
         data={[
           {
@@ -512,8 +520,6 @@ export default function CaseTable(props) {
     );
   };
 
-  const [tabValue, setTabValue] = useState(0);
-
   const rowSelection = {
     selectedRowID,
     onChange: onSelectChange,
@@ -522,11 +528,15 @@ export default function CaseTable(props) {
   const nonAppCases = casesData.filter(item => item.appellate === false);
   const appCases = casesData.filter(item => item.appellate === true);
 
-  const [selectionType, setSelectionType] = useState();
-
   const handleClick = e => {
     console.log('click ', e);
     setState({ current: e.key });
+  };
+
+  const [tabValue, setTabValue] = useState(0);
+
+  const onChange = (e, newTabValue) => {
+    setTabValue(newTabValue);
   };
 
   return (
@@ -539,33 +549,24 @@ export default function CaseTable(props) {
           <div className="divider"></div>
           <CaseDataChart />
         </div>
-        <div className="caseTableContainer">
-          <div>
-            <Menu
-              onClick={handleClick}
-              selectedKeys={[current]}
-              mode="horizontal"
-            >
-              <Menu.Item key="iCase"> Initial Case </Menu.Item>
-              <Menu.Item key="aCase"> Appellate Case</Menu.Item>
-            </Menu>
-            <Table
-              className="cases_table iCases"
-              rowSelection={rowSelection}
-              rowKey={record => record.case_id}
-              columns={columns}
-              dataSource={nonAppCases}
-              onChange={onChange}
-            />
-            <Table
-              className="cases_table appCases"
-              rowSelection={rowSelection}
-              rowKey={record => record.case_id}
-              columns={columns}
-              dataSource={appCases}
-              onChange={onChange}
-            />
-          </div>
+        <div>
+          <CustomToolbar />
+          <Table
+            className="cases_table iCases"
+            rowSelection={rowSelection}
+            rowKey={record => record.case_id}
+            columns={columns}
+            dataSource={nonAppCases}
+            onChange={changeSorter}
+          />
+          <Table
+            className="cases_table appCases"
+            rowSelection={rowSelection}
+            rowKey={record => record.case_id}
+            columns={columns}
+            dataSource={appCases}
+            onChange={changeSorter}
+          />
         </div>
       </div>
     )
