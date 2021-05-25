@@ -9,8 +9,10 @@ import {
   FilePdfOutlined,
 } from '@ant-design/icons';
 import FeatherIcon from 'feather-icons-react';
+import Save from '../../../styles/icons/save.svg';
+import Icon from '@ant-design/icons';
 
-import { Table, Space, Button, Input, Menu, message, Tabs } from 'antd';
+import { Table, Space, Button, Input, Tabs } from 'antd';
 import './CaseTable.less';
 
 export default function CaseTable(props) {
@@ -31,6 +33,7 @@ export default function CaseTable(props) {
       ' ' +
       cases.middle_initial +
       '.',
+    one_year: cases.filed_in_one_year.toString(),
     ...cases,
   }));
 
@@ -137,7 +140,6 @@ export default function CaseTable(props) {
   };
 
   function formatDate(text) {
-    var todayTime = text;
     var year = text.slice(0, 4);
     var month = text.slice(5, 7);
     var day = text.slice(8, 10);
@@ -164,7 +166,7 @@ export default function CaseTable(props) {
       title: 'Case Date',
       dataIndex: 'case_date',
       key: 'case_date',
-      sorter: (a, b) => a.case_date.length - b.case_date.length,
+      sorter: (a, b) => a.case_date.localeCompare(b.case_date),
       sortDirections: ['descend', 'ascend'],
       ...getColumnSearchProps('case_date'),
       render: text => formatDate(text),
@@ -173,7 +175,7 @@ export default function CaseTable(props) {
       title: 'Judge Name',
       dataIndex: 'judge_name',
       key: 'judge_name',
-      sorter: (a, b) => a.last_name.length - b.last_name.length,
+      sorter: (a, b) => a.last_name.localeCompare(b.last_name),
       sortDirections: ['descend', 'ascend'],
       ...getColumnSearchProps('judge_name'),
       render: text => <Link>{text}</Link>,
@@ -182,7 +184,7 @@ export default function CaseTable(props) {
       title: 'Origin City',
       dataIndex: 'case_origin_city',
       key: 'case_origin_city',
-      sorter: (a, b) => a.case_origin_city.length - b.case_origin_city.length,
+      sorter: (a, b) => a.case_origin_city.localeCompare(b.case_origin_city),
       sortDirections: ['descend', 'ascend'],
       ...getColumnSearchProps('case_origin_city'),
     },
@@ -190,23 +192,23 @@ export default function CaseTable(props) {
       title: 'Origin State',
       dataIndex: 'case_origin_state',
       key: 'case_origin_state',
-      sorter: (a, b) => a.case_origin_state.length - b.case_origin_state.length,
+      sorter: (a, b) => a.case_origin_state.localeCompare(b.case_origin_state),
       sortDirections: ['descend', 'ascend'],
       ...getColumnSearchProps('case_origin_state'),
     },
     {
       title: 'File in 1 Year',
-      dataIndex: 'filed_in_one_year',
-      key: 'filed_in_one_year',
-      sorter: (a, b) => a.filed_in_one_year.length - b.filed_in_one_year.length,
+      dataIndex: 'one_year',
+      key: 'one_year',
+      sorter: (a, b) => a.one_year.localeCompare(b.one_year),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('filed_in_one_year'),
+      ...getColumnSearchProps('one_year'),
     },
     {
       title: 'Protected Grounds',
       dataIndex: 'protected_grounds',
       key: 'protected_grounds',
-      sorter: (a, b) => a.protected_grounds.length - b.protected_grounds.length,
+      sorter: (a, b) => a.protected_grounds.localeCompare(b.protected_grounds),
       sortDirections: ['descend', 'ascend'],
       ...getColumnSearchProps('protected_grounds'),
     },
@@ -214,7 +216,7 @@ export default function CaseTable(props) {
       title: 'Outcome',
       dataIndex: 'case_outcome',
       key: 'case_outcome',
-      sorter: (a, b) => a.case_outcome.length - b.case_outcome.length,
+      sorter: (a, b) => a.case_outcome.localeCompare(b.case_outcome),
       sortDirections: ['descend', 'ascend'],
       ...getColumnSearchProps('case_outcome'),
     },
@@ -222,7 +224,7 @@ export default function CaseTable(props) {
       title: 'Country of Origin',
       dataIndex: 'country_of_origin',
       key: 'country_of_origin',
-      sorter: (a, b) => a.country_of_origin.length - b.country_of_origin.length,
+      sorter: (a, b) => a.country_of_origin.localeCompare(b.country_of_origin),
       sortDirections: ['descend', 'ascend'],
       ...getColumnSearchProps('country_of_origin'),
     },
@@ -230,7 +232,7 @@ export default function CaseTable(props) {
       title: 'Applicant Gender',
       dataIndex: 'gender',
       key: 'gender',
-      sorter: (a, b) => a.gender.length - b.gender.length,
+      sorter: (a, b) => a.gender.localeCompare(b.gender),
       sortDirections: ['descend', 'ascend'],
       ...getColumnSearchProps('gender'),
     },
@@ -238,7 +240,7 @@ export default function CaseTable(props) {
       title: 'Violence Experienced',
       dataIndex: 'type_of_violence',
       key: 'type_of_violence',
-      sorter: (a, b) => a.type_of_violence.length - b.type_of_violence.length,
+      sorter: (a, b) => a.type_of_violence.localeCompare(b.type_of_violence),
       sortDirections: ['descend', 'ascend'],
       ...getColumnSearchProps('type_of_violence'),
     },
@@ -247,7 +249,7 @@ export default function CaseTable(props) {
       dataIndex: 'applicant_language',
       key: 'applicant_language',
       sorter: (a, b) =>
-        a.applicant_language.length - b.applicant_language.length,
+        a.applicant_language.localeCompare(b.applicant_language),
       sortDirections: ['descend', 'ascend'],
       ...getColumnSearchProps('applicant_language'),
     },
@@ -371,47 +373,10 @@ export default function CaseTable(props) {
     return filteredData;
   };
 
+  // This is part of the Tabs component
   function callback(key) {
     console.log(key);
   }
-
-  const CustomToolbar = () => {
-    const menuClick = ({ key }) => {
-      message.info(`Click on item ${key}`);
-    };
-
-    const menu = (
-      <Menu onClick={menuClick}>
-        <Menu.Item
-          key="1"
-          className="exportBtn"
-          icon={<FeatherIcon icon="download" />}
-        />
-      </Menu>
-    );
-    return (
-      <div className="menuContainer">
-        <Tabs defaultActiveKey="1" onChange={callback}>
-          <TabPane tab="Initial Cases" key="1"></TabPane>
-          <TabPane tab="Appellate Cases" key="2" />
-        </Tabs>
-        <div className="buttonContainer">
-          <Button
-            icon={<FeatherIcon icon="download" />}
-            onClick={e => e.preventDefault()}
-            overlay={menu}
-            trigger={['click']}
-          />
-          <Button
-            onClick={() => {
-              bookmarkCases(rowSelection);
-            }}
-            icon={<FeatherIcon icon="bookmark" />}
-          />
-        </div>
-      </div>
-    );
-  };
 
   const data = searching ? filter(caseData) : caseData;
 
@@ -515,30 +480,49 @@ export default function CaseTable(props) {
   // };
 
   return (
-    <div className="caseTableContainer">
-      <div className="chartContainer">
+    <div className="cases-container">
+      <div className="viz-container">
         <DecisionRateChart />
         <div className="divider"></div>
         <CaseDataChart />
       </div>
-      <div>
-        <CustomToolbar />
-        <Table
-          className="cases_table iCases"
-          rowSelection={rowSelection}
-          rowKey={record => record.case_id}
-          columns={columns}
-          dataSource={nonAppCases}
-          onChange={changeSorter}
-        />
-        <Table
-          className="cases_table appCases"
-          rowSelection={rowSelection}
-          rowKey={record => record.case_id}
-          columns={columns}
-          dataSource={appCases}
-          onChange={changeSorter}
-        />
+
+      <div className="case-table-container">
+        <Tabs defaultActiveKey="1" onChange={callback}>
+          <TabPane tab="Initial Cases" key="1">
+            <Button
+              className="save-cases-btn"
+              onClick={() => {
+                bookmarkCases(rowSelection);
+              }}
+            >
+              <Icon component={() => <img src={Save} alt="save icon" />} />
+            </Button>
+            <div className="case-table">
+              <Table
+                className="cases_table iCases"
+                rowSelection={rowSelection}
+                rowKey={record => record.case_id}
+                columns={columns}
+                dataSource={nonAppCases}
+                onChange={changeSorter}
+              />
+            </div>
+          </TabPane>
+
+          <TabPane tab="Appellate Cases" key="2">
+            <div className="case-table">
+              <Table
+                className="cases_table appCases"
+                rowSelection={rowSelection}
+                rowKey={record => record.case_id}
+                columns={columns}
+                dataSource={appCases}
+                onChange={changeSorter}
+              />
+            </div>
+          </TabPane>
+        </Tabs>
       </div>
     </div>
   );
