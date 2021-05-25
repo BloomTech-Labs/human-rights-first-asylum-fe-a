@@ -73,7 +73,7 @@ const ManageUsersPage = props => {
       .post(`/profile/`, newUser)
       .then(res => {
         setProfiles(res.data.profile);
-      })    
+      })
       .catch(err => console.log(err));
     setFormValues(initialFormValues);
   };
@@ -86,7 +86,6 @@ const ManageUsersPage = props => {
       email: formValues.email.trim(),
       role: formValues.role.trim(),
     };
-    console.log(newUser);
     postNewUser(newUser);
     setIsModalVisible(false);
   };
@@ -219,7 +218,7 @@ const ManageUsersPage = props => {
       </div>
 
       <div className="pending-users-container">
-        <PendingUsers authState={authState} />
+        <PendingUsers authState={authState} setProfiles={setProfiles} />
       </div>
     </div>
   );

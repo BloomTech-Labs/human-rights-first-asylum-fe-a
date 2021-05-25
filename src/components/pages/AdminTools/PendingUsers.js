@@ -8,7 +8,7 @@ import OrangeLine from '../../../styles/orange-line.svg';
 
 const PendingUsersPage = props => {
   const { Panel } = Collapse;
-  const { authState } = props;
+  const { authState, setProfiles } = props;
   const [pendingProfiles, setPendingProfiles] = useState([]);
 
   useEffect(() => {
@@ -23,11 +23,17 @@ const PendingUsersPage = props => {
   }, [authState.idToken.idToken]);
 
   const approveUser = profile => {
+    console.log(profile);
     axiosWithAuth()
       .post(`/profile/`, profile)
       .then(res => {
         alert(`Profile request from ${profile.email} was approved`);
-        console.log(res.data);
+        setProfiles(res.data.profile);
+        setPendingProfiles(
+          pendingProfiles.filter(
+            pendingProfile => pendingProfile.user_id !== profile.user_id
+          )
+        );
       })
       .catch(err => {
         console.log(err);
@@ -39,7 +45,11 @@ const PendingUsersPage = props => {
       .delete(`/profiles/pending/${profile.id}`)
       .then(res => {
         alert(`Profile request from ${profile.email} was rejected`);
-        console.log(res.data);
+        setPendingProfiles(
+          pendingProfiles.filter(
+            pendingProfile => pendingProfile.user_id !== profile.user_id
+          )
+        );
       })
       .catch(err => {
         console.log(err);
@@ -57,11 +67,11 @@ const PendingUsersPage = props => {
           return (
             <Panel
               className="item-name"
-              header={`${item.firstName} ${item.lastName}`}
+              header={`${item.first_name} ${item.last_name}`}
             >
               <Descriptions className="user-info-title" title="User Info">
                 <Descriptions.Item className="user-details" label="Name">
-                  <p className="detail">{`${item.firstName} ${item.lastName}`}</p>
+                  <p className="detail">{`${item.first_name} ${item.last_name}`}</p>
                 </Descriptions.Item>
 
                 <Descriptions.Item className="user-details" label="Email">
@@ -74,7 +84,7 @@ const PendingUsersPage = props => {
 
                 <Descriptions.Item
                   className="user-details"
-                  label="Date Requsted"
+                  label="Date Requested"
                 >
                   <p className="detail">
                     {String(item.created_at).slice(0, 10)}
@@ -85,6 +95,7 @@ const PendingUsersPage = props => {
                 <AntDButton
                   className="btn-style"
                   onClick={() => {
+                    console.log(item);
                     approveUser(item);
                   }}
                 >
