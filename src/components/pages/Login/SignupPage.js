@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Input, Button } from 'antd';
-import axios from 'axios';
+import axiosWithAuth from '../../../utils/axiosWithAuth';
 import './_SignupPageStyled.less';
 import logo from '../../../styles/hrf-logo.png';
 
@@ -19,8 +19,8 @@ const SignupPage = () => {
   };
 
   const postNewUser = newUser => {
-    axios
-      .post(`${process.env.REACT_APP_API_URI}/profile/pending`, newUser)
+    axiosWithAuth()
+      .post(`/profile/pending`, newUser)
       .catch(err => console.log(err));
     setFormValues(initialFormValues);
   };
