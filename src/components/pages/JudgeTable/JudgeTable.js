@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { Link } from 'react-router-dom';
 
 import { DataGrid } from '@material-ui/data-grid';
@@ -81,16 +81,8 @@ export default function JudgeTable(props) {
   };
 
   const postJudge = rowToPost => {
-    axios
-      .post(
-        `${process.env.REACT_APP_API_URI}/profiles/${userInfo.sub}/judge/${rowToPost.judge_id}`,
-        rowToPost,
-        {
-          headers: {
-            Authorization: 'Bearer ' + authState.idToken.idToken,
-          },
-        }
-      )
+    axiosWithAuth()
+      .post(`/profiles/${userInfo.sub}/judge/${rowToPost.judge_id}`, rowToPost)
 
       .then(res => {
         setSavedJudges(res.data.judge_bookmarks);
