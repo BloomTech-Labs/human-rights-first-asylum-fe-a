@@ -12,6 +12,7 @@ import Save from '../../../styles/icons/save.svg';
 import Icon from '@ant-design/icons';
 import { Table, Space, Button, Input, Tabs } from 'antd';
 import './CaseTable.less';
+import CaseDetails from '../CaseOverview/CaseDetails';
 
 export default function CaseTable(props) {
   const [state, setState] = useState({
@@ -19,6 +20,18 @@ export default function CaseTable(props) {
     searchedColumn: '',
     selectedRowID: [],
   });
+
+  const initialDetails = {
+    case_date: '5/26/2021',
+    origin_city: 'Detroit',
+  };
+  const [isDetailsVisible, setIsDetailsVisible] = useState(false);
+  const [detailsData, setDetailsData] = useState(initialDetails);
+
+  const popUpDetails = rowData => {
+    setDetailsData(rowData);
+    setIsDetailsVisible(true);
+  };
 
   const { caseData, userInfo, savedCases, setSavedCases } = props;
 
@@ -35,6 +48,7 @@ export default function CaseTable(props) {
         .toString()
         .charAt(0)
         .toUpperCase() + cases.filed_in_one_year.toString().slice(1),
+    case_row: cases,
     ...cases,
   }));
 
@@ -43,7 +57,6 @@ export default function CaseTable(props) {
   const { searchText, searchedColumn, selectedRowID } = state;
 
   const onSelectChange = selectedRowID => {
-    console.log('selectedRowID changed: ', selectedRowID);
     setState({ selectedRowID });
   };
 
@@ -164,10 +177,10 @@ export default function CaseTable(props) {
   const columns = [
     {
       title: 'Case Details',
-      dataIndex: '',
+      dataIndex: 'case_row',
       key: 'x',
-      render: () => (
-        <Link>
+      render: text => (
+        <Link onClick={() => popUpDetails(text)}>
           {' '}
           <FileTextOutlined />{' '}
         </Link>
@@ -280,17 +293,16 @@ export default function CaseTable(props) {
   const findRowByID = (rowID, rowData) => {
     for (let i = 0; i < rowData.length; i++) {
       let currentRow = rowData[i];
-
-      if (currentRow.case_id === rowID) {
+      if (rowData[i].case_id === rowID) {
         return currentRow;
       }
     }
-    return 'Please select case to save.';
+    return 'Please select case';
   };
 
-  const postBookmark = rowToPost => {
+  const postBookmark = case_id => {
     axiosWithAuth()
-      .post(`/profile/${userInfo.sub}/case/${rowToPost}`, rowToPost)
+      .post(`/profile/${userInfo.sub}/case/${case_id}`, case_id)
       .then(res => {
         setSavedCases(res.data.case_bookmarks);
       })
@@ -299,28 +311,26 @@ export default function CaseTable(props) {
       });
   };
 
-  const bookmarkCases = targetRows => {
-    let bookmarks = [];
-    if (targetRows.length === 0) {
-      alert('Please select case(s) to be saved');
+  const bookmarkCases = selectedRowID => {
+    if (selectedRowID.length === 0) {
+      alert('Please select cases(s) to be saved');
     } else {
-      for (let i = 0; i < targetRows.length; i++) {
-        bookmarks.push(findRowByID(targetRows[i], caseData));
-      }
+      let bookmarks = [];
+      selectedRowID.forEach(row => bookmarks.push(findRowByID(row, caseData)));
 
       let savedIds = [];
-      for (let i = 0; i < savedCases.length; i++) {
-        savedIds.push(savedCases[i].case_id);
+      if (savedCases) {
+        savedCases.forEach(id => savedIds.push(id.case_id));
       }
-      for (let i = 0; i < bookmarks.length; i++) {
-        if (savedIds.includes(bookmarks[i].case_id)) {
+
+      bookmarks.forEach(b => {
+        if (savedIds.includes(b.case_id)) {
           console.log('Case already saved to bookmarks');
-          continue;
         } else {
-          postBookmark(bookmarks[i]);
+          postBookmark(b.case_id);
         }
-      }
-      alert('Case(s) Successfully Saved');
+      });
+      alert('Cases Successfully Saved');
     }
   };
 
@@ -452,6 +462,11 @@ export default function CaseTable(props) {
 
   return (
     <div className="cases-container">
+      <CaseDetails
+        caseData={detailsData}
+        setIsDetailsVisible={setIsDetailsVisible}
+        isDetailsVisible={isDetailsVisible}
+      />
       <div className="viz-container">
         <DecisionRateChart />
         <div className="divider"></div>

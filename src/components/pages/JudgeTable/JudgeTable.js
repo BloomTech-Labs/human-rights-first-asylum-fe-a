@@ -155,7 +155,7 @@ export default function JudgeTable(props) {
       ...getColumnSearchProps('judge_name'),
       render: text => <Link to={`/judge/${judgesData.judge_id}`}>{text}</Link>,
     },
-    //Link to individual judge page
+    // Link to individual judge page
     //   renderCell: params => (
     //     <>
     //       <Link to={`/judge/${params.row.judge_id}`} className="judgeTableLink">

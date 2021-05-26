@@ -90,7 +90,7 @@ function RenderHomePage(props) {
           res.data.map(eachCase => {
             return {
               ...eachCase,
-              id: eachCase.case_number,
+              id: eachCase.case_id,
             };
           })
         );
@@ -130,7 +130,6 @@ function RenderHomePage(props) {
     savedJudges.length,
     savedCases.length,
   ]);
-
   const getPendingCases = () => {
     trackPromise(axiosWithAuth().get(`/pendingCases/:${user.userInfo.sub}`))
       .then(res => {
@@ -206,6 +205,7 @@ function RenderHomePage(props) {
             <Route exact path="/saved-cases">
               <SavedCases
                 savedCases={savedCases}
+                setSavedCases={setSavedCases}
                 deleteBookmark={deleteBookmark}
               />
             </Route>

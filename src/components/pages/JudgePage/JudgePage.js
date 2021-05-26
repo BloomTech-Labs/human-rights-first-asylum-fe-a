@@ -14,7 +14,7 @@ import FeatherIcon from 'feather-icons-react';
 export default function JudgePage(props) {
   const { authState } = props;
   const [judge, setJudge] = useState();
-  const [vizData, setVizData] = useState({});
+  const [vizData, setVizData] = useState(null);
   const { judge_id } = useParams();
 
   useEffect(() => {
@@ -25,13 +25,100 @@ export default function JudgePage(props) {
         },
       })
       .then(res => {
-        console.log(res.data.judge_cases);
-        setVizData(res.data.judge_cases);
+        console.log(res.data);
+        setVizData(res.data);
       });
   }, [judge_id, authState.idToken]);
 
-  const TestDataChart = () => {
-    return <Plot data={vizData.data} layout={vizData.layout} />;
+  // const TestDataChart = () => {
+  //   return <Plot data={vizData.data} layout={vizData.layout} />;
+  // };
+
+  const CountryOriginChart = () => {
+    return (
+      <Plot
+        data={vizData.bar_country_of_origin.data}
+        layout={vizData.bar_country_of_origin.layout}
+        useResizeHandler={true}
+        config={{
+          modeBarButtonsToRemove: [
+            'toImage',
+            'zoom2d',
+            'pan2d',
+            'select2d',
+            'lasso2d',
+            'drawclosedpath',
+            'drawopenpath',
+            'zoomIn2d',
+            'zoomOut2d',
+            'autoScale2d',
+            'hoverClosestCartesian',
+            'hoverCompareCartesian',
+            'toggleSpikelines',
+          ],
+          displaylogo: false,
+        }}
+        style={{ width: '40%', height: '25rem' }}
+      />
+    );
+  };
+
+  const GenderChart = () => {
+    return (
+      <Plot
+        data={vizData.bar_gender.data}
+        layout={vizData.bar_gender.layout}
+        useResizeHandler={true}
+        config={{
+          modeBarButtonsToRemove: [
+            'toImage',
+            'zoom2d',
+            'pan2d',
+            'select2d',
+            'lasso2d',
+            'drawclosedpath',
+            'drawopenpath',
+            'zoomIn2d',
+            'zoomOut2d',
+            'autoScale2d',
+            'hoverClosestCartesian',
+            'hoverCompareCartesian',
+            'toggleSpikelines',
+          ],
+          displaylogo: false,
+        }}
+        style={{ width: '40%', height: '25rem' }}
+      />
+    );
+  };
+
+  const ProGroundsChart = () => {
+    return (
+      <Plot
+        data={vizData.bar_protected_grounds.data}
+        layout={vizData.bar_protected_grounds.layout}
+        useResizeHandler={true}
+        config={{
+          modeBarButtonsToRemove: [
+            'toImage',
+            'zoom2d',
+            'pan2d',
+            'select2d',
+            'lasso2d',
+            'drawclosedpath',
+            'drawopenpath',
+            'zoomIn2d',
+            'zoomOut2d',
+            'autoScale2d',
+            'hoverClosestCartesian',
+            'hoverCompareCartesian',
+            'toggleSpikelines',
+          ],
+          displaylogo: false,
+        }}
+        style={{ width: '40%', height: '25rem' }}
+      />
+    );
   };
 
   const columns = [
@@ -95,91 +182,91 @@ export default function JudgePage(props) {
     fetchJudge();
   }, [judge_id, authState.idToken]);
 
-  const Toolbar = () => {
-    const { Title } = Typography;
+  // const Toolbar = () => {
+  //   const { Title } = Typography;
 
-    return (
-      <div className="menuContainer">
-        <Title level={2}>Judge</Title>
-        <div className="buttonContainer">
-          <Button
-            onClick={() => {
-              toggleSearch();
-            }}
-          >
-            <FeatherIcon icon="search" />
-          </Button>
-        </div>
-      </div>
-    );
-  };
+  //   return (
+  //     <div className="menuContainer">
+  //       <Title level={2}>Judge</Title>
+  //       <div className="buttonContainer">
+  //         <Button
+  //           onClick={() => {
+  //             toggleSearch();
+  //           }}
+  //         >
+  //           <FeatherIcon icon="search" />
+  //         </Button>
+  //       </div>
+  //     </div>
+  //   );
+  // };
 
-  const [queryValues, setQueryValues] = useState({
-    case_id: '',
-    nation_of_origin: '',
-    protected_ground: '',
-    application_type: '',
-    case_outcome: '',
-  });
+  // const [queryValues, setQueryValues] = useState({
+  //   case_id: '',
+  //   nation_of_origin: '',
+  //   protected_ground: '',
+  //   application_type: '',
+  //   case_outcome: '',
+  // });
 
-  const [new_search, setSearch] = useState(false);
-  const toggleSearch = () => {
-    setSearch(!new_search);
-  };
-  const [searching, setSearching] = useState(false);
+  // const [new_search, setSearch] = useState(false);
+  // const toggleSearch = () => {
+  //   setSearch(!new_search);
+  // };
+  // const [searching, setSearching] = useState(false);
 
-  const filter = data => {
-    const searchedKeys = Object.entries(queryValues).filter(
-      ([k, v]) => v !== ''
-    );
-    const filteredData = data.filter(row => {
-      const matchedHits = [];
-      searchedKeys.forEach(([k, v]) => {
-        if (row[k].toString().includes(v.toString())) {
-          matchedHits.push(k);
-        }
-      });
-      // return matchedHits.length === searchedKeys.length;
-    });
-    return filteredData;
-  };
+  // const filter = data => {
+  //   const searchedKeys = Object.entries(queryValues).filter(
+  //     ([k, v]) => v !== ''
+  //   );
+  //   const filteredData = data.filter(row => {
+  //     const matchedHits = [];
+  //     searchedKeys.forEach(([k, v]) => {
+  //       if (row[k].toString().includes(v.toString())) {
+  //         matchedHits.push(k);
+  //       }
+  //     });
+  //     // return matchedHits.length === searchedKeys.length;
+  //   });
+  //   return filteredData;
+  // };
 
-  const searchOptions = [
-    { id: 'case_id', label: 'Case Id' },
-    { id: 'nation_of_origin', label: 'Nation of Origin' },
-    { id: 'protected_ground', label: 'Protected Ground' },
-    { id: 'application_type', label: 'Application Type' },
-    { id: 'case_outcome', label: 'Decision' },
-  ];
+  // const searchOptions = [
+  //   { id: 'case_id', label: 'Case Id' },
+  //   { id: 'nation_of_origin', label: 'Nation of Origin' },
+  //   { id: 'protected_ground', label: 'Protected Ground' },
+  //   { id: 'application_type', label: 'Application Type' },
+  //   { id: 'case_outcome', label: 'Decision' },
+  // ];
 
-  const drawerContent = () => {
-    return (
-      <div className="judgePageDrawer">
-        {searchOptions.map(value => {
-          return (
-            <div key={value.id}>
-              <p>{value.label}</p>
-              <Input
-                placeholder={'search query'}
-                variant="outlined"
-                size="medium"
-                value={queryValues[value.id]}
-                onChange={e => {
-                  setQueryValues({
-                    ...queryValues,
-                    [value.id]: e.target.value,
-                  });
-                  setSearching(true);
-                }}
-                type="text"
-                className="judgePageSearchInput"
-              />
-            </div>
-          );
-        })}
-      </div>
-    );
-  };
+  // const drawerContent = () => {
+  //   return (
+  //     <div className="judgePageDrawer">
+  //       {searchOptions.map(value => {
+  //         return (
+  //           <div key={value.id}>
+  //             <p>{value.label}</p>
+  //             <Input
+  //               placeholder={'search query'}
+  //               variant="outlined"
+  //               size="medium"
+  //               value={queryValues[value.id]}
+  //               onChange={e => {
+  //                 setQueryValues({
+  //                   ...queryValues,
+  //                   [value.id]: e.target.value,
+  //                 });
+  //                 setSearching(true);
+  //               }}
+  //               type="text"
+  //               className="judgePageSearchInput"
+  //             />
+  //           </div>
+  //         );
+  //       })}
+  //     </div>
+  //   );
+  // };
 
   return (
     <div className="judgePageContainer">
@@ -194,8 +281,7 @@ export default function JudgePage(props) {
                 judge.last_name}
             </h1>
             {judge.birthdate ? <p>Birthdate: {judge.birthdate}</p> : null}
-            {/* <p>Appointed: {judge.date_appointed}</p>
-              <p>Appointed By: {judge.appointed_by}</p> */}
+
             <p>County: {judge.judge_county}</p>
             <a
               className="judgePageLink"
@@ -216,7 +302,9 @@ export default function JudgePage(props) {
           </Drawer> */}
 
           <div className="judgeStatsVizDiv">
-            <TestDataChart />
+            {vizData && <CountryOriginChart />}
+            {vizData && <GenderChart />}
+            {vizData && <ProGroundsChart />}
           </div>
 
           {/* <div className="judgePageGridContainer"> */}

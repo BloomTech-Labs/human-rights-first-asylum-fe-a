@@ -32,7 +32,7 @@ export default function ManageCases(props) {
       title: 'Date Uploaded',
       dataIndex: 'uploaded',
       key: 'uploaded',
-      width: '25%',
+      width: '20%',
     },
     {
       title: 'Approve',
