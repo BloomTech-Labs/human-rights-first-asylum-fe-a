@@ -1,231 +1,63 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-
-import { DataGrid } from '@material-ui/data-grid';
-
-import { Button, Input, Drawer, Typography } from 'antd';
+import { Table } from 'antd';
+import Icon from '@ant-design/icons';
+import OrangeLine from '../../../styles/orange-line.svg';
+import Delete from '../../../styles/icons/delete.svg';
 import './_SavedCasesStyles.less';
-
-import FeatherIcon from 'feather-icons-react';
 
 function SavedCases({ savedCases, deleteBookmark }) {
   const columns = [
     {
-      field: 'case_number',
-      renderHeader: params => <strong>{'Case Number'}</strong>,
-      headerName: 'Case Number',
-      width: 120,
-      options: {
-        filter: true,
-      },
-      //link to individual case page
-      renderCell: params => (
-        <>
-          <Link to={`/case/${params.value}`} className="savedCasesLink">
-            <span>{params.value}</span>
-          </Link>
-        </>
-      ),
+      title: 'Case Number',
+      dataIndex: 'case_number',
+      key: 'case_number',
+      render: text => <Link to={`/case/${text}`}>{text}</Link>,
     },
     {
-      field: 'country_of_origin',
-      renderHeader: params => <strong>{'Country Of Origin'}</strong>,
-      headerName: 'Country of Origin',
-      width: 175,
+      title: 'Country of Origin',
+      dataIndex: 'country_of_origin',
+      key: 'country_of_origin',
     },
     {
-      field: 'protected_grounds',
-      renderHeader: params => <strong>{'Protected Grounds'}</strong>,
-      headerName: 'Protected Grounds',
-      width: 180,
+      title: 'Protected Grounds',
+      dataIndex: 'protected_grounds',
+      key: 'protected_grounds',
     },
     {
-      field: 'application_type',
-      renderHeader: params => <strong>{'Application Type'}</strong>,
-      headerName: 'Application Type',
-      width: 180,
+      title: 'Application Type',
+      dataIndex: 'application_type',
+      key: 'application_type',
     },
     {
-      field: 'judge',
-      renderHeader: params => <strong>{'Judge'}</strong>,
-      headerName: 'Judge',
-      width: 120,
+      title: 'Judge',
+      dataIndex: 'judge_id',
+      key: 'judge_id',
     },
     {
-      field: 'case_outcome',
-      renderHeader: params => <strong>{'Decision'}</strong>,
-      headerName: 'Decision',
-      width: 130,
+      title: 'Outcome',
+      dataIndex: 'case_outcome',
+      key: 'case_outcome',
     },
-
-    // this field (if wanted on this page) should turn into buttons that is implemented in the Toolbar
-    // that will match the other pages
-    // meaning: a download pdf button, and a export(CSV) button if that is still wanted on this page
-
-    // {
-    //   field: 'download',
-    //   renderHeader: params => <strong>{'Download'}</strong>,
-    //   headerName: 'Download',
-    //   width: 120,
-    //   renderCell: params => (
-    //     <div>
-    //       <a
-    //         style={{ color: '#215589' }}
-    //         href={`${process.env.REACT_APP_API_URI}/case/${params.value}/download-pdf`}
-    //       >
-    //         PDF
-    //       </a>
-    //       <a
-    //         style={{ marginLeft: 20, color: '#215589' }}
-    //         href={`${process.env.REACT_APP_API_URI}/case/${params.value}/download-csv`}
-    //       >
-    //         CSV
-    //       </a>
-    //     </div>
-    //   ),
-    // },
-
     {
-      field: 'remove_case',
-      renderHeader: params => <strong>{'Remove Case'}</strong>,
-      headerName: 'Remove',
-      width: 110,
-      renderCell: params => (
-        <Button>
-          <FeatherIcon
-            icon="delete"
-            onClick={() => {
-              deleteBookmark(params.row.id);
-            }}
-          />
-        </Button>
+      title: 'Remove',
+      key: 'remove',
+      render: (text, record) => (
+        <Icon
+          onClick={() => deleteBookmark(record.case_id)}
+          component={() => <img src={Delete} alt="delete icon" />}
+        />
       ),
     },
   ];
-  savedCases.forEach((item, idx) => {
-    item.id = idx;
-  });
-  const Toolbar = () => {
-    const { Title } = Typography;
-    return (
-      <div className="savedCasesMenuContainer">
-        <Title level={2}>Saved Cases</Title>
-        <div className="savedCasesMenubuttonContainer">
-          <Button
-            onClick={() => {
-              toggleSearch();
-            }}
-          >
-            <FeatherIcon icon="search" />
-          </Button>
-        </div>
-      </div>
-    );
-  };
-
-  const [queryValues, setQueryValues] = useState({
-    case_number: '',
-    country_of_origin: '',
-    protected_grounds: '',
-    application_type: '',
-    judge: '',
-    case_outcome: '',
-    remove_case: '',
-  });
-
-  const [new_search, setSearch] = useState(false);
-  const toggleSearch = () => {
-    setSearch(!new_search);
-  };
-  const [searching, setSearching] = useState(false);
-
-  const filter = data => {
-    const searchedKeys = Object.entries(queryValues).filter(
-      ([k, v]) => v !== ''
-    );
-    const filteredData = data.filter(row => {
-      const matchedHits = [];
-      searchedKeys.forEach(([k, v]) => {
-        if (row[k].toString().includes(v.toString())) {
-          matchedHits.push(k);
-        }
-      });
-      return matchedHits.length === searchedKeys.length;
-    });
-    return filteredData;
-  };
-
-  const searchOptions = [
-    { id: 'case_number', label: 'Case Number' },
-    { id: 'country_of_origin', label: 'Country of Origin' },
-    { id: 'protected_grounds', label: 'Protected Grounds' },
-    { id: 'application_type', label: 'Application Type' },
-    { id: 'judge', label: 'Judge' },
-    { id: 'case_outcome', label: 'Decision' },
-    { id: 'remove_case', label: 'Remove Case' },
-  ];
-
-  const drawerContent = () => {
-    return (
-      <div className="savedCasesDrawer">
-        {searchOptions.map(value => {
-          return (
-            <div key={value.id}>
-              <p>{value.label}</p>
-              <Input
-                placeholder={'search query'}
-                variant="outlined"
-                size="medium"
-                value={queryValues[value.id]}
-                onChange={e => {
-                  setQueryValues({
-                    ...queryValues,
-                    [value.id]: e.target.value,
-                  });
-                  setSearching(true);
-                }}
-                type="text"
-                className="savedCasesSearchInput"
-              />
-            </div>
-          );
-        })}
-      </div>
-    );
-  };
-
   return (
     <div className="savedCasesContainer">
-      {savedCases.length === 0 ? (
-        <div className="savedCasesCard">
-          <h1>No Saved Cases</h1>
-          <br />
-          <Link to="/" className="savedCasesLink">
-            Return back to Home
-          </Link>
-        </div>
-      ) : (
-        // This is so the top part only displays when there are no cases, but also displays the empty table below
-        <></>
-      )}
-      <Drawer
-        visible={new_search}
-        onClose={toggleSearch}
-        width={'25%'}
-        style={{ marginTop: '4rem' }}
-      >
-        {drawerContent()}
-      </Drawer>
-      <div className="savedCasesGridContainer">
-        <DataGrid
-          rows={searching ? filter(savedCases) : savedCases}
-          columns={columns}
-          className="savedCasesTable"
-          autoHeight={true}
-          loading={savedCases ? false : true}
-          showCellRightBorder={true}
-          components={{ Toolbar: Toolbar }}
-        />
+      <div className="savedCases">
+        <h2 className="saved-cases-header">Review Cases</h2>
+        <p className="divider">
+          <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
+        </p>
+        <Table columns={columns} dataSource={savedCases} />
       </div>
     </div>
   );
