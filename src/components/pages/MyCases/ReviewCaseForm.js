@@ -116,7 +116,7 @@ const ReviewCaseForm = props => {
     evt.preventDefault();
     if (role === 'user') {
       axiosWithAuth()
-        .post(`/upload/${currentId}`, formValues)
+        .post(`/upload/${currentId}`, editedFormValues)
         .then(res => {
           getPendingCases();
           setVisible(false);
@@ -126,7 +126,7 @@ const ReviewCaseForm = props => {
         });
     } else if (role === 'admin') {
       axiosWithAuth()
-        .post(`/pendingCases/approve/${currentId}`, formValues)
+        .post(`/pendingCases/approve/${currentId}`, editedFormValues)
         .then(res => {
           getPendingCases();
           setVisible(false);
