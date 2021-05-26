@@ -35,6 +35,8 @@ export default function JudgePage(props) {
   // };
 
   const CountryOriginChart = () => {
+    vizData.bar_country_of_origin.layout.title =
+      'Outcomes by Country of Origin';
     return (
       <Plot
         data={vizData.bar_country_of_origin.data}
@@ -64,6 +66,7 @@ export default function JudgePage(props) {
   };
 
   const GenderChart = () => {
+    vizData.bar_gender.layout.title = 'Outcomes By Gender';
     return (
       <Plot
         data={vizData.bar_gender.data}
@@ -93,6 +96,8 @@ export default function JudgePage(props) {
   };
 
   const ProGroundsChart = () => {
+    vizData.bar_protected_grounds.layout.title =
+      'Outcomes by Protected Grounds';
     return (
       <Plot
         data={vizData.bar_protected_grounds.data}
@@ -294,9 +299,9 @@ export default function JudgePage(props) {
           </div>
 
           <div className="judgeStatsVizDiv">
-            {vizData && <CountryOriginChart />}
-            {vizData && <GenderChart />}
-            {vizData && <ProGroundsChart />}
+            <div className="judgeViz">{vizData && <CountryOriginChart />}</div>
+            <div className="judgeViz">{vizData && <GenderChart />}</div>
+            <div className="judgeViz">{vizData && <ProGroundsChart />}</div>
           </div>
 
           {/* <Drawer
