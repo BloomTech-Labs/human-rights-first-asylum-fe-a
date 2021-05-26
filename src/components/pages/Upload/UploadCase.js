@@ -106,6 +106,14 @@ const UploadCase = ({ getPendingCases }) => {
         .catch(() => {
           setIsLoading(false);
           failNotification();
+          if (postQueue.length !== 0) {
+            const copy = postQueue;
+            setNextPost(copy.shift());
+            setPostQueue(copy);
+          } else {
+            setNextPost(null);
+            setIsReady(true);
+          }
         });
     }
   }, [nextPost]);
@@ -126,6 +134,15 @@ const UploadCase = ({ getPendingCases }) => {
         })
         .catch(() => {
           failNotification();
+          getPendingCases();
+          if (scrapQueue.length !== 0) {
+            const copy = scrapQueue;
+            setNextScrap(copy.shift());
+            setScrapQueue(copy);
+          } else {
+            setNextScrap(null);
+            setIsReady(false);
+          }
         });
     }
   }, [nextScrap]);
