@@ -19,7 +19,6 @@ export default function CaseTable(props) {
     searchText: '',
     searchedColumn: '',
     selectedRowID: [],
-    current: 'iCase',
   });
 
   const { caseData, userInfo, savedCases, setSavedCases } = props;
@@ -32,7 +31,7 @@ export default function CaseTable(props) {
       ' ' +
       cases.middle_initial +
       '.',
-    one_year:
+    filed_within_year:
       cases.filed_in_one_year
         .toString()
         .charAt(0)
@@ -60,7 +59,7 @@ export default function CaseTable(props) {
         <Input
           type="text"
           id="searchInput"
-          placeholder={`Search ${dataIndex}`}
+          placeholder={`Search ${dataIndex.replace(/_/g, ' ')}`}
           value={selectedKeys[0]}
           onChange={e =>
             setSelectedKeys(e.target.value ? [e.target.value] : [])
@@ -181,7 +180,7 @@ export default function CaseTable(props) {
       sorter: (a, b) => a.last_name.localeCompare(b.last_name),
       sortDirections: ['descend', 'ascend'],
       ...getColumnSearchProps('judge_name'),
-      render: text => <Link>{text}</Link>,
+      render: text => <Link to={`/judge/${casesData.judge_id}`}>{text}</Link>,
     },
     {
       title: 'Origin City',
@@ -200,12 +199,12 @@ export default function CaseTable(props) {
       ...getColumnSearchProps('case_origin_state'),
     },
     {
-      title: 'File in 1 Year',
-      dataIndex: 'one_year',
-      key: 'one_year',
-      sorter: (a, b) => a.one_year.localeCompare(b.one_year),
+      title: 'Filed within Year',
+      dataIndex: 'filed_within_year',
+      key: 'filed_within_year',
+      sorter: (a, b) => a.filed_within_year.localeCompare(b.filed_within_year),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('one_year'),
+      ...getColumnSearchProps('filed_within_year'),
     },
     {
       title: 'Protected Grounds',
