@@ -31,6 +31,7 @@ const CaseDetails = props => {
             htmlType="submit"
             className="add-user-btn"
             //onClick={onOk}
+            onClick={handleCancel}
           >
             <span>Ok</span>
           </AntDButton>
