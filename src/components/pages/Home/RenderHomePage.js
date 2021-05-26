@@ -148,7 +148,6 @@ function RenderHomePage(props) {
       });
   };
   const deleteFromStateById = (id, state, setState) => {
-    // i made this function non case specific but now I'm remembering that cases get deleted by name
     let index = state.findIndex(item => item.id === id);
     return setState(state.slice(0, index).concat(state.slice(index + 1)));
   };
@@ -218,17 +217,9 @@ function RenderHomePage(props) {
               />
             </Route>
             <Route exact path="/judge/:judge_id">
-              <JudgePage
-                // clicking on a Judge should bring you to a url with their name in it
-                // get request to get details of that judge
-                authState={user.authState}
-              />
+              <JudgePage authState={user.authState} />
             </Route>
             <Route exact path="/case/:id" authState={user.authState}>
-              {/* clicking on a case name will bring you to a page where more indepth information
-      about the case can be viewed, this page is linked to the cooresponding judge's page
-      this page also links to the update case file which is not operational yet, see notation
-      on CaseOverview & CaseUpdate for details */}
               <CaseOverview
                 setCasesData={setCaseData}
                 authState={user.authState}
