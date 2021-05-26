@@ -10,7 +10,6 @@ import {
 } from '@ant-design/icons';
 import Save from '../../../styles/icons/save.svg';
 import Icon from '@ant-design/icons';
-import OrangeLine from '../../../styles/orange-line.svg';
 
 import { Table, Space, Button, Input, Tabs } from 'antd';
 import './CaseTable.less';
@@ -83,7 +82,7 @@ export default function CaseTable(props) {
         />
         <Space>
           <Button
-            type="primary"
+            className="table-search-button"
             onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
             icon={<SearchOutlined />}
             size="small"
@@ -165,6 +164,16 @@ export default function CaseTable(props) {
   function changeSorter(sorter) {
     console.log(sorter);
   }
+
+  // This is part of the Tabs component
+  function callback(key) {
+    console.log(key);
+  }
+
+  const rowSelection = {
+    selectedRowID,
+    onChange: onSelectChange,
+  };
 
   const columns = [
     {
@@ -291,7 +300,7 @@ export default function CaseTable(props) {
         return currentRow;
       }
     }
-    return 'Case does not exist';
+    return 'Please select case';
   };
 
   const postBookmark = case_id => {
@@ -328,6 +337,8 @@ export default function CaseTable(props) {
     }
   };
 
+  const [searching, setSearching] = useState(false);
+
   const [queryValues, setQueryValues] = useState({
     case_number: '',
     case_date: '',
@@ -346,25 +357,13 @@ export default function CaseTable(props) {
     credible: '',
   });
 
-  const [new_search, setSearch] = useState(false);
-  const toggleSearch = () => {
-    setSearch(!new_search);
-  };
-  const [searching, setSearching] = useState(false);
-
   const filter = data => {
-    // searchedKeys is AT MOST 16 keys
     const searchedKeys = Object.entries(queryValues).filter(
       ([k, v]) => v !== ''
     );
-    // for each ROW in DATA -- O(n) where n is the number of rows in our data
     const filteredData = data.filter(row => {
       const matchedHits = [];
-      // map through each searched [K, V] pair -- O(searched_keys) where searchedKeys is at min 0 and at most 16
-      // so nesting this inside is NOT all too expensive.
       searchedKeys.forEach(([k, v]) => {
-        // if the stringified value at row[key] includes the searched-for value,
-        // then we'll push the key to our matchedHits
         if (
           row[k]
             .toString()
@@ -374,12 +373,8 @@ export default function CaseTable(props) {
           matchedHits.push(k);
         }
       });
-      // if the row[k] == v at EVERY searched-for key, then we'll return TRUE
-      // else return FALSE
       return matchedHits.length === searchedKeys.length;
     });
-    // filteredData is only going to contain rows where  every
-    // searched column includes subtext that matches the searched term
     return filteredData;
   };
 
@@ -444,33 +439,50 @@ export default function CaseTable(props) {
     );
   };
 
-  const rowSelection = {
-    selectedRowID,
-    onChange: onSelectChange,
+  const CaseDataChart = () => {
+    let denied = 0;
+    let granted = 0;
+    let remanded = 0;
+    let sustained = 0;
+    let terminated = 0;
+
+    data.map(eachCase => {
+      if (eachCase.case_outcome === 'Denied') {
+        denied += 1;
+      }
+      if (eachCase.case_outcome === 'Granted') {
+        granted += 1;
+      }
+      if (eachCase.case_outcome === 'Remanded') {
+        remanded += 1;
+      }
+      if (eachCase.case_outcome === 'Sustained') {
+        sustained += 1;
+      }
+      if (eachCase.case_outcome === 'Terminated') {
+        terminated += 1;
+      }
+      return null;
+    });
+
+    return (
+      <Plot
+        data={[
+          {
+            type: 'bar',
+            x: ['Granted', 'Denied', 'Remanded', 'Sustained', 'Terminated'],
+            y: [granted, denied, remanded, sustained, terminated],
+          },
+        ]}
+        layout={{ width: 500, height: 300, title: 'Case Data' }}
+      />
+    );
+
+
   };
 
   const nonAppCases = casesData.filter(item => item.appellate === false);
   const appCases = casesData.filter(item => item.appellate === true);
-
-  // This is part of the Tabs component
-  const callback = key => {
-    console.log(key);
-  };
-
-  const SaveButton = () => {
-    return (
-      <>
-        <Button
-          className="save-cases-btn"
-          onClick={() => {
-            bookmarkCases(rowSelection.selectedRowID);
-          }}
-        >
-          <Icon component={() => <img src={Save} alt="save icon" />} />
-        </Button>
-      </>
-    );
-  };
 
   return (
     <div className="cases-container">
@@ -490,9 +502,8 @@ export default function CaseTable(props) {
       </div>
 
       <div className="case-table-container">
-        <Tabs defaultActiveKey="1" onChange={callback}>
+        <Tabs defaultActiveKey="1" onChange={callback} className="tabs">
           <TabPane tab="Initial Cases" key="1">
-            <SaveButton />
             <div className="case-table">
               <Table
                 className="cases_table iCases"
@@ -505,7 +516,6 @@ export default function CaseTable(props) {
             </div>
           </TabPane>
           <TabPane tab="Appellate Cases" key="2">
-            <SaveButton />
             <div className="case-table">
               <Table
                 className="cases_table appCases"
@@ -517,6 +527,20 @@ export default function CaseTable(props) {
               />
             </div>
           </TabPane>
+          <TabPane
+            tab={
+              <Button
+                className="save-cases-btn"
+                onClick={() => {
+                  bookmarkCases(selectedRowID);
+                }}
+              >
+                <Icon component={() => <img src={Save} alt="save icon" />} />
+              </Button>
+            }
+            disabled
+            key="3"
+          />
         </Tabs>
       </div>
     </div>

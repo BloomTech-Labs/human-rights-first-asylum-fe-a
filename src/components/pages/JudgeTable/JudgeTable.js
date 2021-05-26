@@ -16,11 +16,9 @@ export default function JudgeTable(props) {
     searchText: '',
     searchedColumn: '',
     selectedRowID: [],
-    selectionModel: [],
   });
 
-  const { TabPane } = Tabs;
-  const { searchText, searchedColumn, selectedRowID, selectionModel } = state;
+  const { searchText, searchedColumn, selectedRowID } = state;
 
   let judgesData = judgeData.map(judges => ({
     judge_name:
@@ -32,6 +30,8 @@ export default function JudgeTable(props) {
       '.',
     ...judges,
   }));
+
+  const { TabPane } = Tabs;
 
   const onSelectChange = selectedRowID => {
     console.log('selectedRowID changed: ', selectedRowID);
@@ -59,7 +59,6 @@ export default function JudgeTable(props) {
         />
         <Space>
           <Button
-            type="primary"
             onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
             icon={<SearchOutlined />}
             size="small"
@@ -217,7 +216,6 @@ export default function JudgeTable(props) {
   const postJudge = rowToPost => {
     axiosWithAuth()
       .post(`/profiles/${userInfo.sub}/judge/${rowToPost.judge_id}`, rowToPost)
-
       .then(res => {
         setSavedJudges(res.data.judge_bookmarks);
       })
@@ -261,15 +259,6 @@ export default function JudgeTable(props) {
       <div className="judge-table-container">
         <Tabs defaultActiveKey="1">
           <TabPane tab="Judges" key="1">
-            <Button
-              className="save-judge-btn"
-              onClick={() => {
-                bookmarkJudges(selectedRowID);
-              }}
-            >
-              <Icon component={() => <img src={Save} alt="save icon" />} />
-            </Button>
-
             <div className="judge-table">
               <Table
                 className="judges_table"
@@ -281,6 +270,20 @@ export default function JudgeTable(props) {
               />
             </div>
           </TabPane>
+          <TabPane
+            tab={
+              <Button
+                className="save-cases-btn"
+                onClick={() => {
+                  bookmarkJudges(selectedRowID);
+                }}
+              >
+                <Icon component={() => <img src={Save} alt="save icon" />} />
+              </Button>
+            }
+            disabled
+            key="3"
+          />
         </Tabs>
       </div>
     </div>
