@@ -9,9 +9,10 @@ import './_SavedJudgesStyles.less';
 function SavedJudgesAnt({ savedJudges, deleteSavedJudge }) {
   const columns = [
     {
-      title: 'Judge',
+      title: 'Judge Name',
       dataIndex: 'first_name',
       key: 'first_name',
+      width: '20%',
       render: (text, record) => (
         <Link to={`/judge/${record.judge_id}`}>
           {record.first_name}
@@ -26,20 +27,24 @@ function SavedJudgesAnt({ savedJudges, deleteSavedJudge }) {
       title: 'Court Location',
       dataIndex: 'judge_county',
       key: 'judge_county',
+      width: '20%',
     },
     {
       title: 'Date Appointed',
       dataIndex: 'date_appointed',
       key: 'date_appointed',
+      width: '20%',
     },
     {
       title: 'Appointed By',
       dataIndex: 'appointed_by',
       key: 'appointed_by',
+      width: '20%',
     },
     {
       title: 'Remove',
       key: 'remove',
+      width: '10%',
       render: record => (
         <Icon
           onClick={() => deleteSavedJudge(record.judge_id)}
