@@ -212,6 +212,7 @@ function RenderHomePage(props) {
             <Route exact path="/saved-judges">
               <SavedJudges
                 savedJudges={savedJudges}
+                userInfo={user.userInfo}
                 deleteSavedJudge={deleteSavedJudge}
               />
             </Route>
