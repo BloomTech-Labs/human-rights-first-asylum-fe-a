@@ -180,7 +180,9 @@ export default function CaseTable(props) {
       sorter: (a, b) => a.last_name.localeCompare(b.last_name),
       sortDirections: ['descend', 'ascend'],
       ...getColumnSearchProps('judge_name'),
-      render: text => <Link to={`/judge/${casesData.judge_id}`}>{text}</Link>,
+      render: (text, record) => (
+        <Link to={`/judge/${record.judge_id}`}>{text}</Link>
+      ),
     },
     {
       title: 'Origin City',
