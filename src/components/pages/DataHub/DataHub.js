@@ -3,6 +3,8 @@ import './DataHub.less';
 import Plot from 'react-plotly.js';
 import axios from 'axios';
 import { UserContext } from '../../../context/UserContext';
+import Icon from '@ant-design/icons';
+import OrangeLine from '../../../styles/orange-line.svg';
 
 const DataHub = props => {
   const { caseData, authState } = props;
@@ -24,33 +26,6 @@ const DataHub = props => {
   }, [user.authState.idToken.idToken]);
 
   console.log(caseData);
-
-  // const TestDataChart = () => {
-  //   return (
-  //     <Plot
-  //       data={vizData.data}
-  //       layout={vizData.layout}
-  //       config={{
-  //         modeBarButtonsToRemove: [
-  //           'toImage',
-  //           'zoom2d',
-  //           'pan2d',
-  //           'select2d',
-  //           'lasso2d',
-  //           'drawclosedpath',
-  //           'drawopenpath',
-  //           'zoomIn2d',
-  //           'zoomOut2d',
-  //           'autoScale2d',
-  //           'hoverClosestCartesian',
-  //           'hoverCompareCartesian',
-  //           'toggleSpikelines',
-  //         ],
-  //         displaylogo: false,
-  //       }}
-  //     />
-  //   );
-  // };
 
   let states = [
     'AL',
@@ -187,65 +162,7 @@ const DataHub = props => {
             y: [granted, denied, remanded, sustained, terminated],
           },
         ]}
-        layout={{ width: 500, height: 300, title: 'Case Data' }}
-        config={{
-          modeBarButtonsToRemove: [
-            'toImage',
-            'zoom2d',
-            'pan2d',
-            'select2d',
-            'lasso2d',
-            'drawclosedpath',
-            'drawopenpath',
-            'zoomIn2d',
-            'zoomOut2d',
-            'autoScale2d',
-            'hoverClosestCartesian',
-            'hoverCompareCartesian',
-            'toggleSpikelines',
-          ],
-          displaylogo: false,
-        }}
-      />
-    );
-  };
-
-  const MainDataChart = () => {
-    let denied = 0;
-    let granted = 0;
-    let remanded = 0;
-    let sustained = 0;
-    let terminated = 0;
-
-    data.map(eachCase => {
-      if (eachCase.case_outcome === 'Denied') {
-        denied += 1;
-      }
-      if (eachCase.case_outcome === 'Granted') {
-        granted += 1;
-      }
-      if (eachCase.case_outcome === 'Remanded') {
-        remanded += 1;
-      }
-      if (eachCase.case_outcome === 'Sustained') {
-        sustained += 1;
-      }
-      if (eachCase.case_outcome === 'Terminated') {
-        terminated += 1;
-      }
-      return null;
-    });
-
-    return (
-      <Plot
-        data={[
-          {
-            type: 'bar',
-            x: ['Granted', 'Denied', 'Remanded', 'Sustained', 'Terminated'],
-            y: [granted, denied, remanded, sustained, terminated],
-          },
-        ]}
-        layout={{ width: 1100, height: 400, title: 'Case Data' }}
+        layout={{ width: 500, height: 300, title: 'Overview of Case Outcomes' }}
         config={{
           modeBarButtonsToRemove: [
             'toImage',
@@ -286,15 +203,17 @@ const DataHub = props => {
 
   return (
     <div className="dataHubContainer">
-      <h1>Approvals VS Denials Nationwide</h1>
+      <h2 className="h1Styles">Approvals VS Denials Nationwide</h2>
+      <p className="divider">
+        <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
+      </p>
       <div className="mainChartContainer">
         <TestDataChart />
       </div>
-      <h2>Ratio of Cases Resulting In Granted Asylum: {grantedRatio}%</h2>
 
       <div className="subChartsContainer">
         <CaseDataChart />
-        <CaseDataChart />
+        <h2>Ratio of Cases Resulting In Granted Asylum: {grantedRatio}%</h2>
       </div>
     </div>
   );

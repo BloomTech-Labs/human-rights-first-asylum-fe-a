@@ -10,6 +10,7 @@ import {
 } from '@ant-design/icons';
 import Save from '../../../styles/icons/save.svg';
 import Icon from '@ant-design/icons';
+import OrangeLine from '../../../styles/orange-line.svg';
 
 import { Table, Space, Button, Input, Tabs } from 'antd';
 import './CaseTable.less';
@@ -193,7 +194,9 @@ export default function CaseTable(props) {
       sorter: (a, b) => a.last_name.localeCompare(b.last_name),
       sortDirections: ['descend', 'ascend'],
       ...getColumnSearchProps('judge_name'),
-      render: text => <Link to={`/judge/${casesData.judge_id}`}>{text}</Link>,
+      render: (text, record) => (
+        <Link to={`/judge/${record.judge_id}`}>{text}</Link>
+      ),
     },
     {
       title: 'Origin City',
@@ -417,47 +420,26 @@ export default function CaseTable(props) {
             y: [granted, denied, remanded, sustained, terminated],
           },
         ]}
+        useResizeHandler={true}
+        config={{
+          modeBarButtonsToRemove: [
+            'toImage',
+            'zoom2d',
+            'pan2d',
+            'select2d',
+            'lasso2d',
+            'drawclosedpath',
+            'drawopenpath',
+            'zoomIn2d',
+            'zoomOut2d',
+            'autoScale2d',
+            'hoverClosestCartesian',
+            'hoverCompareCartesian',
+            'toggleSpikelines',
+          ],
+          displaylogo: false,
+        }}
         layout={{ width: 500, height: 300, title: 'Decision Rate' }}
-      />
-    );
-  };
-
-  const CaseDataChart = () => {
-    let denied = 0;
-    let granted = 0;
-    let remanded = 0;
-    let sustained = 0;
-    let terminated = 0;
-
-    data.map(eachCase => {
-      if (eachCase.case_outcome === 'Denied') {
-        denied += 1;
-      }
-      if (eachCase.case_outcome === 'Granted') {
-        granted += 1;
-      }
-      if (eachCase.case_outcome === 'Remanded') {
-        remanded += 1;
-      }
-      if (eachCase.case_outcome === 'Sustained') {
-        sustained += 1;
-      }
-      if (eachCase.case_outcome === 'Terminated') {
-        terminated += 1;
-      }
-      return null;
-    });
-
-    return (
-      <Plot
-        data={[
-          {
-            type: 'bar',
-            x: ['Granted', 'Denied', 'Remanded', 'Sustained', 'Terminated'],
-            y: [granted, denied, remanded, sustained, terminated],
-          },
-        ]}
-        layout={{ width: 500, height: 300, title: 'Case Data' }}
       />
     );
   };
@@ -492,15 +474,19 @@ export default function CaseTable(props) {
 
   return (
     <div className="cases-container">
+
+      <h2 className="h1Styles">Cases</h2>
+      <p className="divider">
+        <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
+      </p>
+
       <CaseDetails
         caseData={detailsData}
         setIsDetailsVisible={setIsDetailsVisible}
         isDetailsVisible={isDetailsVisible}
       />
       <div className="viz-container">
-        <DecisionRateChart />
-        <div className="divider"></div>
-        <CaseDataChart />
+        <DecisionRateChart className="casesViz" />
       </div>
 
       <div className="case-table-container">
