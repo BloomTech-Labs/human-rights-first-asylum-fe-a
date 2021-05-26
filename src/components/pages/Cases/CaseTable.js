@@ -375,11 +375,6 @@ export default function CaseTable(props) {
     return filteredData;
   };
 
-  // This is part of the Tabs component
-  function callback(key) {
-    console.log(key);
-  }
-
   const data = searching ? filter(caseData) : caseData;
 
   const DecisionRateChart = () => {
@@ -481,9 +476,9 @@ export default function CaseTable(props) {
   //   setTabValue(newTabValue);
   // };
   // This is part of the Tabs component
-  function callback(key) {
+  const callback = key => {
     console.log(key);
-  }
+  };
 
   const SaveButton = () => {
     return (
