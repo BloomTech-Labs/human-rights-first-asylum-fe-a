@@ -10,6 +10,7 @@ import {
 } from '@ant-design/icons';
 import Save from '../../../styles/icons/save.svg';
 import Icon from '@ant-design/icons';
+import OrangeLine from '../../../styles/orange-line.svg';
 
 import { Table, Space, Button, Input, Tabs } from 'antd';
 import './CaseTable.less';
@@ -477,8 +478,6 @@ export default function CaseTable(props) {
         layout={{ width: 500, height: 300, title: 'Case Data' }}
       />
     );
-
-
   };
 
   const nonAppCases = casesData.filter(item => item.appellate === false);
@@ -486,7 +485,6 @@ export default function CaseTable(props) {
 
   return (
     <div className="cases-container">
-
       <h2 className="h1Styles">Cases</h2>
       <p className="divider">
         <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />

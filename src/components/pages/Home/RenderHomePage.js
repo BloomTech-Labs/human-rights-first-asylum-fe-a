@@ -233,10 +233,7 @@ function RenderHomePage(props) {
               <ManageCases />
             </Route>
             <Route exact path="/account">
-              <AccountPage
-                oktaUserInfo={user.userInfo}
-                hrfUserInfo={hrfUserInfo}
-              />
+              <AccountPage hrfUserInfo={hrfUserInfo} />
             </Route>
             <Route exact path="/support">
               <SupportPage authState={user.authState} userInfo={hrfUserInfo} />
