@@ -366,11 +366,6 @@ export default function CaseTable(props) {
     return filteredData;
   };
 
-  // This is part of the Tabs component
-  function callback(key) {
-    console.log(key);
-  }
-
   const data = searching ? filter(caseData) : caseData;
 
   const DecisionRateChart = () => {
@@ -461,9 +456,10 @@ export default function CaseTable(props) {
   const nonAppCases = casesData.filter(item => item.appellate === false);
   const appCases = casesData.filter(item => item.appellate === true);
 
-  function callback(key) {
+  // This is part of the Tabs component
+  const callback = key => {
     console.log(key);
-  }
+  };
 
   const SaveButton = () => {
     return (
