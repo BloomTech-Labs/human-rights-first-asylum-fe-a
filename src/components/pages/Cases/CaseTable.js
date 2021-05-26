@@ -3,6 +3,7 @@ import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { Link } from 'react-router-dom';
 import Plot from 'react-plotly.js';
 import Highlighter from 'react-highlight-words';
+import OrangeLine from '../../../styles/orange-line.svg';
 import {
   SearchOutlined,
   FileTextOutlined,
@@ -477,8 +478,6 @@ export default function CaseTable(props) {
         layout={{ width: 500, height: 300, title: 'Case Data' }}
       />
     );
-
-
   };
 
   const nonAppCases = casesData.filter(item => item.appellate === false);
@@ -486,7 +485,6 @@ export default function CaseTable(props) {
 
   return (
     <div className="cases-container">
-
       <h2 className="h1Styles">Cases</h2>
       <p className="divider">
         <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />

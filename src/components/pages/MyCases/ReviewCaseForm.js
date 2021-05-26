@@ -1,90 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Checkbox from '@material-ui/core/Checkbox';
-import './ReviewCaseForm.css';
+import './ReviewCaseForm.less';
+import { Form, Input, DatePicker, Checkbox, Button } from 'antd';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    '& .MuiTextField-root': {
-      margin: theme.spacing(2),
-      width: '25rem',
-      textAlign: 'center',
-    },
-
-    '& .MuiOutlinedInput-root': {
-      '& input': {
-        color: '#215589',
-      },
-      '& fieldset': {
-        borderColor: '#215589',
-      },
-      '&:hover fieldset': {
-        borderColor: '#215589',
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: '#215589',
-      },
-    },
-    '& .MuiFormLabel-root': {
-      color: '#215589',
-    },
-  },
-
-  uploadPage: {
-    display: 'flex',
-    flexFlow: 'row no-wrap',
-    padding: '1%',
-    margin: '0 auto',
-    width: '80%',
-    alignItems: 'flex-start',
-    justifyContent: 'space-around',
-  },
-
-  editForm: {
-    marginTop: '5%',
-    padding: '1%',
-    paddingRight: '10%',
-  },
-
-  row: {
-    fontSize: '1rem',
-    display: 'flex',
-    Margin: theme.spacing(2),
-  },
-
-  buttonStyles: {
-    color: 'white',
-    backgroundColor: '#215589',
-    marginTop: '3%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    '&.MuiButton-contained': {
-      boxShadow: 'none',
-      color: 'white',
-      border: '1px solid darkgray',
-    },
-  },
-
-  checkbox: {
-    color: '#205488',
-    '&.MUI-checked': {
-      color: '#205488',
-    },
-    '&.MuiIconButton-root': {
-      color: '#205488',
-    },
-  },
-}));
 const ReviewCaseForm = props => {
   const {
     formValues,
@@ -109,7 +28,6 @@ const ReviewCaseForm = props => {
       setEditedFormValues({ ...editedFormValues, [name]: value });
     }
   };
-  const classes = useStyles();
   const role = window.localStorage.getItem('role');
   const { handleSubmit } = useForm();
   const onSubmit = evt => {
@@ -138,222 +56,171 @@ const ReviewCaseForm = props => {
   };
 
   return (
-    <div className={classes.uploadPage}>
-      <div className={classes.editForm}>
-        <div className={classes.root}>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="hearing-date">
-              <label htmlFor="hearing-date">
-                <TextField
-                  id="hearing-date"
-                  label="Hearing Date"
-                  type="date"
-                  variant="outlined"
-                  defaultValue={editedFormValues.case_date}
-                  className={classes.textField}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-              </label>
-            </div>
-            <div className="judge">
-              <label htmlFor="judge">
-                <TextField
-                  label="Judge"
-                  placeholder="Judge"
-                  type="text"
-                  variant="outlined"
-                  name="judge"
-                  onChange={onInputChange}
-                  value={editedFormValues.judge}
-                />
-              </label>
-            </div>
-            <div className="case-outcome">
-              <label htmlFor="case-outcome">
-                <TextField
-                  label="Case Outcome"
-                  placeholder="Case Outcome"
-                  variant="outlined"
-                  name="case_outcome"
-                  onChange={onInputChange}
-                  value={editedFormValues.case_outcome}
-                />
-              </label>
-            </div>
-            <div className="nation-of-origin">
-              <label htmlFor="nation-of-origin">
-                <TextField
-                  label="Nation of Origin"
-                  type="text"
-                  variant="outlined"
-                  placeholder="Nation of Origin"
-                  name="country_of_origin"
-                  onChange={onInputChange}
-                  value={editedFormValues.country_of_origin}
-                />
-              </label>
-            </div>
-            <div className="protected-ground">
-              <label htmlFor="protected-ground">
-                <TextField
-                  label="Protected Ground"
-                  variant="outlined"
-                  name="protected_grounds"
-                  placeholder="Protected Ground"
-                  onChange={onInputChange}
-                  value={editedFormValues.protected_grounds}
-                />
-              </label>
-            </div>
-            <div className="application-type">
-              <label htmlFor="application-type">
-                <TextField
-                  label="Application Type"
-                  type="text"
-                  variant="outlined"
-                  placeholder="Application Type"
-                  name="application_type"
-                  onChange={onInputChange}
-                  value={editedFormValues.application_type}
-                />
-              </label>
-            </div>
-            <div className="case-origin-city">
-              <label htmlFor="case-origin-city">
-                <TextField
-                  label="Case Origin City"
-                  type="text"
-                  variant="outlined"
-                  placeholder="Case Origin City"
-                  name="case_origin_city"
-                  onChange={onInputChange}
-                  value={editedFormValues.case_origin_city}
-                />
-              </label>
-            </div>
-            <div className="case-origin-state">
-              <label htmlFor="case-origin-state">
-                <TextField
-                  label="Case Origin State"
-                  type="text"
-                  variant="outlined"
-                  placeholder="Case Origin State"
-                  name="case_origin_state"
-                  onChange={onInputChange}
-                  value={editedFormValues.case_origin_state}
-                />
-              </label>
-            </div>
-            <div className="applicant-gender">
-              <label htmlFor="applicant-gender">
-                <TextField
-                  label="Applicant Gender"
-                  variant="outlined"
-                  placeholder="Applicant Gender"
-                  name="gender"
-                  onChange={onInputChange}
-                  value={editedFormValues.gender}
-                />
-              </label>
-            </div>
-            <div className="applicant-language">
-              <label htmlFor="applicant-language">
-                <TextField
-                  label="Applicant Language"
-                  variant="outlined"
-                  placeholder="Applicant Language"
-                  name="applicant_language"
-                  onChange={onInputChange}
-                  value={editedFormValues.applicant_language}
-                />
-              </label>
-            </div>
-            <div className="applicant-indigenous-group">
-              <label htmlFor="applicant-indigenous-group">
-                <TextField
-                  label="Applicant Indigenous Group"
-                  type="text"
-                  variant="outlined"
-                  placeholder="Applicant Indigenous Group"
-                  name="indigenous_group"
-                  onChange={onInputChange}
-                  value={editedFormValues.indigenous_group}
-                />
-              </label>
-            </div>
-            <div className="type-of-violence-experienced">
-              <label htmlFor="type-of-violence-experienced">
-                <TextField
-                  label="Type of Violence Experienced"
-                  type="text"
-                  variant="outlined"
-                  placeholder="Type of Violence Experienced"
-                  name="type_of_violence"
-                  onChange={onInputChange}
-                  value={editedFormValues.type_of_violence}
-                />
-              </label>
-            </div>
-            <FormControl component="fieldset">
-              <FormLabel component="legend"></FormLabel>
-              <FormGroup className={classes.row}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      className={classes.checkbox}
-                      checked={editedFormValues.initial_or_appellate}
-                      onChange={onInputChange}
-                      name="initial_or_appellate"
-                    />
-                  }
-                  label="Appellate Case"
-                  labelPlacement="end"
-                />
-              </FormGroup>
-              <FormGroup className={classes.row}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      className={classes.checkbox}
-                      checked={editedFormValues.filed_in_one_year}
-                      onChange={onInputChange}
-                      name="filed_in_one_year"
-                    />
-                  }
-                  label="Case was filed Within One Year"
-                  labelPlacement="end"
-                />
-              </FormGroup>
-              <FormGroup className={classes.row}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      className={classes.checkbox}
-                      checked={editedFormValues.credible}
-                      onChange={onInputChange}
-                      name="credible"
-                    />
-                  }
-                  label="Applicant is Perceived as Credible"
-                  labelPlacement="end"
-                />
-              </FormGroup>
-              <FormHelperText></FormHelperText>
-            </FormControl>
-            <div className="submit-button">
-              <Button
-                onClick={onSubmit}
-                className={classes.buttonStyles}
-                variant="contained"
-                component="span"
-              >
-                <p className="button-text">Submit</p>
-              </Button>
-            </div>
-          </form>
-        </div>
+    <div className="uploadPage">
+      <div className="editForm">
+        <Form
+          layout="vertical"
+          className="user-form"
+          onFinish={handleSubmit(onSubmit)}
+        >
+          <div>
+            <Form.Item label="Hearing Date">
+              <DatePicker id="hearing-date" />
+            </Form.Item>
+          </div>
+          <div>
+            <Form.Item label="Case Outcome">
+              <Input
+                id="case_outcome"
+                type="text"
+                name="case_outcome"
+                onChange={onInputChange}
+                placeholder="Case Outcome"
+                value={editedFormValues.case_outcome}
+              />
+            </Form.Item>
+          </div>
+          <div>
+            <Form.Item label="Nation of Origin">
+              <Input
+                id="nation-of-origin"
+                type="text"
+                name="country_of_origin"
+                onChange={onInputChange}
+                placeholder="Nation of Origin"
+                value={editedFormValues.country_of_origin}
+              />
+            </Form.Item>
+          </div>
+          <div>
+            <Form.Item label="Protected Ground">
+              <Input
+                id="protected-ground"
+                type="text"
+                name="protected_grounds"
+                onChange={onInputChange}
+                placeholder="Protected Ground"
+                value={editedFormValues.protected_grounds}
+              />
+            </Form.Item>
+          </div>
+          <div>
+            <Form.Item label="application-type">
+              <Input
+                id="application-type"
+                type="text"
+                name="application_type"
+                onChange={onInputChange}
+                placeholder="Application Type"
+                value={editedFormValues.application_type}
+              />
+            </Form.Item>
+          </div>
+          <div>
+            <Form.Item label="Case Origin City">
+              <Input
+                id="case-origin-city"
+                type="text"
+                name="case_origin_city"
+                onChange={onInputChange}
+                placeholder="Case Origin City"
+                value={editedFormValues.case_origin_city}
+              />
+            </Form.Item>
+          </div>
+          <div>
+            <Form.Item label="Case Origin State">
+              <Input
+                id="case-origin-state"
+                type="text"
+                name="case_origin_state"
+                onChange={onInputChange}
+                placeholder="Case Origin State"
+                value={editedFormValues.case_origin_state}
+              />
+            </Form.Item>
+          </div>
+          <div>
+            <Form.Item label="Applicant Gender">
+              <Input
+                id="applicant-gender"
+                type="text"
+                name="gender"
+                onChange={onInputChange}
+                placeholder="Applicant Gender"
+                value={editedFormValues.gender}
+              />
+            </Form.Item>
+          </div>
+          <div>
+            <Form.Item label="Applicant Language">
+              <Input
+                id="applicant-language"
+                type="text"
+                name="applicant_language"
+                onChange={onInputChange}
+                placeholder="Applicant Language"
+                value={editedFormValues.applicant_language}
+              />
+            </Form.Item>
+          </div>
+          <div>
+            <Form.Item label="Applicant Indigenous Group">
+              <Input
+                id="applicant-indigenous-group"
+                type="text"
+                name="indigenous_group"
+                onChange={onInputChange}
+                placeholder="Applicant Indigenous Group"
+                value={editedFormValues.indigenous_group}
+              />
+            </Form.Item>
+          </div>
+          <div className="type-of-violence-experienced">
+            <Form.Item label="Type of Violence Experienced">
+              <Input
+                id="type-of-violence-experienced"
+                type="text"
+                name="type_of_violence"
+                onChange={onInputChange}
+                placeholder="Type of Violence Experienced"
+                value={editedFormValues.type_of_violence}
+              />
+            </Form.Item>
+          </div>
+          <div className="checkbox">
+            <Checkbox
+              name="initial_or_appellate"
+              checked={editedFormValues.initial_or_appellate}
+              onChange={onInputChange}
+            >
+              Appellate Case
+            </Checkbox>
+          </div>
+          <div className="checkbox">
+            <Checkbox
+              name="filed_in_one_year"
+              checked={editedFormValues.filed_in_one_year}
+              onChange={onInputChange}
+            >
+              Case was filed Within One Year
+            </Checkbox>
+          </div>
+          <div className="checkbox">
+            <Checkbox
+              name="credible"
+              checked={editedFormValues.credible}
+              onChange={onInputChange}
+            >
+              Applicant is Perceived as Credible
+            </Checkbox>
+          </div>
+          <div className="submit-button">
+            <Button className="button-styles" onClick={onSubmit}>
+              Submit
+            </Button>
+          </div>
+        </Form>
       </div>
     </div>
   );
