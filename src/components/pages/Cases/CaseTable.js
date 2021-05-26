@@ -14,6 +14,7 @@ import OrangeLine from '../../../styles/orange-line.svg';
 
 import { Table, Space, Button, Input, Tabs } from 'antd';
 import './CaseTable.less';
+import CaseDetails from '../CaseOverview/CaseDetails';
 
 export default function CaseTable(props) {
   const [state, setState] = useState({
@@ -21,6 +22,18 @@ export default function CaseTable(props) {
     searchedColumn: '',
     selectedRowID: [],
   });
+
+  const initialDetails = {
+    case_date: '5/26/2021',
+    origin_city: 'Detroit',
+  };
+  const [isDetailsVisible, setIsDetailsVisible] = useState(false);
+  const [detailsData, setDetailsData] = useState(initialDetails);
+
+  const popUpDetails = rowData => {
+    setDetailsData(rowData);
+    setIsDetailsVisible(true);
+  };
 
   const { caseData, userInfo, savedCases, setSavedCases } = props;
 
@@ -37,6 +50,7 @@ export default function CaseTable(props) {
         .toString()
         .charAt(0)
         .toUpperCase() + cases.filed_in_one_year.toString().slice(1),
+    case_row: cases,
     ...cases,
   }));
 
@@ -155,10 +169,10 @@ export default function CaseTable(props) {
   const columns = [
     {
       title: 'Case Details',
-      dataIndex: '',
+      dataIndex: 'case_row',
       key: 'x',
-      render: () => (
-        <Link>
+      render: text => (
+        <Link onClick={() => popUpDetails(text)}>
           {' '}
           <FileTextOutlined />{' '}
         </Link>
@@ -460,10 +474,17 @@ export default function CaseTable(props) {
 
   return (
     <div className="cases-container">
+
       <h2 className="h1Styles">Cases</h2>
       <p className="divider">
         <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
       </p>
+
+      <CaseDetails
+        caseData={detailsData}
+        setIsDetailsVisible={setIsDetailsVisible}
+        isDetailsVisible={isDetailsVisible}
+      />
       <div className="viz-container">
         <DecisionRateChart className="casesViz" />
       </div>
