@@ -6,7 +6,7 @@ import OrangeLine from '../../../styles/orange-line.svg';
 import Delete from '../../../styles/icons/delete.svg';
 import './_SavedJudgesStyles.less';
 
-function SavedJudgesAnt({ savedJudges, deleteSavedJudge }) {
+function SavedJudges({ savedJudges, deleteSavedJudge }) {
   const columns = [
     {
       title: 'Judge Name',
@@ -30,9 +30,9 @@ function SavedJudgesAnt({ savedJudges, deleteSavedJudge }) {
       width: '20%',
     },
     {
-      title: 'Date Appointed',
-      dataIndex: 'date_appointed',
-      key: 'date_appointed',
+      title: 'Biography',
+      dataIndex: 'biography',
+      key: 'biography',
       width: '20%',
     },
     {
@@ -67,4 +67,4 @@ function SavedJudgesAnt({ savedJudges, deleteSavedJudge }) {
   );
 }
 
-export default SavedJudgesAnt;
+export default SavedJudges;
