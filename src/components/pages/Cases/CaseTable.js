@@ -8,9 +8,7 @@ import {
   FileTextOutlined,
   FilePdfOutlined,
 } from '@ant-design/icons';
-import Save from '../../../styles/icons/save.svg';
-import Icon from '@ant-design/icons';
-
+import FeatherIcon from 'feather-icons-react';
 import { Table, Space, Button, Input, Tabs } from 'antd';
 import './CaseTable.less';
 
@@ -152,6 +150,16 @@ export default function CaseTable(props) {
     console.log(sorter);
   }
 
+  // This is part of the Tabs component
+  function callback(key) {
+    console.log(key);
+  }
+
+  const rowSelection = {
+    selectedRowID,
+    onChange: onSelectChange,
+  };
+
   const columns = [
     {
       title: 'Case Details',
@@ -267,27 +275,22 @@ export default function CaseTable(props) {
       ),
     },
   ];
-  const findRowByID = (selectedRowID, caseData) => {
-    caseData.forEach(row => {
-      if (row.case_id === selectedRowID) {
-        return row;
-      } else {
-        return 'Please select row to save.';
+
+  const findRowByID = (rowID, rowData) => {
+    for (let i = 0; i < rowData.length; i++) {
+      let currentRow = rowData[i];
+
+      if (currentRow.case_id === rowID) {
+        return currentRow;
       }
-    });
+    }
+    return 'Please select case to save.';
   };
 
   const postBookmark = rowToPost => {
     axiosWithAuth()
       .post(`/profile/${userInfo.sub}/case/${rowToPost}`, rowToPost)
-      // .then(res => {
-      //   let justAdded = res.data.case_bookmarks.slice(-1); // response comes back as array of all existing bookmarks
-      //   let justAddedID = justAdded[0].case_id;
-      //   let wholeAddedRow = findRowByID(justAddedID, caseData);
-      //   setSavedCases([...savedCases, wholeAddedRow]);
-
       .then(res => {
-        console.log(res.data);
         setSavedCases(res.data.case_bookmarks);
       })
       .catch(err => {
@@ -295,30 +298,32 @@ export default function CaseTable(props) {
       });
   };
 
-  const bookmarkCases = selectedRowID => {
-    // loop through currently selected cases and do post requests
-    // need to reference rows by id, as that is all that selection stores
-    // need to account for duplicates as well
+  const bookmarkCases = targetRows => {
     let bookmarks = [];
-    if (selectedRowID.length === 0) {
-      alert('Please select cases(s) to be saved');
+    if (targetRows.length === 0) {
+      alert('Please select case(s) to be saved');
     } else {
-      selectedRowID.forEach(row => bookmarks.push(findRowByID(row, caseData)));
-    }
-
-    let savedIds = [];
-    if (savedCases) {
-      savedCases.forEach(id => savedIds.push(id.case_id));
-    }
-    bookmarks.forEach(b => {
-      if (savedIds.includes(b.case_id)) {
-        console.log('Case already saved to bookmarks');
-      } else {
-        postBookmark(b);
+      for (let i = 0; i < targetRows.length; i++) {
+        bookmarks.push(findRowByID(targetRows[i], caseData));
       }
-    });
-    alert('Cases Successfully Saved');
+
+      let savedIds = [];
+      for (let i = 0; i < savedCases.length; i++) {
+        savedIds.push(savedCases[i].case_id);
+      }
+      for (let i = 0; i < bookmarks.length; i++) {
+        if (savedIds.includes(bookmarks[i].case_id)) {
+          console.log('Case already saved to bookmarks');
+          continue;
+        } else {
+          postBookmark(bookmarks[i]);
+        }
+      }
+      alert('Case(s) Successfully Saved');
+    }
   };
+
+  const [searching, setSearching] = useState(false);
 
   const [queryValues, setQueryValues] = useState({
     case_number: '',
@@ -338,25 +343,13 @@ export default function CaseTable(props) {
     credible: '',
   });
 
-  const [new_search, setSearch] = useState(false);
-  const toggleSearch = () => {
-    setSearch(!new_search);
-  };
-  const [searching, setSearching] = useState(false);
-
   const filter = data => {
-    // searchedKeys is AT MOST 16 keys
     const searchedKeys = Object.entries(queryValues).filter(
       ([k, v]) => v !== ''
     );
-    // for each ROW in DATA -- O(n) where n is the number of rows in our data
     const filteredData = data.filter(row => {
       const matchedHits = [];
-      // map through each searched [K, V] pair -- O(searched_keys) where searchedKeys is at min 0 and at most 16
-      // so nesting this inside is NOT all too expensive.
       searchedKeys.forEach(([k, v]) => {
-        // if the stringified value at row[key] includes the searched-for value,
-        // then we'll push the key to our matchedHits
         if (
           row[k]
             .toString()
@@ -366,19 +359,10 @@ export default function CaseTable(props) {
           matchedHits.push(k);
         }
       });
-      // if the row[k] == v at EVERY searched-for key, then we'll return TRUE
-      // else return FALSE
       return matchedHits.length === searchedKeys.length;
     });
-    // filteredData is only going to contain rows where  every
-    // searched column includes subtext that matches the searched term
     return filteredData;
   };
-
-  // This is part of the Tabs component
-  function callback(key) {
-    console.log(key);
-  }
 
   const data = searching ? filter(caseData) : caseData;
 
@@ -462,43 +446,8 @@ export default function CaseTable(props) {
     );
   };
 
-  const rowSelection = {
-    selectedRowID,
-    onChange: onSelectChange,
-  };
-
   const nonAppCases = casesData.filter(item => item.appellate === false);
   const appCases = casesData.filter(item => item.appellate === true);
-
-  // const handleClick = e => {
-  //   console.log('click ', e);
-  //   setState({ current: e.key });
-  // };
-
-  // const [tabValue, setTabValue] = useState(0);
-
-  // const onChange = (e, newTabValue) => {
-  //   setTabValue(newTabValue);
-  // };
-  // This is part of the Tabs component
-  function callback(key) {
-    console.log(key);
-  }
-
-  const SaveButton = () => {
-    return (
-      <>
-        <Button
-          className="save-cases-btn"
-          onClick={() => {
-            bookmarkCases(rowSelection);
-          }}
-        >
-          <Icon component={() => <img src={Save} alt="save icon" />} />
-        </Button>
-      </>
-    );
-  };
 
   return (
     <div className="cases-container">
@@ -509,9 +458,8 @@ export default function CaseTable(props) {
       </div>
 
       <div className="case-table-container">
-        <Tabs defaultActiveKey="1" onChange={callback}>
+        <Tabs defaultActiveKey="1" onChange={callback} className="tabs">
           <TabPane tab="Initial Cases" key="1">
-            <SaveButton />
             <div className="case-table">
               <Table
                 className="cases_table iCases"
@@ -524,7 +472,6 @@ export default function CaseTable(props) {
             </div>
           </TabPane>
           <TabPane tab="Appellate Cases" key="2">
-            <SaveButton />
             <div className="case-table">
               <Table
                 className="cases_table appCases"
@@ -536,6 +483,20 @@ export default function CaseTable(props) {
               />
             </div>
           </TabPane>
+          <TabPane
+            tab={
+              <Button
+                className="save-cases-btn"
+                onClick={() => {
+                  bookmarkCases(selectedRowID);
+                }}
+              >
+                <FeatherIcon icon="bookmark" />
+              </Button>
+            }
+            disabled
+            key="3"
+          />
         </Tabs>
       </div>
     </div>

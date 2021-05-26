@@ -3,7 +3,7 @@ import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { Link } from 'react-router-dom';
 import Highlighter from 'react-highlight-words';
 import { SearchOutlined } from '@ant-design/icons';
-import { PageHeader, Table, Space, Button, Input } from 'antd';
+import { Table, Space, Button, Input } from 'antd';
 import './_JudgeTableStyles.less';
 
 import FeatherIcon from 'feather-icons-react';
@@ -14,10 +14,9 @@ export default function JudgeTable(props) {
     searchText: '',
     searchedColumn: '',
     selectedRowID: [],
-    selectionModel: [],
   });
 
-  const { searchText, searchedColumn, selectedRowID, selectionModel } = state;
+  const { searchText, searchedColumn, selectedRowID } = state;
 
   let judgesData = judgeData.map(judges => ({
     judge_name:
@@ -221,7 +220,6 @@ export default function JudgeTable(props) {
   const postJudge = rowToPost => {
     axiosWithAuth()
       .post(`/profiles/${userInfo.sub}/judge/${rowToPost.judge_id}`, rowToPost)
-
       .then(res => {
         setSavedJudges(res.data.judge_bookmarks);
       })
@@ -257,31 +255,28 @@ export default function JudgeTable(props) {
   };
 
   return (
-    console.log(judgesData),
-    (
-      <div className="judgeContainer">
-        <div className="judgeTableContainer">
-          <div className="table-header">
-            <h2>Judges</h2>
-            <Button
-              className="buttonContainer"
-              onClick={() => {
-                bookmarkJudges(selectedRowID);
-              }}
-            >
-              <FeatherIcon icon="bookmark" />
-            </Button>
-          </div>
-          <Table
-            className="judges_table"
-            rowSelection={rowSelection}
-            rowKey={record => record.judge_id}
-            columns={columns}
-            dataSource={judgesData}
-            onChange={changeSorter}
-          />
+    <div className="judgeContainer">
+      <div className="judgeTableContainer">
+        <div className="table-header">
+          <h2>Judges</h2>
+          <Button
+            className="buttonContainer"
+            onClick={() => {
+              bookmarkJudges(selectedRowID);
+            }}
+          >
+            <FeatherIcon icon="bookmark" />
+          </Button>
         </div>
+        <Table
+          className="judges_table"
+          rowSelection={rowSelection}
+          rowKey={record => record.judge_id}
+          columns={columns}
+          dataSource={judgesData}
+          onChange={changeSorter}
+        />
       </div>
-    )
+    </div>
   );
 }
