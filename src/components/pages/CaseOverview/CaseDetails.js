@@ -11,12 +11,18 @@ import '../AdminTools/_ManageUsersStyles.less';
 import Icon from '@ant-design/icons';
 import OrangeLine from '../../../styles/orange-line.svg';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
+import EditCaseDetails from '../CaseOverview/EditCaseDetails';
 
 const CaseDetails = props => {
   const { caseData, isDetailsVisible, setIsDetailsVisible } = props;
+  const [editData, setEditData] = useState(caseData);
+  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
 
   const handleCancel = () => {
     setIsDetailsVisible(false);
+  };
+  const showEditModal = () => {
+    setIsEditModalVisible(true);
   };
 
   return (
@@ -35,6 +41,9 @@ const CaseDetails = props => {
           >
             <span>Ok</span>
           </AntDButton>
+          <AntDButton className="btn-style" onClick={showEditModal}>
+            Edit
+          </AntDButton>
         </div>,
       ]}
     >
@@ -52,7 +61,15 @@ const CaseDetails = props => {
         <p>{`Indigenous Group: ${caseData.indigenous_group}`}</p>
         <p>{`Protected Grounds: ${caseData.protected_grounds}`}</p>
         <p>{`Outcome: ${caseData.case_outcome}`}</p>
+        <p>{`Country of Origin: ${caseData.country_of_origin}`}</p>
+        <p>{`Filed Within One Year: ${caseData.filed_in_one_year}`}</p>
+        <p>{`Applicant Language: ${caseData.applicant_language}`}</p>
       </div>
+      <EditCaseDetails
+        caseId={caseData.case_id}
+        setIsEditModalVisible={setIsEditModalVisible}
+        isEditModalVisible={isEditModalVisible}
+      />
     </Modal>
   );
 };

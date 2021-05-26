@@ -28,7 +28,7 @@ export default function CaseTable(props) {
     case_date: '5/26/2021',
     origin_city: 'Detroit',
   };
-  const [isDetailsVisible, setIsDetailsVisible] = useState(true);
+  const [isDetailsVisible, setIsDetailsVisible] = useState(false);
   const [detailsData, setDetailsData] = useState(initialDetails);
 
   const popUpDetails = rowData => {
