@@ -233,7 +233,10 @@ function RenderHomePage(props) {
               <ManageCases />
             </Route>
             <Route exact path="/account">
-              <AccountPage hrfUserInfo={hrfUserInfo} />
+              <AccountPage
+                hrfUserInfo={hrfUserInfo}
+                setHrfUserInfo={setHrfUserInfo}
+              />
             </Route>
             <Route exact path="/support">
               <SupportPage authState={user.authState} userInfo={hrfUserInfo} />

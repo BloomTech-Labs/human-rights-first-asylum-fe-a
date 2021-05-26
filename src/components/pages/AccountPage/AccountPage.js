@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { Button, Card, Avatar, Modal, Form, Input } from 'antd';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
 
@@ -14,10 +13,9 @@ const initialFormValues = {
 };
 
 const AccountPage = props => {
-  const { hrfUserInfo } = props;
+  const { hrfUserInfo, setHrfUserInfo } = props;
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [formValues, setFormValues] = useState(initialFormValues);
-  const history = useHistory();
 
   const onChange = e => {
     const { name, value } = e.target;
@@ -46,8 +44,8 @@ const AccountPage = props => {
   const updateUser = updatedUserInfo => {
     axiosWithAuth()
       .put(`/profile/${updatedUserInfo.user_id}`, updatedUserInfo)
-      .then(() => {
-        history.push('/');
+      .then(res => {
+        setHrfUserInfo(res.data.updated_profile);
       })
       .catch(err => console.log(err));
     setFormValues(initialFormValues);
