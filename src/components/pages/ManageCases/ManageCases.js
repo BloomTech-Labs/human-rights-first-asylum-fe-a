@@ -21,13 +21,24 @@ export default function ManageCases(props) {
   };
 
   const columns = [
-    { title: 'Case ID', dataIndex: 'case_id', key: 'case_id' },
-    { title: 'Uploaded By', dataIndex: 'user_id', key: 'user_id' },
-    { title: 'Date Uploaded', dataIndex: 'uploaded', key: 'uploaded' },
+    { title: 'Case ID', dataIndex: 'case_id', key: 'case_id', width: '25%' },
+    {
+      title: 'Uploaded By',
+      dataIndex: 'user_id',
+      key: 'user_id',
+      width: '25%',
+    },
+    {
+      title: 'Date Uploaded',
+      dataIndex: 'uploaded',
+      key: 'uploaded',
+      width: '25%',
+    },
     {
       title: 'Approve',
       dataIndex: '',
       key: 'x',
+      width: '10%',
       render: () => (
         <Button onClick={handleAccept} id="acceptCaseButton">
           Accept
@@ -38,6 +49,7 @@ export default function ManageCases(props) {
       title: 'Reject',
       dataIndex: '',
       key: 'y',
+      width: '10%',
       render: () => (
         <Button onClick={handleReject} id="rejectCaseButton">
           Reject

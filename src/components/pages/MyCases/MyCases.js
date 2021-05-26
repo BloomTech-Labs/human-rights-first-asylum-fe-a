@@ -225,7 +225,14 @@ export default function MyCases(props) {
       headerName: 'Status',
       headerAlign: 'center',
       flex: 1,
-      renderCell: params => <span>Approved</span>,
+      renderCell: params => (
+        <>
+          <span>Approved</span>
+          <div style={{ width: 100, margin: 5 }}>
+            <Progress percent={100} size="small" />
+          </div>
+        </>
+      ),
     },
   ];
 
