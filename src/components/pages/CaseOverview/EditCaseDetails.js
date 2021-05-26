@@ -25,7 +25,8 @@ const initialFormValues = {
   applicant_language: '',
   credible: false,
 };
-const CaseModal = props => {
+
+const EditCaseDetails = props => {
   const [formValues, setFormValues] = useState(initialFormValues);
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -240,4 +241,4 @@ const CaseModal = props => {
     </Modal>
   );
 };
-export default CaseModal;
+export default EditCaseDetails;
