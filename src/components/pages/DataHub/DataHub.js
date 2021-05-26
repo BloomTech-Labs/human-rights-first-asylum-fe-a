@@ -162,7 +162,7 @@ const DataHub = props => {
             y: [granted, denied, remanded, sustained, terminated],
           },
         ]}
-        layout={{ width: 500, height: 300, title: 'Case Data' }}
+        layout={{ width: 500, height: 300, title: 'Overview of Case Outcomes' }}
         config={{
           modeBarButtonsToRemove: [
             'toImage',
