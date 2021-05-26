@@ -159,15 +159,6 @@ export default function JudgeTable(props) {
         <Link to={`/judge/${record.judge_id}`}>{text}</Link>
       ),
     },
-    // Link to individual judge page
-    //   renderCell: params => (
-    //     <>
-    //       <Link to={`/judge/${params.row.judge_id}`} className="judgeTableLink">
-    //         <span>{params.value}</span>
-    //       </Link>
-    //     </>
-    //   ),
-    // },
     {
       title: 'Judge County',
       dataIndex: 'judge_county',
