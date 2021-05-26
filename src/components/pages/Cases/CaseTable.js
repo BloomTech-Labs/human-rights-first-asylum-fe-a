@@ -10,6 +10,7 @@ import {
 } from '@ant-design/icons';
 import Save from '../../../styles/icons/save.svg';
 import Icon from '@ant-design/icons';
+
 import { Table, Space, Button, Input, Tabs } from 'antd';
 import './CaseTable.less';
 import CaseDetails from '../CaseOverview/CaseDetails';
@@ -202,7 +203,9 @@ export default function CaseTable(props) {
       sorter: (a, b) => a.last_name.localeCompare(b.last_name),
       sortDirections: ['descend', 'ascend'],
       ...getColumnSearchProps('judge_name'),
-      render: text => <Link to={`/judge/${casesData.judge_id}`}>{text}</Link>,
+      render: (text, record) => (
+        <Link to={`/judge/${record.judge_id}`}>{text}</Link>
+      ),
     },
     {
       title: 'Origin City',
@@ -412,6 +415,25 @@ export default function CaseTable(props) {
             y: [granted, denied, remanded, sustained, terminated],
           },
         ]}
+        useResizeHandler={true}
+        config={{
+          modeBarButtonsToRemove: [
+            'toImage',
+            'zoom2d',
+            'pan2d',
+            'select2d',
+            'lasso2d',
+            'drawclosedpath',
+            'drawopenpath',
+            'zoomIn2d',
+            'zoomOut2d',
+            'autoScale2d',
+            'hoverClosestCartesian',
+            'hoverCompareCartesian',
+            'toggleSpikelines',
+          ],
+          displaylogo: false,
+        }}
         layout={{ width: 500, height: 300, title: 'Decision Rate' }}
       />
     );
@@ -455,6 +477,8 @@ export default function CaseTable(props) {
         layout={{ width: 500, height: 300, title: 'Case Data' }}
       />
     );
+
+
   };
 
   const nonAppCases = casesData.filter(item => item.appellate === false);
@@ -462,15 +486,19 @@ export default function CaseTable(props) {
 
   return (
     <div className="cases-container">
+
+      <h2 className="h1Styles">Cases</h2>
+      <p className="divider">
+        <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
+      </p>
+
       <CaseDetails
         caseData={detailsData}
         setIsDetailsVisible={setIsDetailsVisible}
         isDetailsVisible={isDetailsVisible}
       />
       <div className="viz-container">
-        <DecisionRateChart />
-        <div className="divider"></div>
-        <CaseDataChart />
+        <DecisionRateChart className="casesViz" />
       </div>
 
       <div className="case-table-container">

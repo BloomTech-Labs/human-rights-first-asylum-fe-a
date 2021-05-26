@@ -36,8 +36,8 @@ export default function MainHeader(props) {
     <div className="site-page-header">
       <img src={HRFLogo} alt="HRF Logo" width="350px" />
       <UploadCase getPendingCases={getPendingCases} />
-      <Dropdown className="drop-down" overlay={menu}>
-        <ul className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+      <Dropdown className="account-drop-down" overlay={menu}>
+        <ul className="accounts" onClick={e => e.preventDefault()}>
           <div className="user-button">
             <Icon component={() => <img src={Profile} alt="profile icon" />} />
           </div>

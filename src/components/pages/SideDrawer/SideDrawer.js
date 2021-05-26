@@ -56,10 +56,6 @@ function SideDrawer() {
           Judges
         </Menu.Item>
 
-        <Menu.Item className="my-cases" key="/my-cases">
-          My Cases
-        </Menu.Item>
-
         <SubMenu
           key="saved"
           className="saved-submenu"
@@ -69,6 +65,10 @@ function SideDrawer() {
           <Menu.Item key="/saved-cases">Saved Cases</Menu.Item>
           <Menu.Item key="/saved-judges">Saved Judges</Menu.Item>
         </SubMenu>
+
+        <Menu.Item className="my-cases" key="/my-cases">
+          My Cases
+        </Menu.Item>
 
         {role === 'moderator' || role === 'admin' ? (
           <>

@@ -8,6 +8,7 @@ import './_JudgeTableStyles.less';
 
 import Save from '../../../styles/icons/save.svg';
 import Icon from '@ant-design/icons';
+import OrangeLine from '../../../styles/orange-line.svg';
 
 export default function JudgeTable(props) {
   const { judgeData, userInfo, savedJudges, setSavedJudges, authState } = props;
@@ -153,17 +154,10 @@ export default function JudgeTable(props) {
       sorter: (a, b) => a.last_name.localeCompare(b.last_name),
       sortDirections: ['descend', 'ascend'],
       ...getColumnSearchProps('judge_name'),
-      render: text => <Link to={`/judge/${judgesData.judge_id}`}>{text}</Link>,
+      render: (text, record) => (
+        <Link to={`/judge/${record.judge_id}`}>{text}</Link>
+      ),
     },
-    // Link to individual judge page
-    //   renderCell: params => (
-    //     <>
-    //       <Link to={`/judge/${params.row.judge_id}`} className="judgeTableLink">
-    //         <span>{params.value}</span>
-    //       </Link>
-    //     </>
-    //   ),
-    // },
     {
       title: 'Judge County',
       dataIndex: 'judge_county',
@@ -258,6 +252,10 @@ export default function JudgeTable(props) {
 
   return (
     <div className="judge-container">
+      <h2 className="h1Styles">Judges</h2>
+      <p className="divider">
+        <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
+      </p>
       <div className="judge-table-container">
         <Tabs defaultActiveKey="1">
           <TabPane tab="Judges" key="1">
