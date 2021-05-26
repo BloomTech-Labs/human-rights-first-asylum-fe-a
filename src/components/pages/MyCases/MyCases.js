@@ -108,7 +108,7 @@ export default function MyCases(props) {
       sortDirections: ['descend', 'ascend'],
       render: row =>
         row.status === 'Review' ? (
-          <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <div className="column-items">
             <Button
               size="small"
               style={{ backgroundColor: '#2a5c8d', color: 'white' }}
