@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Button, Card, Avatar, Modal, Form, Input } from 'antd';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
 
@@ -14,7 +13,7 @@ const initialFormValues = {
 };
 
 const AccountPage = props => {
-  const { oktaUserInfo, hrfUserInfo } = props;
+  const { hrfUserInfo, setHrfUserInfo } = props;
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [formValues, setFormValues] = useState(initialFormValues);
 
@@ -46,7 +45,7 @@ const AccountPage = props => {
     axiosWithAuth()
       .put(`/profile/${updatedUserInfo.user_id}`, updatedUserInfo)
       .then(res => {
-        console.log(res.data);
+        setHrfUserInfo(res.data.updated_profile);
       })
       .catch(err => console.log(err));
     setFormValues(initialFormValues);
@@ -61,7 +60,6 @@ const AccountPage = props => {
       user_id: formValues.user_id.trim(),
     };
     updateUser(updatedUser);
-
     setIsEditModalVisible(false);
   };
 
@@ -83,22 +81,17 @@ const AccountPage = props => {
             </Avatar>
             <div className="user-info">
               <div className="info-line">
+                <p className="p-1">First: </p>
+                <p className="p-2">{hrfUserInfo.first_name}</p>
+              </div>
+              <div className="info-line">
+                <p className="p-1">Last: </p>
+                <p className="p-2">{hrfUserInfo.last_name}</p>
+              </div>
+              <div className="info-line">
                 <p className="p-1">Email: </p>
-                <p className="p-2">{oktaUserInfo.email}</p>
+                <p className="p-2">{hrfUserInfo.email}</p>
               </div>
-
-              <div className="info-line">
-                <p className="p-1">Date joined:</p>
-                <p className="p-2">
-                  {String(hrfUserInfo.created_at).slice(0, 10)}
-                </p>
-              </div>
-
-              <div className="info-line">
-                <p className="p-1">Location: </p>
-                <p className="p-2">{oktaUserInfo.zoneinfo}</p>
-              </div>
-
               <div className="info-line">
                 <p className="p-1">Role: </p>
                 <p className="p-2">{hrfUserInfo.role}</p>

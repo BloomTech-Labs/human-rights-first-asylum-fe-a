@@ -11,6 +11,7 @@ import {
 } from '@ant-design/icons';
 import Save from '../../../styles/icons/save.svg';
 import Icon from '@ant-design/icons';
+import OrangeLine from '../../../styles/orange-line.svg';
 
 import { Table, Space, Button, Input, Tabs } from 'antd';
 import './CaseTable.less';
