@@ -404,6 +404,25 @@ export default function CaseTable(props) {
             y: [granted, denied, remanded, sustained, terminated],
           },
         ]}
+        useResizeHandler={true}
+        config={{
+          modeBarButtonsToRemove: [
+            'toImage',
+            'zoom2d',
+            'pan2d',
+            'select2d',
+            'lasso2d',
+            'drawclosedpath',
+            'drawopenpath',
+            'zoomIn2d',
+            'zoomOut2d',
+            'autoScale2d',
+            'hoverClosestCartesian',
+            'hoverCompareCartesian',
+            'toggleSpikelines',
+          ],
+          displaylogo: false,
+        }}
         layout={{ width: 500, height: 300, title: 'Decision Rate' }}
       />
     );
