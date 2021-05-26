@@ -8,7 +8,6 @@ import {
   FileTextOutlined,
   FilePdfOutlined,
 } from '@ant-design/icons';
-import FeatherIcon from 'feather-icons-react';
 import Save from '../../../styles/icons/save.svg';
 import Icon from '@ant-design/icons';
 
@@ -482,6 +481,25 @@ export default function CaseTable(props) {
   // const onChange = (e, newTabValue) => {
   //   setTabValue(newTabValue);
   // };
+  // This is part of the Tabs component
+  function callback(key) {
+    console.log(key);
+  }
+
+  const SaveButton = () => {
+    return (
+      <>
+        <Button
+          className="save-cases-btn"
+          onClick={() => {
+            bookmarkCases(rowSelection);
+          }}
+        >
+          <Icon component={() => <img src={Save} alt="save icon" />} />
+        </Button>
+      </>
+    );
+  };
 
   return (
     <div className="cases-container">
@@ -494,14 +512,7 @@ export default function CaseTable(props) {
       <div className="case-table-container">
         <Tabs defaultActiveKey="1" onChange={callback}>
           <TabPane tab="Initial Cases" key="1">
-            <Button
-              className="save-cases-btn"
-              onClick={() => {
-                bookmarkCases(rowSelection);
-              }}
-            >
-              <Icon component={() => <img src={Save} alt="save icon" />} />
-            </Button>
+            <SaveButton />
             <div className="case-table">
               <Table
                 className="cases_table iCases"
@@ -513,8 +524,8 @@ export default function CaseTable(props) {
               />
             </div>
           </TabPane>
-
           <TabPane tab="Appellate Cases" key="2">
+            <SaveButton />
             <div className="case-table">
               <Table
                 className="cases_table appCases"
