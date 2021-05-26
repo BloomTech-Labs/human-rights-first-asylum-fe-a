@@ -36,12 +36,11 @@ const CaseDetails = props => {
           <AntDButton
             htmlType="submit"
             className="add-user-btn"
-            //onClick={onOk}
             onClick={handleCancel}
           >
             <span>Ok</span>
           </AntDButton>
-          {localStorage.role === 'admin' ? (
+          {localStorage.role === 'admin' || '' ? (
             <AntDButton className="btn-style" onClick={showEditModal}>
               Edit
             </AntDButton>

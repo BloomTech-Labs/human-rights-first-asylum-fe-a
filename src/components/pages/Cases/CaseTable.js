@@ -14,8 +14,6 @@ import Icon from '@ant-design/icons';
 import { Table, Space, Button, Input, Tabs } from 'antd';
 import './CaseTable.less';
 import CaseDetails from '../CaseOverview/CaseDetails';
-import { TableCell } from '@material-ui/core';
-import { TableRow } from '@material-ui/core';
 
 export default function CaseTable(props) {
   const [state, setState] = useState({
