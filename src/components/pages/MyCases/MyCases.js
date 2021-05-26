@@ -2,22 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { trackPromise } from 'react-promise-tracker';
 import { Link } from 'react-router-dom';
-import {
-  Modal,
-  Button,
-  Typography,
-  Progress,
-  Table,
-  Space,
-  Input,
-  Tabs,
-  Row,
-} from 'antd';
-import {
-  ReloadOutlined,
-  ExclamationCircleTwoTone,
-  FileTextOutlined,
-} from '@ant-design/icons';
+import { Modal, Button, Progress, Table, Tabs } from 'antd';
+import { ExclamationCircleTwoTone, FileTextOutlined } from '@ant-design/icons';
 import './MyCases.less';
 import ReviewCaseForm from './ReviewCaseForm';
 const initialFormValues = {
@@ -245,10 +231,6 @@ export default function MyCases(props) {
         console.log(err);
       });
   };
-  const handleRefresh = () => {
-    getPendingCases();
-  };
-
   return (
     <div className="myCaseContainer">
       <div className="myCaseTableContainer">
