@@ -12,12 +12,13 @@ import Icon from '@ant-design/icons';
 import OrangeLine from '../../../styles/orange-line.svg';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
 const initialFormValues = {
-  hearing_date: '',
-  judge_id: '',
+  case_date: '',
   application_type: '',
   protected_grounds: '',
   case_outcome: '',
   country_of_origin: '',
+  case_origin_city: '',
+  case_origin_state: '',
   gender: '',
   type_of_violence: '',
   indigenous_group: '',
@@ -27,16 +28,22 @@ const initialFormValues = {
 const CaseModal = props => {
   const [formValues, setFormValues] = useState(initialFormValues);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [caseData, setCaseData] = useState({});
   const [loading, setLoading] = useState(false);
   const { caseId, setIsEditModalVisible, isEditModalVisible } = props;
 
   useEffect(() => {
+    if (localStorage.role === 'admin') {
+      setIsAdmin(true);
+    }
     async function fetchCase() {
       axiosWithAuth()
         .get(`/case/${caseId}`)
         .then(res => {
-          setCaseData(res.data);
+          console.log(res.data);
+          setFormValues({
+            ...res.data,
+            case_date: res.data.case_date.slice(0, 10),
+          });
           setLoading(false);
         })
         .catch(err => {
@@ -57,8 +64,14 @@ const CaseModal = props => {
 
   const onEditSubmit = e => {
     e.preventDefault();
-    // axiosWithAuth().put(`/case/${caseId}`, formValues);
-    console.log(formValues);
+    axiosWithAuth()
+      .put(`/case/${caseId}`, formValues)
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
     setIsEditModalVisible(false);
   };
 
@@ -66,6 +79,7 @@ const CaseModal = props => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
   };
+
   const onCheck = e => {
     console.log(formValues.credible);
     setFormValues({ ...formValues, credible: !e.target.checked });
@@ -94,25 +108,14 @@ const CaseModal = props => {
         <p className="divider">
           <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
         </p>
-        <Form.Item label="Hearing Date">
+        <Form.Item label="Case Date">
           <Input
-            id="hearing_date"
+            id="case_date"
             type="date"
-            name="hearing_date"
+            name="case_date"
             onChange={onChange}
             className="text-field"
-            value={formValues.hearing_date}
-          />
-        </Form.Item>
-        <Form.Item label="Judge">
-          <Input
-            id="judge_id"
-            type="text"
-            name="judge_id"
-            onChange={onChange}
-            className="text-field"
-            placeholder="judge name"
-            value={formValues.judge_id}
+            value={formValues.case_date}
           />
         </Form.Item>
         <Form.Item label="Application Type">
@@ -157,6 +160,28 @@ const CaseModal = props => {
             onChange={onChange}
             className="text-field"
             value={formValues.country_of_origin}
+          />
+        </Form.Item>
+        <Form.Item label="Case Origin City">
+          <Input
+            id="case_origin_city"
+            type="text"
+            name="case_origin_city"
+            placeholder="Case Origin City"
+            onChange={onChange}
+            className="text-field"
+            value={formValues.case_origin_city}
+          />
+        </Form.Item>
+        <Form.Item label="Case Origin State">
+          <Input
+            id="case_origin_state"
+            type="text"
+            name="case_origin_state"
+            placeholder="Case Origin State"
+            onChange={onChange}
+            className="text-field"
+            value={formValues.case_origin_state}
           />
         </Form.Item>
         <Form.Item label="Gender">
