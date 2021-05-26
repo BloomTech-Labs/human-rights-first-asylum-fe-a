@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import CaseTable from '../Cases/CaseTable';
 import JudgeTable from '../JudgeTable/JudgeTable';
-import UploadCase from '../Upload/UploadCase';
 import SideDrawer from '../SideDrawer/SideDrawer';
 import MainHeader from '../Home/MainHeader';
 import JudgePage from '../JudgePage/JudgePage';
@@ -129,7 +128,7 @@ function RenderHomePage(props) {
     user.authState.idToken.idToken,
     user.userInfo.sub,
     savedJudges.length,
-    // savedCases.length,
+    savedCases.length,
   ]);
 
   const getPendingCases = () => {
@@ -155,7 +154,6 @@ function RenderHomePage(props) {
   };
 
   const deleteBookmark = caseID => {
-    // only works for cases, judge requires name instead of ID to delete
     axiosWithAuth()
       .delete(`/profile/${user.userInfo.sub}/case/${caseID}`)
       .then(res => {
@@ -215,6 +213,7 @@ function RenderHomePage(props) {
             <Route exact path="/saved-judges">
               <SavedJudges
                 savedJudges={savedJudges}
+                userInfo={user.userInfo}
                 deleteSavedJudge={deleteSavedJudge}
               />
             </Route>
