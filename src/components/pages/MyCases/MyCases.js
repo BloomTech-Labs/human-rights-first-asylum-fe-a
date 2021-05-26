@@ -2,14 +2,28 @@ import React, { useState, useEffect } from 'react';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { trackPromise } from 'react-promise-tracker';
 import { Link } from 'react-router-dom';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+// import Tabs from '@material-ui/core/Tabs';
+// import Tab from '@material-ui/core/Tab';
 import AppBar from '@material-ui/core/AppBar';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import { DataGrid, GridColumnsToolbarButton } from '@material-ui/data-grid';
-import { Modal, Button, Typography, Progress } from 'antd';
-import { ReloadOutlined, ExclamationCircleTwoTone } from '@ant-design/icons';
+import {
+  Modal,
+  Button,
+  Typography,
+  Progress,
+  Table,
+  Space,
+  Input,
+  Tabs,
+  Row,
+} from 'antd';
+import {
+  ReloadOutlined,
+  ExclamationCircleTwoTone,
+  FileTextOutlined,
+} from '@ant-design/icons';
 import './MyCases.less';
 import ReviewCaseForm from './ReviewCaseForm';
 const initialFormValues = {
@@ -30,6 +44,7 @@ const initialFormValues = {
   credible: false,
 };
 export default function MyCases(props) {
+  const { TabPane } = Tabs;
   const { Title } = Typography;
   const [tabValue, setTabValue] = useState(0);
   const { user, myPendingCases, getPendingCases } = props;
@@ -60,32 +75,28 @@ export default function MyCases(props) {
       });
     // eslint-disable-next-line
   }, []);
-
   const pendingColumns = [
     {
-      field: 'file_name',
-      renderHeader: params => <strong>{'File Name'}</strong>,
-      headerName: 'file_name',
-      flex: 1,
-      headerAlign: 'center',
-      options: {
-        filter: true,
-      },
+      width: '1',
+      title: row => <strong>{'File Name'}</strong>,
+      dataIndex: 'file_name',
+      key: 'file_name',
+      sorter: true,
+      sortDirections: ['descend', 'ascend'],
     },
     {
-      field: 'uploaded',
-      renderHeader: params => <strong>{'Uploaded On'}</strong>,
-      headerName: 'Uploaded',
-      headerAlign: 'center',
-      flex: 1,
+      width: '1',
+      dataIndex: 'uploaded',
+      key: 'uploaded',
+      title: row => <strong>{'Uploaded On'}</strong>,
+      sorter: true,
+      sortDirections: ['descend', 'ascend'],
     },
     {
-      field: 'case_url',
-      renderHeader: params => <strong>{'View PDF'}</strong>,
-      headerName: 'PDF',
-      headerAlign: 'center',
-      flex: 1,
-      renderCell: params => (
+      width: '2',
+      dataIndex: 'case_url',
+      title: row => <strong>{'View PDF'}</strong>,
+      render: params => (
         <Button
           size="small"
           style={{ backgroundColor: 'aliceblue' }}
@@ -108,21 +119,20 @@ export default function MyCases(props) {
       ),
     },
     {
-      field: 'status',
-      renderHeader: params => <strong>{'Status'}</strong>,
-      headerName: 'Status',
-      headerAlign: 'center',
-      flex: 1,
-      renderCell: params =>
-        params.row.status === 'Review' ? (
+      title: row => <strong>{'Status'}</strong>,
+      key: 'status',
+      sorter: true,
+      sortDirections: ['descend', 'ascend'],
+      render: row =>
+        row.status === 'Review' ? (
           <div style={{ display: 'flex', flexDirection: 'row' }}>
             <Button
               size="small"
               style={{ backgroundColor: '#2a5c8d', color: 'white' }}
               onClick={e => {
                 e.preventDefault();
-                showModal(params.row);
-                setCurrentId(params.row.pending_case_id);
+                showModal(row);
+                setCurrentId(row.pending_case_id);
               }}
             >
               Review
@@ -131,13 +141,13 @@ export default function MyCases(props) {
           </div>
         ) : (
           <>
-            {params.row.status}
+            {row.status}
             <div style={{ width: 100, margin: 5 }}>
-              {params.row.status === 'Processing' ? (
+              {row.status === 'Processing' ? (
                 <Progress percent={30} size="small" status="active" />
-              ) : params.row.status === 'Error' || 'Rejected' ? (
+              ) : row.status === 'Error' || 'Rejected' ? (
                 <Progress percent={50} size="small" status="exception" />
-              ) : params.row.status === 'Pending' ? (
+              ) : row.status === 'Pending' ? (
                 <Progress percent={80} size="small" />
               ) : null}
             </div>
@@ -145,12 +155,9 @@ export default function MyCases(props) {
         ),
     },
     {
-      field: 'pending_case_id',
-      renderHeader: params => <strong>{'Cancel'}</strong>,
-      headerName: 'Cancel',
-      headerAlign: 'center',
-      flex: 0.4,
-      renderCell: params => (
+      title: row => <strong>{'Cancel'}</strong>,
+      key: 'cancel',
+      render: row => (
         <Button
           size="small"
           shape="circle"
@@ -169,7 +176,7 @@ export default function MyCases(props) {
           }
           onClick={e => {
             e.preventDefault();
-            onDelete(params.row.pending_case_id);
+            onDelete(row.pending_case_id);
           }}
         ></Button>
       ),
@@ -177,30 +184,21 @@ export default function MyCases(props) {
   ];
   const approvedColumns = [
     {
-      field: 'case_number',
-      renderHeader: params => <strong>{'Case Number'}</strong>,
-      headerName: 'Case Number',
-      flex: 1,
-      headerAlign: 'center',
-      options: {
-        filter: true,
-      },
-
-      renderCell: params => (
+      key: '',
+      title: row => <strong>{'Case Details'}</strong>,
+      render: row => (
         <>
-          <Link to={`/case/${params.value}`} className="caseTableLink">
-            <span> {params.row['case_number']}</span>
+          <Link>
+            {' '}
+            <FileTextOutlined />{' '}
           </Link>
         </>
       ),
     },
     {
-      field: 'pdf',
-      renderHeader: params => <strong>{'View PDF'}</strong>,
-      headerName: 'PDF',
-      headerAlign: 'center',
-      flex: 1,
-      renderCell: params => (
+      key: 'case_url',
+      title: row => <strong>{'View PDF'}</strong>,
+      render: params => (
         <Button
           size="small"
           style={{ backgroundColor: 'aliceblue' }}
@@ -216,16 +214,16 @@ export default function MyCases(props) {
               />
             </svg>
           }
+          onClick={e => {
+            e.preventDefault();
+          }}
         ></Button>
       ),
     },
     {
-      field: 'status',
-      renderHeader: params => <strong>{'Status'}</strong>,
-      headerName: 'Status',
-      headerAlign: 'center',
-      flex: 1,
-      renderCell: params => <span>Approved</span>,
+      key: 'status',
+      title: row => <strong>{'Status'}</strong>,
+      render: row => <span>Approved</span>,
     },
   ];
 
@@ -237,50 +235,34 @@ export default function MyCases(props) {
   const handleCancel = () => {
     setVisible(false);
   };
-  const CustomToolbar = () => {
-    return (
-      <div className="menuContainer">
-        <Title level={2}>
-          {
-            <AppBar
-              position="static"
-              classes={{ root: classes.root }}
-              elevation={0}
-            >
-              <Tabs
-                value={tabValue}
-                onChange={onChange}
-                aria-label="Types of Cases"
-                classes={{
-                  root: classes.root,
-                  indicator: classes.tabIndicator,
-                }}
-              >
-                <Tab label="My Pending Cases" />
-                <Tab label="My Approved Cases" />
-              </Tabs>
-            </AppBar>
-          }
-        </Title>
-        <div className="buttonContainer">
-          <Button icon={<ReloadOutlined />} onClick={handleRefresh}></Button>
-          <GridColumnsToolbarButton onClick={e => e.preventDefault()} />
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M0 0H24L14.1818 15.094V24L9.81818 21V15.094L0 0Z"
-              fill="grey"
-            />
-          </svg>
-        </div>
-      </div>
-    );
-  };
+  // const CustomToolbar = () => {
+  //   return (
+  //     <div className="menuContainer">
+  //       <Title level={2}>
+  //         {
+  //           <AppBar
+  //             position="static"
+  //             classes={{ root: classes.root }}
+  //             elevation={0}
+  //           >
+  //             <Tabs
+  //               value={tabValue}
+  //               onChange={onChange}
+  //               aria-label="Types of Cases"
+  //               classes={{
+  //                 root: classes.root,
+  //                 indicator: classes.tabIndicator,
+  //               }}
+  //             >
+  //               {/* <Tab label="My Pending Cases" />
+  //               <Tab label="My Approved Cases" /> */}
+  //             </Tabs>
+  //           </AppBar>
+  //         }
+  //       </Title>
+  //     </div>
+  //   );
+  // };
   const onDelete = case_id => {
     trackPromise(axiosWithAuth().delete(`/pendingCases/${case_id}`))
       .then(res => {
@@ -336,47 +318,71 @@ export default function MyCases(props) {
   }));
   const classes = useStyles();
   return (
+    // <div className="myCaseTableContainer">
+    //   <TabPanel className={classes.tabPanel} value={tabValue} index={0}>
+    //     <div className="myCaseTableGridContainer">
+    //       <DataGrid
+    //         rows={myPendingCases}
+    //         columns={pendingColumns}
+    //         className="myCaseTable"
+    //         loading={myPendingCases ? false : true}
+    //         pageSize={25}
+    //         disableColumnMenu={true}
+    //         components={{ Toolbar: CustomToolbar }}
+    //       />
+    //     </div>
+    //   </TabPanel>
+    //   <TabPanel className={classes.tabPanel} value={tabValue} index={1}>
+    //     <div className="myCaseTableGridContainer">
+    //       <DataGrid
+    //         rows={myApprovedCases}
+    //         columns={approvedColumns}
+    //         className="myCaseTable"
+    //         loading={myApprovedCases ? false : true}
+    //         pageSize={25}
+    //         disableColumnMenu={true}
+    //         components={{ Toolbar: CustomToolbar }}
+    //       />
+    //     </div>
+    //   </TabPanel>
+    //   <Modal
+    //     title="Review Case Details"
+    //     visible={visible}
+    //     onCancel={handleCancel}
+    //     footer={[]}
+    //   >
+    //     <ReviewCaseForm
+    //       formValues={formValues}
+    //       currentId={currentId}
+    //       getPendingCases={getPendingCases}
+    //       setVisible={setVisible}
+    //       isVisible={visible}
+    //     />
+    //   </Modal>
+    // </div>
     <div className="myCaseTableContainer">
-      <TabPanel className={classes.tabPanel} value={tabValue} index={0}>
-        <div className="myCaseTableGridContainer">
-          <DataGrid
-            rows={myPendingCases}
-            columns={pendingColumns}
-            className="myCaseTable"
-            loading={myPendingCases ? false : true}
-            pageSize={25}
-            disableColumnMenu={true}
-            components={{ Toolbar: CustomToolbar }}
-          />
-        </div>
-      </TabPanel>
-      <TabPanel className={classes.tabPanel} value={tabValue} index={1}>
-        <div className="myCaseTableGridContainer">
-          <DataGrid
-            rows={myApprovedCases}
-            columns={approvedColumns}
-            className="myCaseTable"
-            loading={myApprovedCases ? false : true}
-            pageSize={25}
-            disableColumnMenu={true}
-            components={{ Toolbar: CustomToolbar }}
-          />
-        </div>
-      </TabPanel>
-      <Modal
-        title="Review Case Details"
-        visible={visible}
-        onCancel={handleCancel}
-        footer={[]}
-      >
-        <ReviewCaseForm
-          formValues={formValues}
-          currentId={currentId}
-          getPendingCases={getPendingCases}
-          setVisible={setVisible}
-          isVisible={visible}
-        />
-      </Modal>
+      <Tabs defaultActiveKey="1">
+        <TabPane tab="Initial Cases" key="1">
+          <div className="myCaseTableGridContainer">
+            <Table
+              className="myCaseTable"
+              rowKey={record => record.pending_case_id}
+              columns={pendingColumns}
+              dataSource={myPendingCases}
+            />
+          </div>
+        </TabPane>
+        <TabPane tab="Appellate Cases" key="2">
+          <div className="myCaseTableGridContainer">
+            <Table
+              className="myCaseTable appCases"
+              rowKey={record => record.case_id}
+              columns={approvedColumns}
+              dataSource={myApprovedCases}
+            />
+          </div>
+        </TabPane>
+      </Tabs>
     </div>
   );
 }
