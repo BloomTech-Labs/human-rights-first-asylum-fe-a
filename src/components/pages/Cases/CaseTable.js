@@ -22,7 +22,6 @@ export default function CaseTable(props) {
     searchText: '',
     searchedColumn: '',
     selectedRowID: [],
-    current: 'iCase',
   });
 
   const initialDetails = {
@@ -47,7 +46,7 @@ export default function CaseTable(props) {
       ' ' +
       cases.middle_initial +
       '.',
-    one_year:
+    filed_within_year:
       cases.filed_in_one_year
         .toString()
         .charAt(0)
@@ -61,7 +60,6 @@ export default function CaseTable(props) {
   const { searchText, searchedColumn, selectedRowID } = state;
 
   const onSelectChange = selectedRowID => {
-    console.log('selectedRowID changed: ', selectedRowID);
     setState({ selectedRowID });
   };
 
@@ -76,7 +74,7 @@ export default function CaseTable(props) {
         <Input
           type="text"
           id="searchInput"
-          placeholder={`Search ${dataIndex}`}
+          placeholder={`Search ${dataIndex.replace(/_/g, ' ')}`}
           value={selectedKeys[0]}
           onChange={e =>
             setSelectedKeys(e.target.value ? [e.target.value] : [])
@@ -197,7 +195,7 @@ export default function CaseTable(props) {
       sorter: (a, b) => a.last_name.localeCompare(b.last_name),
       sortDirections: ['descend', 'ascend'],
       ...getColumnSearchProps('judge_name'),
-      render: text => <Link>{text}</Link>,
+      render: text => <Link to={`/judge/${casesData.judge_id}`}>{text}</Link>,
     },
     {
       title: 'Origin City',
@@ -216,12 +214,12 @@ export default function CaseTable(props) {
       ...getColumnSearchProps('case_origin_state'),
     },
     {
-      title: 'File in 1 Year',
-      dataIndex: 'one_year',
-      key: 'one_year',
-      sorter: (a, b) => a.one_year.localeCompare(b.one_year),
+      title: 'Filed within Year',
+      dataIndex: 'filed_within_year',
+      key: 'filed_within_year',
+      sorter: (a, b) => a.filed_within_year.localeCompare(b.filed_within_year),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('one_year'),
+      ...getColumnSearchProps('filed_within_year'),
     },
     {
       title: 'Protected Grounds',
@@ -284,27 +282,21 @@ export default function CaseTable(props) {
       ),
     },
   ];
-  const findRowByID = (selectedRowID, caseData) => {
-    caseData.forEach(row => {
-      if (row.case_id === selectedRowID) {
-        return row;
-      } else {
-        return 'Please select row to save.';
+
+  const findRowByID = (rowID, rowData) => {
+    for (let i = 0; i < rowData.length; i++) {
+      let currentRow = rowData[i];
+      if (rowData[i].case_id === rowID) {
+        return currentRow;
       }
-    });
+    }
+    return 'Case does not exist';
   };
 
-  const postBookmark = rowToPost => {
+  const postBookmark = case_id => {
     axiosWithAuth()
-      .post(`/profile/${userInfo.sub}/case/${rowToPost}`, rowToPost)
-      // .then(res => {
-      //   let justAdded = res.data.case_bookmarks.slice(-1); // response comes back as array of all existing bookmarks
-      //   let justAddedID = justAdded[0].case_id;
-      //   let wholeAddedRow = findRowByID(justAddedID, caseData);
-      //   setSavedCases([...savedCases, wholeAddedRow]);
-
+      .post(`/profile/${userInfo.sub}/case/${case_id}`, case_id)
       .then(res => {
-        console.log(res.data);
         setSavedCases(res.data.case_bookmarks);
       })
       .catch(err => {
@@ -313,28 +305,26 @@ export default function CaseTable(props) {
   };
 
   const bookmarkCases = selectedRowID => {
-    // loop through currently selected cases and do post requests
-    // need to reference rows by id, as that is all that selection stores
-    // need to account for duplicates as well
-    let bookmarks = [];
     if (selectedRowID.length === 0) {
       alert('Please select cases(s) to be saved');
     } else {
+      let bookmarks = [];
       selectedRowID.forEach(row => bookmarks.push(findRowByID(row, caseData)));
-    }
 
-    let savedIds = [];
-    if (savedCases) {
-      savedCases.forEach(id => savedIds.push(id.case_id));
-    }
-    bookmarks.forEach(b => {
-      if (savedIds.includes(b.case_id)) {
-        console.log('Case already saved to bookmarks');
-      } else {
-        postBookmark(b);
+      let savedIds = [];
+      if (savedCases) {
+        savedCases.forEach(id => savedIds.push(id.case_id));
       }
-    });
-    alert('Cases Successfully Saved');
+
+      bookmarks.forEach(b => {
+        if (savedIds.includes(b.case_id)) {
+          console.log('Case already saved to bookmarks');
+        } else {
+          postBookmark(b.case_id);
+        }
+      });
+      alert('Cases Successfully Saved');
+    }
   };
 
   const [queryValues, setQueryValues] = useState({
@@ -391,11 +381,6 @@ export default function CaseTable(props) {
     // searched column includes subtext that matches the searched term
     return filteredData;
   };
-
-  // This is part of the Tabs component
-  function callback(key) {
-    console.log(key);
-  }
 
   const data = searching ? filter(caseData) : caseData;
 
@@ -487,20 +472,10 @@ export default function CaseTable(props) {
   const nonAppCases = casesData.filter(item => item.appellate === false);
   const appCases = casesData.filter(item => item.appellate === true);
 
-  // const handleClick = e => {
-  //   console.log('click ', e);
-  //   setState({ current: e.key });
-  // };
-
-  // const [tabValue, setTabValue] = useState(0);
-
-  // const onChange = (e, newTabValue) => {
-  //   setTabValue(newTabValue);
-  // };
   // This is part of the Tabs component
-  function callback(key) {
+  const callback = key => {
     console.log(key);
-  }
+  };
 
   const SaveButton = () => {
     return (
@@ -508,7 +483,7 @@ export default function CaseTable(props) {
         <Button
           className="save-cases-btn"
           onClick={() => {
-            bookmarkCases(rowSelection);
+            bookmarkCases(rowSelection.selectedRowID);
           }}
         >
           <Icon component={() => <img src={Save} alt="save icon" />} />

@@ -1,26 +1,29 @@
-.myCaseTableContainer {
+.myCaseContainer {
   display: flex;
   flex-direction: column;
-  width: 80vw;
-  margin-left: 12rem;
-  .myCaseTableGridContainer {
-    width: 98%;
-    margin-left: -3rem;
-    margin-top: 3rem;
-  }
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  width: 80%;
+  margin-left: 10rem;
+  margin-top: 2rem;
+}
+.myCaseTableContainer {
+  width: 100%;
+  margin: 0 0 2rem 10rem;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
   .myCaseTable {
-    display: flex;
-    width: 100%;
+    min-width: 80%;
     min-height: 90vh;
     height: 100%;
-    margin: -2rem 4rem 4rem 4rem;
-    .MuiDataGrid-row {
-      background-color: aliceblue;
-    }
-    .MuiDataGrid-cell {
-      justify-content: center;
-      align-content: center;
-      text-align: center;
-    }
   }
+}
+.column-items{
+  display:flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
 }

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import CaseTable from '../Cases/CaseTable';
 import JudgeTable from '../JudgeTable/JudgeTable';
-import UploadCase from '../Upload/UploadCase';
 import SideDrawer from '../SideDrawer/SideDrawer';
 import MainHeader from '../Home/MainHeader';
 import JudgePage from '../JudgePage/JudgePage';
@@ -91,7 +90,7 @@ function RenderHomePage(props) {
           res.data.map(eachCase => {
             return {
               ...eachCase,
-              id: eachCase.case_number,
+              id: eachCase.case_id,
             };
           })
         );
@@ -129,9 +128,8 @@ function RenderHomePage(props) {
     user.authState.idToken.idToken,
     user.userInfo.sub,
     savedJudges.length,
-    // savedCases.length,
+    savedCases.length,
   ]);
-
   const getPendingCases = () => {
     trackPromise(axiosWithAuth().get(`/pendingCases/:${user.userInfo.sub}`))
       .then(res => {
@@ -149,13 +147,11 @@ function RenderHomePage(props) {
       });
   };
   const deleteFromStateById = (id, state, setState) => {
-    // i made this function non case specific but now I'm remembering that cases get deleted by name
     let index = state.findIndex(item => item.id === id);
     return setState(state.slice(0, index).concat(state.slice(index + 1)));
   };
 
   const deleteBookmark = caseID => {
-    // only works for cases, judge requires name instead of ID to delete
     axiosWithAuth()
       .delete(`/profile/${user.userInfo.sub}/case/${caseID}`)
       .then(res => {
@@ -209,27 +205,21 @@ function RenderHomePage(props) {
             <Route exact path="/saved-cases">
               <SavedCases
                 savedCases={savedCases}
+                setSavedCases={setSavedCases}
                 deleteBookmark={deleteBookmark}
               />
             </Route>
             <Route exact path="/saved-judges">
               <SavedJudges
                 savedJudges={savedJudges}
+                userInfo={user.userInfo}
                 deleteSavedJudge={deleteSavedJudge}
               />
             </Route>
             <Route exact path="/judge/:judge_id">
-              <JudgePage
-                // clicking on a Judge should bring you to a url with their name in it
-                // get request to get details of that judge
-                authState={user.authState}
-              />
+              <JudgePage authState={user.authState} />
             </Route>
             <Route exact path="/case/:id" authState={user.authState}>
-              {/* clicking on a case name will bring you to a page where more indepth information
-      about the case can be viewed, this page is linked to the cooresponding judge's page
-      this page also links to the update case file which is not operational yet, see notation
-      on CaseOverview & CaseUpdate for details */}
               <CaseOverview
                 setCasesData={setCaseData}
                 authState={user.authState}
