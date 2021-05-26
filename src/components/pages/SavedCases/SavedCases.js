@@ -53,7 +53,7 @@ function SavedCases({ savedCases, deleteBookmark }) {
   return (
     <div className="savedCasesContainer">
       <div className="savedCases">
-        <h2 className="saved-cases-header">Review Cases</h2>
+        <h2 className="saved-cases-header">Saved Cases</h2>
         <p className="divider">
           <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
         </p>
