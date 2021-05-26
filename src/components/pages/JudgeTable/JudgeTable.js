@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { Link } from 'react-router-dom';
 import Highlighter from 'react-highlight-words';
-import { SearchOutlined } from '@ant-design/icons';
-import { Table, Space, Button, Input, Tabs } from 'antd';
+import {
+  SearchOutlined,
+  CloseCircleOutlined,
+  CheckCircleOutlined,
+} from '@ant-design/icons';
+import { Table, Space, Button, Input, Tabs, notification } from 'antd';
 import './_JudgeTableStyles.less';
 
 import Save from '../../../styles/icons/save.svg';
@@ -205,8 +209,7 @@ export default function JudgeTable(props) {
     for (let i = 0; i < rowData.length; i++) {
       let currentRow = rowData[i];
 
-      let adjustedRowID = parseInt(rowID) + 1;
-      if (currentRow.judge_id === adjustedRowID) {
+      if (currentRow.judge_id === rowID) {
         return currentRow;
       }
     }
@@ -227,26 +230,37 @@ export default function JudgeTable(props) {
   const bookmarkJudges = targetRows => {
     let bookmarks = [];
     if (targetRows.length === 0) {
-      alert('Please select judge(s) to be saved');
+      notification.open({
+        message: 'Saved Status',
+        description: 'Please select judge(s) to be saved',
+        top: 128,
+        duration: 8,
+        icon: <CloseCircleOutlined style={{ color: 'red' }} />,
+      });
     } else {
       for (let i = 0; i < targetRows.length; i++) {
         bookmarks.push(findRowByID(targetRows[i], judgeData));
       }
 
-      let savedNames = [];
+      let savedIDs = [];
       for (let i = 0; i < savedJudges.length; i++) {
-        savedNames.push(savedJudges[i].first_name);
+        savedIDs.push(savedJudges[i].judge_id);
       }
 
       for (let i = 0; i < bookmarks.length; i++) {
-        if (savedNames.includes(bookmarks[i].first_name)) {
+        if (savedIDs.includes(bookmarks[i].judge_id)) {
           console.log('Judge already saved to bookmarks');
           continue;
         } else {
           postJudge(bookmarks[i]);
         }
       }
-      alert('Judge(s) Successfully Saved');
+      notification.open({
+        message: 'Saved Status',
+        description: 'Judge(s) Successfully Saved',
+        top: 128,
+        icon: <CheckCircleOutlined style={{ color: 'green' }} />,
+      });
     }
   };
 

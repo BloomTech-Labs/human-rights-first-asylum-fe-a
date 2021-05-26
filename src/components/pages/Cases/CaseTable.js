@@ -7,13 +7,16 @@ import {
   SearchOutlined,
   FileTextOutlined,
   FilePdfOutlined,
+  CloseCircleOutlined,
+  CheckCircleOutlined,
 } from '@ant-design/icons';
 import Save from '../../../styles/icons/save.svg';
 import Icon from '@ant-design/icons';
 
-import { Table, Space, Button, Input, Tabs } from 'antd';
+import { Table, Space, Button, Input, Tabs, notification } from 'antd';
 import './CaseTable.less';
 import CaseDetails from '../CaseOverview/CaseDetails';
+import OrangeLine from '../../../styles/orange-line.svg';
 
 export default function CaseTable(props) {
   const [state, setState] = useState({
@@ -316,7 +319,13 @@ export default function CaseTable(props) {
 
   const bookmarkCases = selectedRowID => {
     if (selectedRowID.length === 0) {
-      alert('Please select cases(s) to be saved');
+      notification.open({
+        message: 'Saved Status',
+        description: 'Please select cases(s) to be saved',
+        top: 128,
+        duration: 8,
+        icon: <CloseCircleOutlined style={{ color: 'red' }} />,
+      });
     } else {
       let bookmarks = [];
       selectedRowID.forEach(row => bookmarks.push(findRowByID(row, caseData)));
@@ -333,7 +342,12 @@ export default function CaseTable(props) {
           postBookmark(b.case_id);
         }
       });
-      alert('Cases Successfully Saved');
+      notification.open({
+        message: 'Saved Status',
+        description: 'Case(s) Successfully Saved',
+        top: 128,
+        icon: <CheckCircleOutlined style={{ color: 'green' }} />,
+      });
     }
   };
 
@@ -477,8 +491,6 @@ export default function CaseTable(props) {
         layout={{ width: 500, height: 300, title: 'Case Data' }}
       />
     );
-
-
   };
 
   const nonAppCases = casesData.filter(item => item.appellate === false);
@@ -486,7 +498,6 @@ export default function CaseTable(props) {
 
   return (
     <div className="cases-container">
-
       <h2 className="h1Styles">Cases</h2>
       <p className="divider">
         <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
