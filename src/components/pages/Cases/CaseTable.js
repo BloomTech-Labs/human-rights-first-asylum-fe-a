@@ -376,6 +376,13 @@ export default function CaseTable(props) {
     return filteredData;
   };
 
+
+  // This is part of the Tabs component
+  function callback(key) {
+    console.log(key);
+  }
+
+
   const data = searching ? filter(caseData) : caseData;
 
   const DecisionRateChart = () => {
@@ -507,7 +514,7 @@ export default function CaseTable(props) {
       <div className="case-table-container">
         <Tabs defaultActiveKey="1" onChange={callback}>
           <TabPane tab="Initial Cases" key="1">
-            <SaveButton />
+            <SaveButton /> 
             <div className="case-table">
               <Table
                 className="cases_table iCases"
@@ -519,7 +526,6 @@ export default function CaseTable(props) {
               />
             </div>
           </TabPane>
-
           <TabPane tab="Appellate Cases" key="2">
             <SaveButton />
             <div className="case-table">
