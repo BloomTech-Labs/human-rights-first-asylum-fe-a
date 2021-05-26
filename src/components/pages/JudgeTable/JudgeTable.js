@@ -3,10 +3,11 @@ import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { Link } from 'react-router-dom';
 import Highlighter from 'react-highlight-words';
 import { SearchOutlined } from '@ant-design/icons';
-import { Table, Space, Button, Input } from 'antd';
+import { Table, Space, Button, Input, Tabs } from 'antd';
 import './_JudgeTableStyles.less';
 
-import FeatherIcon from 'feather-icons-react';
+import Save from '../../../styles/icons/save.svg';
+import Icon from '@ant-design/icons';
 
 export default function JudgeTable(props) {
   const { judgeData, userInfo, savedJudges, setSavedJudges, authState } = props;
@@ -28,6 +29,8 @@ export default function JudgeTable(props) {
       '.',
     ...judges,
   }));
+
+  const { TabPane } = Tabs;
 
   const onSelectChange = selectedRowID => {
     console.log('selectedRowID changed: ', selectedRowID);
@@ -55,7 +58,6 @@ export default function JudgeTable(props) {
         />
         <Space>
           <Button
-            type="primary"
             onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
             icon={<SearchOutlined />}
             size="small"
@@ -255,27 +257,36 @@ export default function JudgeTable(props) {
   };
 
   return (
-    <div className="judgeContainer">
-      <div className="judgeTableContainer">
-        <div className="table-header">
-          <h2>Judges</h2>
-          <Button
-            className="buttonContainer"
-            onClick={() => {
-              bookmarkJudges(selectedRowID);
-            }}
-          >
-            <FeatherIcon icon="bookmark" />
-          </Button>
-        </div>
-        <Table
-          className="judges_table"
-          rowSelection={rowSelection}
-          rowKey={record => record.judge_id}
-          columns={columns}
-          dataSource={judgesData}
-          onChange={changeSorter}
-        />
+    <div className="judge-container">
+      <div className="judge-table-container">
+        <Tabs defaultActiveKey="1">
+          <TabPane tab="Judges" key="1">
+            <div className="judge-table">
+              <Table
+                className="judges_table"
+                rowSelection={rowSelection}
+                rowKey={record => record.judge_id}
+                columns={columns}
+                dataSource={judgesData}
+                onChange={changeSorter}
+              />
+            </div>
+          </TabPane>
+          <TabPane
+            tab={
+              <Button
+                className="save-cases-btn"
+                onClick={() => {
+                  bookmarkJudges(selectedRowID);
+                }}
+              >
+                <Icon component={() => <img src={Save} alt="save icon" />} />
+              </Button>
+            }
+            disabled
+            key="3"
+          />
+        </Tabs>
       </div>
     </div>
   );

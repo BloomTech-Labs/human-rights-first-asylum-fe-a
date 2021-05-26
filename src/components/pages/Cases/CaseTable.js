@@ -8,7 +8,8 @@ import {
   FileTextOutlined,
   FilePdfOutlined,
 } from '@ant-design/icons';
-import FeatherIcon from 'feather-icons-react';
+import Save from '../../../styles/icons/save.svg';
+import Icon from '@ant-design/icons';
 import { Table, Space, Button, Input, Tabs } from 'antd';
 import './CaseTable.less';
 
@@ -67,7 +68,7 @@ export default function CaseTable(props) {
         />
         <Space>
           <Button
-            type="primary"
+            className="table-search-button"
             onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
             icon={<SearchOutlined />}
             size="small"
@@ -491,7 +492,7 @@ export default function CaseTable(props) {
                   bookmarkCases(selectedRowID);
                 }}
               >
-                <FeatherIcon icon="bookmark" />
+                <Icon component={() => <img src={Save} alt="save icon" />} />
               </Button>
             }
             disabled
