@@ -17,7 +17,6 @@ import Icon from '@ant-design/icons';
 import { Table, Space, Button, Input, Tabs, notification } from 'antd';
 import './CaseTable.less';
 import CaseDetails from '../CaseOverview/CaseDetails';
-import OrangeLine from '../../../styles/orange-line.svg';
 
 export default function CaseTable(props) {
   const [state, setState] = useState({
