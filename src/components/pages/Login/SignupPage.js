@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Form, Input, Button } from 'antd';
-import axiosWithAuth from '../../../utils/axiosWithAuth';
 import './_SignupPageStyled.less';
 import logo from '../../../styles/hrf-logo.png';
 import axios from 'axios';
+import { notification } from 'antd';
+import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 
 const initialFormValues = {
   first_name: '',
@@ -14,6 +15,26 @@ const initialFormValues = {
 const SignupPage = () => {
   const [formValues, setFormValues] = useState(initialFormValues);
 
+  const successNotification = () => {
+    notification.open({
+      message: 'Success',
+      description: 'Request for membership submitted!',
+      top: 128,
+      icon: <CheckCircleOutlined style={{ color: 'green' }} />,
+    });
+  };
+
+  const failNotification = () => {
+    notification.open({
+      message: 'Error',
+      description:
+        'There was an issue with the signup. Please try again and if the issue persists contact the site administrator.',
+      top: 128,
+      duration: 8,
+      icon: <CloseCircleOutlined style={{ color: 'red' }} />,
+    });
+  };
+
   const onChange = e => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
@@ -22,7 +43,13 @@ const SignupPage = () => {
   const postNewUser = newUser => {
     axios
       .post(`${process.env.REACT_APP_API_URI}/profile/pending`, newUser)
-      .catch(err => console.log(err));
+      .then(res => {
+        successNotification();
+      })
+      .catch(err => {
+        console.log(err);
+        failNotification();
+      });
     setFormValues(initialFormValues);
   };
 
