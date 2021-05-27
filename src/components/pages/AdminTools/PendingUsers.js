@@ -47,7 +47,7 @@ const PendingUsersPage = props => {
         alert(`Profile request from ${profile.email} was rejected`);
         setPendingProfiles(
           pendingProfiles.filter(
-            pendingProfile => pendingProfile.user_id !== profile.user_id
+            pendingProfile => pendingProfile.id !== profile.id
           )
         );
       })
