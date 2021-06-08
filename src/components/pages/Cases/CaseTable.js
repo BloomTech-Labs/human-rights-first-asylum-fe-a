@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { Link } from 'react-router-dom';
 import Plot from 'react-plotly.js';
@@ -164,8 +164,21 @@ export default function CaseTable(props) {
     return month + '/' + day + '/' + year;
   }
 
-  function changeSorter(sorter) {
-    console.log(sorter);
+  // state to keep track of filters being applied to the table
+  const [currentFilters, setCurrentFilters] = useState([]);
+
+  // update state every time the filters are changed
+  useEffect(() => {
+    console.log(currentFilters);
+  }, [currentFilters]);
+
+  // function fires every time that the table is filtered
+  function changeSorter(pagination, filters, sorter, extra) {
+    for (const i in filters) {
+      if (filters[i]) {
+        setCurrentFilters([...currentFilters, filters[i]]);
+      }
+    }
   }
 
   // This is part of the Tabs component
