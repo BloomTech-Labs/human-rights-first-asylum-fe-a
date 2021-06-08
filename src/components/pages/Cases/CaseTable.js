@@ -175,8 +175,9 @@ export default function CaseTable(props) {
 
   // function fires every time that the table is filtered
   function changeSorter(pagination, filters, sorter, extra) {
+    console.log('Sorter Activated!');
     for (const i in filters) {
-      if (filters[i] && !currentFilters.includes(filters[i])) {
+      if (filters[i] && !currentFilters.includes(`${i}: ${filters[i]}`)) {
         setCurrentFilters([...currentFilters, `${i}: ${filters[i]}`]);
       } else if (!filters[i]) {
         let temp = [];
@@ -196,6 +197,7 @@ export default function CaseTable(props) {
   // This is part of the Tabs component
   function callback(key) {
     console.log(key);
+    setCurrentFilters([]);
   }
 
   const rowSelection = {
@@ -543,7 +545,7 @@ export default function CaseTable(props) {
             <div>
               Filters:{' '}
               {currentFilters.map(filter => (
-                <Tag>{filter}</Tag>
+                <Tag key={filter}>{filter}</Tag>
               ))}
             </div>
             <div className="case-table">
@@ -558,6 +560,12 @@ export default function CaseTable(props) {
             </div>
           </TabPane>
           <TabPane tab="Appellate Cases" key="2">
+            <div>
+              Filters:{' '}
+              {currentFilters.map(filter => (
+                <Tag key={filter}>{filter}</Tag>
+              ))}
+            </div>
             <div className="case-table">
               <Table
                 className="cases_table appCases"
