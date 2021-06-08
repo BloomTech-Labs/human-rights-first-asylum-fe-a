@@ -164,7 +164,7 @@ export default function CaseTable(props) {
     return month + '/' + day + '/' + year;
   }
 
-  // state to keep track of filters being applied to the table
+  // state to keep track of filters being applied to the table (Initial cases section)
   const [currentFilters, setCurrentFilters] = useState([]);
 
   // update state every time the filters are changed
@@ -175,7 +175,6 @@ export default function CaseTable(props) {
 
   // function fires every time that the table is filtered
   function changeSorter(pagination, filters, sorter, extra) {
-    console.log('Sorter Activated!');
     for (const i in filters) {
       if (filters[i] && !currentFilters.includes(`${i}: ${filters[i]}`)) {
         setCurrentFilters([...currentFilters, `${i}: ${filters[i]}`]);
@@ -183,8 +182,8 @@ export default function CaseTable(props) {
         let temp = [];
         currentFilters.forEach(value => {
           if (value !== undefined) {
-            const label = value.split(':')[0];
-            if (label !== i) {
+            const term = value.split(':')[0];
+            if (term !== i) {
               temp.push(value);
             }
           }
@@ -197,7 +196,6 @@ export default function CaseTable(props) {
   // This is part of the Tabs component
   function callback(key) {
     console.log(key);
-    setCurrentFilters([]);
   }
 
   const rowSelection = {
