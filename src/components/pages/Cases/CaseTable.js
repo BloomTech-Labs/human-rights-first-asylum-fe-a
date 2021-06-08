@@ -169,6 +169,7 @@ export default function CaseTable(props) {
 
   // update state every time the filters are changed
   useEffect(() => {
+    // TODO: don't know what to put into this useEffect - current use is to keep the filter state in sync.
     console.log(currentFilters);
   }, [currentFilters]);
 
@@ -177,6 +178,17 @@ export default function CaseTable(props) {
     for (const i in filters) {
       if (filters[i] && !currentFilters.includes(filters[i])) {
         setCurrentFilters([...currentFilters, `${i}: ${filters[i]}`]);
+      } else if (!filters[i]) {
+        let temp = [];
+        currentFilters.forEach(value => {
+          if (value !== undefined) {
+            const label = value.split(':')[0];
+            if (label !== i) {
+              temp.push(value);
+            }
+          }
+        });
+        setCurrentFilters(temp);
       }
     }
   }
