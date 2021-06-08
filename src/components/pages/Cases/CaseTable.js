@@ -14,7 +14,7 @@ import {
 import Save from '../../../styles/icons/save.svg';
 import Icon from '@ant-design/icons';
 
-import { Table, Space, Button, Input, Tabs, notification } from 'antd';
+import { Table, Space, Button, Input, Tabs, notification, Tag } from 'antd';
 import './CaseTable.less';
 import CaseDetails from '../CaseOverview/CaseDetails';
 
@@ -175,8 +175,8 @@ export default function CaseTable(props) {
   // function fires every time that the table is filtered
   function changeSorter(pagination, filters, sorter, extra) {
     for (const i in filters) {
-      if (filters[i]) {
-        setCurrentFilters([...currentFilters, filters[i]]);
+      if (filters[i] && !currentFilters.includes(filters[i])) {
+        setCurrentFilters([...currentFilters, `${i}: ${filters[i]}`]);
       }
     }
   }
@@ -528,6 +528,12 @@ export default function CaseTable(props) {
       <div className="case-table-container">
         <Tabs defaultActiveKey="1" onChange={callback} className="tabs">
           <TabPane tab="Initial Cases" key="1">
+            <div>
+              Filters:{' '}
+              {currentFilters.map(filter => (
+                <Tag>{filter}</Tag>
+              ))}
+            </div>
             <div className="case-table">
               <Table
                 className="cases_table iCases"
