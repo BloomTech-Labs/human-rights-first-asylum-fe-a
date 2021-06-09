@@ -39,8 +39,8 @@ export default function ManageCases(props) {
       dataIndex: '',
       key: 'x',
       width: '10%',
-      render: () => (
-        <Button onClick={handleAccept} id="acceptCaseButton">
+      render: (_, record, _) => (
+        <Button onClick={() => handleAccept(record)} id="acceptCaseButton">
           Accept
         </Button>
       ),
@@ -50,8 +50,8 @@ export default function ManageCases(props) {
       dataIndex: '',
       key: 'y',
       width: '10%',
-      render: () => (
-        <Button onClick={handleReject} id="rejectCaseButton">
+      render: (_, record, _) => (
+        <Button onClick={() => handleReject(record)} id="rejectCaseButton">
           Reject
         </Button>
       ),
