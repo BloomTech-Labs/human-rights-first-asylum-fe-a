@@ -165,37 +165,75 @@ export default function CaseTable(props) {
   }
 
   // state to keep track of filters being applied to the table (Initial cases section)
-  const [currentFilters, setCurrentFilters] = useState([]);
+  const [initialFilters, setInitialFilters] = useState([]);
+  // keeping track of filters applied to the appelate section
+  const [appFilters, setAppFilters] = useState([]);
 
-  // update state every time the filters are changed
+  // state to keep track of the current table being displayed
+  const [currentKey, setCurrentKey] = useState(1);
+
   useEffect(() => {
     // TODO: don't know what to put into this useEffect - current use is to keep the filter state in sync.
-    console.log(currentFilters);
-  }, [currentFilters]);
+    console.log(initialFilters);
+  }, [initialFilters]);
+
+  useEffect(() => {
+    // TODO: don't know what to put into this useEffect - current use is to keep the filter state in sync.
+    console.log(appFilters);
+  }, [appFilters]);
+
+  // returns processed array of filters
+  const processFilters = filters => {
+    let res = [];
+    for (const i in filters) {
+      if (filters[i]) {
+        res.push(`${i}: ${filters[i]}`);
+      } else if (!filters[i]) {
+        let temp = [];
+        if (
+          currentKey === 1 &&
+          initialFilters.length > 0 &&
+          initialFilters.includes(`${i}: ${filters[i]}`)
+        ) {
+          initialFilters.forEach(value => {
+            if (value !== undefined) {
+              const term = value.split(':')[0];
+              if (term !== i) {
+                temp.push(value);
+              }
+            }
+          });
+          res = temp;
+        } else if (
+          currentKey === 2 &&
+          appFilters.length > 0 &&
+          appFilters.includes(`${i}: ${filters[i]}`)
+        ) {
+          appFilters.forEach(value => {
+            if (value !== undefined) {
+              const term = value.split(':')[0];
+              if (term !== i) {
+                temp.push(value);
+              }
+            }
+          });
+          res = temp;
+        }
+      }
+    }
+    return res;
+  };
 
   // function fires every time that the table is filtered
   function changeSorter(pagination, filters, sorter, extra) {
-    for (const i in filters) {
-      if (filters[i] && !currentFilters.includes(`${i}: ${filters[i]}`)) {
-        setCurrentFilters([...currentFilters, `${i}: ${filters[i]}`]);
-      } else if (!filters[i]) {
-        let temp = [];
-        currentFilters.forEach(value => {
-          if (value !== undefined) {
-            const term = value.split(':')[0];
-            if (term !== i) {
-              temp.push(value);
-            }
-          }
-        });
-        setCurrentFilters(temp);
-      }
-    }
+    Number(currentKey) === 1
+      ? setInitialFilters(filters)
+      : setAppFilters(filters);
   }
 
   // This is part of the Tabs component
   function callback(key) {
-    console.log(key);
+    setCurrentKey(key);
   }
 
   const rowSelection = {
@@ -542,7 +580,7 @@ export default function CaseTable(props) {
           <TabPane tab="Initial Cases" key="1">
             <div>
               Filters:{' '}
-              {currentFilters.map(filter => (
+              {processFilters(initialFilters).map(filter => (
                 <Tag key={filter}>{filter}</Tag>
               ))}
             </div>
@@ -560,7 +598,7 @@ export default function CaseTable(props) {
           <TabPane tab="Appellate Cases" key="2">
             <div>
               Filters:{' '}
-              {currentFilters.map(filter => (
+              {processFilters(appFilters).map(filter => (
                 <Tag key={filter}>{filter}</Tag>
               ))}
             </div>
