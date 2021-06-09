@@ -10,13 +10,15 @@ import OrangeLine from '../../../styles/orange-line.svg';
 
 export default function ManageCases(props) {
   const [apiData, setApiData] = useState([]);
-  const handleAccept = case_id => {
+  const handleAccept = record => {
     console.log('Accepted');
+    console.log(record);
     //Need to make and connect put request to handle "status"(or whatever they decided to call case status) update
   };
 
-  const handleReject = case_id => {
+  const handleReject = record => {
     console.log('Rejected');
+    console.log(record);
     //Need to make and connect put request to handle "status" (or whatever they decided to call case status) update
   };
 
@@ -39,7 +41,7 @@ export default function ManageCases(props) {
       dataIndex: '',
       key: 'x',
       width: '10%',
-      render: (_, record, _) => (
+      render: (_, record) => (
         <Button onClick={() => handleAccept(record)} id="acceptCaseButton">
           Accept
         </Button>
@@ -50,7 +52,7 @@ export default function ManageCases(props) {
       dataIndex: '',
       key: 'y',
       width: '10%',
-      render: (_, record, _) => (
+      render: (_, record) => (
         <Button onClick={() => handleReject(record)} id="rejectCaseButton">
           Reject
         </Button>
