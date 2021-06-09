@@ -35,14 +35,16 @@ export default function MainHeader(props) {
   return (
     <div className="site-page-header">
       <img src={HRFLogo} alt="HRF Logo" width="350px" />
-      <UploadCase getPendingCases={getPendingCases} />
-      <Dropdown className="account-drop-down" overlay={menu}>
-        <ul className="accounts" onClick={e => e.preventDefault()}>
-          <div className="user-button">
-            <Icon component={() => <img src={Profile} alt="profile icon" />} />
-          </div>
-        </ul>
-      </Dropdown>
+      <div id="nav-flex-container">
+        <UploadCase getPendingCases={getPendingCases} />
+        <Dropdown className="account-drop-down" overlay={menu}>
+          <ul className="accounts" onClick={e => e.preventDefault()}>
+            <div className="user-button">
+              <Icon component={() => <img src={Profile} alt="profile icon" />} />
+            </div>
+          </ul>
+        </Dropdown>
+      </div>
     </div>
   );
 }
