@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { Button as AntDButton, Collapse, Descriptions } from 'antd';
-
+import { notification, Upload, Modal, Spin } from 'antd';
+import {
+  CheckCircleOutlined,
+  CloseCircleOutlined,
+  LoadingOutlined,
+} from '@ant-design/icons';
 // Styles and Icons
 import Icon from '@ant-design/icons';
 import OrangeLine from '../../../styles/orange-line.svg';
@@ -21,13 +26,22 @@ const PendingUsersPage = props => {
         console.log(err);
       });
   }, [authState.idToken.idToken]);
-
+  const successNotification = () => {
+    // getPendingCases();
+    notification.open({
+      message: 'User Status',
+      description: 'User added successfully!',
+      top: 128,
+      icon: <CheckCircleOutlined style={{ color: 'green' }} />,
+    });
+  };
   const approveUser = profile => {
     console.log(profile);
+    successNotification();
     axiosWithAuth()
       .post(`/profile/`, profile)
       .then(res => {
-        alert(`Profile request from ${profile.email} was approved`);
+        // alert(`Profile request from ${profile.email} was approved`);
         setProfiles(res.data.profile);
         setPendingProfiles(
           pendingProfiles.filter(

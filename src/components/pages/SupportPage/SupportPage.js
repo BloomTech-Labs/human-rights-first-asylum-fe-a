@@ -4,11 +4,25 @@ import { Collapse, Input, Button, Modal, Form } from 'antd';
 import './_SupportPageStyles.less';
 import Icon from '@ant-design/icons';
 import OrangeLine from '../../../styles/orange-line.svg';
-
+import { notification, Upload, Spin } from 'antd';
+import {
+  CheckCircleOutlined,
+  CloseCircleOutlined,
+  LoadingOutlined,
+} from '@ant-design/icons';
 const initialFormValues = {
   message: '',
   email: '',
   name: '',
+};
+const successNotification = () => {
+  // getPendingCases();
+  notification.open({
+    message: 'Contact Us',
+    description: 'Message sent successfully!',
+    top: 128,
+    icon: <CheckCircleOutlined style={{ color: 'green' }} />,
+  });
 };
 
 const SupportPage = props => {
@@ -55,7 +69,8 @@ const SupportPage = props => {
       email: formValues.email.trim(),
       name: formValues.name.trim(),
     };
-    alert('Message sent');
+    // alert('Message sent');
+    successNotification();
     postNewMessage(message);
     setIsModalVisible(false);
   };

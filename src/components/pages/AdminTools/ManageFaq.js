@@ -2,8 +2,13 @@ import React, { useEffect, useState } from 'react';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { Link } from 'react-router-dom';
 import { Form, Input, Button as AntDButton, Modal, Collapse } from 'antd';
-
+import { notification, Upload, Button, Spin } from 'antd';
 // Styling and Icons
+import {
+  CheckCircleOutlined,
+  CloseCircleOutlined,
+  LoadingOutlined,
+} from '@ant-design/icons';
 import './_AddFaqStyles.less';
 import './_ManageFaqStyles.less';
 import Icon from '@ant-design/icons';
@@ -18,11 +23,39 @@ const ManageFaqPage = props => {
   const { authState } = props;
   const [faq, setFaq] = useState([]);
   const [formValues, setFormValues] = useState(initialFormValues);
-
+  const deleteNotification = () => {
+    // getPendingCases();
+    notification.open({
+      message: 'FAQ Question',
+      description: 'Question deleted successfully!',
+      top: 128,
+      icon: <CheckCircleOutlined style={{ color: 'green' }} />,
+    });
+  };
+  const failNotification = () => {
+    notification.open({
+      message: 'Upload Status',
+      description:
+        'There was an issue with the upload. Please try again and if the issue persists contact the site administrator.',
+      top: 128,
+      duration: 8,
+      icon: <CloseCircleOutlined style={{ color: 'red' }} />,
+    });
+  };
+  const addingNotification = () => {
+    // getPendingCases();
+    notification.open({
+      message: 'FAQ Question',
+      description: 'Question added successfully!',
+      top: 128,
+      icon: <CheckCircleOutlined style={{ color: 'green' }} />,
+    });
+  };
   useEffect(() => {
     axiosWithAuth()
       .get(`/faq`)
       .then(res => {
+        // successNotification();
         setFaq(res.data);
       })
       .catch(err => {
@@ -30,11 +63,14 @@ const ManageFaqPage = props => {
       });
   }, [authState.idToken.idToken]);
 
+
   const deleteFaq = faq => {
+    deleteNotification();
     axiosWithAuth()
       .delete(`/faq/${faq.faq_id}`)
       .then(res => {
-        alert(`'Deleted Question: ${faq.question}'`);
+        // successNotification();
+        // alert(`'Deleted Question: ${faq.question}'`);
         window.location.reload();
       })
       .catch(err => {
@@ -58,13 +94,17 @@ const ManageFaqPage = props => {
   };
 
   const postNewQuestion = question => {
+    addingNotification();
     axiosWithAuth()
       .post(`/faq/`, question)
       .then(res => {
         setFormValues(initialFormValues);
         window.location.reload();
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+        failNotification();
+      });
   };
 
   const onSubmit = e => {

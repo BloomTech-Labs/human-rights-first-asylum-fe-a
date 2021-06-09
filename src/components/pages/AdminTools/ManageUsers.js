@@ -10,6 +10,12 @@ import {
   Radio,
 } from 'antd';
 import PendingUsers from './PendingUsers';
+import { notification, Upload, Button, Spin } from 'antd';
+import {
+  CheckCircleOutlined,
+  CloseCircleOutlined,
+  LoadingOutlined,
+} from '@ant-design/icons';
 
 // Styling and Icons
 import './_ManageUsersStyles.less';
@@ -40,11 +46,21 @@ const ManageUsersPage = props => {
       });
   }, [authState.idToken.idToken]);
 
+  const successNotification = () => {
+    notification.open({
+      message: 'User Status',
+      description: 'User deleted successfully!',
+      top: 128,
+      icon: <CheckCircleOutlined style={{ color: 'green' }} />,
+    });
+  };
+
   const deleteUser = profile => {
+    successNotification();
     axiosWithAuth()
       .delete(`/profiles/${profile.user_id}`)
       .then(res => {
-        alert(`${profile.first_name}'s profile was deleted`);
+        // alert(`${profile.first_name}'s profile was deleted`);
         setProfiles(res.data.profiles);
       })
       .catch(err => {
