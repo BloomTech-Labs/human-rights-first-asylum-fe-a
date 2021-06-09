@@ -16,7 +16,6 @@ const initialFormValues = {
   name: '',
 };
 const successNotification = () => {
-  // getPendingCases();
   notification.open({
     message: 'Contact Us',
     description: 'Message sent successfully!',
@@ -69,7 +68,6 @@ const SupportPage = props => {
       email: formValues.email.trim(),
       name: formValues.name.trim(),
     };
-    // alert('Message sent');
     successNotification();
     postNewMessage(message);
     setIsModalVisible(false);

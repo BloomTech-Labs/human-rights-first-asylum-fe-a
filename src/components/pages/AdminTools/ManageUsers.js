@@ -17,7 +17,6 @@ import {
   LoadingOutlined,
 } from '@ant-design/icons';
 
-// Styling and Icons
 import './_ManageUsersStyles.less';
 import Icon from '@ant-design/icons';
 import OrangeLine from '../../../styles/orange-line.svg';
@@ -60,7 +59,6 @@ const ManageUsersPage = props => {
     axiosWithAuth()
       .delete(`/profiles/${profile.user_id}`)
       .then(res => {
-        // alert(`${profile.first_name}'s profile was deleted`);
         setProfiles(res.data.profiles);
       })
       .catch(err => {

@@ -27,7 +27,6 @@ const PendingUsersPage = props => {
       });
   }, [authState.idToken.idToken]);
   const successNotification = () => {
-    // getPendingCases();
     notification.open({
       message: 'User Status',
       description: 'User added successfully!',
@@ -41,7 +40,6 @@ const PendingUsersPage = props => {
     axiosWithAuth()
       .post(`/profile/`, profile)
       .then(res => {
-        // alert(`Profile request from ${profile.email} was approved`);
         setProfiles(res.data.profile);
         setPendingProfiles(
           pendingProfiles.filter(

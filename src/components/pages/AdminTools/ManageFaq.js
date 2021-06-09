@@ -24,7 +24,6 @@ const ManageFaqPage = props => {
   const [faq, setFaq] = useState([]);
   const [formValues, setFormValues] = useState(initialFormValues);
   const deleteNotification = () => {
-    // getPendingCases();
     notification.open({
       message: 'FAQ Question',
       description: 'Question deleted successfully!',
@@ -43,7 +42,6 @@ const ManageFaqPage = props => {
     });
   };
   const addingNotification = () => {
-    // getPendingCases();
     notification.open({
       message: 'FAQ Question',
       description: 'Question added successfully!',
@@ -55,7 +53,6 @@ const ManageFaqPage = props => {
     axiosWithAuth()
       .get(`/faq`)
       .then(res => {
-        // successNotification();
         setFaq(res.data);
       })
       .catch(err => {
@@ -69,8 +66,6 @@ const ManageFaqPage = props => {
     axiosWithAuth()
       .delete(`/faq/${faq.faq_id}`)
       .then(res => {
-        // successNotification();
-        // alert(`'Deleted Question: ${faq.question}'`);
         window.location.reload();
       })
       .catch(err => {
