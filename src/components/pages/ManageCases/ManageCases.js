@@ -14,16 +14,36 @@ export default function ManageCases(props) {
     console.log('Accepted');
     console.log(record);
     //Need to make and connect put request to handle "status"(or whatever they decided to call case status) update
+    axiosWithAuth()
+      .post(`/pendingCases/approve/${record.pending_case_id}`, record)
+      .then(res => {
+        console.log('accept successful');
+        setApiData(apiData.filter(c => c.pending_case_id != record.pending_case_id));
+      })
+      .catch(err => {
+        console.log('accept failed');
+        console.log(err);
+      });
   };
 
   const handleReject = record => {
     console.log('Rejected');
     console.log(record);
     //Need to make and connect put request to handle "status" (or whatever they decided to call case status) update
+    axiosWithAuth()
+    .delete(`/pendingCases/approve/${record.pending_case_id}`)
+    .then(res => {
+      console.log('reject successful');
+      setApiData(apiData.filter(c => c.pending_case_id != record.pending_case_id));
+    })
+    .catch(err => {
+      console.log('reject failed');
+      console.log(err);
+    });
   };
 
   const columns = [
-    { title: 'Case ID', dataIndex: 'case_id', key: 'case_id', width: '25%' },
+    { title: 'Pending Case ID', dataIndex: 'pending_case_id', key: 'pending_case_id', width: '25%' },
     {
       title: 'Uploaded By',
       dataIndex: 'user_id',
@@ -95,7 +115,7 @@ export default function ManageCases(props) {
           expandable={{
             expandedRowRender: caseObj => (
               <div key={caseObj.case_id}>
-                <p style={{ margin: 0 }}>Case ID: {caseObj.case_id}</p>
+                <p style={{ margin: 0 }}>Pending Case ID: {caseObj.pending_case_id}</p>
                 <p style={{ margin: 0 }}>Date: {caseObj.date}</p>
                 <p style={{ margin: 0 }}>
                   Case Outcome: {caseObj.case_outcome}
