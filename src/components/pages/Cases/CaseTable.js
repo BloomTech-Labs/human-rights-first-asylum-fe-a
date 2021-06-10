@@ -173,14 +173,9 @@ export default function CaseTable(props) {
   const [currentKey, setCurrentKey] = useState(1);
 
   useEffect(() => {
-    // TODO: don't know what to put into this useEffect - current use is to keep the filter state in sync.
-    console.log(initialFilters);
-  }, [initialFilters]);
-
-  useEffect(() => {
-    // TODO: don't know what to put into this useEffect - current use is to keep the filter state in sync.
-    console.log(appFilters);
-  }, [appFilters]);
+    // current use is to keep the filter state in sync.
+    console.log('filter applied');
+  }, [initialFilters, appFilters]);
 
   // returns processed array of filters
   const processFilters = filters => {
