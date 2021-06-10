@@ -8,6 +8,7 @@ import Case from '../../../styles/icons/case.svg';
 import PDF from '../../../styles/icons/pdf.svg';
 
 import './_SavedCasesStyles.less';
+import PDFExportButton from '../Cases/PDFOverviewExport/PDFExportButton';
 
 function SavedCases({ savedCases, setSavedCases, deleteBookmark }) {
   const handleClick = deleteCase => {
@@ -16,6 +17,7 @@ function SavedCases({ savedCases, setSavedCases, deleteBookmark }) {
       savedCases.filter(savedCase => savedCase.case_id !== deleteCase)
     );
   };
+
   const columns = [
     {
       title: 'Case',
@@ -29,13 +31,35 @@ function SavedCases({ savedCases, setSavedCases, deleteBookmark }) {
       width: '5%',
     },
     {
-      title: 'PDF',
+      title: 'Download Case',
       dataIndex: 'case_url',
       key: 'case_url',
       render: (text, record) => (
         <a href={record.case_url}>
           <Icon component={() => <img src={PDF} alt="download" />} />
         </a>
+      ),
+      width: '5%',
+    },
+    {
+      title: 'Download Report',
+      render: (text, record) => (
+        <PDFExportButton
+          key="export"
+          fileName={`Judge_${record.last_name}_Case_${record.case_number}`}
+          caseData={[
+            {
+              case_id: record.case_number,
+              case_date: record.case_date,
+              judge_name: record.last_name,
+              case_origin: record.case_origin_city,
+              case_outcome: record.case_outcome,
+              country_of_origin: record.country_of_origin,
+              gender: record.gender,
+              type_of_violence: record.type_of_violence,
+            },
+          ]} /*viz={}*/
+        />
       ),
       width: '5%',
     },

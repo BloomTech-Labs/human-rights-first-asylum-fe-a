@@ -59,6 +59,11 @@ const styles = StyleSheet.create({
 });
 
 export function MyDoc(props) {
+  // case_date has a UTC format from the database
+  // convertDate/date formats it to a correctly configured date string
+  const convertDate = new Date(props.caseData[0].case_date);
+  const date = convertDate.toLocaleDateString();
+
   return (
     <Document>
       <Page style={styles.page}>
@@ -66,10 +71,10 @@ export function MyDoc(props) {
         <View style={styles.table}>
           <View style={styles.tableRow}>
             <View style={styles.tableCol}>
-              <Text style={styles.columnNameCell}>Case ID</Text>
+              <Text style={styles.columnNameCell}>Case #</Text>
             </View>
             <View style={styles.tableCol}>
-              <Text style={styles.columnNameCell}>Date</Text>
+              <Text style={styles.columnNameCell}>Case Date</Text>
             </View>
             <View style={styles.tableCol}>
               <Text style={styles.columnNameCell}>Judge</Text>
@@ -97,7 +102,7 @@ export function MyDoc(props) {
                   <Text style={styles.tableCell}>{item.case_id}</Text>
                 </View>
                 <View style={styles.tableCol}>
-                  <Text style={styles.tableCell}>{item.hearing_date}</Text>
+                  <Text style={styles.tableCell}>{date}</Text>
                 </View>
                 <View style={styles.tableCol}>
                   <Text style={styles.tableCell}>{item.judge_name}</Text>
@@ -109,15 +114,13 @@ export function MyDoc(props) {
                   <Text style={styles.tableCell}>{item.case_outcome}</Text>
                 </View>
                 <View style={styles.tableCol}>
-                  <Text style={styles.tableCell}>{item.nation_of_origin}</Text>
+                  <Text style={styles.tableCell}>{item.country_of_origin}</Text>
                 </View>
                 <View style={styles.tableCol}>
-                  <Text style={styles.tableCell}>{item.applicant_gender}</Text>
+                  <Text style={styles.tableCell}>{item.gender}</Text>
                 </View>
                 <View style={styles.tableCol}>
-                  <Text style={styles.tableCell}>
-                    {item.type_of_violence_experienced}
-                  </Text>
+                  <Text style={styles.tableCell}>{item.type_of_violence}</Text>
                 </View>
               </View>
             );
