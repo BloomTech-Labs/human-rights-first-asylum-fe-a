@@ -30,6 +30,10 @@ const ManageUsersPage = props => {
   const [formValues, setFormValues] = useState(initialFormValues);
 
   useEffect(() => {
+    loadUsers();
+  }, [authState.idToken.idToken]);
+
+  const loadUsers = () => {
     axiosWithAuth()
       .get(`/profiles`)
       .then(res => {
@@ -38,21 +42,14 @@ const ManageUsersPage = props => {
       .catch(err => {
         console.log(err);
       });
-  }, [authState.idToken.idToken]);
+  };
 
   const deleteUser = profile => {
     axiosWithAuth()
       .delete(`/profiles/${profile.user_id}`)
       .then(res => {
         alert(`${profile.first_name}'s profile was deleted`);
-        axiosWithAuth()
-          .get(`/profiles`)
-          .then(res => {
-            setProfiles(res.data);
-          })
-          .catch(err => {
-            console.log(err);
-          });
+        loadUsers();
       })
       .catch(err => {
         console.log(err);
@@ -99,14 +96,7 @@ const ManageUsersPage = props => {
     axiosWithAuth()
       .post(`/profile/`, newUser)
       .then(res => {
-        axiosWithAuth()
-          .get(`/profiles`)
-          .then(res => {
-            setProfiles(res.data);
-          })
-          .catch(err => {
-            console.log(err);
-          });
+        loadUsers();
       })
       .catch(err => console.log(err));
     setFormValues(initialFormValues);
@@ -116,14 +106,7 @@ const ManageUsersPage = props => {
     axiosWithAuth()
       .put(`/profile/${updatedUser.user_id}`, updatedUser)
       .then(res => {
-        axiosWithAuth()
-          .get(`/profiles`)
-          .then(res => {
-            setProfiles(res.data);
-          })
-          .catch(err => {
-            console.log(err);
-          });
+        loadUsers();
       })
       .catch(err => console.log(err));
     setFormValues(initialFormValues);
