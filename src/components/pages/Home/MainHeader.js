@@ -10,13 +10,19 @@ import Notifications from './Notifications';
 
 const MOCK_NOTIFICATIONS = [
   {
-    text: 'Notification 1',
+    id: '1',
+    title: 'Uploaded Case',
+    text: 'Successfully uploaded case #12345.',
   },
   {
-    text: 'Notification 2',
+    id: '2',
+    title: 'User registration',
+    text: 'A new user has requested to join the application.',
   },
   {
-    text: 'Notification 3',
+    id: '3',
+    title: 'Judge Report',
+    text: 'A judge you follow has handed down a decision',
   },
 ];
 
@@ -32,6 +38,14 @@ export default function MainHeader(props) {
     }
   };
 
+  const onClickViewNotification = id => {
+    alert(`View notification id: '${id}'`);
+  };
+
+  const onClickDismissNotification = id => {
+    alert(`Dismiss notification id: '${id}'`);
+  };
+
   const menu = (
     <Menu onClick={onClick}>
       <Menu.Item className="account" key="/account">
@@ -45,12 +59,17 @@ export default function MainHeader(props) {
       </Menu.Item>
     </Menu>
   );
+
   return (
     <div className="site-page-header">
       <img src={HRFLogo} alt="HRF Logo" />
       <div id="nav-flex-container">
         <UploadCase getPendingCases={getPendingCases} />
-        <Notifications notifications={MOCK_NOTIFICATIONS} />
+        <Notifications
+          notifications={MOCK_NOTIFICATIONS}
+          onClickView={onClickViewNotification}
+          onClickDismiss={onClickDismissNotification}
+        />
         <Dropdown className="account-drop-down" overlay={menu}>
           <ul className="accounts" onClick={e => e.preventDefault()}>
             <div className="user-button">
