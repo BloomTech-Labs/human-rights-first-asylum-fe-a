@@ -2,7 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
 import './_ManageCasesStyles.less';
 
-import { Table, Button } from 'antd';
+import { notification, Table, Button } from 'antd';
+import {
+  CheckCircleOutlined,
+  CloseCircleOutlined
+} from '@ant-design/icons';
 import Icon from '@ant-design/icons';
 import OrangeLine from '../../../styles/orange-line.svg';
 
@@ -11,39 +15,53 @@ import OrangeLine from '../../../styles/orange-line.svg';
 export default function ManageCases(props) {
   const [apiData, setApiData] = useState([]);
   const handleAccept = record => {
-    console.log('Accepted');
-    console.log(record);
-    //Need to make and connect put request to handle "status"(or whatever they decided to call case status) update
     axiosWithAuth()
       .post(`/pendingCases/approve/${record.pending_case_id}`, record)
       .then(res => {
-        console.log('accept successful');
-        setApiData(apiData.filter(c => c.pending_case_id != record.pending_case_id));
+        notification.open({
+          message: 'Case Approved',
+          top: 128,
+          icon: <CheckCircleOutlined style={{ color: 'green' }} />,
+        });
+        setApiData([apiData[0].filter(c => c.pending_case_id !== record.pending_case_id)]);
       })
       .catch(err => {
-        console.log('accept failed');
-        console.log(err);
+        notification.open({
+          message: 'Database Error',
+          description: 'failed to approve case',
+          top: 128,
+          icon: <CloseCircleOutlined style={{ color: 'red' }} />,
+        });
       });
   };
 
   const handleReject = record => {
-    console.log('Rejected');
-    console.log(record);
-    //Need to make and connect put request to handle "status" (or whatever they decided to call case status) update
     axiosWithAuth()
-    .delete(`/pendingCases/approve/${record.pending_case_id}`)
+    .delete(`/pendingCases/${record.pending_case_id}`)
     .then(res => {
-      console.log('reject successful');
-      setApiData(apiData.filter(c => c.pending_case_id != record.pending_case_id));
+      notification.open({
+        message: 'Case Rejected',
+        top: 128,
+        icon: <CheckCircleOutlined style={{ color: 'green' }} />,
+      });
+      setApiData([apiData[0].filter(c => c.pending_case_id !== record.pending_case_id)]);
     })
     .catch(err => {
-      console.log('reject failed');
-      console.log(err);
+      notification.open({
+        message: 'Database Error',
+        description: 'failed to reject case',
+        top: 128,
+        icon: <CloseCircleOutlined style={{ color: 'red' }} />,
+      });
     });
   };
 
   const columns = [
-    { title: 'Pending Case ID', dataIndex: 'pending_case_id', key: 'pending_case_id', width: '25%' },
+    { title: 'Pending Case ID',
+      dataIndex: 'pending_case_id',
+      key: 'pending_case_id',
+      width: '25%'
+    },
     {
       title: 'Uploaded By',
       dataIndex: 'user_id',
