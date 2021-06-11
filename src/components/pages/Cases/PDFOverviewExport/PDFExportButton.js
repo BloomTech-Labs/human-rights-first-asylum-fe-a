@@ -2,16 +2,17 @@ import React from 'react';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import ExportGenerator from './ExportGenerator.jsx';
 import { LoadingOutlined } from '@ant-design/icons';
+import { DownloadOutlined } from '@ant-design/icons';
 
-const PDFExportButton = props => (
+const PDFExportButton = ({ fileName, caseData, viz }) => (
   <div>
     <PDFDownloadLink
-      document={<ExportGenerator caseData={props.caseData} viz={props.viz} />}
-      fileName="Case_Data_Overview.pdf"
+      document={<ExportGenerator caseData={caseData} viz={viz} />}
+      fileName={fileName}
       style={{ color: '#215589' }}
     >
       {({ blob, url, loading, error }) =>
-        loading ? <LoadingOutlined /> : 'Download PDF'
+        loading ? <LoadingOutlined /> : <DownloadOutlined />
       }
     </PDFDownloadLink>
   </div>
