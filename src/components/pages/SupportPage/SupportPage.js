@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
-import { Collapse, Input, Button, Modal, Form } from 'antd';
+import { Collapse, Input, Button, Modal, notification, Form } from 'antd';
 import './_SupportPageStyles.less';
 import Icon from '@ant-design/icons';
 import OrangeLine from '../../../styles/orange-line.svg';
-import { notification, Upload, Spin } from 'antd';
 import {
   CheckCircleOutlined,
-  CloseCircleOutlined,
-  LoadingOutlined,
 } from '@ant-design/icons';
 const initialFormValues = {
   message: '',

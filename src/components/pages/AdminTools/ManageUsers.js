@@ -7,14 +7,12 @@ import {
   Modal,
   Collapse,
   Descriptions,
+  notification,
   Radio,
 } from 'antd';
 import PendingUsers from './PendingUsers';
-import { notification, Upload, Button, Spin } from 'antd';
 import {
   CheckCircleOutlined,
-  CloseCircleOutlined,
-  LoadingOutlined,
 } from '@ant-design/icons';
 
 import './_ManageUsersStyles.less';

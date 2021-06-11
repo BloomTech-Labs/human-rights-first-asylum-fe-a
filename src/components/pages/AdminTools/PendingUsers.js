@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
-import { Button as AntDButton, Collapse, Descriptions } from 'antd';
-import { notification, Upload, Modal, Spin } from 'antd';
+import { Button as AntDButton, notification, Collapse, Descriptions } from 'antd';
+
 import {
   CheckCircleOutlined,
-  CloseCircleOutlined,
-  LoadingOutlined,
 } from '@ant-design/icons';
 // Styles and Icons
 import Icon from '@ant-design/icons';
