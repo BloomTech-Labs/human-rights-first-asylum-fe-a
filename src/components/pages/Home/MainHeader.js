@@ -6,6 +6,19 @@ import UploadCase from '../Upload/UploadCase';
 import Icon from '@ant-design/icons';
 import Profile from '../../../styles/icons/profile.svg';
 import HRFLogo from '../../../styles/HRFlogo.png';
+import Notifications from './Notifications';
+
+const MOCK_NOTIFICATIONS = [
+  {
+    text: 'Notification 1',
+  },
+  {
+    text: 'Notification 2',
+  },
+  {
+    text: 'Notification 3',
+  },
+];
 
 export default function MainHeader(props) {
   const { logout, getPendingCases } = props;
@@ -37,10 +50,15 @@ export default function MainHeader(props) {
       <img src={HRFLogo} alt="HRF Logo" />
       <div id="nav-flex-container">
         <UploadCase getPendingCases={getPendingCases} />
+        <Notifications notifications={MOCK_NOTIFICATIONS} />
         <Dropdown className="account-drop-down" overlay={menu}>
           <ul className="accounts" onClick={e => e.preventDefault()}>
             <div className="user-button">
-              <Icon component={() => <img id="avatar-icon" src={Profile} alt="profile icon" />} />
+              <Icon
+                component={() => (
+                  <img id="avatar-icon" src={Profile} alt="profile icon" />
+                )}
+              />
             </div>
           </ul>
         </Dropdown>
