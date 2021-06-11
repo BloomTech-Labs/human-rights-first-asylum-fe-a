@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { Link } from 'react-router-dom';
 import Plot from 'react-plotly.js';
@@ -14,7 +14,7 @@ import {
 import Save from '../../../styles/icons/save.svg';
 import Icon from '@ant-design/icons';
 
-import { Table, Space, Button, Input, Tabs, notification } from 'antd';
+import { Table, Space, Button, Input, Tabs, notification, Tag } from 'antd';
 import './CaseTable.less';
 import CaseDetails from '../CaseOverview/CaseDetails';
 
@@ -164,13 +164,71 @@ export default function CaseTable(props) {
     return month + '/' + day + '/' + year;
   }
 
-  function changeSorter(sorter) {
-    console.log(sorter);
+  // state to keep track of filters being applied to the table (Initial cases section)
+  const [initialFilters, setInitialFilters] = useState([]);
+  // keeping track of filters applied to the appelate section
+  const [appFilters, setAppFilters] = useState([]);
+
+  // state to keep track of the current table being displayed
+  const [currentKey, setCurrentKey] = useState(1);
+
+  useEffect(() => {
+    // current use is to keep the filter state in sync.
+    console.log('filter applied');
+  }, [initialFilters, appFilters]);
+
+  // returns processed array of filters
+  const processFilters = filters => {
+    let res = [];
+    for (const i in filters) {
+      if (filters[i]) {
+        res.push(`${i}: ${filters[i]}`);
+      } else if (!filters[i]) {
+        let temp = [];
+        if (
+          currentKey === 1 &&
+          initialFilters.length > 0 &&
+          initialFilters.includes(`${i}: ${filters[i]}`)
+        ) {
+          initialFilters.forEach(value => {
+            if (value !== undefined) {
+              const term = value.split(':')[0];
+              if (term !== i) {
+                temp.push(value);
+              }
+            }
+          });
+          res = temp;
+        } else if (
+          currentKey === 2 &&
+          appFilters.length > 0 &&
+          appFilters.includes(`${i}: ${filters[i]}`)
+        ) {
+          appFilters.forEach(value => {
+            if (value !== undefined) {
+              const term = value.split(':')[0];
+              if (term !== i) {
+                temp.push(value);
+              }
+            }
+          });
+          res = temp;
+        }
+      }
+    }
+    return res;
+  };
+
+  // function fires every time that the table is filtered
+  function changeSorter(pagination, filters, sorter, extra) {
+    Number(currentKey) === 1
+      ? setInitialFilters(filters)
+      : setAppFilters(filters);
   }
 
   // This is part of the Tabs component
   function callback(key) {
-    console.log(key);
+    setCurrentKey(key);
   }
 
   const rowSelection = {
@@ -515,6 +573,12 @@ export default function CaseTable(props) {
       <div className="case-table-container">
         <Tabs defaultActiveKey="1" onChange={callback} className="tabs">
           <TabPane tab="Initial Cases" key="1">
+            <div>
+              Filters:{' '}
+              {processFilters(initialFilters).map(filter => (
+                <Tag key={filter}>{filter}</Tag>
+              ))}
+            </div>
             <div className="case-table">
               <Table
                 className="cases_table iCases"
@@ -527,6 +591,12 @@ export default function CaseTable(props) {
             </div>
           </TabPane>
           <TabPane tab="Appellate Cases" key="2">
+            <div>
+              Filters:{' '}
+              {processFilters(appFilters).map(filter => (
+                <Tag key={filter}>{filter}</Tag>
+              ))}
+            </div>
             <div className="case-table">
               <Table
                 className="cases_table appCases"
