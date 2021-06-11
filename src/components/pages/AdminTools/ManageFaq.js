@@ -35,7 +35,14 @@ const ManageFaqPage = props => {
       .delete(`/faq/${faq.faq_id}`)
       .then(res => {
         alert(`'Deleted Question: ${faq.question}'`);
-        window.location.reload();
+        axiosWithAuth()
+          .get(`/faq`)
+          .then(res => {
+            setFaq(res.data);
+          })
+          .catch(err => {
+            console.log(err);
+          });
       })
       .catch(err => {
         console.log(err);
@@ -62,7 +69,14 @@ const ManageFaqPage = props => {
       .post(`/faq/`, question)
       .then(res => {
         setFormValues(initialFormValues);
-        window.location.reload();
+        axiosWithAuth()
+          .get(`/faq`)
+          .then(res => {
+            setFaq(res.data);
+          })
+          .catch(err => {
+            console.log(err);
+          });
       })
       .catch(err => console.log(err));
   };
