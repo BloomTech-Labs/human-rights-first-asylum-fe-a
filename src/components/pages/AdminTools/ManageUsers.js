@@ -45,7 +45,14 @@ const ManageUsersPage = props => {
       .delete(`/profiles/${profile.user_id}`)
       .then(res => {
         alert(`${profile.first_name}'s profile was deleted`);
-        setProfiles(res.data.profiles);
+        axiosWithAuth()
+          .get(`/profiles`)
+          .then(res => {
+            setProfiles(res.data);
+          })
+          .catch(err => {
+            console.log(err);
+          });
       })
       .catch(err => {
         console.log(err);
@@ -92,7 +99,14 @@ const ManageUsersPage = props => {
     axiosWithAuth()
       .post(`/profile/`, newUser)
       .then(res => {
-        setProfiles(res.data.profile);
+        axiosWithAuth()
+          .get(`/profiles`)
+          .then(res => {
+            setProfiles(res.data);
+          })
+          .catch(err => {
+            console.log(err);
+          });
       })
       .catch(err => console.log(err));
     setFormValues(initialFormValues);
@@ -102,7 +116,14 @@ const ManageUsersPage = props => {
     axiosWithAuth()
       .put(`/profile/${updatedUser.user_id}`, updatedUser)
       .then(res => {
-        setProfiles(res.data.profiles);
+        axiosWithAuth()
+          .get(`/profiles`)
+          .then(res => {
+            setProfiles(res.data);
+          })
+          .catch(err => {
+            console.log(err);
+          });
       })
       .catch(err => console.log(err));
     setFormValues(initialFormValues);
