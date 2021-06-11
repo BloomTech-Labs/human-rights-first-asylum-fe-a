@@ -1,5 +1,5 @@
 import React from 'react';
-import { Badge, Card, Dropdown, List, Menu } from 'antd';
+import { Badge, Dropdown, List, Menu } from 'antd';
 import { BellOutlined } from '@ant-design/icons';
 
 const NotificationListItem = props => {
