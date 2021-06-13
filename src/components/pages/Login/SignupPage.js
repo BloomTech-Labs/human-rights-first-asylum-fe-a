@@ -60,8 +60,11 @@ const SignupPage = () => {
       last_name: formValues.last_name.trim(),
       email: formValues.email.trim(),
     };
-    console.log(newUser);
-    postNewUser(newUser);
+    console.log(postNewUser(newUser));
+  };
+
+  const onFinishFailed = errorInfo => {
+    console.log('Failed:', errorInfo);
   };
 
   return (
@@ -75,7 +78,11 @@ const SignupPage = () => {
           <img src={logo} alt="logo" width="350px" />
         </div>
         <h2 className="h2-signup">Register for Access</h2>
-        <Form onFinish={onSubmit} layout="vertical">
+        <Form
+          onFinish={onSubmit}
+          onFinishFailed={onFinishFailed}
+          layout="vertical"
+        >
           <Form.Item label="First Name">
             <Input
               id="first_name"
@@ -86,7 +93,16 @@ const SignupPage = () => {
               value={formValues.first_name}
             />
           </Form.Item>
-          <Form.Item label="Last Name">
+
+          <Form.Item
+            label="Last Name"
+            rules={[
+              {
+                required: true,
+                message: 'Please input your last Name!',
+              },
+            ]}
+          >
             <Input
               id="last_name"
               type="text"
