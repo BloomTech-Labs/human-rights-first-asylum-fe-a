@@ -108,7 +108,7 @@ const SignupPage = () => {
                 type: 'email',
                 message: 'The input is not a valid email',
               },
-              { required: true, message: 'Please input an email' },
+              { required: true, message: 'Valid email is required' },
             ]}
             hasFeedback
           >
