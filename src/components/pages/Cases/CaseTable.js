@@ -26,7 +26,7 @@ export default function CaseTable(props) {
   });
 
   const initialDetails = {
-    case_date: '5/26/2021',
+    date: '5/26/2021',
     origin_city: 'Detroit',
   };
   const [isDetailsVisible, setIsDetailsVisible] = useState(false);
@@ -250,11 +250,11 @@ export default function CaseTable(props) {
     },
     {
       title: 'Case Date',
-      dataIndex: 'case_date',
-      key: 'case_date',
-      sorter: (a, b) => a.case_date.localeCompare(b.case_date),
+      dataIndex: 'date',
+      key: 'date',
+      sorter: (a, b) => a.date.localeCompare(b.date),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('case_date'),
+      ...getColumnSearchProps('date'),
       render: text => formatDate(text),
     },
     {
@@ -302,11 +302,11 @@ export default function CaseTable(props) {
     },
     {
       title: 'Outcome',
-      dataIndex: 'case_outcome',
-      key: 'case_outcome',
-      sorter: (a, b) => a.case_outcome.localeCompare(b.case_outcome),
+      dataIndex: 'outcome',
+      key: 'outcome',
+      sorter: (a, b) => a.outcome.localeCompare(b.outcome),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('case_outcome'),
+      ...getColumnSearchProps('outcome'),
     },
     {
       title: 'Country of Origin',
@@ -343,8 +343,8 @@ export default function CaseTable(props) {
     },
     {
       title: 'Download PDF',
-      dataIndex: 'case_url',
-      key: 'case_url',
+      dataIndex: 'url',
+      key: 'url',
       render: text => (
         <a href={text}>
           {' '}
@@ -412,15 +412,15 @@ export default function CaseTable(props) {
   const [searching, setSearching] = useState(false);
 
   const [queryValues, setQueryValues] = useState({
-    case_number: '',
-    case_date: '',
+    number: '',
+    date: '',
     judge: '',
     case_origin_city: '',
     case_origin_state: '',
     filed_in_one_year: '',
     application_type: '',
     protected_grounds: '',
-    case_outcome: '',
+    outcome: '',
     country_of_origin: '',
     gender: '',
     type_of_violence: '',
@@ -460,19 +460,19 @@ export default function CaseTable(props) {
     let terminated = 0;
 
     data.map(eachCase => {
-      if (eachCase.case_outcome === 'Denied') {
+      if (eachCase.outcome === 'Denied') {
         denied += 1;
       }
-      if (eachCase.case_outcome === 'Granted') {
+      if (eachCase.outcome === 'Granted') {
         granted += 1;
       }
-      if (eachCase.case_outcome === 'Remanded') {
+      if (eachCase.outcome === 'Remanded') {
         remanded += 1;
       }
-      if (eachCase.case_outcome === 'Sustained') {
+      if (eachCase.outcome === 'Sustained') {
         sustained += 1;
       }
-      if (eachCase.case_outcome === 'Terminated') {
+      if (eachCase.outcome === 'Terminated') {
         terminated += 1;
       }
       return null;
@@ -519,19 +519,19 @@ export default function CaseTable(props) {
     let terminated = 0;
 
     data.map(eachCase => {
-      if (eachCase.case_outcome === 'Denied') {
+      if (eachCase.outcome === 'Denied') {
         denied += 1;
       }
-      if (eachCase.case_outcome === 'Granted') {
+      if (eachCase.outcome === 'Granted') {
         granted += 1;
       }
-      if (eachCase.case_outcome === 'Remanded') {
+      if (eachCase.outcome === 'Remanded') {
         remanded += 1;
       }
-      if (eachCase.case_outcome === 'Sustained') {
+      if (eachCase.outcome === 'Sustained') {
         sustained += 1;
       }
-      if (eachCase.case_outcome === 'Terminated') {
+      if (eachCase.outcome === 'Terminated') {
         terminated += 1;
       }
       return null;

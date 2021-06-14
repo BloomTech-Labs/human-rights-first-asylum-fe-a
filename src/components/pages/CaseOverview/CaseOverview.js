@@ -74,7 +74,7 @@ const CaseOverview = props => {
               <p>Case Origin: {caseData.case_origin}</p>
               <p>
                 Filed 1 Year:{' '}
-                {caseData.case_filed_within_one_year ? 'True' : 'False'}
+                {caseData.filed_within_one_year ? 'True' : 'False'}
               </p>
               <br />
               <p style={{ textDecoration: 'underline', fontWeight: 'bold' }}>
@@ -93,7 +93,7 @@ const CaseOverview = props => {
               <p style={{ textDecoration: 'underline', fontWeight: 'bold' }}>
                 Results
               </p>
-              <p>Case Outcome: {caseData.case_outcome}</p>
+              <p>Case Outcome: {caseData.outcome}</p>
               <br />
             </>
           )}
