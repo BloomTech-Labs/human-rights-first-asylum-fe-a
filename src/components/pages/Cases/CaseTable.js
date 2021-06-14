@@ -24,13 +24,10 @@ export default function CaseTable(props) {
     searchedColumn: '',
     selectedRowID: [],
   });
-
-  const initialDetails = {
-    case_date: '5/26/2021',
-    origin_city: 'Detroit',
-  };
+  const [appFilter, setAppFilter] = useState();
+  const [nonAppFilter, setNonAppFilter] = useState();
   const [isDetailsVisible, setIsDetailsVisible] = useState(false);
-  const [detailsData, setDetailsData] = useState(initialDetails);
+  const [detailsData, setDetailsData] = useState({});
 
   const popUpDetails = rowData => {
     setDetailsData(rowData);
@@ -125,12 +122,7 @@ export default function CaseTable(props) {
             .toString()
             .toLowerCase()
             .includes(value.toLowerCase())
-        : '',
-    onFilterDropdownVisibleChange: visible => {
-      if (visible) {
-        //setTimeout(() => searchInput.select(), 100);
-      }
-    },
+        : ``,
     render: text =>
       searchedColumn === dataIndex ? (
         <Highlighter
@@ -150,6 +142,7 @@ export default function CaseTable(props) {
       searchText: selectedKeys[0],
       searchedColumn: dataIndex,
     });
+    console.log(state);
   };
 
   const handleReset = clearFilters => {
@@ -192,11 +185,11 @@ export default function CaseTable(props) {
     },
     {
       title: 'Case Date',
-      dataIndex: 'case_date',
-      key: 'case_date',
-      sorter: (a, b) => a.case_date.localeCompare(b.case_date),
+      dataIndex: 'date',
+      key: 'date',
+      sorter: (a, b) => a.date.localeCompare(b.date),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('case_date'),
+      ...getColumnSearchProps('date'),
       render: text => formatDate(text),
     },
     {
@@ -205,7 +198,7 @@ export default function CaseTable(props) {
       key: 'judge_name',
       sorter: (a, b) => a.last_name.localeCompare(b.last_name),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('judge_name'),
+      ...getColumnSearchProps('first_name'),
       render: (text, record) => (
         <Link to={`/judge/${record.judge_id}`}>{text}</Link>
       ),
@@ -244,11 +237,11 @@ export default function CaseTable(props) {
     },
     {
       title: 'Outcome',
-      dataIndex: 'case_outcome',
-      key: 'case_outcome',
-      sorter: (a, b) => a.case_outcome.localeCompare(b.case_outcome),
+      dataIndex: 'outcome',
+      key: 'outcome',
+      sorter: (a, b) => a.outcome.localeCompare(b.outcome),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('case_outcome'),
+      ...getColumnSearchProps('outcome'),
     },
     {
       title: 'Country of Origin',
@@ -285,8 +278,8 @@ export default function CaseTable(props) {
     },
     {
       title: 'Download PDF',
-      dataIndex: 'case_url',
-      key: 'case_url',
+      dataIndex: 'url',
+      key: 'url',
       render: text => (
         <a href={text}>
           {' '}
@@ -351,30 +344,32 @@ export default function CaseTable(props) {
     }
   };
 
-  const [searching, setSearching] = useState(false);
+  /* const [searching, setSearching] = useState(false);
 
   const [queryValues, setQueryValues] = useState({
-    case_number: '',
-    case_date: '',
+    number: '',
+    date: '',
     judge: '',
     case_origin_city: '',
     case_origin_state: '',
     filed_in_one_year: '',
     application_type: '',
     protected_grounds: '',
-    case_outcome: '',
+    outcome: '',
     country_of_origin: '',
     gender: '',
     type_of_violence: '',
     indigenous_group: '',
     applicant_language: '',
     credible: '',
-  });
+  }); */
 
-  const filter = data => {
+  /* const filter = data => {
     const searchedKeys = Object.entries(queryValues).filter(
       ([k, v]) => v !== ''
     );
+    console.log(searchedKeys)
+    
     const filteredData = data.filter(row => {
       const matchedHits = [];
       searchedKeys.forEach(([k, v]) => {
@@ -390,9 +385,10 @@ export default function CaseTable(props) {
       return matchedHits.length === searchedKeys.length;
     });
     return filteredData;
-  };
+  }; */
 
-  const data = searching ? filter(caseData) : caseData;
+  /* const data = searching ? filter(caseData) : caseData; */
+  const data = caseData;
 
   const DecisionRateChart = () => {
     let denied = 0;
@@ -402,19 +398,19 @@ export default function CaseTable(props) {
     let terminated = 0;
 
     data.map(eachCase => {
-      if (eachCase.case_outcome === 'Denied') {
+      if (eachCase.outcome === 'Denied') {
         denied += 1;
       }
-      if (eachCase.case_outcome === 'Granted') {
+      if (eachCase.outcome === 'Granted') {
         granted += 1;
       }
-      if (eachCase.case_outcome === 'Remanded') {
+      if (eachCase.outcome === 'Remanded') {
         remanded += 1;
       }
-      if (eachCase.case_outcome === 'Sustained') {
+      if (eachCase.outcome === 'Sustained') {
         sustained += 1;
       }
-      if (eachCase.case_outcome === 'Terminated') {
+      if (eachCase.outcome === 'Terminated') {
         terminated += 1;
       }
       return null;
@@ -453,46 +449,6 @@ export default function CaseTable(props) {
     );
   };
 
-  const CaseDataChart = () => {
-    let denied = 0;
-    let granted = 0;
-    let remanded = 0;
-    let sustained = 0;
-    let terminated = 0;
-
-    data.map(eachCase => {
-      if (eachCase.case_outcome === 'Denied') {
-        denied += 1;
-      }
-      if (eachCase.case_outcome === 'Granted') {
-        granted += 1;
-      }
-      if (eachCase.case_outcome === 'Remanded') {
-        remanded += 1;
-      }
-      if (eachCase.case_outcome === 'Sustained') {
-        sustained += 1;
-      }
-      if (eachCase.case_outcome === 'Terminated') {
-        terminated += 1;
-      }
-      return null;
-    });
-
-    return (
-      <Plot
-        data={[
-          {
-            type: 'bar',
-            x: ['Granted', 'Denied', 'Remanded', 'Sustained', 'Terminated'],
-            y: [granted, denied, remanded, sustained, terminated],
-          },
-        ]}
-        layout={{ width: 500, height: 300, title: 'Case Data' }}
-      />
-    );
-  };
-
   const nonAppCases = casesData.filter(item => item.appellate === false);
   const appCases = casesData.filter(item => item.appellate === true);
 
@@ -516,6 +472,7 @@ export default function CaseTable(props) {
         <Tabs defaultActiveKey="1" onChange={callback} className="tabs">
           <TabPane tab="Initial Cases" key="1">
             <div className="case-table">
+              {console.log(nonAppCases)}
               <Table
                 className="cases_table iCases"
                 rowSelection={rowSelection}
@@ -527,6 +484,9 @@ export default function CaseTable(props) {
             </div>
           </TabPane>
           <TabPane tab="Appellate Cases" key="2">
+            <div>
+              <p>{appFilter}</p>
+            </div>
             <div className="case-table">
               <Table
                 className="cases_table appCases"

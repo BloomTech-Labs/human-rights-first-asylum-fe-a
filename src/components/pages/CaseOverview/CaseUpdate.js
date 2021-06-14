@@ -39,14 +39,14 @@ const CaseUpdate = props => {
         delete caseData['social_group_type'];
 
         const newCases = props.casesData.map(c => {
-          return c.case_number === caseData.case_number
+          return c.number === caseData.number
             ? {
                 ...caseData,
                 ...fieldsValue,
                 judge_name: judges.filter(
                   j => fieldsValue['judge'] === j.judge_id
                 )[0]['name'],
-                id: caseData.case_number,
+                id: caseData.number,
               }
             : c;
         });
@@ -114,7 +114,7 @@ const CaseUpdate = props => {
         <Input />
       </Form.Item>
 
-      <Form.Item label="case_outcome" name="case_outcome">
+      <Form.Item label="outcome" name="outcome">
         {/*dropdown*/}
         <Select>
           <Option value="Granted">Granted</Option>

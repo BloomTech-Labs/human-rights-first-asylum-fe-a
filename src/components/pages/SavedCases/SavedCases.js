@@ -32,10 +32,10 @@ function SavedCases({ savedCases, setSavedCases, deleteBookmark }) {
     },
     {
       title: 'Download Case',
-      dataIndex: 'case_url',
-      key: 'case_url',
+      dataIndex: 'url',
+      key: 'url',
       render: (text, record) => (
-        <a href={record.case_url}>
+        <a href={record.url}>
           <Icon component={() => <img src={PDF} alt="download" />} />
         </a>
       ),
@@ -46,14 +46,14 @@ function SavedCases({ savedCases, setSavedCases, deleteBookmark }) {
       render: (text, record) => (
         <PDFExportButton
           key="export"
-          fileName={`Judge_${record.last_name}_Case_${record.case_number}`}
+          fileName={`Judge_${record.last_name}_Case_${record.number}`}
           caseData={[
             {
-              case_id: record.case_number,
-              case_date: record.case_date,
+              case_id: record.case_id,
+              date: record.date,
               judge_name: record.last_name,
               case_origin: record.case_origin_city,
-              case_outcome: record.case_outcome,
+              outcome: record.outcome,
               country_of_origin: record.country_of_origin,
               gender: record.gender,
               type_of_violence: record.type_of_violence,
@@ -98,8 +98,8 @@ function SavedCases({ savedCases, setSavedCases, deleteBookmark }) {
     },
     {
       title: 'Outcome',
-      dataIndex: 'case_outcome',
-      key: 'case_outcome',
+      dataIndex: 'outcome',
+      key: 'outcome',
       width: '10%',
     },
     {
