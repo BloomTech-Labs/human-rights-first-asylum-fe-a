@@ -12,10 +12,10 @@ import Icon from '@ant-design/icons';
 import OrangeLine from '../../../styles/orange-line.svg';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
 const initialFormValues = {
-  case_date: '',
+  date: '',
   application_type: '',
   protected_grounds: '',
-  case_outcome: '',
+  outcome: '',
   country_of_origin: '',
   case_origin_city: '',
   case_origin_state: '',
@@ -43,7 +43,7 @@ const EditCaseDetails = props => {
           console.log(res.data);
           setFormValues({
             ...res.data,
-            case_date: res.data.case_date.slice(0, 10),
+            date: res.data.date.slice(0, 10),
           });
           setLoading(false);
         })
@@ -111,12 +111,12 @@ const EditCaseDetails = props => {
         </p>
         <Form.Item label="Case Date">
           <Input
-            id="case_date"
+            id="date"
             type="date"
-            name="case_date"
+            name="date"
             onChange={onChange}
             className="text-field"
-            value={formValues.case_date}
+            value={formValues.date}
           />
         </Form.Item>
         <Form.Item label="Application Type">
@@ -143,13 +143,13 @@ const EditCaseDetails = props => {
         </Form.Item>
         <Form.Item label="Case Outcome">
           <Input
-            id="case_outcome"
+            id="outcome"
             type="text"
-            name="case_outcome"
+            name="outcome"
             placeholder="Case Outcome"
             onChange={onChange}
             className="text-field"
-            value={formValues.case_outcome}
+            value={formValues.outcome}
           />
         </Form.Item>
         <Form.Item label="Country of Origin">
