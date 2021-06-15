@@ -7,11 +7,14 @@ import {
   Modal,
   Collapse,
   Descriptions,
+  notification,
   Radio,
 } from 'antd';
 import PendingUsers from './PendingUsers';
+import {
+  CheckCircleOutlined,
+} from '@ant-design/icons';
 
-// Styling and Icons
 import './_ManageUsersStyles.less';
 import Icon from '@ant-design/icons';
 import OrangeLine from '../../../styles/orange-line.svg';
@@ -44,7 +47,17 @@ const ManageUsersPage = props => {
       });
   };
 
+  const successNotification = () => {
+    notification.open({
+      message: 'User Status',
+      description: 'User deleted successfully!',
+      top: 128,
+      icon: <CheckCircleOutlined style={{ color: 'green' }} />,
+    });
+  };
+
   const deleteUser = profile => {
+    successNotification();
     axiosWithAuth()
       .delete(`/profiles/${profile.user_id}`)
       .then(res => {

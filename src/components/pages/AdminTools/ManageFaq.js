@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { Link } from 'react-router-dom';
-import { Form, Input, Button as AntDButton, Modal, Collapse } from 'antd';
-
+import { Form, Input, Button as AntDButton, notification, Modal, Collapse } from 'antd';
 // Styling and Icons
+import {
+  CheckCircleOutlined,
+  CloseCircleOutlined,
+} from '@ant-design/icons';
 import './_AddFaqStyles.less';
 import './_ManageFaqStyles.less';
 import Icon from '@ant-design/icons';
@@ -18,7 +21,32 @@ const ManageFaqPage = props => {
   const { authState } = props;
   const [faq, setFaq] = useState([]);
   const [formValues, setFormValues] = useState(initialFormValues);
-
+  const deleteNotification = () => {
+    notification.open({
+      message: 'FAQ Question',
+      description: 'Question deleted successfully!',
+      top: 128,
+      icon: <CheckCircleOutlined style={{ color: 'green' }} />,
+    });
+  };
+  const failNotification = () => {
+    notification.open({
+      message: 'Upload Status',
+      description:
+        'There was an issue with the upload. Please try again and if the issue persists contact the site administrator.',
+      top: 128,
+      duration: 8,
+      icon: <CloseCircleOutlined style={{ color: 'red' }} />,
+    });
+  };
+  const addingNotification = () => {
+    notification.open({
+      message: 'FAQ Question',
+      description: 'Question added successfully!',
+      top: 128,
+      icon: <CheckCircleOutlined style={{ color: 'green' }} />,
+    });
+  };
   useEffect(() => {
     loadFaqs();
   }, [authState.idToken.idToken]);
@@ -34,7 +62,9 @@ const ManageFaqPage = props => {
       });
   };
 
+
   const deleteFaq = faq => {
+    deleteNotification();
     axiosWithAuth()
       .delete(`/faq/${faq.faq_id}`)
       .then(res => {
@@ -62,13 +92,17 @@ const ManageFaqPage = props => {
   };
 
   const postNewQuestion = question => {
+    addingNotification();
     axiosWithAuth()
       .post(`/faq/`, question)
       .then(res => {
         setFormValues(initialFormValues);
         loadFaqs();
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+        failNotification();
+      });
   };
 
   const onSubmit = e => {
