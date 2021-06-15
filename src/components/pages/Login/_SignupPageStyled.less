@@ -5,6 +5,9 @@
 .signup-root {
   width: 100%;
   display: flex;
+  background-image: url('../../../styles/blueStatueOfLiberty.png');
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .signup-form {
@@ -12,7 +15,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 32%;
+  width: 20%;
   margin: 0 auto;
   @media (max-width: 600px) {
     width: 70%;
@@ -25,8 +28,8 @@
 }
 
 .background-image-signup {
-  // background-image: url(@background-image);
-  width: 29vw; //500px
+  
+  width: 50vw; 
   min-height: 100vh;
   background-position: top;
   background-repeat: no-repeat;
@@ -66,12 +69,12 @@
 .h2-signup {
   font-size: 1.4rem;
   margin-top: 3.5rem;
+  font-weight: bold;
 }
 
 .request-btn {
   color: @white !important;
   background-color: @button;
-  margin: 0.8rem 0rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -94,4 +97,11 @@
   }
 }
 
+.submit-button{
+  margin-top: -0.5rem;
+  width: 102%;
+}
 
+label{
+  font-weight: bold;
+  }
