@@ -28,6 +28,7 @@ const ManageUsersPage = props => {
   const { authState } = props;
   const [profiles, setProfiles] = useState([]);
   const [formValues, setFormValues] = useState(initialFormValues);
+  const [form] = Form.useForm();
 
   useEffect(() => {
     loadUsers();
@@ -295,38 +296,53 @@ const ManageUsersPage = props => {
                 component={() => <img src={OrangeLine} alt="divider icon" />}
               />
             </p>
-            <Form.Item label="First Name">
-              <Input
-                id="first_name"
-                type="text"
-                name="first_name"
-                onChange={onChange}
-                className="text-field"
-                placeholder="First Name"
-                value={formValues.first_name}
-              />
+            <Form.Item
+              label="First Name"
+              name="first_name"
+              rules={[
+                {
+                  required: true,
+                  message: 'First Name is required',
+                },
+                {
+                  min: 3,
+                  message: 'First Name must be at least 3 characters',
+                },
+              ]}
+              hasFeedback
+            >
+              <Input placeholder="First Name" />
             </Form.Item>
-            <Form.Item label="Last Name">
-              <Input
-                id="last_name"
-                type="text"
-                name="last_name"
-                onChange={onChange}
-                className="text-field"
-                placeholder="Last Name"
-                value={formValues.last_name}
-              />
+            <Form.Item
+              label="Last Name"
+              name="last_name"
+              rules={[
+                {
+                  required: true,
+                  message: 'Last Name is required',
+                },
+                {
+                  min: 3,
+                  message: 'Last Name must be at least 3 characters',
+                },
+              ]}
+              hasFeedback
+            >
+              <Input placeholder="Last Name" />
             </Form.Item>
-            <Form.Item label="Email">
-              <Input
-                id="email"
-                type="email"
-                name="email"
-                placeholder="Email"
-                onChange={onChange}
-                className="text-field"
-                value={formValues.email}
-              />
+            <Form.Item
+              name="email"
+              label="Email"
+              rules={[
+                {
+                  type: 'email',
+                  message: 'The input is not a valid email',
+                },
+                { required: true, message: 'Valid email is required' },
+              ]}
+              hasFeedback
+            >
+              <Input placeholder="Email" />
             </Form.Item>
             <Radio.Group
               onChange={onChange}
