@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { Link } from 'react-router-dom';
 import Highlighter from 'react-highlight-words';
@@ -7,7 +7,7 @@ import {
   CloseCircleOutlined,
   CheckCircleOutlined,
 } from '@ant-design/icons';
-import { Table, Space, Button, Input, Tabs, notification } from 'antd';
+import { Table, Space, Button, Input, Tabs, notification, Tag } from 'antd';
 import './_JudgeTableStyles.less';
 
 import Save from '../../../styles/icons/save.svg';
@@ -134,8 +134,8 @@ export default function JudgeTable(props) {
     setState({ searchText: '' });
   };
 
-  function changeSorter(sorter) {
-    console.log(sorter);
+  function changeSorter(pagination, filters, sorter, extra) {
+    setFilters(filters);
   }
 
   const rowSelection = {
@@ -149,6 +149,38 @@ export default function JudgeTable(props) {
     var day = text.slice(8, 10);
     return month + '/' + day + '/' + year;
   }
+
+  // keeping track of filters applied to the table
+  const [filters, setFilters] = useState([]);
+
+  useEffect(() => {
+    // current use is to keep the filter state in sync.
+    console.log('filter applied');
+  }, [filters]);
+
+  // returns processed array of filters
+  const processFilters = filters => {
+    let res = [];
+    for (const i in filters) {
+      if (filters[i]) {
+        res.push(`${i}: ${filters[i]}`);
+      } else if (!filters[i]) {
+        let temp = [];
+        if (filters.length > 0 && filters.includes(`${i}: ${filters[i]}`)) {
+          filters.forEach(value => {
+            if (value !== undefined) {
+              const term = value.split(':')[0];
+              if (term !== i) {
+                temp.push(value);
+              }
+            }
+          });
+          res = temp;
+        }
+      }
+    }
+    return res;
+  };
 
   const columns = [
     {
@@ -273,6 +305,12 @@ export default function JudgeTable(props) {
       <div className="judge-table-container">
         <Tabs defaultActiveKey="1">
           <TabPane tab="Judges" key="1">
+            <div>
+              Filters:{' '}
+              {processFilters(filters).map(filter => (
+                <Tag key={filter}>{filter}</Tag>
+              ))}
+            </div>
             <div className="judge-table">
               <Table
                 className="judges_table"
