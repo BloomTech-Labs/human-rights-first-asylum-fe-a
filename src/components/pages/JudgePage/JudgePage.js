@@ -162,7 +162,7 @@ export default function JudgePage(props) {
       width: 180,
     },
     {
-      field: 'case_outcome',
+      field: 'outcome',
       renderHeader: params => <strong>{'Decision'}</strong>,
       headerName: 'Decision',
       width: 140,
@@ -211,7 +211,7 @@ export default function JudgePage(props) {
   //   nation_of_origin: '',
   //   protected_ground: '',
   //   application_type: '',
-  //   case_outcome: '',
+  //   outcome: '',
   // });
 
   // const [new_search, setSearch] = useState(false);
@@ -241,7 +241,7 @@ export default function JudgePage(props) {
   //   { id: 'nation_of_origin', label: 'Nation of Origin' },
   //   { id: 'protected_ground', label: 'Protected Ground' },
   //   { id: 'application_type', label: 'Application Type' },
-  //   { id: 'case_outcome', label: 'Decision' },
+  //   { id: 'outcome', label: 'Decision' },
   // ];
 
   // const drawerContent = () => {

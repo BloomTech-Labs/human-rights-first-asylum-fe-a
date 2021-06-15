@@ -131,13 +131,15 @@ function RenderHomePage(props) {
     savedCases.length,
   ]);
   const getPendingCases = () => {
-    trackPromise(axiosWithAuth().get(`/pendingCases/:${user.userInfo.sub}`))
+    trackPromise(
+      axiosWithAuth().get(`/cases/pending/user/${user.userInfo.sub}`)
+    )
       .then(res => {
         setMyPendingCases(
           res.data.map(eachCase => {
             return {
               ...eachCase,
-              id: eachCase.pending_case_id,
+              id: eachCase.case_id,
             };
           })
         );

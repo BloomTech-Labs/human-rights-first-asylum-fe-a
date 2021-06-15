@@ -33,6 +33,10 @@ const ManageUsersPage = props => {
   const [formValues, setFormValues] = useState(initialFormValues);
 
   useEffect(() => {
+    loadUsers();
+  }, [authState.idToken.idToken]);
+
+  const loadUsers = () => {
     axiosWithAuth()
       .get(`/profiles`)
       .then(res => {
@@ -41,7 +45,7 @@ const ManageUsersPage = props => {
       .catch(err => {
         console.log(err);
       });
-  }, [authState.idToken.idToken]);
+  };
 
   const successNotification = () => {
     notification.open({
@@ -57,7 +61,8 @@ const ManageUsersPage = props => {
     axiosWithAuth()
       .delete(`/profiles/${profile.user_id}`)
       .then(res => {
-        setProfiles(res.data.profiles);
+        alert(`${profile.first_name}'s profile was deleted`);
+        loadUsers();
       })
       .catch(err => {
         console.log(err);
@@ -104,7 +109,7 @@ const ManageUsersPage = props => {
     axiosWithAuth()
       .post(`/profile/`, newUser)
       .then(res => {
-        setProfiles(res.data.profile);
+        loadUsers();
       })
       .catch(err => console.log(err));
     setFormValues(initialFormValues);
@@ -114,7 +119,7 @@ const ManageUsersPage = props => {
     axiosWithAuth()
       .put(`/profile/${updatedUser.user_id}`, updatedUser)
       .then(res => {
-        setProfiles(res.data.profiles);
+        loadUsers();
       })
       .catch(err => console.log(err));
     setFormValues(initialFormValues);

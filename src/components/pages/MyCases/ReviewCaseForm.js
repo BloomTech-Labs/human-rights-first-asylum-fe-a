@@ -44,7 +44,7 @@ const ReviewCaseForm = props => {
         });
     } else if (role === 'admin') {
       axiosWithAuth()
-        .post(`/pendingCases/approve/${currentId}`, editedFormValues)
+        .post(`/cases/pending/approve/${currentId}`, editedFormValues)
         .then(res => {
           getPendingCases();
           setVisible(false);
@@ -71,12 +71,12 @@ const ReviewCaseForm = props => {
           <div>
             <Form.Item label="Case Outcome">
               <Input
-                id="case_outcome"
+                id="outcome"
                 type="text"
-                name="case_outcome"
+                name="outcome"
                 onChange={onInputChange}
                 placeholder="Case Outcome"
-                value={editedFormValues.case_outcome}
+                value={editedFormValues.outcome}
               />
             </Form.Item>
           </div>
