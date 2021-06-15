@@ -59,9 +59,9 @@ const styles = StyleSheet.create({
 });
 
 export function MyDoc(props) {
-  // case_date has a UTC format from the database
+  // date has a UTC format from the database
   // convertDate/date formats it to a correctly configured date string
-  const convertDate = new Date(props.caseData[0].case_date);
+  const convertDate = new Date(props.caseData[0].date);
   const date = convertDate.toLocaleDateString();
 
   return (
@@ -111,7 +111,7 @@ export function MyDoc(props) {
                   <Text style={styles.tableCell}>{item.case_origin}</Text>
                 </View>
                 <View style={styles.tableCol}>
-                  <Text style={styles.tableCell}>{item.case_outcome}</Text>
+                  <Text style={styles.tableCell}>{item.outcome}</Text>
                 </View>
                 <View style={styles.tableCol}>
                   <Text style={styles.tableCell}>{item.country_of_origin}</Text>
