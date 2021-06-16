@@ -38,7 +38,7 @@ export default function ManageCases(props) {
 
   const handleReject = record => {
     axiosWithAuth()
-    .put(`/cases/pending/approve/${record.case_id}`, {status: "rejected"})
+    .put(`/cases/pending/approve/${record.case_id}`, {status: "Review"})
     .then(res => {
       notification.open({
         message: 'Case Rejected',
