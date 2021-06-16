@@ -4,9 +4,7 @@ import { Collapse, Input, Button, Modal, notification, Form } from 'antd';
 import './_SupportPageStyles.less';
 import Icon from '@ant-design/icons';
 import OrangeLine from '../../../styles/orange-line.svg';
-import {
-  CheckCircleOutlined,
-} from '@ant-design/icons';
+import { CheckCircleOutlined } from '@ant-design/icons';
 const initialFormValues = {
   message: '',
   email: '',
