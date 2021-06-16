@@ -4,6 +4,7 @@ import './_ManageCasesStyles.less';
 
 import { notification, Table, Button } from 'antd';
 import {
+  FilePdfOutlined,
   CheckCircleOutlined,
   CloseCircleOutlined
 } from '@ant-design/icons';
@@ -61,6 +62,17 @@ export default function ManageCases(props) {
       dataIndex: 'case_id',
       key: 'case_id',
       width: '25%'
+    },
+    {
+      title: 'Download PDF',
+      dataIndex: 'url',
+      key: 'url',
+      render: text => (
+        <a href={text}>
+          {' '}
+          <FilePdfOutlined />
+        </a>
+      ),
     },
     {
       title: 'Uploaded By',
