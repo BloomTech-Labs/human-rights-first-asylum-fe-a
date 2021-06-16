@@ -1,32 +1,37 @@
-@background-image: '../../../styles/statueOfLiberty.jpg';
+@background-image: '../../../styles/blueStatueOfLiberty.png';
 @button: #bd5a27;
 @white: #ffffff;
+@font-color: #262626;
+@font: 'Lato', sans-serif;
 
 .signup-root {
   width: 100%;
   display: flex;
+  background-image: url('../../../styles/blueStatueOfLiberty.png');
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .signup-form {
   display: flex;
+  width: 20vw;
+  margin-left: 20rem;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 32%;
-  margin: 0 auto;
   @media (max-width: 600px) {
-    width: 70%;
+    width: 100%;
   }
 }
 
 .logo {
-  max-width: 350px;
-  max-height: 65px;
+    max-width: 70rem;
+    max-height: 3.6rem;
+    margin-bottom: 1rem;
 }
 
 .background-image-signup {
-  background-image: url(@background-image);
-  width: 500px;
+  width: 50vw; 
   min-height: 100vh;
   background-position: top;
   background-repeat: no-repeat;
@@ -45,9 +50,11 @@
 }
 
 .ant-input {
-  border-radius: 1px;
-  line-height: 22px;
-  padding: 6px 8px;
+  border-radius: 0.1rem;
+  line-height: 2rem;
+  margin-top: -0.2rem;
+
+  
 }
 
 .link-back {
@@ -65,24 +72,24 @@
 
 .h2-signup {
   font-size: 1.4rem;
-  margin-top: 3.5rem;
+  margin-top: 1.8rem;
+  font-weight: bold;
 }
 
 .request-btn {
   color: @white !important;
   background-color: @button;
-  margin: 0.8rem 0rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 1px;
+  border-radius: 0.1rem;
   padding: 1.5rem;
   width: 100%;
   &:hover {
     background-color: @white !important;
     color: @button !important;
-    border: 1px solid @button !important;
-    border-radius: 1px;
+    border: 0.1rem solid @button !important;
+    border-radius: 0.1rem;
   }
   &:active {
     color: @white;
@@ -93,3 +100,15 @@
     background-color: @button;
   }
 }
+
+.submit-button{
+  margin-top: -0.5rem;
+  width: 102%;
+}
+
+  .signUP-form label {
+    font-family:@font;
+    color: @font-color;
+    font-weight: bold;
+    font-size: 0.9rem;
+  }

@@ -1,4 +1,4 @@
-@background-image: '../../../styles/statueOfLiberty.jpg';
+@background-image: '../../../styles/blueStatueOfLiberty.png';
 @font: 'Lato', sans-serif;
 @font-color: #262626;
 @button: #bd5a27;
@@ -8,10 +8,14 @@
 .login-container {
   width: 100%;
   display: flex;
+  background-image: url('../../../styles/blueStatueOfLiberty.png');
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 .login-form {
   display: flex;
-  width: 60vw;
+  width: 85vw;
+  margin-left: 35rem;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -20,9 +24,9 @@
   }
 
   .logo {
-    max-width: 450px;
-    max-height: 65px;
-    margin-bottom: 2rem;
+    max-width: 70rem;
+    max-height: 3.6rem;
+    margin-bottom: 1rem;
   }
 
   .login-page {
@@ -41,11 +45,11 @@
   #sign-in-widget {
     display: flex;
     align-items: center;
-    margin: 0 auto;
     font-family: @font;
+    
 
     #okta-sign-in {
-      border-radius: 1px;
+      border-radius: 0.3rem;
     }
 
     #okta-sign-in.auth-container.main-container {
@@ -62,6 +66,8 @@
       }
       .button-primary {
         background: @button;
+        height: 2.6rem;
+        width: 20rem;
       }
       .okta-form-input-field input {
         font-family: @font;
@@ -70,7 +76,7 @@
         color: @font-color;
       }
       .custom-checkbox {
-        margin-top: -25px;
+        margin-top: -1rem;
         padding-bottom: 1rem;
         box-shadow: none;
       }
@@ -81,16 +87,21 @@
     }
 
     .o-form {
+      width: 100%;
       .o-form-head {
         font-size: 1.4rem;
         font-family: @font;
         margin-top: 0;
       }
       .o-form-input-name-username {
-        border-radius: 1px;
+        border-radius: 0.1rem;
+        height: 2.6rem;
+        width: 20rem;
       }
       .o-form-input-name-password {
-        border-radius: 1px;
+        border-radius: 0.1rem;
+        height: 2.6rem;
+        width: 20rem;
       }
       .o-form-label {
         padding-top: 1rem;
@@ -116,12 +127,12 @@
     .button-primary {
       background: @button;
       border: none !important;
-      border-radius: 1px !important;
+      border-radius: 0.1rem !important;
       &:hover {
         background-color: @white !important;
-        border: 1px solid @button !important;
+        border: 0.1rem solid @button !important;
         color: @button;
-        border-radius: 1px;
+        border-radius: 0.1rem;
       }
       &::selection {
         background: @button;
