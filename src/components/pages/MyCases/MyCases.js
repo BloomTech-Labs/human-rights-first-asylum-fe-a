@@ -7,9 +7,9 @@ import { ExclamationCircleTwoTone, FileTextOutlined } from '@ant-design/icons';
 import './MyCases.less';
 import ReviewCaseForm from './ReviewCaseForm';
 const initialFormValues = {
-  case_date: new Date(),
+  date: new Date(),
   judge: '',
-  case_outcome: '',
+  outcome: '',
   country_of_origin: '',
   protected_grounds: '',
   application_type: '',
@@ -36,7 +36,9 @@ export default function MyCases(props) {
     // eslint-disable-next-line
   }, []);
   useEffect(() => {
-    trackPromise(axiosWithAuth().get(`/cases/user/:${user.userInfo.sub}`))
+    trackPromise(
+      axiosWithAuth().get(`/cases/pending/user/:${user.userInfo.sub}`)
+    )
       .then(res => {
         setMyApprovedCases(
           res.data.map(eachCase => {
@@ -64,7 +66,7 @@ export default function MyCases(props) {
     {
       width: '15%',
       align: 'center',
-      dataIndex: 'uploaded',
+      dataIndex: 'created_at',
       key: 'uploaded',
       title: row => <strong>{'Uploaded On'}</strong>,
       sorter: true,
@@ -73,7 +75,7 @@ export default function MyCases(props) {
     {
       width: '15%',
       align: 'center',
-      dataIndex: 'case_url',
+      dataIndex: 'url',
       title: row => <strong>{'View PDF'}</strong>,
       render: params => (
         <div className="column-items">
@@ -115,7 +117,7 @@ export default function MyCases(props) {
               onClick={e => {
                 e.preventDefault();
                 showModal(row);
-                setCurrentId(row.pending_case_id);
+                setCurrentId(row.case_id);
               }}
             >
               Review
@@ -162,7 +164,7 @@ export default function MyCases(props) {
             }
             onClick={e => {
               e.preventDefault();
-              onDelete(row.pending_case_id);
+              onDelete(row.case_id);
             }}
           ></Button>
         </div>
@@ -183,7 +185,7 @@ export default function MyCases(props) {
       ),
     },
     {
-      key: 'case_url',
+      key: 'url',
       title: row => <strong>{'View PDF'}</strong>,
       render: params => (
         <Button
@@ -223,7 +225,7 @@ export default function MyCases(props) {
     setVisible(false);
   };
   const onDelete = case_id => {
-    trackPromise(axiosWithAuth().delete(`/pendingCases/${case_id}`))
+    trackPromise(axiosWithAuth().delete(`/cases/${case_id}`))
       .then(res => {
         getPendingCases();
       })
@@ -238,7 +240,7 @@ export default function MyCases(props) {
           <TabPane tab="Initial Cases" key="1">
             <div className="myCaseTable">
               <Table
-                rowKey={record => record.pending_case_id}
+                rowKey={record => record.case_id}
                 columns={pendingColumns}
                 dataSource={myPendingCases}
               />

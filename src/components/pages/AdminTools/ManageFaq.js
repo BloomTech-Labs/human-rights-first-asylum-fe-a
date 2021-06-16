@@ -48,6 +48,10 @@ const ManageFaqPage = props => {
     });
   };
   useEffect(() => {
+    loadFaqs();
+  }, [authState.idToken.idToken]);
+
+  const loadFaqs = () => {
     axiosWithAuth()
       .get(`/faq`)
       .then(res => {
@@ -56,7 +60,7 @@ const ManageFaqPage = props => {
       .catch(err => {
         console.log(err);
       });
-  }, [authState.idToken.idToken]);
+  };
 
 
   const deleteFaq = faq => {
@@ -64,7 +68,8 @@ const ManageFaqPage = props => {
     axiosWithAuth()
       .delete(`/faq/${faq.faq_id}`)
       .then(res => {
-        window.location.reload();
+        alert(`'Deleted Question: ${faq.question}'`);
+        loadFaqs();
       })
       .catch(err => {
         console.log(err);
@@ -92,7 +97,7 @@ const ManageFaqPage = props => {
       .post(`/faq/`, question)
       .then(res => {
         setFormValues(initialFormValues);
-        window.location.reload();
+        loadFaqs();
       })
       .catch(err => {
         console.log(err);

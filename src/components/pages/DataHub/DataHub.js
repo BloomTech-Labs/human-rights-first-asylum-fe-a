@@ -135,19 +135,19 @@ const DataHub = props => {
     let terminated = 0;
 
     data.map(eachCase => {
-      if (eachCase.case_outcome === 'Denied') {
+      if (eachCase.outcome === 'Denied') {
         denied += 1;
       }
-      if (eachCase.case_outcome === 'Granted') {
+      if (eachCase.outcome === 'Granted') {
         granted += 1;
       }
-      if (eachCase.case_outcome === 'Remanded') {
+      if (eachCase.outcome === 'Remanded') {
         remanded += 1;
       }
-      if (eachCase.case_outcome === 'Sustained') {
+      if (eachCase.outcome === 'Sustained') {
         sustained += 1;
       }
-      if (eachCase.case_outcome === 'Terminated') {
+      if (eachCase.outcome === 'Terminated') {
         terminated += 1;
       }
       return null;
@@ -190,7 +190,7 @@ const DataHub = props => {
     let granted = 0;
 
     data.map(eachCase => {
-      if (eachCase.case_outcome === 'Granted') {
+      if (eachCase.outcome === 'Granted') {
         granted += 1;
       }
       return null;
