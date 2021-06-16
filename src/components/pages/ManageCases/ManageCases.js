@@ -2,7 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
 import './_ManageCasesStyles.less';
 
-import { Table, Button } from 'antd';
+import { notification, Table, Button } from 'antd';
+import {
+  FilePdfOutlined,
+  CheckCircleOutlined,
+  CloseCircleOutlined
+} from '@ant-design/icons';
 import Icon from '@ant-design/icons';
 import OrangeLine from '../../../styles/orange-line.svg';
 
@@ -10,18 +15,65 @@ import OrangeLine from '../../../styles/orange-line.svg';
 
 export default function ManageCases(props) {
   const [apiData, setApiData] = useState([]);
-  const handleAccept = case_id => {
-    console.log('Accepted');
-    //Need to make and connect put request to handle "status"(or whatever they decided to call case status) update
+  const handleAccept = record => {
+    axiosWithAuth()
+      .put(`/cases/pending/approve/${record.case_id}`, {status: "approved"})
+      .then(res => {
+        notification.open({
+          message: 'Case Approved',
+          top: 128,
+          icon: <CheckCircleOutlined style={{ color: 'green' }} />,
+        });
+        setApiData([apiData[0].filter(c => c.case_id !== record.case_id)]);
+      })
+      .catch(err => {
+        notification.open({
+          message: 'Database Error',
+          description: 'failed to approve case',
+          top: 128,
+          icon: <CloseCircleOutlined style={{ color: 'red' }} />,
+        });
+      });
   };
 
-  const handleReject = case_id => {
-    console.log('Rejected');
-    //Need to make and connect put request to handle "status" (or whatever they decided to call case status) update
+  const handleReject = record => {
+    axiosWithAuth()
+    .put(`/cases/pending/approve/${record.case_id}`, {status: "Review"})
+    .then(res => {
+      notification.open({
+        message: 'Case Rejected',
+        top: 128,
+        icon: <CheckCircleOutlined style={{ color: 'green' }} />,
+      });
+      setApiData([apiData[0].filter(c => c.case_id !== record.case_id)]);
+    })
+    .catch(err => {
+      notification.open({
+        message: 'Database Error',
+        description: 'failed to reject case',
+        top: 128,
+        icon: <CloseCircleOutlined style={{ color: 'red' }} />,
+      });
+    });
   };
 
   const columns = [
-    { title: 'Case ID', dataIndex: 'case_id', key: 'case_id', width: '25%' },
+    { title: 'Case ID',
+      dataIndex: 'case_id',
+      key: 'case_id',
+      width: '25%'
+    },
+    {
+      title: 'Download PDF',
+      dataIndex: 'url',
+      key: 'url',
+      render: text => (
+        <a href={text}>
+          {' '}
+          <FilePdfOutlined />
+        </a>
+      ),
+    },
     {
       title: 'Uploaded By',
       dataIndex: 'user_id',
@@ -39,8 +91,8 @@ export default function ManageCases(props) {
       dataIndex: '',
       key: 'x',
       width: '10%',
-      render: () => (
-        <Button onClick={handleAccept} id="acceptCaseButton">
+      render: (_, record) => (
+        <Button onClick={() => handleAccept(record)} id="acceptCaseButton">
           Accept
         </Button>
       ),
@@ -50,8 +102,8 @@ export default function ManageCases(props) {
       dataIndex: '',
       key: 'y',
       width: '10%',
-      render: () => (
-        <Button onClick={handleReject} id="rejectCaseButton">
+      render: (_, record) => (
+        <Button onClick={() => handleReject(record)} id="rejectCaseButton">
           Reject
         </Button>
       ),
@@ -93,7 +145,7 @@ export default function ManageCases(props) {
           expandable={{
             expandedRowRender: caseObj => (
               <div key={caseObj.case_id}>
-                <p style={{ margin: 0 }}>Case ID: {caseObj.case_id}</p>
+                <p style={{ margin: 0 }}>Pending Case ID: {caseObj.pending_case_id}</p>
                 <p style={{ margin: 0 }}>Date: {caseObj.date}</p>
                 <p style={{ margin: 0 }}>Case Outcome: {caseObj.outcome}</p>
                 <p style={{ margin: 0 }}>
