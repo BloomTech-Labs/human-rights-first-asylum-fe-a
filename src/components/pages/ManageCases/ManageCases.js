@@ -16,14 +16,14 @@ export default function ManageCases(props) {
   const [apiData, setApiData] = useState([]);
   const handleAccept = record => {
     axiosWithAuth()
-      .post(`/pendingCases/approve/${record.pending_case_id}`, record)
+      .put(`/cases/pending/approve/${record.case_id}`, {status: "approved"})
       .then(res => {
         notification.open({
           message: 'Case Approved',
           top: 128,
           icon: <CheckCircleOutlined style={{ color: 'green' }} />,
         });
-        setApiData([apiData[0].filter(c => c.pending_case_id !== record.pending_case_id)]);
+        setApiData([apiData[0].filter(c => c.case_id !== record.case_id)]);
       })
       .catch(err => {
         notification.open({
@@ -37,14 +37,14 @@ export default function ManageCases(props) {
 
   const handleReject = record => {
     axiosWithAuth()
-    .delete(`/pendingCases/${record.pending_case_id}`)
+    .put(`/cases/pending/approve/${record.case_id}`, {status: "rejected"})
     .then(res => {
       notification.open({
         message: 'Case Rejected',
         top: 128,
         icon: <CheckCircleOutlined style={{ color: 'green' }} />,
       });
-      setApiData([apiData[0].filter(c => c.pending_case_id !== record.pending_case_id)]);
+      setApiData([apiData[0].filter(c => c.case_id !== record.case_id)]);
     })
     .catch(err => {
       notification.open({
@@ -57,9 +57,9 @@ export default function ManageCases(props) {
   };
 
   const columns = [
-    { title: 'Pending Case ID',
-      dataIndex: 'pending_case_id',
-      key: 'pending_case_id',
+    { title: 'Case ID',
+      dataIndex: 'case_id',
+      key: 'case_id',
       width: '25%'
     },
     {
