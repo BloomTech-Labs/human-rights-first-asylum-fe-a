@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
-import { Collapse, Input, Button, Modal, Form } from 'antd';
+import { Collapse, Input, Button, Modal, notification, Form } from 'antd';
 import './_SupportPageStyles.less';
 import Icon from '@ant-design/icons';
 import OrangeLine from '../../../styles/orange-line.svg';
-
+import { CheckCircleOutlined } from '@ant-design/icons';
 const initialFormValues = {
   message: '',
   email: '',
   name: '',
+};
+const successNotification = () => {
+  notification.open({
+    message: 'Contact Us',
+    description: 'Message sent successfully!',
+    top: 128,
+    icon: <CheckCircleOutlined style={{ color: 'green' }} />,
+  });
 };
 
 const SupportPage = props => {
@@ -55,7 +63,7 @@ const SupportPage = props => {
       email: formValues.email.trim(),
       name: formValues.name.trim(),
     };
-    alert('Message sent');
+    successNotification();
     postNewMessage(message);
     setIsModalVisible(false);
   };

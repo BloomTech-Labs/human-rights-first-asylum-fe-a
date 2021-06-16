@@ -28,7 +28,6 @@ const ManageUsersPage = props => {
   const { authState } = props;
   const [profiles, setProfiles] = useState([]);
   const [formValues, setFormValues] = useState(initialFormValues);
-  const [form] = Form.useForm();
 
   useEffect(() => {
     loadUsers();
