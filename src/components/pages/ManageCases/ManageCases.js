@@ -62,12 +62,12 @@ export default function ManageCases(props) {
 
   useEffect(() => {
     axiosWithAuth()
-      .get(`/pendingCases`)
+      .get(`/cases/pending`)
       .then(res => {
         filteredData.push(
           res.data.filter(caseStatus => {
             return caseStatus.status === 'Pending';
-            //currently, there is only one pending case in the seed data. If you want to test multiple case objects, try setting "status" to case_outcome and "pending" to "remanded" or "denied"
+            //currently, there is only one pending case in the seed data. If you want to test multiple case objects, try setting "status" to outcome and "pending" to "remanded" or "denied"
           })
         );
       })
@@ -95,9 +95,7 @@ export default function ManageCases(props) {
               <div key={caseObj.case_id}>
                 <p style={{ margin: 0 }}>Case ID: {caseObj.case_id}</p>
                 <p style={{ margin: 0 }}>Date: {caseObj.date}</p>
-                <p style={{ margin: 0 }}>
-                  Case Outcome: {caseObj.case_outcome}
-                </p>
+                <p style={{ margin: 0 }}>Case Outcome: {caseObj.outcome}</p>
                 <p style={{ margin: 0 }}>
                   Country of Origin: {caseObj.country_of_origin}
                 </p>
@@ -124,7 +122,7 @@ export default function ManageCases(props) {
                 </p>
                 <p style={{ margin: 0 }}>
                   Filed 1 Year:
-                  {caseObj.case_filed_within_one_year ? 'True' : 'False'}
+                  {caseObj.filed_within_one_year ? 'True' : 'False'}
                 </p>
                 <p style={{ margin: 0 }}>
                   Credible:
