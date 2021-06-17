@@ -9,15 +9,16 @@ import {
   Descriptions,
   notification,
   Radio,
+  Tabs,
+  Table,
 } from 'antd';
 import PendingUsers from './PendingUsers';
-import {
-  CheckCircleOutlined,
-} from '@ant-design/icons';
+import { CheckCircleOutlined } from '@ant-design/icons';
 
 import './_ManageUsersStyles.less';
 import Icon from '@ant-design/icons';
 import OrangeLine from '../../../styles/orange-line.svg';
+import ColumnGroup from 'antd/lib/table/ColumnGroup';
 
 const initialFormValues = {
   first_name: '',
@@ -149,6 +150,30 @@ const ManageUsersPage = props => {
     updateUser(updatedUser);
     setIsEditModalVisible(false);
   };
+  const { Column, ColumnGroup } = Table;
+
+  const columns = [
+    {
+      title: 'Name',
+      dataIndex: 'item.name',
+      key: 'item.name',
+    },
+    {
+      title: 'Email',
+      dataIndex: 'item.email',
+      key: 'item.email',
+    },
+    {
+      title: 'Role',
+      dataIndex: 'item.role',
+      key: 'item.role',
+    },
+    {
+      title: 'Joined',
+      dataIndex: 'item.joined',
+      key: 'item.joined',
+    },
+  ];
 
   return (
     <div className="users-container">
@@ -157,33 +182,90 @@ const ManageUsersPage = props => {
         <p className="divider">
           <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
         </p>
-        <Collapse accordion>
+        <Table dataSource={profiles}>
           {profiles.map(item => {
             return (
-              <Panel
-                className="item-name"
-                header={`${item.first_name} ${item.last_name}`}
-              >
-                <Descriptions className="user-info-title" title="User Info">
-                  <Descriptions.Item className="user-details" label="Name">
+              <>
+                <ColumnGroup>
+                  <Column
+                    title="First Name"
+                    dataIndex="first_name"
+                    key="first_name"
+                    className="item-name"
+                    header={`${item.first_name} ${item.last_name}`}
+                    columns={columns}
+                  />
+                </ColumnGroup>
+                <ColumnGroup>
+                  <Column
+                    title="Last Name"
+                    dataIndex="last_name"
+                    key="last_name"
+                    className="item-name"
+                    header={`${item.first_name} ${item.last_name}`}
+                    columns={columns}
+                  />
+                </ColumnGroup>
+                <ColumnGroup>
+                  <Column
+                    title="Email"
+                    dataIndex="item.email"
+                    key="item.email"
+                    className="item.email"
+                    header={`${item.item.email} ${item.email}`}
+                    columns={columns}
+                  />
+                </ColumnGroup>
+                <ColumnGroup>
+                  <Column
+                    title="Role"
+                    dataIndex="item.role"
+                    key="item.role"
+                    className="item.role"
+                    header={`${item.item.role} ${item.role}`}
+                    columns={columns}
+                  />
+                </ColumnGroup>
+                <ColumnGroup>
+                  <Column
+                    title="Joined"
+                    dataIndex="item.joined"
+                    key="item.joined"
+                    className="item.joined"
+                    header={`${item.item.joined} ${item.joined}`}
+                    columns={columns}
+                  />
+                </ColumnGroup>
+              </>
+            );
+          })}
+        </Table>
+      </div>
+    </div>
+  );
+
+  /* <Tabs className="user-info-title" title="User Info">
+                  <Tabs.Item className="user-details" label="Name">
                     <p className="detail">{`${item.first_name} ${item.last_name}`}</p>
-                  </Descriptions.Item>
+                  </Tabs.Item>
 
-                  <Descriptions.Item className="user-details" label="Email">
+                  <Tabs.Item className="user-details" label="Email">
                     <p className="detail">{item.email}</p>
-                  </Descriptions.Item>
+                  </Tabs.Item>
 
-                  <Descriptions.Item className="user-details" label="Role">
+                  <Tabs.Item className="user-details" label="Role">
                     <p className="detail">{item.role}</p>
-                  </Descriptions.Item>
+                  </Tabs.Item>
 
-                  <Descriptions.Item className="user-details" label="Joined">
+                  <Tabs.Item className="user-details" label="Joined">
                     <p className="detail">
                       {String(item.created_at).slice(0, 10)}
                     </p>
-                  </Descriptions.Item>
-                </Descriptions>
-                <div className="buttons">
+                  </Tabs.Item>
+                </Tabs> */
+};
+{
+  /* <div className="buttons">
                   <AntDButton
                     className="btn-style"
                     onClick={() => showEditModal(item.user_id)}
@@ -207,9 +289,9 @@ const ManageUsersPage = props => {
                       </div>,
                     ]}
                   >
-                    <Form
+                    <Table
                       layout="vertical"
-                      className="user-form"
+                      className="user-Table"
                       onFinish={onSubmit}
                     >
                       <h2 className="h1Styles">Edit User</h2>
@@ -220,7 +302,7 @@ const ManageUsersPage = props => {
                           )}
                         />
                       </p>
-                      <Form.Item label="First Name">
+                      <Tabs.Item label="First Name">
                         <Input
                           id="first_name"
                           type="text"
@@ -230,8 +312,8 @@ const ManageUsersPage = props => {
                           placeholder="First Name"
                           value={formValues.first_name}
                         />
-                      </Form.Item>
-                      <Form.Item label="Last Name">
+                      </Tabs.Item>
+                      <Tabs.Item label="Last Name">
                         <Input
                           id="last_name"
                           type="text"
@@ -241,8 +323,8 @@ const ManageUsersPage = props => {
                           placeholder="Last Name"
                           value={formValues.last_name}
                         />
-                      </Form.Item>
-                      <Form.Item label="Email">
+                      </Tabs.Item>
+                      <Tabs.Item label="Email">
                         <Input
                           id="email"
                           type="email"
@@ -252,7 +334,7 @@ const ManageUsersPage = props => {
                           className="text-field"
                           value={formValues.email}
                         />
-                      </Form.Item>
+                      </Tabs.Item>
                       <Radio.Group
                         onChange={onChange}
                         name="role"
@@ -263,7 +345,7 @@ const ManageUsersPage = props => {
                         <Radio value="moderator">Moderator</Radio>
                         <Radio value="admin">Admin</Radio>
                       </Radio.Group>
-                    </Form>
+                    </Table>
                   </Modal>
                   <AntDButton
                     className="btn-style"
@@ -274,10 +356,10 @@ const ManageUsersPage = props => {
                     Delete
                   </AntDButton>
                 </div>
-              </Panel>
+              </TabPane>
             );
           })}
-        </Collapse>
+        </Table>
       </div>
 
       <div className="add-user-btn-container">
@@ -301,14 +383,14 @@ const ManageUsersPage = props => {
             </div>,
           ]}
         >
-          <Form layout="vertical" className="user-form" onFinish={onSubmit}>
+          <TabPane layout="vertical" className="user-form" onFinish={onSubmit}>
             <h2 className="h1Styles">Add a User</h2>
             <p className="divider">
               <Icon
                 component={() => <img src={OrangeLine} alt="divider icon" />}
               />
             </p>
-            <Form.Item label="First Name">
+            <TabPane.Item label="First Name">
               <Input
                 id="first_name"
                 type="text"
@@ -318,8 +400,8 @@ const ManageUsersPage = props => {
                 placeholder="First Name"
                 value={formValues.first_name}
               />
-            </Form.Item>
-            <Form.Item label="Last Name">
+            </TabPane.Item>
+            <TabPane.Item label="Last Name">
               <Input
                 id="last_name"
                 type="text"
@@ -329,8 +411,8 @@ const ManageUsersPage = props => {
                 placeholder="Last Name"
                 value={formValues.last_name}
               />
-            </Form.Item>
-            <Form.Item label="Email">
+            </TabPane.Item>
+            <TabPane.Item label="Email">
               <Input
                 id="email"
                 type="email"
@@ -340,7 +422,7 @@ const ManageUsersPage = props => {
                 className="text-field"
                 value={formValues.email}
               />
-            </Form.Item>
+            </TabPane.Item>
             <Radio.Group
               onChange={onChange}
               name="role"
@@ -351,7 +433,7 @@ const ManageUsersPage = props => {
               <Radio value="moderator">Moderator</Radio>
               <Radio value="admin">Admin</Radio>
             </Radio.Group>
-          </Form>
+          </TabPane>
         </Modal>
       </div>
 
@@ -360,6 +442,219 @@ const ManageUsersPage = props => {
       </div>
     </div>
   );
-};
+  */
+}
+// return (
+//   <div className="users-container">
+//     <div className="users">
+//       <h2 className="users-header"> Manage Users </h2>
+//       <p className="divider">
+//         <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
+//       </p>
+//       <Collapse accordion>
+//         {profiles.map(item => {
+//           return (
+//             <Panel
+//               className="item-name"
+//               header={`${item.first_name} ${item.last_name}`}
+//             >
+//               <Descriptions className="user-info-title" title="User Info">
+//                 <Descriptions.Item className="user-details" label="Name">
+//                   <p className="detail">{`${item.first_name} ${item.last_name}`}</p>
+//                 </Descriptions.Item>
+
+//                 <Descriptions.Item className="user-details" label="Email">
+//                   <p className="detail">{item.email}</p>
+//                 </Descriptions.Item>
+
+//                 <Descriptions.Item className="user-details" label="Role">
+//                   <p className="detail">{item.role}</p>
+//                 </Descriptions.Item>
+
+//                 <Descriptions.Item className="user-details" label="Joined">
+//                   <p className="detail">
+//                     {String(item.created_at).slice(0, 10)}
+//                   </p>
+//                 </Descriptions.Item>
+//               </Descriptions>
+//               <div className="buttons">
+//                 <AntDButton
+//                   className="btn-style"
+//                   onClick={() => showEditModal(item.user_id)}
+//                 >
+//                   Edit
+//                 </AntDButton>
+//                 <Modal
+//                   title=""
+//                   visible={isEditModalVisible}
+//                   onOk={handleEditOk}
+//                   onCancel={handleEditCancel}
+//                   footer={[
+//                     <div className="submit-button">
+//                       <AntDButton
+//                         htmlType="submit"
+//                         className="add-user-btn"
+//                         onClick={onEditSubmit}
+//                       >
+//                         <span>Submit</span>
+//                       </AntDButton>
+//                     </div>,
+//                   ]}
+//                 >
+//                   <Form
+//                     layout="vertical"
+//                     className="user-form"
+//                     onFinish={onSubmit}
+//                   >
+//                     <h2 className="h1Styles">Edit User</h2>
+//                     <p className="divider">
+//                       <Icon
+//                         component={() => (
+//                           <img src={OrangeLine} alt="divider icon" />
+//                         )}
+//                       />
+//                     </p>
+//                     <Form.Item label="First Name">
+//                       <Input
+//                         id="first_name"
+//                         type="text"
+//                         name="first_name"
+//                         onChange={onChange}
+//                         className="text-field"
+//                         placeholder="First Name"
+//                         value={formValues.first_name}
+//                       />
+//                     </Form.Item>
+//                     <Form.Item label="Last Name">
+//                       <Input
+//                         id="last_name"
+//                         type="text"
+//                         name="last_name"
+//                         onChange={onChange}
+//                         className="text-field"
+//                         placeholder="Last Name"
+//                         value={formValues.last_name}
+//                       />
+//                     </Form.Item>
+//                     <Form.Item label="Email">
+//                       <Input
+//                         id="email"
+//                         type="email"
+//                         name="email"
+//                         placeholder="Email"
+//                         onChange={onChange}
+//                         className="text-field"
+//                         value={formValues.email}
+//                       />
+//                     </Form.Item>
+//                     <Radio.Group
+//                       onChange={onChange}
+//                       name="role"
+//                       value={formValues.role}
+//                       className="radio"
+//                     >
+//                       <Radio value="user">User</Radio>
+//                       <Radio value="moderator">Moderator</Radio>
+//                       <Radio value="admin">Admin</Radio>
+//                     </Radio.Group>
+//                   </Form>
+//                 </Modal>
+//                 <AntDButton
+//                   className="btn-style"
+//                   onClick={() => {
+//                     deleteUser(item);
+//                   }}
+//                 >
+//                   Delete
+//                 </AntDButton>
+//               </div>
+//             </Panel>
+//           );
+//         })}
+//       </Collapse>
+//     </div>
+
+//     <div className="add-user-btn-container">
+//       <AntDButton className="add-user-btn" onClick={showModal}>
+//         Add a User
+//       </AntDButton>
+//       <Modal
+//         title=""
+//         visible={isModalVisible}
+//         onOk={handleOk}
+//         onCancel={handleCancel}
+//         footer={[
+//           <div className="submit-button">
+//             <AntDButton
+//               htmlType="submit"
+//               className="add-user-btn"
+//               onClick={onSubmit}
+//             >
+//               <span>Submit</span>
+//             </AntDButton>
+//           </div>,
+//         ]}
+//       >
+//         <Form layout="vertical" className="user-form" onFinish={onSubmit}>
+//           <h2 className="h1Styles">Add a User</h2>
+//           <p className="divider">
+//             <Icon
+//               component={() => <img src={OrangeLine} alt="divider icon" />}
+//             />
+//           </p>
+//           <Form.Item label="First Name">
+//             <Input
+//               id="first_name"
+//               type="text"
+//               name="first_name"
+//               onChange={onChange}
+//               className="text-field"
+//               placeholder="First Name"
+//               value={formValues.first_name}
+//             />
+//           </Form.Item>
+//           <Form.Item label="Last Name">
+//             <Input
+//               id="last_name"
+//               type="text"
+//               name="last_name"
+//               onChange={onChange}
+//               className="text-field"
+//               placeholder="Last Name"
+//               value={formValues.last_name}
+//             />
+//           </Form.Item>
+//           <Form.Item label="Email">
+//             <Input
+//               id="email"
+//               type="email"
+//               name="email"
+//               placeholder="Email"
+//               onChange={onChange}
+//               className="text-field"
+//               value={formValues.email}
+//             />
+//           </Form.Item>
+//           <Radio.Group
+//             onChange={onChange}
+//             name="role"
+//             value={formValues.role}
+//             className="radio"
+//           >
+//             <Radio value="user">User</Radio>
+//             <Radio value="moderator">Moderator</Radio>
+//             <Radio value="admin">Admin</Radio>
+//           </Radio.Group>
+//         </Form>
+//       </Modal>
+//     </div>
+
+//     <div className="pending-users-container">
+//       <PendingUsers authState={authState} setProfiles={setProfiles} />
+//     </div>
+//   </div>
+// );
+
+// }
 
 export default ManageUsersPage;
