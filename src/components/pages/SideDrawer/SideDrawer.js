@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Menu, Button } from 'antd';
+import { Menu } from 'antd';
 import './_SideDrawer.less';
-
-import { DoubleRightOutlined, DoubleLeftOutlined } from '@ant-design/icons';
+import MenuButton from './MenuButton';
 
 const { SubMenu } = Menu;
 
@@ -38,11 +37,7 @@ function SideDrawer() {
           position: 'sticky',
         }}
       >
-        <Button type="primary" className="toggle-btn" onClick={toggleCollapsed}>
-          {React.createElement(
-            collapsed ? DoubleRightOutlined : DoubleLeftOutlined
-          )}
-        </Button>
+        <MenuButton toggle={toggleCollapsed} collapsed={collapsed} />
 
         <Menu.Item className="home" key="/">
           Home
