@@ -8,34 +8,34 @@ import logo from '../../../styles/hrf-logo.png';
 
 import { config } from '../../../utils/oktaConfig';
 
+const { pkce, issuer, clientId, redirectUri, scopes } = config;
+
+const widget = new OktaSignIn({
+  baseUrl: issuer ? issuer.split('/oauth2')[0] : '',
+  clientId,
+  redirectUri,
+  registration: {},
+  features: { registration: false },
+  // turning this feature on allows your widget to use Okta for user registration
+  i18n: {
+    en: {
+      'primaryauth.title': 'Log in to Continue',
+      'primaryauth.username.placeholder': 'Email Address',
+      'password.forgot.email.or.username.placeholder': 'Email Address',
+      'password.forgot.email.or.username.tooltip': ' ',
+      // change title for your app
+    },
+  },
+  authParams: {
+    pkce,
+    issuer,
+    display: 'page',
+    scopes,
+  },
+});
+
 const LoginContainer = () => {
   useEffect(() => {
-    const { pkce, issuer, clientId, redirectUri, scopes } = config;
-
-    const widget = new OktaSignIn({
-      baseUrl: issuer ? issuer.split('/oauth2')[0] : '',
-      clientId,
-      redirectUri,
-      registration: {},
-      features: { registration: false },
-      // turning this feature on allows your widget to use Okta for user registration
-      i18n: {
-        en: {
-          'primaryauth.title': 'Log in to Continue',
-          'primaryauth.username.placeholder': 'Email Address',
-          'password.forgot.email.or.username.placeholder': 'Email Address',
-          'password.forgot.email.or.username.tooltip': ' ',
-          // change title for your app
-        },
-      },
-      authParams: {
-        pkce,
-        issuer,
-        display: 'page',
-        scopes,
-      },
-    });
-
     widget.renderEl(
       { el: '#sign-in-widget' },
       () => {
@@ -49,6 +49,10 @@ const LoginContainer = () => {
       }
     );
   }, []);
+
+  const removeOktaSignIn = () => {
+    widget.remove();
+  };
 
   return (
     <div className="login-container">
@@ -64,7 +68,11 @@ const LoginContainer = () => {
           <div id="sign-in-widget" aria-label="login form" />
           <p className="register">
             Don't have an account?{' '}
-            <Link className="link-styles" to="/signup">
+            <Link
+              className="link-styles"
+              to="/signup"
+              onClick={removeOktaSignIn}
+            >
               <span>Register here</span>
             </Link>
           </p>
