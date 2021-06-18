@@ -16,7 +16,8 @@ const { TextArea } = Input;
 
 export default function ManageCases(props) {
   const [apiData, setApiData] = useState([]);
-  const [isModalVisible, setIsModalVisible] = useState(true);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [currentCase, setCurrentCase] = useState();
 
   const handleAccept = record => {
     axiosWithAuth()
@@ -49,6 +50,7 @@ export default function ManageCases(props) {
           icon: <CheckCircleOutlined style={{ color: 'green' }} />,
         });
         setApiData([apiData[0].filter(c => c.case_id !== record.case_id)]);
+        setIsModalVisible(false);
       })
       .catch(err => {
         notification.open({
@@ -57,10 +59,12 @@ export default function ManageCases(props) {
           top: 128,
           icon: <CloseCircleOutlined style={{ color: 'red' }} />,
         });
+        setIsModalVisible(false);
       });
   };
 
-  const showModal = () => {
+  const showModal = record => {
+    setCurrentCase(record);
     setIsModalVisible(true);
   };
 
@@ -110,7 +114,7 @@ export default function ManageCases(props) {
       key: 'y',
       width: '10%',
       render: (_, record) => (
-        <Button onClick={() => showModal()} id="rejectCaseButton">
+        <Button onClick={() => showModal(record)} id="rejectCaseButton">
           Reject
         </Button>
       ),
@@ -212,7 +216,10 @@ export default function ManageCases(props) {
                 </h2>
                 <TextArea rows={4} />
                 <div className="rejectionModalButtonContainer">
-                  <Button className="review-btn" onClick={() => handleReject()}>
+                  <Button
+                    className="review-btn"
+                    onClick={() => handleReject(currentCase)}
+                  >
                     Reject
                   </Button>
                 </div>
