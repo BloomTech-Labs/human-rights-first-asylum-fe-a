@@ -210,7 +210,42 @@ const DataHub = props => {
       <div className="mainChartContainer">
         <TestDataChart />
       </div>
+      {/* everything from here to below comment is just an experimental form for feature/display-data-with-plotly */}
+      <div className="dataHubContainer">
+        <div>
+          <h2 className="h1Styles">Search Features</h2>
+          <p className="divider">
+            <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
+          </p>
+          <div>
+            <form>
+              <label for='x value'>Choose an X value</label>
+              <select id='xvalue' name='xvalue'>
+                <option>testestest</option>
+                <option>testestest</option>
+                <option>testestest</option>
+                <option>testestest</option>
+                <option>testestest</option>
+                <option>testestest</option>
+                <option>testestest</option>
+              </select>
+              <label for='y value'>Choose an Y value</label>
+              <select id='yvalue' name='yvalue'>
+                <option>testestest</option>
+                <option>testestest</option>
+                <option>testestest</option>
+                <option>testestest</option>
+                <option>testestest</option>
+                <option>testestest</option>
+                <option>testestest</option>
+              </select>
+            </form>
+          </div>
+        </div>
 
+
+      </div>
+      {/* end of form */}
       <div className="subChartsContainer">
         <CaseDataChart />
         <h2>Ratio of Cases Resulting In Granted Asylum: {grantedRatio}%</h2>
