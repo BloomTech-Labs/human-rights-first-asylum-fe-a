@@ -13,6 +13,7 @@ import './_UploadCase.less';
 import Icon from '@ant-design/icons';
 import UploadCaseBox from '../../../styles/icons/upload-box.svg';
 import OrangeLine from '../../../styles/orange-line.svg';
+
 const UploadCase = ({ getPendingCases }) => {
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
@@ -56,6 +57,7 @@ const UploadCase = ({ getPendingCases }) => {
     }
     setPostQueue([...postQueue, ...multiFile]);
   };
+
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -68,6 +70,7 @@ const UploadCase = ({ getPendingCases }) => {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
+
   const DragProps = {
     name: 'file',
     multiple: true,
@@ -86,6 +89,7 @@ const UploadCase = ({ getPendingCases }) => {
       setPostQueue(copy);
     }
   }, [postQueue]);
+
   useEffect(() => {
     if (nextPost) {
       axiosWithAuth()
@@ -117,6 +121,7 @@ const UploadCase = ({ getPendingCases }) => {
         });
     }
   }, [nextPost]);
+
   useEffect(() => {
     if (nextScrap) {
       axiosWithAuth()
@@ -146,6 +151,7 @@ const UploadCase = ({ getPendingCases }) => {
         });
     }
   }, [nextScrap]);
+
   useEffect(() => {
     if (!nextScrap && scrapQueue.length !== 0 && isReady) {
       const copy = scrapQueue;
@@ -153,6 +159,7 @@ const UploadCase = ({ getPendingCases }) => {
       setScrapQueue(copy);
     }
   }, [scrapQueue, isReady]);
+
   return (
     <div className="uploadPage">
       <div className="uploadButton">
@@ -165,11 +172,11 @@ const UploadCase = ({ getPendingCases }) => {
           onOk={handleOk}
           onCancel={handleCancel}
           footer={[
-            <div className="footer-btn">
+            <div key="footer" className="footer-btn">
               <Button className="not-now-btn" key="back" onClick={handleCancel}>
                 Not Now
               </Button>
-              <Button className="review-btn" onClick={handleOk}>
+              <Button className="review-btn" key="review" onClick={handleOk}>
                 Review Cases
               </Button>
             </div>,
@@ -224,4 +231,5 @@ const UploadCase = ({ getPendingCases }) => {
     </div>
   );
 };
+
 export default UploadCase;
