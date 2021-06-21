@@ -128,7 +128,11 @@ const ManageFaqPage = props => {
         <Collapse accordion>
           {faq.map(item => {
             return (
-              <Panel className="q-header" header={`${item.question}`}>
+              <Panel
+                key={item.faq_id}
+                className="q-header"
+                header={`${item.question}`}
+              >
                 <p className="answer">Answer: </p>
                 <span>{item.answer}</span>
                 <div className="buttons">
