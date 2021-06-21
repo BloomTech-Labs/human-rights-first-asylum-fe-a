@@ -97,7 +97,7 @@ export function MyDoc(props) {
           </View>
           {props.caseData.map(item => {
             return (
-              <View style={styles.tableRow}>
+              <View key={item.case_id} style={styles.tableRow}>
                 <View style={styles.tableCol}>
                   <Text style={styles.tableCell}>{item.case_id}</Text>
                 </View>
