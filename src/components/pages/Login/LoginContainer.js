@@ -19,7 +19,7 @@ const widget = new OktaSignIn({
   // turning this feature on allows your widget to use Okta for user registration
   i18n: {
     en: {
-      'primaryauth.title': 'Log in to Continue',
+      'primaryauth.title': 'Sign In to continue',
       'primaryauth.username.placeholder': 'Email Address',
       'password.forgot.email.or.username.placeholder': 'Email Address',
       'password.forgot.email.or.username.tooltip': ' ',

@@ -62,7 +62,7 @@ export default function MainHeader(props) {
 
   return (
     <div className="site-page-header">
-      <img src={HRFLogo} alt="HRF Logo" />
+      <img className="hrf-logo" src={HRFLogo} alt="HRF Logo" />
       <div id="nav-flex-container">
         <UploadCase getPendingCases={getPendingCases} />
         <Notifications
