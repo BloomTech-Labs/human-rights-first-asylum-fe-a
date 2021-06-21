@@ -2,22 +2,26 @@ import React, { useState, useEffect } from 'react';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
 import './_ManageCasesStyles.less';
 
-import { notification, Table, Button } from 'antd';
+import { notification, Table, Button, Modal, Input, Form } from 'antd';
 import {
   FilePdfOutlined,
   CheckCircleOutlined,
-  CloseCircleOutlined
+  CloseCircleOutlined,
 } from '@ant-design/icons';
 import Icon from '@ant-design/icons';
 import OrangeLine from '../../../styles/orange-line.svg';
+const { TextArea } = Input;
 
 //***There is a bug*** Currently, when you expand one caseObj they all expand. This may be an issue with accept and reject buttons - we don't want to accept all or reject all on accident!
 
 export default function ManageCases(props) {
   const [apiData, setApiData] = useState([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [currentCase, setCurrentCase] = useState();
+
   const handleAccept = record => {
     axiosWithAuth()
-      .put(`/cases/pending/approve/${record.case_id}`, {status: "approved"})
+      .put(`/cases/pending/approve/${record.case_id}`, { status: 'approved' })
       .then(res => {
         notification.open({
           message: 'Case Approved',
@@ -38,31 +42,38 @@ export default function ManageCases(props) {
 
   const handleReject = record => {
     axiosWithAuth()
-    .put(`/cases/pending/approve/${record.case_id}`, {status: "Review"})
-    .then(res => {
-      notification.open({
-        message: 'Case Rejected',
-        top: 128,
-        icon: <CheckCircleOutlined style={{ color: 'green' }} />,
+      .put(`/cases/pending/approve/${record.case_id}`, { status: 'Review' })
+      .then(res => {
+        notification.open({
+          message: 'Case Rejected',
+          top: 128,
+          icon: <CheckCircleOutlined style={{ color: 'green' }} />,
+        });
+        setApiData([apiData[0].filter(c => c.case_id !== record.case_id)]);
+        setIsModalVisible(false);
+      })
+      .catch(err => {
+        notification.open({
+          message: 'Database Error',
+          description: 'failed to reject case',
+          top: 128,
+          icon: <CloseCircleOutlined style={{ color: 'red' }} />,
+        });
+        setIsModalVisible(false);
       });
-      setApiData([apiData[0].filter(c => c.case_id !== record.case_id)]);
-    })
-    .catch(err => {
-      notification.open({
-        message: 'Database Error',
-        description: 'failed to reject case',
-        top: 128,
-        icon: <CloseCircleOutlined style={{ color: 'red' }} />,
-      });
-    });
+  };
+
+  const showModal = record => {
+    setCurrentCase(record);
+    setIsModalVisible(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
   };
 
   const columns = [
-    { title: 'Case ID',
-      dataIndex: 'case_id',
-      key: 'case_id',
-      width: '25%'
-    },
+    { title: 'Case ID', dataIndex: 'case_id', key: 'case_id', width: '25%' },
     {
       title: 'Download PDF',
       dataIndex: 'url',
@@ -103,7 +114,7 @@ export default function ManageCases(props) {
       key: 'y',
       width: '10%',
       render: (_, record) => (
-        <Button onClick={() => handleReject(record)} id="rejectCaseButton">
+        <Button onClick={() => showModal(record)} id="rejectCaseButton">
           Reject
         </Button>
       ),
@@ -145,7 +156,9 @@ export default function ManageCases(props) {
           expandable={{
             expandedRowRender: caseObj => (
               <div key={caseObj.case_id}>
-                <p style={{ margin: 0 }}>Pending Case ID: {caseObj.pending_case_id}</p>
+                <p style={{ margin: 0 }}>
+                  Pending Case ID: {caseObj.pending_case_id}
+                </p>
                 <p style={{ margin: 0 }}>Date: {caseObj.date}</p>
                 <p style={{ margin: 0 }}>Case Outcome: {caseObj.outcome}</p>
                 <p style={{ margin: 0 }}>
@@ -188,6 +201,32 @@ export default function ManageCases(props) {
             rowExpandable: caseObj => caseObj.name !== 'Not Expandable',
           }}
         ></Table>
+        <Modal
+          title=""
+          visible={isModalVisible}
+          onOk={handleReject}
+          onCancel={handleCancel}
+          footer={[
+            <div className="rejectionModal">
+              <Form
+                rules={[{ required: true, message: 'Please leave a comment' }]}
+              >
+                <h2 className="rejectionModalTitle">
+                  Tell us why you rejected this case
+                </h2>
+                <TextArea rows={4} />
+                <div className="rejectionModalButtonContainer">
+                  <Button
+                    className="review-btn"
+                    onClick={() => handleReject(currentCase)}
+                  >
+                    Reject
+                  </Button>
+                </div>
+              </Form>
+            </div>,
+          ]}
+        ></Modal>
       </div>
     </div>
   );
