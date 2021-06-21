@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { Link } from 'react-router-dom';
-import { Form, Input, Button as AntDButton, notification, Modal, Collapse } from 'antd';
-// Styling and Icons
 import {
-  CheckCircleOutlined,
-  CloseCircleOutlined,
-} from '@ant-design/icons';
+  Form,
+  Input,
+  Button as AntDButton,
+  notification,
+  Modal,
+  Collapse,
+} from 'antd';
+// Styling and Icons
+import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import './_AddFaqStyles.less';
 import './_ManageFaqStyles.less';
 import Icon from '@ant-design/icons';
@@ -61,7 +65,6 @@ const ManageFaqPage = props => {
         console.log(err);
       });
   };
-
 
   const deleteFaq = faq => {
     deleteNotification();

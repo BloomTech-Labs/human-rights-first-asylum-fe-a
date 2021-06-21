@@ -65,7 +65,12 @@ const SignupPage = () => {
           <img src={logo} alt="logo" width="350px" />
         </div>
         <h2 className="h2-signup">Register for Access</h2>
-        <Form onFinish={onFinish} form={form} layout="vertical">
+        <Form
+          onFinish={onFinish}
+          form={form}
+          layout="vertical"
+          className="signUP-form"
+        >
           <Form.Item
             label="First Name"
             name="first_name"
@@ -102,7 +107,7 @@ const SignupPage = () => {
           </Form.Item>
           <Form.Item
             name="email"
-            label="Email"
+            label="Email Address"
             rules={[
               {
                 type: 'email',
