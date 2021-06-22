@@ -88,6 +88,7 @@ export default function ManageCases(props) {
 
   const showModal = record => {
     setCurrentCase(record);
+    setComment("");
     setIsModalVisible(true);
   };
 
