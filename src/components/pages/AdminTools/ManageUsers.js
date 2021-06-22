@@ -5,7 +5,6 @@ import {
   Input,
   Button as AntDButton,
   Modal,
-  Collapse,
   Radio,
   Tabs,
   Table,
@@ -16,7 +15,6 @@ import PendingUsers from './PendingUsers';
 import './_ManageUsersStyles.less';
 import Icon from '@ant-design/icons';
 import OrangeLine from '../../../styles/orange-line.svg';
-import ColumnGroup from 'antd/lib/table/ColumnGroup';
 
 const initialFormValues = {
   first_name: '',
@@ -26,7 +24,6 @@ const initialFormValues = {
 };
 
 const ManageUsersPage = props => {
-  const { Panel } = Collapse;
   const { authState } = props;
   const [profiles, setProfiles] = useState([]);
   const [formValues, setFormValues] = useState(initialFormValues);
@@ -48,7 +45,7 @@ const ManageUsersPage = props => {
 
   const deleteUser = profile => {
     axiosWithAuth()
-      .delete(`/profiles/${profile.user_id}`)
+      .delete(`/profiles/${profiles.user_id}`)
       .then(res => {
         alert(`${profile.first_name}'s profile was deleted`);
         loadUsers();
@@ -210,7 +207,6 @@ const ManageUsersPage = props => {
       </div>
       <Tabs defaultActiveKey="1">
         <TabPane tab="Manage Users" key="1">
-          {/* <div className="users-table"> */}
           <Table
             columns={columns}
             dataSource={profiles}
@@ -285,7 +281,6 @@ const ManageUsersPage = props => {
               </Radio.Group>
             </Form>
           </Modal>
-          {/* </div> */}
         </TabPane>
         <TabPane tab="Pending Users" key="2">
           <div className="pending-users-container">
@@ -294,7 +289,7 @@ const ManageUsersPage = props => {
         </TabPane>
       </Tabs>
       <div className="add-user-btn-container">
-        <AntDButton className="add-user-btn" onClick={showModal}>
+        <AntDButton className="add-user" onClick={showModal}>
           Add a User
         </AntDButton>
         <Modal
