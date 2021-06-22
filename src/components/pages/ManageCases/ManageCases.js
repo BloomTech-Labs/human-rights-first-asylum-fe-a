@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
 import './_ManageCasesStyles.less';
 
-import { notification, Table, Button } from 'antd';
+import { notification, Table, Button, Modal, Input, Form } from 'antd';
 import {
   FilePdfOutlined,
   CheckCircleOutlined,
@@ -10,11 +10,16 @@ import {
 } from '@ant-design/icons';
 import Icon from '@ant-design/icons';
 import OrangeLine from '../../../styles/orange-line.svg';
+const { TextArea } = Input;
 
 //***There is a bug*** Currently, when you expand one caseObj they all expand. This may be an issue with accept and reject buttons - we don't want to accept all or reject all on accident!
 
 export default function ManageCases(props) {
   const [apiData, setApiData] = useState([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [currentCase, setCurrentCase] = useState();
+  const [comment, setComment] = useState('');
+
   const handleAccept = record => {
     axiosWithAuth()
       .put(`/cases/pending/approve/${record.case_id}`, { status: 'approved' })
@@ -37,24 +42,58 @@ export default function ManageCases(props) {
   };
 
   const handleReject = record => {
+    record.comment = comment;
+    // BE fixing model, so here for now
+    delete record.first_name;
+    delete record.middle_initial;
+    delete record.last_name;
+
     axiosWithAuth()
-      .put(`/cases/pending/approve/${record.case_id}`, { status: 'Review' })
+      .put(`/cases/comment/`, record)
       .then(res => {
-        notification.open({
-          message: 'Case Rejected',
-          top: 128,
-          icon: <CheckCircleOutlined style={{ color: 'green' }} />,
-        });
-        setApiData([apiData[0].filter(c => c.case_id !== record.case_id)]);
+        axiosWithAuth()
+          .put(`/cases/pending/approve/${record.case_id}`, { status: 'Review' })
+          .then(res => {
+            notification.open({
+              message: 'Case Rejected',
+              top: 128,
+              icon: <CheckCircleOutlined style={{ color: 'green' }} />,
+            });
+            setApiData([apiData[0].filter(c => c.case_id !== record.case_id)]);
+            setIsModalVisible(false);
+          })
+          .catch(err => {
+            notification.open({
+              message: 'Database Error',
+              description: 'failed to reject case',
+              top: 128,
+              icon: <CloseCircleOutlined style={{ color: 'red' }} />,
+            });
+            setIsModalVisible(false);
+          });
       })
       .catch(err => {
         notification.open({
           message: 'Database Error',
-          description: 'failed to reject case',
+          description: 'failed to reject the case',
           top: 128,
           icon: <CloseCircleOutlined style={{ color: 'red' }} />,
         });
       });
+  };
+
+  const handleChangeComment = e => {
+    setComment(e.target.value);
+  };
+
+  const showModal = record => {
+    setCurrentCase(record);
+    setComment('');
+    setIsModalVisible(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
   };
 
   const columns = [
@@ -99,7 +138,7 @@ export default function ManageCases(props) {
       key: 'y',
       width: '10%',
       render: (_, record) => (
-        <Button onClick={() => handleReject(record)} id="rejectCaseButton">
+        <Button onClick={() => showModal(record)} id="rejectCaseButton">
           Reject
         </Button>
       ),
@@ -186,6 +225,36 @@ export default function ManageCases(props) {
             rowExpandable: caseObj => caseObj.name !== 'Not Expandable',
           }}
         ></Table>
+        <Modal
+          title=""
+          visible={isModalVisible}
+          onOk={handleReject}
+          onCancel={handleCancel}
+          footer={[
+            <div className="rejectionModal">
+              <Form
+                rules={[{ required: true, message: 'Please leave a comment' }]}
+              >
+                <h2 className="rejectionModalTitle">
+                  Tell us why you rejected this case
+                </h2>
+                <TextArea
+                  onChange={handleChangeComment}
+                  value={comment}
+                  rows={4}
+                />
+                <div className="rejectionModalButtonContainer">
+                  <Button
+                    className="review-btn"
+                    onClick={() => handleReject(currentCase)}
+                  >
+                    Reject
+                  </Button>
+                </div>
+              </Form>
+            </div>,
+          ]}
+        ></Modal>
       </div>
     </div>
   );

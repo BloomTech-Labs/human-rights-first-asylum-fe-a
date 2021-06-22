@@ -128,7 +128,11 @@ function SavedCases({ savedCases, setSavedCases, deleteBookmark }) {
         <p className="divider">
           <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
         </p>
-        <Table columns={columns} dataSource={savedCases} />
+        <Table
+          rowKey={record => record.case_id}
+          columns={columns}
+          dataSource={savedCases}
+        />
       </div>
     </div>
   );

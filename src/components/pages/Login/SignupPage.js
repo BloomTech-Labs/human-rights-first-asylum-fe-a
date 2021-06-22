@@ -64,7 +64,7 @@ const SignupPage = () => {
         <div className="logo">
           <img src={logo} alt="logo" width="350px" />
         </div>
-        <h2 className="h2-signup">Register for Access</h2>
+        <h2 className="h2-signup">Request for Access</h2>
         <Form
           onFinish={onFinish}
           form={form}

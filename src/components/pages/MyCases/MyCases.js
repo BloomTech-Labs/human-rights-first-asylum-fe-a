@@ -64,7 +64,7 @@ export default function MyCases(props) {
       sortDirections: ['descend', 'ascend'],
     },
     {
-      width: '15%',
+      width: '10%',
       align: 'center',
       dataIndex: 'created_at',
       key: 'uploaded',
@@ -104,7 +104,7 @@ export default function MyCases(props) {
     {
       title: row => <strong>{'Status'}</strong>,
       key: 'status',
-      width: '25%',
+      width: '15%',
       align: 'center',
       sorter: true,
       sortDirections: ['descend', 'ascend'],
@@ -138,6 +138,15 @@ export default function MyCases(props) {
             </div>
           </>
         ),
+    },
+    {
+      width: '25%',
+      align: 'center',
+      dataIndex: 'comment',
+      key: 'comment',
+      title: row => <strong>{'Comment'}</strong>,
+      sorter: true,
+      sortDirections: ['descend', 'ascend'],
     },
     {
       width: '10em',
@@ -242,7 +251,12 @@ export default function MyCases(props) {
               <Table
                 rowKey={record => record.case_id}
                 columns={pendingColumns}
-                dataSource={myPendingCases}
+                dataSource={myPendingCases.map(c => {
+                  return {
+                    ...c,
+                    created_at: c.created_at.slice(0, c.created_at.search('T')),
+                  };
+                })}
               />
             </div>
           </TabPane>

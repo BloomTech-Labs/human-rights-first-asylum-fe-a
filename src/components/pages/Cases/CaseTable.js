@@ -241,12 +241,7 @@ export default function CaseTable(props) {
       title: 'Case Details',
       dataIndex: 'case_row',
       key: 'x',
-      render: text => (
-        <Link onClick={() => popUpDetails(text)}>
-          {' '}
-          <FileTextOutlined />{' '}
-        </Link>
-      ),
+      render: text => <FileTextOutlined onClick={() => popUpDetails(text)} />,
     },
     {
       title: 'Case Date',
@@ -371,7 +366,7 @@ export default function CaseTable(props) {
         setSavedCases(res.data.case_bookmarks);
       })
       .catch(err => {
-        console.log(err);
+        throw new Error(err);
       });
   };
 
@@ -395,6 +390,7 @@ export default function CaseTable(props) {
 
       bookmarks.forEach(b => {
         if (savedIds.includes(b.case_id)) {
+          // This should be an alert
           console.log('Case already saved to bookmarks');
         } else {
           postBookmark(b.case_id);
