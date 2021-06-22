@@ -5,6 +5,7 @@ import {
   notification,
   Collapse,
   Descriptions,
+  Table,
 } from 'antd';
 
 import { CheckCircleOutlined } from '@ant-design/icons';
@@ -69,13 +70,76 @@ const PendingUsersPage = props => {
       });
   };
 
+  const columns = [
+    {
+      title: 'First Name',
+      dataIndex: 'first_name',
+      key: 'name',
+    },
+    {
+      title: 'Last Name',
+      dataIndex: 'last_name',
+      key: 'last_name',
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+    },
+    {
+      title: 'Role',
+      dataIndex: 'role',
+      key: 'role',
+    },
+    {
+      title: 'Date Requested',
+      dataIndex: 'date requested',
+      key: 'date requested',
+      render: (_, pendingProfiles) => (
+        <p className="detail">
+          {String(pendingProfiles.created_at).slice(0, 10)}
+        </p>
+      ),
+    },
+    {
+      title: 'Approve',
+      key: 'approve',
+      render: (_, pendingProfiles) => (
+        <AntDButton
+          className="btn-style"
+          id="pendingProfiles.user_id"
+          onClick={() => {
+            approveUser(pendingProfiles);
+          }}
+        >
+          Approve
+        </AntDButton>
+      ),
+    },
+    {
+      title: 'Reject',
+      key: 'reject',
+      render: (_, pendingProfiles) => (
+        <AntDButton
+          className="btn-style"
+          onClick={() => {
+            rejectUser(pendingProfiles);
+          }}
+        >
+          Reject
+        </AntDButton>
+      ),
+    },
+  ];
+
   return (
     <div className="users">
-      <h2 className="users-header"> Pending Users </h2>
-      <p className="divider">
+      {/* <h2 className="users-header"> Pending Users </h2> */}
+      {/* <p className="divider">
         <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
-      </p>
-      <Collapse accordion>
+      </p> */}
+      <Table columns={columns} dataSource={pendingProfiles} />
+      {/* <Collapse accordion>
         {pendingProfiles.map(item => {
           return (
             <Panel
@@ -126,7 +190,7 @@ const PendingUsersPage = props => {
             </Panel>
           );
         })}
-      </Collapse>
+      </Collapse> */}
     </div>
   );
 };
