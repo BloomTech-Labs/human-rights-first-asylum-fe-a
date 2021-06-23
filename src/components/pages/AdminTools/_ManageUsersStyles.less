@@ -4,22 +4,14 @@
 @white: #ffffff;
 
 .users-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-left: 10rem;
-  width: 80vw;
-  margin-top: 2rem;
-}
+  margin-left: 15rem;
+  margin-right: 3rem;
 
-.users {
-  width: 80%;
-  margin-bottom: 1rem;
-}
+ }
 
 .users-header {
   font-size: 1.8rem;
+  margin-top: 2rem;
 }
 
 .buttons {
@@ -36,18 +28,36 @@
   display: flex;
   width: 2rem;
 }
-.detail {
-  margin-left: 2rem;
-}
 
 // Add User Modal
 .user-form {
   margin-left: 2rem;
+  
+}
+
+.add-user-btn-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.add-user{
+  background: @blue !important;
+  color: @white !important;
+  margin-left: 50%;
+  &:visited {
+    background: @blue;
+    color: @white;
+  }
+  &:focus {
+    background: @blue;
+    color: @white;
+  }
 }
 
 .add-user-btn {
   background: @blue !important;
   color: @white !important;
+  
   &:visited {
     background: @blue;
     color: @white;
@@ -60,17 +70,6 @@
 
 .radio {
   display: flex;
-}
-
-// Pending Users
-.pending-users-container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  width: 80vw;
-  margin-top: 1.5rem;
-  margin-left: 16.5rem;
 }
 
 .submit-button {

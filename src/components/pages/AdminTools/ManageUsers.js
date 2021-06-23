@@ -5,9 +5,9 @@ import {
   Input,
   Button as AntDButton,
   Modal,
-  Collapse,
-  Descriptions,
   Radio,
+  Tabs,
+  Table,
 } from 'antd';
 import PendingUsers from './PendingUsers';
 
@@ -24,7 +24,6 @@ const initialFormValues = {
 };
 
 const ManageUsersPage = props => {
-  const { Panel } = Collapse;
   const { authState } = props;
   const [profiles, setProfiles] = useState([]);
   const [formValues, setFormValues] = useState(initialFormValues);
@@ -46,7 +45,7 @@ const ManageUsersPage = props => {
 
   const deleteUser = profile => {
     axiosWithAuth()
-      .delete(`/profiles/${profile.user_id}`)
+      .delete(`/profiles/${profiles.user_id}`)
       .then(res => {
         alert(`${profile.first_name}'s profile was deleted`);
         loadUsers();
@@ -136,6 +135,67 @@ const ManageUsersPage = props => {
     updateUser(updatedUser);
     setIsEditModalVisible(false);
   };
+  const { TabPane } = Tabs;
+
+  const columns = [
+    {
+      title: 'First Name',
+      dataIndex: 'first_name',
+      key: 'name',
+    },
+    {
+      title: 'Last Name',
+      dataIndex: 'last_name',
+      key: 'last_name',
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+    },
+    {
+      title: 'Role',
+      dataIndex: 'role',
+      key: 'role',
+    },
+    {
+      title: 'Joined',
+      dataIndex: 'joined',
+      key: 'joined',
+      render: (_, profiles) => (
+        <div className="detail">{String(profiles.created_at).slice(0, 10)}</div>
+      ),
+    },
+    {
+      title: 'Edit',
+      key: 'edit',
+      render: (_, profiles) => (
+        <AntDButton
+          className="btn-style"
+          id="profiles.user_id"
+          onClick={() => {
+            showEditModal(profiles.user_id);
+          }}
+        >
+          Edit
+        </AntDButton>
+      ),
+    },
+    {
+      title: 'Delete',
+      key: 'delete',
+      render: (_, profiles) => (
+        <AntDButton
+          className="btn-style"
+          onClick={() => {
+            deleteUser(profiles);
+          }}
+        >
+          Delete
+        </AntDButton>
+      ),
+    },
+  ];
 
   return (
     <div className="users-container">
@@ -144,131 +204,92 @@ const ManageUsersPage = props => {
         <p className="divider">
           <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
         </p>
-        <Collapse accordion>
-          {profiles.map(item => {
-            return (
-              <Panel
-                className="item-name"
-                header={`${item.first_name} ${item.last_name}`}
-              >
-                <Descriptions className="user-info-title" title="User Info">
-                  <Descriptions.Item className="user-details" label="Name">
-                    <p className="detail">{`${item.first_name} ${item.last_name}`}</p>
-                  </Descriptions.Item>
-
-                  <Descriptions.Item className="user-details" label="Email">
-                    <p className="detail">{item.email}</p>
-                  </Descriptions.Item>
-
-                  <Descriptions.Item className="user-details" label="Role">
-                    <p className="detail">{item.role}</p>
-                  </Descriptions.Item>
-
-                  <Descriptions.Item className="user-details" label="Joined">
-                    <p className="detail">
-                      {String(item.created_at).slice(0, 10)}
-                    </p>
-                  </Descriptions.Item>
-                </Descriptions>
-                <div className="buttons">
-                  <AntDButton
-                    className="btn-style"
-                    onClick={() => showEditModal(item.user_id)}
-                  >
-                    Edit
-                  </AntDButton>
-                  <Modal
-                    title=""
-                    visible={isEditModalVisible}
-                    onOk={handleEditOk}
-                    onCancel={handleEditCancel}
-                    footer={[
-                      <div className="submit-button">
-                        <AntDButton
-                          htmlType="submit"
-                          className="add-user-btn"
-                          onClick={onEditSubmit}
-                        >
-                          <span>Submit</span>
-                        </AntDButton>
-                      </div>,
-                    ]}
-                  >
-                    <Form
-                      layout="vertical"
-                      className="user-form"
-                      onFinish={onSubmit}
-                    >
-                      <h2 className="h1Styles">Edit User</h2>
-                      <p className="divider">
-                        <Icon
-                          component={() => (
-                            <img src={OrangeLine} alt="divider icon" />
-                          )}
-                        />
-                      </p>
-                      <Form.Item label="First Name">
-                        <Input
-                          id="first_name"
-                          type="text"
-                          name="first_name"
-                          onChange={onChange}
-                          className="text-field"
-                          placeholder="First Name"
-                          value={formValues.first_name}
-                        />
-                      </Form.Item>
-                      <Form.Item label="Last Name">
-                        <Input
-                          id="last_name"
-                          type="text"
-                          name="last_name"
-                          onChange={onChange}
-                          className="text-field"
-                          placeholder="Last Name"
-                          value={formValues.last_name}
-                        />
-                      </Form.Item>
-                      <Form.Item label="Email">
-                        <Input
-                          id="email"
-                          type="email"
-                          name="email"
-                          placeholder="Email"
-                          onChange={onChange}
-                          className="text-field"
-                          value={formValues.email}
-                        />
-                      </Form.Item>
-                      <Radio.Group
-                        onChange={onChange}
-                        name="role"
-                        value={formValues.role}
-                        className="radio"
-                      >
-                        <Radio value="user">User</Radio>
-                        <Radio value="moderator">Moderator</Radio>
-                        <Radio value="admin">Admin</Radio>
-                      </Radio.Group>
-                    </Form>
-                  </Modal>
-                  <AntDButton
-                    className="btn-style"
-                    onClick={() => {
-                      deleteUser(item);
-                    }}
-                  >
-                    Delete
-                  </AntDButton>
-                </div>
-              </Panel>
-            );
-          })}
-        </Collapse>
       </div>
-
+      <Tabs defaultActiveKey="1">
+        <TabPane tab="Manage Users" key="1">
+          <Table
+            columns={columns}
+            dataSource={profiles}
+            isModalVisible={isModalVisible}
+          />
+          <Modal
+            title=""
+            visible={isEditModalVisible}
+            onOk={handleEditOk}
+            onCancel={handleEditCancel}
+            footer={[
+              <div className="submit-button">
+                <AntDButton
+                  htmlType="submit"
+                  className="add-user-btn"
+                  onClick={onEditSubmit}
+                >
+                  <span>Submit</span>
+                </AntDButton>
+              </div>,
+            ]}
+          >
+            <Form layout="vertical" className="user-form" onFinish={onSubmit}>
+              <h2 className="h1Styles">Edit User</h2>
+              <p className="divider">
+                <Icon
+                  component={() => <img src={OrangeLine} alt="divider icon" />}
+                />
+              </p>
+              <Form.Item label="First Name">
+                <Input
+                  id="first_name"
+                  type="text"
+                  name="first_name"
+                  onChange={onChange}
+                  className="text-field"
+                  placeholder="First Name"
+                  value={formValues.first_name}
+                />
+              </Form.Item>
+              <Form.Item label="Last Name">
+                <Input
+                  id="last_name"
+                  type="text"
+                  name="last_name"
+                  onChange={onChange}
+                  className="text-field"
+                  placeholder="Last Name"
+                  value={formValues.last_name}
+                />
+              </Form.Item>
+              <Form.Item label="Email">
+                <Input
+                  id="email"
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  onChange={onChange}
+                  className="text-field"
+                  value={formValues.email}
+                />
+              </Form.Item>
+              <Radio.Group
+                onChange={onChange}
+                name="role"
+                value={formValues.role}
+                className="radio"
+              >
+                <Radio value="user">User</Radio>
+                <Radio value="moderator">Moderator</Radio>
+                <Radio value="admin">Admin</Radio>
+              </Radio.Group>
+            </Form>
+          </Modal>
+        </TabPane>
+        <TabPane tab="Pending Users" key="2">
+          <div className="pending-users-container">
+            <PendingUsers authState={authState} setProfiles={setProfiles} />
+          </div>
+        </TabPane>
+      </Tabs>
       <div className="add-user-btn-container">
-        <AntDButton className="add-user-btn" onClick={showModal}>
+        <AntDButton className="add-user" onClick={showModal}>
           Add a User
         </AntDButton>
         <Modal
@@ -295,53 +316,38 @@ const ManageUsersPage = props => {
                 component={() => <img src={OrangeLine} alt="divider icon" />}
               />
             </p>
-            <Form.Item
-              label="First Name"
-              name="first_name"
-              rules={[
-                {
-                  required: true,
-                  message: 'First Name is required',
-                },
-                {
-                  min: 3,
-                  message: 'First Name must be at least 3 characters',
-                },
-              ]}
-              hasFeedback
-            >
-              <Input placeholder="First Name" />
+            <Form.Item label="First Name">
+              <Input
+                id="first_name"
+                type="text"
+                name="first_name"
+                onChange={onChange}
+                className="text-field"
+                placeholder="First Name"
+                value={formValues.first_name}
+              />
             </Form.Item>
-            <Form.Item
-              label="Last Name"
-              name="last_name"
-              rules={[
-                {
-                  required: true,
-                  message: 'Last Name is required',
-                },
-                {
-                  min: 3,
-                  message: 'Last Name must be at least 3 characters',
-                },
-              ]}
-              hasFeedback
-            >
-              <Input placeholder="Last Name" />
+            <Form.Item label="Last Name">
+              <Input
+                id="last_name"
+                type="text"
+                name="last_name"
+                onChange={onChange}
+                className="text-field"
+                placeholder="Last Name"
+                value={formValues.last_name}
+              />
             </Form.Item>
-            <Form.Item
-              name="email"
-              label="Email"
-              rules={[
-                {
-                  type: 'email',
-                  message: 'The input is not a valid email',
-                },
-                { required: true, message: 'Valid email is required' },
-              ]}
-              hasFeedback
-            >
-              <Input placeholder="Email" />
+            <Form.Item label="Email">
+              <Input
+                id="email"
+                type="email"
+                name="email"
+                placeholder="Email"
+                onChange={onChange}
+                className="text-field"
+                value={formValues.email}
+              />
             </Form.Item>
             <Radio.Group
               onChange={onChange}
@@ -356,12 +362,7 @@ const ManageUsersPage = props => {
           </Form>
         </Modal>
       </div>
-
-      <div className="pending-users-container">
-        <PendingUsers authState={authState} setProfiles={setProfiles} />
-      </div>
     </div>
   );
 };
-
 export default ManageUsersPage;

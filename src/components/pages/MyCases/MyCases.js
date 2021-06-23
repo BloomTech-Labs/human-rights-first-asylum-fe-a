@@ -251,7 +251,12 @@ export default function MyCases(props) {
               <Table
                 rowKey={record => record.case_id}
                 columns={pendingColumns}
-                dataSource={myPendingCases.map(c => {return {...c, created_at: c.created_at.slice(0, c.created_at.search('T'))};})}
+                dataSource={myPendingCases.map(c => {
+                  return {
+                    ...c,
+                    created_at: c.created_at.slice(0, c.created_at.search('T')),
+                  };
+                })}
               />
             </div>
           </TabPane>
