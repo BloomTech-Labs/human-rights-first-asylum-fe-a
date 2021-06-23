@@ -7,7 +7,7 @@ import Icon from '@ant-design/icons';
 import OrangeLine from '../../../styles/orange-line.svg';
 
 const DataHub = props => {
-  const { caseData, authState } = props;
+  const { caseData } = props;
   const [vizData, setVizData] = useState({});
   const user = useContext(UserContext);
 
@@ -24,8 +24,6 @@ const DataHub = props => {
         setVizData(res.data.judge_cases);
       });
   }, [user.authState.idToken.idToken]);
-
-  console.log(caseData);
 
   let states = [
     'AL',

@@ -12,9 +12,9 @@ const initialFormValues = {
   answer: '',
 };
 
-const AddFaq = props => {
+const AddFaq = () => {
   const [formValues, setFormValues] = useState(initialFormValues);
-  const { authState } = props;
+
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const showModal = () => {

@@ -29,7 +29,7 @@ const CaseOverview = props => {
       setLoading(true);
       fetchCase();
     }
-  }, [id]);
+  }, [id, token]);
 
   return (
     <div className="case-container">

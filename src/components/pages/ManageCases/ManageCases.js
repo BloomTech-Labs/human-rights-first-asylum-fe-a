@@ -165,7 +165,7 @@ export default function ManageCases(props) {
         console.log(err);
         //need to change functionality to render the error to the screen for user
       });
-  }, []);
+  }, [filteredData]);
 
   return (
     <div className="manage-cases-container">
