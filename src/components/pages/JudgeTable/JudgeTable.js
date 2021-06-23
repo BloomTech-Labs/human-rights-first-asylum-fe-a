@@ -15,7 +15,7 @@ import Icon from '@ant-design/icons';
 import OrangeLine from '../../../styles/orange-line.svg';
 
 export default function JudgeTable(props) {
-  const { judgeData, userInfo, savedJudges, setSavedJudges, authState } = props;
+  const { judgeData, userInfo, savedJudges, setSavedJudges } = props;
   const [state, setState] = useState({
     searchText: '',
     searchedColumn: '',
@@ -155,7 +155,6 @@ export default function JudgeTable(props) {
 
   useEffect(() => {
     // current use is to keep the filter state in sync.
-    console.log('filter applied');
   }, [filters]);
 
   // returns processed array of filters

@@ -174,7 +174,6 @@ export default function CaseTable(props) {
 
   useEffect(() => {
     // current use is to keep the filter state in sync.
-    console.log('filter applied');
   }, [initialFilters, appFilters]);
 
   // returns processed array of filters
@@ -405,9 +404,9 @@ export default function CaseTable(props) {
     }
   };
 
-  const [searching, setSearching] = useState(false);
+  const [searching] = useState(false);
 
-  const [queryValues, setQueryValues] = useState({
+  const [queryValues] = useState({
     number: '',
     date: '',
     judge: '',

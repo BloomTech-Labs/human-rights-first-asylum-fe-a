@@ -9,7 +9,7 @@ const CaseUpdate = props => {
   const history = useHistory();
   const { id } = useParams();
   const [judges, setJudges] = useState([]);
-  const { authState, caseData } = props;
+  const { caseData } = props;
 
   useEffect(() => {
     axiosWithAuth()

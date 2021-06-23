@@ -1,21 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import {
-  Form,
-  Input,
-  Button as AntDButton,
-  Modal,
-  Radio,
-  Checkbox,
-} from 'antd';
+import React, { useState } from 'react';
+import { Button as AntDButton, Modal } from 'antd';
 import '../AdminTools/_ManageUsersStyles.less';
 import Icon from '@ant-design/icons';
 import OrangeLine from '../../../styles/orange-line.svg';
-import axiosWithAuth from '../../../utils/axiosWithAuth';
 import EditCaseDetails from '../CaseOverview/EditCaseDetails';
 
 const CaseDetails = props => {
   const { caseData, isDetailsVisible, setIsDetailsVisible } = props;
-  const [editData, setEditData] = useState(caseData);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
 
   const handleCancel = () => {
@@ -29,7 +20,6 @@ const CaseDetails = props => {
     <Modal
       title=""
       visible={isDetailsVisible}
-      //onOk={handleOk}
       onCancel={handleCancel}
       footer={[
         <div className="submit-button">
