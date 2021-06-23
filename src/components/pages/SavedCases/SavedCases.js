@@ -1,4 +1,4 @@
-import React from 'react';
+import React /*, { useEffect }*/ from 'react';
 import { Link } from 'react-router-dom';
 import { Table } from 'antd';
 import Icon from '@ant-design/icons';
@@ -10,7 +10,34 @@ import PDF from '../../../styles/icons/pdf.svg';
 import './_SavedCasesStyles.less';
 import PDFExportButton from '../Cases/PDFOverviewExport/PDFExportButton';
 
+// import axiosWithAuth from '../../../utils/axiosWithAuth';
+
 function SavedCases({ savedCases, setSavedCases, deleteBookmark }) {
+  /* 
+  
+      - This useEffect was used to pass the presiding judge's cases data to the ExportGenerator
+    
+      - There was a recent change on the backend that broke it
+
+      - As the function stands now, the report needs a number of cases for the presiding judge as well as ruling info to compare to the saved cases
+      
+      useEffect(() => {
+        savedCases.forEach(item => {
+          axiosWithAuth()
+            .get(`/judge/${item.judge_id}/cases`)
+            .then(res => {
+              console.log(res);
+              // Send data to the export generator
+              // Hopefully, DS can create data structure that can be used on the report
+            })
+            .catch(err => {
+              throw new Error(err);
+            });
+        });
+      });
+
+  */
+
   const handleClick = deleteCase => {
     deleteBookmark(deleteCase);
     setSavedCases(
@@ -49,14 +76,28 @@ function SavedCases({ savedCases, setSavedCases, deleteBookmark }) {
           fileName={`Judge_${record.last_name}_Case_${record.number}`}
           caseData={[
             {
+              appellate: record.appellate,
+              applicant_language: record.applicant_language,
+              application_type: record.application_type,
               case_id: record.number,
-              date: record.date,
-              judge_name: record.last_name,
-              case_origin: record.case_origin_city,
-              outcome: record.outcome,
+              case_origin_city: record.case_origin_city,
+              case_origin_state: record.case_origin_state,
               country_of_origin: record.country_of_origin,
+              credible: record.credible,
+              date: record.date,
+              filed_in_one_year: record.filed_in_one_year,
+              first_name: record.first_name,
               gender: record.gender,
+              indigenous_group: record.indigenous_group,
+              judge_id: record.judge_id,
+              last_name: record.last_name,
+              middle_initial: record.middle_initial,
+              number: record.number,
+              outcome: record.outcome,
+              protected_grounds: record.protected_grounds,
+              status: record.status,
               type_of_violence: record.type_of_violence,
+              url: record.url,
             },
           ]} /*viz={}*/
         />
