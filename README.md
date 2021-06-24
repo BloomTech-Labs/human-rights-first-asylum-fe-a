@@ -28,28 +28,39 @@ The base technologies are JavaScript, HTML and CSS. The frontend leverages [Reac
 - Administrators are able to approve, deny, or edit uploaded asylum case data, as well as perform all other tasks available to Refugee Representatives.
 - Refugee Representatives, or standard users, are able to look up information on judges, look up information on previous asylum cases, upload case file information in bulk on asylum case rulings, and see accurate data visualizations.
 
-### Key Features
+### What Has Been Done:
 
 - Added new home page which displays visualizations meant to showcase the current state of the database and, eventually, the state of asylum cases across the nation
 - Swapped many Material UI components to use ANT D instead
 - Moved many features to use modals to prevent from UX being disrupted by unnecessary page-hopping (Case Upload, add/edit a user, edit/add a faq, case details/edit case, and support contact form)
 - Combined related features in the sidebar, making for a smoother user experience
-- Style improvements all around
+- Changed the accordions on the Manage Users page to a table
+- Filtering indication for the Judges and the  Cases Tables
+- Comments implemented from Administrator's rejection of a case is sent to the user
+- Client-side form validation
+- Styling of Login Page
+- Export Report on Saved Cases can be downloaded
+- Updated Styling 
+- Optimizing backend
+- Implementation of data normalization
 
 ### Still Needs Work
 
-- All alerts need to be swapped to ANT D notifications to match the case upload notifications
-- Change the accordions on the 'Manage Users' page to a table to account for a larger user base and facilitate searching for admins/our stakeholders
-- All of the reloading pages (Occurs on any delete, update, or add functionality) should be switched to simply update the state rather than starting a full reload
-- The stakeholders have mentioned possibly wanting an alert system to be implemented, either within the app itself and/or as customizable email notifications. This could be added to the account settings as an option so users can toggle as they please
+- Home Page needs to accommdate for custom visualization like a form
+- The ability to request to join the app still needs work see Trello Board
+- Groundwork has been laid for in-app notification to work
+- BE for noticiations needs to be built
+- Stakeholders are deciding on email notification means tbd not super important right now
 - Stakeholders have also mentioned users might want to be able to favorite/subscribe to specific judges so they can watch for new cases to be added that might be most relevant to them
-- Add a comment when you deny or reject a case describing your decision (Add/reject case functionality still needs to be built out on 'Manage Cases')
-- The new hub page could use some more fine-tuning/additional visualizations
-- The back-end repo has a lot of unused functions that may need to be cleaned up
-- The swapping from Material UI components to ANT D components still needs to be completed
 - Sort out where the support contact form goes (Check backend ENV credentials)
-- The ability to request to join the app still needs work
 - The PDF view for the my_cases table still needs work
-- Much discourse was had regarding judge ids and how to present them, this may need to be looked at deeper
-- May need to add a bridge table for protected_grounds
-- May need to reevaluate table relationships in handling judge to case relationships
+- Individual Judge Page needs work such 
+- Judge Management needs implementation like ability to add or delete judge
+- BE needs to create a judges table by creating a many-to-many in handling judge to case relationships
+- BE delete protected_grounds and social_tags tables
+- Manage Users Page has buttons that are not functioning properly
+- For Case Uploads:
+    1. BE needs to pull from table ds_cases
+    2. Look into work queue system to rate limit the amount of uploads being performed at once
+- On Cases, user needs to be able to filter the cases like a stacked search
+
