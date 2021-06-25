@@ -35,30 +35,30 @@ The base technologies are JavaScript, HTML and CSS. The frontend leverages [Reac
 - Moved many features to use modals to prevent from UX being disrupted by unnecessary page-hopping (Case Upload, add/edit a user, edit/add a faq, case details/edit case, and support contact form)
 - Combined related features in the sidebar, making for a smoother user experience
 - Changed the accordions on the Manage Users page to a table
-- Filtering indication for the Judges and the  Cases Tables
-- Comments implemented from Administrator's rejection of a case is sent to the user
+- Filtering indication for the Judges and the Cases Tables
+- Ability to send a comment when an Administrator rejects a case from the administrator to the user
 - Client-side form validation
 - Styling of Login Page
 - Export Report on Saved Cases can be downloaded
 - Updated Styling 
-- Optimizing backend
+- Optimized backend
 - Implementation of data normalization
 
 ### Still Needs Work
 
-- Home Page needs to accommdate for custom visualization like a form
+- Home Page needs to accommdate for custom visualization with a form
 - The ability to request to join the app still needs work see Trello Board
-- Groundwork has been laid for in-app notification to work
-- BE for noticiations needs to be built
-- Stakeholders are deciding on email notification means tbd not super important right now
+- Groundwork has been laid for in-app notifications to work
+- BE needs to be built out for noticiations to work
+- Stakeholders are deciding on what email notification system they want to use for external notifications, but not super important right now
 - Stakeholders have also mentioned users might want to be able to favorite/subscribe to specific judges so they can watch for new cases to be added that might be most relevant to them
 - Sort out where the support contact form goes (Check backend ENV credentials)
 - The PDF view for the my_cases table still needs work
-- Individual Judge Page needs work such 
+- Individual Judge Page needs work 
 - Judge Management needs implementation like ability to add or delete judge
-- BE needs to create a judges table by creating a many-to-many in handling judge to case relationships
-- BE delete protected_grounds and social_tags tables
-- Manage Users Page has buttons that are not functioning properly
+- BE needs to create a judges table by creating a many-to-many relationship in handling judge to case relationships
+- BE needs to delete protected_grounds and social_tags tables
+- On Manage Users Page, approve, reject, edit, and delete buttons not functioning properly  
 - For Case Uploads:
     1. BE needs to pull from table ds_cases
     2. Look into work queue system to rate limit the amount of uploads being performed at once
