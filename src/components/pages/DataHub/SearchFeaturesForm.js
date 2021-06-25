@@ -3,6 +3,7 @@ import './DataHub.less';
 import Icon from '@ant-design/icons';
 import OrangeLine from '../../../styles/orange-line.svg';
 const SearchFeaturesForm = () => {
+
     return (
         <div className="searchWrapper">
             <div className="searchFeaturesContainer">
@@ -42,7 +43,7 @@ const SearchFeaturesForm = () => {
                         </div>
                         <div className="valueSep">
                             <div>
-                                <label for='x value'>Choose an X value</label>
+                                <label for='x value'>different value</label>
                                 <select id='xvalue' name='xvalue'>
                                     <option>test</option>
                                     <option>test</option>
@@ -54,7 +55,7 @@ const SearchFeaturesForm = () => {
                                 </select>
                             </div>
                             <div>
-                                <label for='y value'>Choose an Y value</label>
+                                <label for='y value'>different value</label>
                                 <select id='yvalue' name='yvalue'>
                                     <option>test</option>
                                     <option>test</option>

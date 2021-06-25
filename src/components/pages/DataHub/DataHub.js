@@ -211,9 +211,7 @@ const DataHub = props => {
       <div className="mainChartContainer">
         <TestDataChart />
       </div>
-      {/* everything from here to below comment is just an experimental form for feature/display-data-with-plotly */}
       <SearchFeaturesForm />
-      {/* end of form */}
       <div className="subChartsContainer">
         <CaseDataChart />
         <h2>Ratio of Cases Resulting In Granted Asylum: {grantedRatio}%</h2>
