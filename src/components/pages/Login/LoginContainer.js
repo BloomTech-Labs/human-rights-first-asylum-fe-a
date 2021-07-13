@@ -48,6 +48,10 @@ const LoginContainer = () => {
         throw err;
       }
     );
+
+    return () => {
+      widget.remove();
+    };
   }, []);
 
   const removeOktaSignIn = () => {
