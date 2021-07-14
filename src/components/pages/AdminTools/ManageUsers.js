@@ -72,14 +72,12 @@ const ManageUsersPage = props => {
       ? setFormValues({ ...formValues, [name]: parseInt(value) })
       : setFormValues({ ...formValues, [name]: value });
   };
-  console.log(formValues);
 
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const showEditModal = id => {
     axiosWithAuth()
       .get(`/profile/${id}`)
       .then(res => {
-        console.log(res.data);
         const { first_name, last_name, role_id, email, user_id } = res.data;
         setFormValues({ first_name, last_name, role_id, email, user_id });
         setIsEditModalVisible(true);
