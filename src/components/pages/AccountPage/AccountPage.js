@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Button, Card, Avatar, Modal, Form, Input } from 'antd';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
+import ImgCrop from 'antd-img-crop';
+import { Upload } from 'antd';
 
 import './_AccountPageStyles.less';
 import Icon from '@ant-design/icons';
@@ -10,6 +12,7 @@ const initialFormValues = {
   first_name: '',
   last_name: '',
   email: '',
+  avatarUrl: '',
 };
 
 const AccountPage = props => {
@@ -27,8 +30,8 @@ const AccountPage = props => {
       .get(`/profile/${id}`)
       .then(res => {
         console.log(res.data);
-        const { first_name, last_name, email, user_id } = res.data;
-        setFormValues({ first_name, last_name, email, user_id });
+        const { first_name, last_name, email, user_id, avatarUrl } = res.data;
+        setFormValues({ first_name, last_name, email, user_id, avatarUrl });
         setIsEditModalVisible(true);
       });
   };
@@ -58,6 +61,7 @@ const AccountPage = props => {
       last_name: formValues.last_name.trim(),
       email: formValues.email.trim(),
       user_id: formValues.user_id.trim(),
+      avatarUrl: formValues.avatarUrl,
     };
     updateUser(updatedUser);
     setIsEditModalVisible(false);
@@ -169,6 +173,16 @@ const AccountPage = props => {
                     value={formValues.email}
                   />
                 </Form.Item>
+                <ImgCrop shape="round">
+                  <Upload
+                    id="avatarUrl"
+                    name="avatarUrl"
+                    onChange={onChange}
+                    value={formValues.avatarUrl}
+                  >
+                    + Add image
+                  </Upload>
+                </ImgCrop>
               </Form>
             </Modal>
           </div>
