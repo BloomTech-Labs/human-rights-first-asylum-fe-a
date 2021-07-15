@@ -116,7 +116,7 @@ function RenderHomePage(props) {
   useEffect(() => {
     trackPromise(axiosWithAuth().get(`/profile/${user.userInfo.sub}`))
       .then(res => {
-        window.localStorage.setItem('role', res.data.role);
+        window.localStorage.setItem('role_name', res.data.role_name);
         setHrfUserInfo(res.data);
         setSavedCases(res.data.case_bookmarks);
         setSavedJudges(res.data.judge_bookmarks);

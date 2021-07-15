@@ -28,7 +28,7 @@ const ReviewCaseForm = props => {
       setEditedFormValues({ ...editedFormValues, [name]: value });
     }
   };
-  const role = window.localStorage.getItem('role');
+  const role = window.localStorage.getItem('role_name');
   const { handleSubmit } = useForm();
   const onSubmit = evt => {
     evt.preventDefault();
