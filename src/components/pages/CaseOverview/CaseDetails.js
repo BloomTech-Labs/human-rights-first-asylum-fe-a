@@ -4,6 +4,7 @@ import '../AdminTools/_ManageUsersStyles.less';
 import Icon from '@ant-design/icons';
 import OrangeLine from '../../../styles/orange-line.svg';
 import EditCaseDetails from '../CaseOverview/EditCaseDetails';
+import moment from 'moment';
 
 const CaseDetails = props => {
   const { caseData, isDetailsVisible, setIsDetailsVisible } = props;
@@ -15,6 +16,9 @@ const CaseDetails = props => {
   const showEditModal = () => {
     setIsEditModalVisible(true);
   };
+
+  const theDate = new Date(caseData.date);
+  const converted = moment(theDate).format('MMMM D, Y');
 
   return (
     <Modal
@@ -45,7 +49,7 @@ const CaseDetails = props => {
         <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
       </p>
       <div>
-        <p>{`Case Date: ${caseData.date}`}</p>
+        <p>{`Case Date: ${converted}`}</p>
         <p>{`Judge Name: ${caseData.first_name} ${caseData.middle_initial}. ${caseData.last_name}`}</p>
         <p>{`Origin City: ${caseData.case_origin_city}`}</p>
         <p>{`Origin State: ${caseData.case_origin_state}`}</p>
