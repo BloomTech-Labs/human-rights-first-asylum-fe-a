@@ -67,7 +67,6 @@ const ManageUsersPage = props => {
   };
 
   const onChange = e => {
-    console.log(formValues);
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
   };
