@@ -15,6 +15,7 @@ const { TextArea } = Input;
 //***There is a bug*** Currently, when you expand one caseObj they all expand. This may be an issue with accept and reject buttons - we don't want to accept all or reject all on accident!
 
 export default function ManageCases(props) {
+  const { authState } = props;
   const [apiData, setApiData] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [currentCase, setCurrentCase] = useState();
@@ -145,9 +146,8 @@ export default function ManageCases(props) {
     },
   ];
 
-  let filteredData = [];
-
   useEffect(() => {
+    let filteredData = [];
     axiosWithAuth()
       .get(`/cases/pending`)
       .then(res => {
@@ -165,7 +165,7 @@ export default function ManageCases(props) {
         console.log(err);
         //need to change functionality to render the error to the screen for user
       });
-  }, [filteredData]);
+  }, [authState.idToken.idToken]);
 
   return (
     <div className="manage-cases-container">
