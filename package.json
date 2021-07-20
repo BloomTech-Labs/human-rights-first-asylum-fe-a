@@ -28,6 +28,7 @@
     "date-fns": "^2.16.1",
     "dotenv": "^8.2.0",
     "feather-icons-react": "^0.4.3",
+    "knex": "^0.95.6",
     "logger": "0.0.1",
     "moment": "^2.29.1",
     "mui-datatables": "^3.7.1",
