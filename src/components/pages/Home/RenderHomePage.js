@@ -232,7 +232,7 @@ function RenderHomePage(props) {
               <CaseUpdate />
             </Route>
             <Route exact path="/manage-cases">
-              <ManageCases />
+              <ManageCases authState={user.authState} />
             </Route>
             <Route exact path="/account">
               <AccountPage
