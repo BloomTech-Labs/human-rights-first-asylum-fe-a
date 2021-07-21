@@ -9,7 +9,7 @@ const { SubMenu } = Menu;
 function SideDrawer() {
   const [collapsed, setCollapsed] = useState(false);
 
-  const role = window.localStorage.getItem('role');
+  const role = window.localStorage.getItem('role_name');
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);

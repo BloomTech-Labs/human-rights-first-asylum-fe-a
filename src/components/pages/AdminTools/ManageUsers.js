@@ -20,7 +20,7 @@ const initialFormValues = {
   first_name: '',
   last_name: '',
   email: '',
-  role: '',
+  role_id: '',
 };
 
 const ManageUsersPage = props => {
@@ -76,9 +76,14 @@ const ManageUsersPage = props => {
     axiosWithAuth()
       .get(`/profile/${id}`)
       .then(res => {
-        console.log(res.data);
-        const { first_name, last_name, role, email, user_id } = res.data;
-        setFormValues({ first_name, last_name, role, email, user_id });
+        const { first_name, last_name, role_id, email, user_id } = res.data;
+        setFormValues({
+          first_name,
+          last_name,
+          role_id: role_id.toString(),
+          email,
+          user_id,
+        });
         setIsEditModalVisible(true);
       });
   };
@@ -117,7 +122,7 @@ const ManageUsersPage = props => {
       first_name: formValues.first_name.trim(),
       last_name: formValues.last_name.trim(),
       email: formValues.email.trim(),
-      role: formValues.role.trim(),
+      role_id: formValues.role_id,
     };
     postNewUser(newUser);
     setIsModalVisible(false);
@@ -129,7 +134,7 @@ const ManageUsersPage = props => {
       first_name: formValues.first_name.trim(),
       last_name: formValues.last_name.trim(),
       email: formValues.email.trim(),
-      role: formValues.role.trim(),
+      role_id: parseInt(formValues.role_id),
       user_id: formValues.user_id.trim(),
     };
     updateUser(updatedUser);
@@ -155,8 +160,8 @@ const ManageUsersPage = props => {
     },
     {
       title: 'Role',
-      dataIndex: 'role',
-      key: 'role',
+      dataIndex: 'role_name',
+      key: 'role_name',
     },
     {
       title: 'Joined',
@@ -271,13 +276,13 @@ const ManageUsersPage = props => {
               </Form.Item>
               <Radio.Group
                 onChange={onChange}
-                name="role"
-                value={formValues.role}
+                name="role_id"
+                value={formValues.role_id}
                 className="radio"
               >
-                <Radio value="user">User</Radio>
-                <Radio value="moderator">Moderator</Radio>
-                <Radio value="admin">Admin</Radio>
+                <Radio value="3">User</Radio>
+                <Radio value="2">Moderator</Radio>
+                <Radio value="1">Admin</Radio>
               </Radio.Group>
             </Form>
           </Modal>
@@ -351,13 +356,13 @@ const ManageUsersPage = props => {
             </Form.Item>
             <Radio.Group
               onChange={onChange}
-              name="role"
-              value={formValues.role}
+              name="role_id"
+              value={formValues.role_id}
               className="radio"
             >
-              <Radio value="user">User</Radio>
-              <Radio value="moderator">Moderator</Radio>
-              <Radio value="admin">Admin</Radio>
+              <Radio value="3">User</Radio>
+              <Radio value="2">Moderator</Radio>
+              <Radio value="1">Admin</Radio>
             </Radio.Group>
           </Form>
         </Modal>
