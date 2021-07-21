@@ -60,10 +60,6 @@ const LoginContainer = () => {
 
   return (
     <div className="login-container">
-      <div
-        className="background-image-signup"
-        aria-label="cosmetic background image"
-      />
       <div className="login-form">
         <div className="logo">
           <img src={logo} alt="logo" width="350px" />
