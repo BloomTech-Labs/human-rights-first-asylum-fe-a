@@ -549,6 +549,20 @@ export default function CaseTable(props) {
   const nonAppCases = casesData.filter(item => item.appellate === false);
   const appCases = casesData.filter(item => item.appellate === true);
 
+  const removeSearchTerm = filter => {
+    const term = filter.split(':')[0];
+    const key = filter.split(': ')[1];
+    const index = initialFilters[term].indexOf(key);
+    // console.log(term)
+    // console.log(initialFilters[term][0])
+    // console.log(key)
+    // console.log(index)
+    if (index > -1) {
+      initialFilters[term].splice(index, 1);
+    }
+    console.log(initialFilters);
+  };
+
   return (
     <div className="cases-container">
       <h2 className="h1Styles">Cases</h2>
@@ -571,7 +585,10 @@ export default function CaseTable(props) {
             <div>
               Filters:{' '}
               {processFilters(initialFilters).map(filter => (
-                <Tag key={filter}>{filter}</Tag>
+                <Tag key={filter}>
+                  {filter}{' '}
+                  <span onClick={() => removeSearchTerm(filter)}>x</span>
+                </Tag>
               ))}
             </div>
             <div className="case-table">
@@ -589,7 +606,9 @@ export default function CaseTable(props) {
             <div>
               Filters:{' '}
               {processFilters(appFilters).map(filter => (
-                <Tag key={filter}>{filter}</Tag>
+                <Tag key={filter}>
+                  {filter} <span>x</span>
+                </Tag>
               ))}
             </div>
             <div className="case-table">
