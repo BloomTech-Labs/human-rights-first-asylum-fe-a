@@ -45,7 +45,7 @@ const AccountPage = props => {
     axiosWithAuth()
       .put(`/profile/${updatedUserInfo.user_id}`, updatedUserInfo)
       .then(res => {
-        setHrfUserInfo(res.data.updated_profile);
+        setHrfUserInfo(updatedUserInfo);
       })
       .catch(err => console.log(err));
     setFormValues(initialFormValues);
@@ -58,6 +58,7 @@ const AccountPage = props => {
       last_name: formValues.last_name.trim(),
       email: formValues.email.trim(),
       user_id: formValues.user_id.trim(),
+      role: hrfUserInfo.role
     };
     updateUser(updatedUser);
     setIsEditModalVisible(false);
