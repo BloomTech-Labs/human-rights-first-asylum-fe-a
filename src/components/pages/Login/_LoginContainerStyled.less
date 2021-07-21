@@ -1,4 +1,4 @@
-@background-image: '../../../styles/blueStatueOfLiberty.png';
+@background-image: '../../../styles/blue.svg';
 @font: 'Lato', sans-serif;
 @font-color: #262626;
 @button: #bd5a27;
@@ -8,29 +8,93 @@
 .login-container {
   width: 100vw;
   height: 100vh;
+  overflow:hidden;
+  position: relative;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; 
 }
+
+.background{
+  width:100%;
+  height:100vh;
+  z-index:-3;
+  position: relative;
+}
+
+.svgContain{
+  width:100%;
+  height:100%;
+  z-index: -1;
+  
+}
+
+.blue{
+
+  width:auto;
+  height:100%;
+}
+
+.bgImgContain{
+  width:100%;
+  height:100%;
+  position:fixed;
+  z-index: -3;
+
+}
+
+
+.liberty{
+  position:relative;
+  width:90%;
+  object-fit: cover;
+  top:-50%;
+  right:-40%;
+  opacity: .15;
+
+  @media (max-width: 768px) {
+    right:-40%;
+    top:2%;
+  }
+}
+
+
 .login-form {
+  position:fixed;
   display: flex;
-  width: 35vw;
+  width: 45%;
+  padding-bottom: 2rem;
+  background-color: rgba(255, 255, 255, 0.98);
   // margin-left: 35rem;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 2px solid black;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
   border-radius: 1rem;
-
-  @media (max-width: 600px) {
-    width: 100%;
+  
+  @media (max-width: 768px) {
+    width: 70%;
   }
 
+  @media (max-width: 425px) {
+    width: 80%;
+  }
+
+
   .logo {
-    max-width: 70rem;
-    max-height: 3.6rem;
-    margin-bottom: 1rem;
-    margin-top: 4%;
+    margin:auto;
+    margin-top:1.5rem;
+    margin-bottom:1rem;
+    padding-bottom:.5rem;
+    width:100%;
+    height:100%;
+    text-align: center;
+  
+  }
+
+  .logo img{
+    width: 70%;
+    height:auto;
   }
 
   .login-page {
@@ -39,6 +103,7 @@
     align-items: center;
     justify-content: center;
     margin: 0 auto;
+    
 
     .link-styles {
       font-family: @font;
@@ -59,10 +124,13 @@
 
     #okta-sign-in.auth-container.main-container {
       font-family: 'Lato' sans-serif;
+      width:100%;
       margin: 0;
       border: none;
       box-shadow: none;
       color: @font-color;
+      background:none;
+      //transform: translatex(7%);
 
       label {
         font-family: 'Lato', sans-serif;
@@ -72,7 +140,7 @@
       .button-primary {
         background: @button;
         height: 2.6rem;
-        width: 20rem;
+        width: 100%;
       }
       .okta-form-input-field input {
         font-family: @font;
@@ -98,6 +166,7 @@
 
     .o-form {
       width: 100%;
+      
       .o-form-head {
         font-size: 1.4rem;
         font-family: @font;
@@ -106,12 +175,12 @@
       .o-form-input-name-username {
         border-radius: 0.1rem;
         height: 2.6rem;
-        width: 20rem;
+        width: 100%;
       }
       .o-form-input-name-password {
         border-radius: 0.1rem;
         height: 2.6rem;
-        width: 20rem;
+        width: 100%;
       }
       .o-form-label {
         padding-top: 1rem;

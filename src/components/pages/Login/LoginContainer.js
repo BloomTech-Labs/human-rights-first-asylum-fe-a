@@ -5,6 +5,8 @@ import OktaSignIn from '@okta/okta-signin-widget';
 import '@okta/okta-signin-widget/dist/css/okta-sign-in.min.css';
 // Below is the Human Rights logo
 import logo from '../../../styles/hrf-logo.png';
+import blue from '../../../styles/blue.svg';
+import liberty from '../../../styles/liberty.png';
 
 import { config } from '../../../utils/oktaConfig';
 
@@ -60,9 +62,18 @@ const LoginContainer = () => {
 
   return (
     <div className="login-container">
+      <div className="background">
+        <div className="bgImgContain">
+          <img className="liberty" src={liberty} alt="Statue of Liberty" />
+        </div>
+        <div className="svgContain">
+          <img className="blue" src={blue} alt="bgSvg" />
+        </div>
+      </div>
+
       <div className="login-form">
         <div className="logo">
-          <img src={logo} alt="logo" width="350px" />
+          <img src={logo} alt="logo" />
         </div>
         <div className="login-page">
           <div id="sign-in-widget" aria-label="login form" />
