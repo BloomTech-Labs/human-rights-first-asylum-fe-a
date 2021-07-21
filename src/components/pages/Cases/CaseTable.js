@@ -219,7 +219,7 @@ export default function CaseTable(props) {
   };
 
   // function fires every time that the table is filtered
-  function changeSorter(pagination, filters, sorter, extra) {
+  function changeSorter(pagination, filters, sorter, extra, event) {
     Number(currentKey) === 1
       ? setInitialFilters(filters)
       : setAppFilters(filters);
