@@ -69,9 +69,9 @@ const LoginContainer = () => {
           <img className="liberty" src={liberty} alt="Statue of Liberty" />
         </div>
         <div className="svgContain">
-          <img className="blue" src={blue} alt="bgSvg" />
-          <img className="blue1" src={blue1} alt="bgSvg" />
-          <img className="blue2" src={blue2} alt="bgSvg" />
+          <img className="blueShape" src={blue} alt="bgSvg" />
+          <img className="blueShape1" src={blue1} alt="bgSvg" />
+          <img className="blueShape2" src={blue2} alt="bgSvg" />
         </div>
       </div>
 
