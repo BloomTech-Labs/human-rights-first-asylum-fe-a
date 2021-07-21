@@ -6,6 +6,8 @@ import '@okta/okta-signin-widget/dist/css/okta-sign-in.min.css';
 // Below is the Human Rights logo
 import logo from '../../../styles/hrf-logo.png';
 import blue from '../../../styles/blue.svg';
+import blue1 from '../../../styles/blue1.svg';
+import blue2 from '../../../styles/blue2.svg';
 import liberty from '../../../styles/liberty.png';
 
 import { config } from '../../../utils/oktaConfig';
@@ -68,6 +70,8 @@ const LoginContainer = () => {
         </div>
         <div className="svgContain">
           <img className="blue" src={blue} alt="bgSvg" />
+          <img className="blue1" src={blue1} alt="bgSvg" />
+          <img className="blue2" src={blue2} alt="bgSvg" />
         </div>
       </div>
 
