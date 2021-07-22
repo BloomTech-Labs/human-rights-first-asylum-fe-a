@@ -219,7 +219,7 @@ export default function CaseTable(props) {
   };
 
   // function fires every time that the table is filtered
-  function changeSorter(pagination, filters, sorter, extra, event) {
+  function changeSorter(pagination, filters, sorter, extra) {
     Number(currentKey) === 1
       ? setInitialFilters(filters)
       : setAppFilters(filters);
@@ -553,13 +553,14 @@ export default function CaseTable(props) {
     const term = filter.split(':')[0];
     const key = filter.split(': ')[1];
     const index = initialFilters[term].indexOf(key);
-    // console.log(term)
-    // console.log(initialFilters[term][0])
-    // console.log(key)
-    // console.log(index)
     if (index > -1) {
       initialFilters[term].splice(index, 1);
     }
+    if (initialFilters[term].length === 0) {
+      initialFilters[term] = null;
+    }
+    console.log(initialFilters);
+    setInitialFilters(initialFilters);
     console.log(initialFilters);
   };
 
