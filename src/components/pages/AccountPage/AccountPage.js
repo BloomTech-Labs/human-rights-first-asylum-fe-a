@@ -94,7 +94,21 @@ const AccountPage = props => {
               </div>
               <div className="info-line">
                 <p className="p-1">Role: </p>
-                <p className="p-2">{hrfUserInfo.role_name}</p>
+                {hrfUserInfo.role_id === 1 ? (
+                  <p className="p-2">admin</p>
+                ) : (
+                  <p className="p-2"></p>
+                )}
+                {hrfUserInfo.role_id === 2 ? (
+                  <p className="p-2">moderator</p>
+                ) : (
+                  <p className="p-2"></p>
+                )}
+                {hrfUserInfo.role_id === 3 ? (
+                  <p className="p-2">user</p>
+                ) : (
+                  <p className="p-2"></p>
+                )}
               </div>
             </div>
           </div>
