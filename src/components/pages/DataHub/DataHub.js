@@ -201,6 +201,10 @@ const DataHub = props => {
 
   return (
     <div className="dataHubContainer">
+      <h3 className="homeDisclaimer">
+        All visualizations reflect the data in the database. As more cases are
+        added, more data can be visualized.
+      </h3>
       <h2 className="h1Styles">Approvals VS Denials Nationwide</h2>
       <p className="divider">
         <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
