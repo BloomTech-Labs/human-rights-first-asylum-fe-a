@@ -559,7 +559,6 @@ export default function CaseTable(props) {
     if (initialFilters[term].length === 0) {
       initialFilters[term] = null;
     }
-    console.log(initialFilters);
     setInitialFilters(initialFilters);
     console.log(initialFilters);
   };
