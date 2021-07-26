@@ -1,4 +1,3 @@
-@background-image: '../../../styles/blue.svg';
 @font: 'Lato', sans-serif;
 @font-color: #262626;
 @button: #bd5a27;
@@ -15,80 +14,76 @@
   align-items: center; 
 }
 
-.background{
-  width:100%;
-  height:100vh;
-  z-index:-3;
+.background {
+  width: 100%;
+  height: 100vh;
+  z-index: -3;
   position: relative;
 }
 
-.svgContain{
-  width:100%;
-  height:100%;
+.svgContain {
+  width: 100%;
+  height: 100%;
   z-index: -1;
-  
 }
 
-.blueShape{
-  width:auto;
-  height:100%;
+.blueShape {
+  width: auto;
+  height: 100%;
 
   @media (max-width: 768px) {
-    display:none;
+    display: none;
   }
-
 }
 
-.blueShape1{
-
-  width:auto;
-  height:100%;
-  display:none;
+.blueShape1 {
+  width: auto;
+  height: 100%;
+  display: none;
 
   @media (min-width: 425px) {
-    display:block;
+    display: block;
   }
 } 
 
-.blueShape2{
-
-  width:auto;
-  height:100%;
-  display:none;
+.blueShape2 {
+  width: auto;
+  height: 100%;
+  display: none;
 
   @media (max-width: 425px) {
-    display:block;
+    display: block;
   }
 }
 
-.bgImgContain{
-  width:100%;
-  height:100%;
-  position:fixed;
+.bgImgContain {
+  width: 100%;
+  height: 100%;
+  position: fixed;
   z-index: -3;
 }
 
-.liberty{
-  position:relative;
-  width:90%;
+.liberty {
+  position: relative;
+  width: 90%;
   object-fit: cover;
-  top:-50%;
-  right:-40%;
+  top: -50%;
+  right: -40%;
   opacity: .15;
 
   @media (max-width: 768px) {
-    right:-40%;
-    top:2%;
+    right: -40%;
+    top: 2%;
   }
 
   @media (max-width: 425px) {
-    width:110%;
-    top:2%;
+    width: 110%;
+    top: 2%;
   }
 }
 
 .login-form {
-  position:fixed;
+  position: fixed;
   display: flex;
   width: 45%;
   padding-bottom: 2rem;
@@ -98,7 +93,7 @@
   justify-content: center;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
   border-radius: 10px;
-  
+
   @media (max-width: 768px) {
     width: 55%;
   }
@@ -108,18 +103,18 @@
   }
 
   .logo {
-    margin:auto;
-    margin-top:1.5rem;
-    margin-bottom:1rem;
-    padding-bottom:.5rem;
-    width:100%;
-    height:100%;
+    margin: auto;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: .5rem;
+    width: 100%;
+    height: 100%;
     text-align: center;
   }
 
-  .logo img{
+  .logo img {
     width: 70%;
-    height:auto;
+    height: auto;
   }
 
   .login-page {
@@ -146,29 +141,32 @@
 
     #okta-sign-in.auth-container.main-container {
       font-family: 'Lato' sans-serif;
-      width:100%;
+      width: 100%;
       margin: 0;
       border: none;
       box-shadow: none;
       color: @font-color;
-      background:none;
-
+      background: none;
       label {
         font-family: 'Lato', sans-serif;
         color: @font-color;
         padding-bottom: 1rem;
       }
+
       .button-primary {
         background: @button;
         height: 2.6rem;
         width: 100%;
       }
+
       .okta-form-input-field input {
         font-family: @font;
       }
+
       h2 {
         color: @font-color;
       }
+
       .custom-checkbox {
         margin-top: -1rem;
         padding-bottom: 1rem;
@@ -187,25 +185,29 @@
 
     .o-form {
       width: 100%;
-      
+
       .o-form-head {
         font-size: 1.4rem;
         font-family: @font;
         margin-top: 0;
       }
+
       .o-form-input-name-username {
         border-radius: 0.1rem;
         height: 2.6rem;
         width: 100%;
       }
+
       .o-form-input-name-password {
         border-radius: 0.1rem;
         height: 2.6rem;
         width: 100%;
       }
+
       .o-form-label {
         padding-top: 1rem;
       }
+
       .o-form-theme {
         padding: 0;
       }
@@ -228,12 +230,14 @@
       background: @button;
       border: none !important;
       border-radius: 0.1rem !important;
+
       &:hover {
         background-color: @white !important;
         border: 0.1rem solid @button !important;
         color: @button;
         border-radius: 0.1rem;
       }
+
       &::selection {
         background: @button;
       }
