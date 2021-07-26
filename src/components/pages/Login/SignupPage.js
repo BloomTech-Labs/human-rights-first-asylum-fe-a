@@ -5,6 +5,10 @@ import logo from '../../../styles/hrf-logo.png';
 import axios from 'axios';
 import { notification } from 'antd';
 import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
+import blue from '../../../styles/blue.svg';
+import blue1 from '../../../styles/blue1.svg';
+import blue2 from '../../../styles/blue2.svg';
+import liberty from '../../../styles/liberty.png';
 
 const SignupPage = () => {
   const [form] = Form.useForm();
@@ -56,10 +60,17 @@ const SignupPage = () => {
 
   return (
     <div className="signup-root">
-      <div
-        className="background-image-signup"
-        aria-label=" cosmetic background image"
-      />
+      <div className="background">
+        <div className="bgImgContain">
+          <img className="liberty" src={liberty} alt="Statue of Liberty" />
+        </div>
+        <div className="svgContain">
+          <img className="blueShape" src={blue} alt="bgSvg" />
+          <img className="blueShape1" src={blue1} alt="bgSvg" />
+          <img className="blueShape2" src={blue2} alt="bgSvg" />
+        </div>
+      </div>
+
       <div className="signup-form">
         <div className="logo">
           <img src={logo} alt="logo" width="350px" />
