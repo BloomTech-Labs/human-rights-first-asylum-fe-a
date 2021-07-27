@@ -20,15 +20,16 @@
 @white: #ffffff;
 
 .ant-menu
-  .ant-menu-light
-  .ant-menu-inline-collapsed
-  .ant-menu--root
-  .ant-menu-vertical {
+.ant-menu-light
+.ant-menu-inline-collapsed
+.ant-menu--root
+.ant-menu-vertical {
   min-height: 100vh !important;
 }
 
 .saved-submenu {
   background: url(@save-icon) no-repeat left 26px top 10px !important;
+
   &:hover {
     background: url(@save-blue) no-repeat left 26px top 10px !important;
     background-color: @white !important;
@@ -37,6 +38,7 @@
 
 .admin-tools-submenu {
   background: url(@tool-icon) no-repeat left 20px top 10px !important;
+  
   &:hover {
     background: url(@tool-blue) no-repeat left 20px top 10px !important;
     background-color: @white !important;
@@ -46,6 +48,7 @@
 .home {
   background: url(@home-icon) no-repeat left 20px center !important;
   padding-left: 3.5rem !important;
+  
   &:hover {
     background: url(@home-blue) no-repeat left 20px center !important;
     background-color: @white !important;
@@ -55,6 +58,7 @@
 .cases {
   background: url(@case-icon) no-repeat left 20px center !important;
   padding-left: 3.5rem !important;
+  
   &:hover {
     background: url(@case-blue) no-repeat left 20px center !important;
     background-color: @white !important;
@@ -64,6 +68,7 @@
 .judges {
   background: url(@judge-icon) no-repeat left 20px center !important;
   padding-left: 3.5rem !important;
+  
   &:hover {
     background: url(@judge-blue) no-repeat left 20px center !important;
     background-color: @white !important;
@@ -73,6 +78,7 @@
 .my-cases {
   background: url(@my-cases-icon) no-repeat left 20px center !important;
   padding-left: 3.5rem !important;
+  
   &:hover {
     background: url(@my-cases-blue) no-repeat left 20px center !important;
     background-color: @white !important;
@@ -89,6 +95,7 @@
   align-items: center;
   justify-content: left;
   color: @gray;
+  
   &:hover {
     color: @light-blue;
     background-color: @white;
@@ -97,23 +104,27 @@
 
 .ant-menu-submenu-title {
   color: @gray;
+  margin-right: 0;
+  padding-left: 3.5rem !important;
+
   &:hover {
     color: @light-blue;
   }
+  
   &:active {
     color: @light-blue;
     background-color: @selected-color;
   }
-  margin-right: 0;
-  padding-left: 3.5rem !important;
 }
 
 .ant-btn-primary {
   color: @selected-color;
+
   &:hover {
     color: @light-blue;
     background: none;
   }
+
   &:focus {
     background: none;
     color: @selected-color;
@@ -122,9 +133,11 @@
 
 li {
   padding-right: 0 !important;
+
   .ant-menu-inline-collapsed-noicon {
     display: none;
   }
+
   .ant-menu-inline-collapsed-selected {
     border: none;
   }
@@ -152,9 +165,11 @@ li {
 
 .ant-menu-submenu-arrow {
   color: @light-gray;
+
   &:active {
     color: @light-blue;
   }
+
   &:hover {
     color: @light-blue;
   }
@@ -165,9 +180,11 @@ li {
   background-color: #f4f6f7 !important;
   margin-left: 1rem;
   color: #2a5c8d !important;
+
   &:active {
     background-color: #f4f6f7;
   }
+  
   &:hover {
     background-color: #f4f6f7;
   }
