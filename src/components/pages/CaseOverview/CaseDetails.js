@@ -61,6 +61,23 @@ const CaseDetails = props => {
         <p>{`Country of Origin: ${caseData.country_of_origin}`}</p>
         <p>{`Filed Within One Year: ${caseData.filed_in_one_year}`}</p>
         <p>{`Applicant Language: ${caseData.applicant_language}`}</p>
+        {/* the segment below displays the disclaimer message with the details requested by the stakeholders */}
+        <br></br>
+        <p>
+          This {caseData.appellate === true ? 'appellate' : 'initial'} case was
+          heard on {converted} in {caseData.case_origin_city},{' '}
+          {caseData.case_origin_state} by Judge {caseData.first_name}{' '}
+          {caseData.middle_initial}. {caseData.last_name}. The applicant comes
+          from {caseData.country_of_origin} and speaks{' '}
+          {caseData.applicant_language}; they have applied for asylum under the
+          following protected grounds: "{caseData.protected_grounds}." The
+          applicant’s case has been{' '}
+          {caseData.outcome === 'Denied' ? 'denied' : ''}
+          {caseData.outcome === 'Terminated' ? 'terminated' : ''}
+          {caseData.outcome === 'Granted' ? 'granted' : ''}
+          {caseData.outcome === 'Remanded' ? 'remanded' : ''}
+          {caseData.outcome === 'Sustained' ? 'sustained' : ''}.
+        </p>
       </div>
       <EditCaseDetails
         caseId={caseData.case_id}
