@@ -279,18 +279,18 @@ export default function JudgePage(props) {
         <div>
           <div className="imgBox">
             <h3 className="judgeDisclaimer">
-              {judge.first_name} {judge.middle_initial} {judge.last_name} serves
-              as a judge in the county of {judge.county}. All visualizations
-              regarding Judge {judge.first_name} {judge.middle_initial}{' '}
-              {judge.last_name}'s asylum acceptance rates and asylum denial
-              rates reflect only the data in the database. As more cases are
-              added, more data can be visualized.
+              {judge.first_name} {judge.middle_initial}. {judge.last_name}{' '}
+              serves as a judge in the county of {judge.county}. All
+              visualizations regarding Judge {judge.first_name}{' '}
+              {judge.middle_initial}. {judge.last_name}'s asylum acceptance
+              rates and asylum denial rates reflect only the data in the
+              database. As more cases are added, more data can be visualized.
             </h3>
             <h1>
               {judge.first_name +
                 ' ' +
                 judge.middle_initial +
-                ' ' +
+                '. ' +
                 judge.last_name}
             </h1>
             {judge.birthdate ? <p>Birthdate: {judge.birthdate}</p> : null}
