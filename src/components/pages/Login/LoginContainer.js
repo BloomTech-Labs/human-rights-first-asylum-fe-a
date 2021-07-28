@@ -5,6 +5,10 @@ import OktaSignIn from '@okta/okta-signin-widget';
 import '@okta/okta-signin-widget/dist/css/okta-sign-in.min.css';
 // Below is the Human Rights logo
 import logo from '../../../styles/hrf-logo.png';
+import blue from '../../../styles/blue.svg';
+import blue1 from '../../../styles/blue1.svg';
+import blue2 from '../../../styles/blue2.svg';
+import liberty from '../../../styles/liberty.png';
 
 import { config } from '../../../utils/oktaConfig';
 
@@ -60,13 +64,20 @@ const LoginContainer = () => {
 
   return (
     <div className="login-container">
-      <div
-        className="background-image-signup"
-        aria-label="cosmetic background image"
-      />
+      <div className="background">
+        <div className="bgImgContain">
+          <img className="liberty" src={liberty} alt="Statue of Liberty" />
+        </div>
+        <div className="svgContain">
+          <img className="blueShape" src={blue} alt="bgSvg" />
+          <img className="blueShape1" src={blue1} alt="bgSvg" />
+          <img className="blueShape2" src={blue2} alt="bgSvg" />
+        </div>
+      </div>
+
       <div className="login-form">
         <div className="logo">
-          <img src={logo} alt="logo" width="350px" />
+          <img src={logo} alt="logo" />
         </div>
         <div className="login-page">
           <div id="sign-in-widget" aria-label="login form" />
