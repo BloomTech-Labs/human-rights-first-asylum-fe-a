@@ -278,6 +278,7 @@ export default function JudgePage(props) {
       {judge && (
         <div>
           <div className="imgBox">
+            {/* the judgeDisclaimer segment below displays the disclaimer message with the details requested by the stakeholders */}
             <h3 className="judgeDisclaimer">
               {judge.first_name} {judge.middle_initial}. {judge.last_name}{' '}
               serves as a judge in the county of {judge.county}. All

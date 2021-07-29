@@ -41,6 +41,7 @@ const AccountPage = props => {
     setIsEditModalVisible(false);
   };
 
+  // this axios call is what receives the data to be rendered on the Account Details page
   const updateUser = updatedUserInfo => {
     axiosWithAuth()
       .put(`/profile/${updatedUserInfo.user_id}`, updatedUserInfo)
@@ -92,6 +93,7 @@ const AccountPage = props => {
                 <p className="p-1">Email: </p>
                 <p className="p-2">{hrfUserInfo.email}</p>
               </div>
+              {/* The three ternary operators below handle what the UI renders on the 'Role:' line of the Account Details page */}
               <div className="info-line">
                 <p className="p-1">Role: </p>
                 {hrfUserInfo.role_id === 1 ? (

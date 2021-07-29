@@ -63,4 +63,6 @@ The base technologies are JavaScript, HTML and CSS. The frontend leverages [Reac
     1. BE needs to pull from table ds_cases
     2. Look into work queue system to rate limit the amount of uploads being performed at once
 - On Cases, user needs to be able to filter the cases like a stacked search
+- The disclaimer messages that our stakeholders requested we add to the application are located in the following three React components: DataHub.js, JudgePage.js, CaseDetails.js
+- The stakeholders requested that we add to the disclaimer message at the top of each individual judge page (JudgePage.js component) a link to the following url to give more context to the data: https://trac.syr.edu/immigration/reports/judgereports/
 
