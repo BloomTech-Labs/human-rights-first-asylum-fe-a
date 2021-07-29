@@ -61,7 +61,7 @@ const CaseDetails = props => {
         <p>{`Country of Origin: ${caseData.country_of_origin}`}</p>
         <p>{`Filed Within One Year: ${caseData.filed_in_one_year}`}</p>
         <p>{`Applicant Language: ${caseData.applicant_language}`}</p>
-        {/* the segment below displays the disclaimer message with the details requested by the stakeholders;*/}
+        {/* the segment below displays the disclaimer message with the details requested by the stakeholders*/}
         <br></br>
         <p>
           This {caseData.appellate === true ? 'appellate' : 'initial'} case was
