@@ -201,6 +201,7 @@ const DataHub = props => {
 
   return (
     <div className="dataHubContainer">
+      {/* the homeDisclaimer segment below displays the disclaimer message with the details requested by the stakeholders */}
       <h3 className="homeDisclaimer">
         All visualizations reflect the data in the database. As more cases are
         added, more data can be visualized.
