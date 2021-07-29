@@ -549,6 +549,12 @@ export default function CaseTable(props) {
   const nonAppCases = casesData.filter(item => item.appellate === false);
   const appCases = casesData.filter(item => item.appellate === true);
 
+  /*
+   * This function was created to attempt to remove filters from the initialFilters object
+   * In checking the console.log in the function, you can see that it is being removed, but the page does not refresh
+   * getColumnSearchProps (above) was built with ant design, and is the header row of the table - it does not include the Filters div above it
+   * the handleReset function is used in there to wipe the search of filters for specific columns, but I could not make it work for the search terms themselves
+   */
   const removeSearchTerm = filter => {
     const term = filter.split(':')[0];
     const key = filter.split(': ')[1];
@@ -587,6 +593,11 @@ export default function CaseTable(props) {
               {processFilters(initialFilters).map(filter => (
                 <Tag key={filter}>
                   {filter}{' '}
+                  {/*
+                    spans were created for the filter on both the initial and appellate case tables
+                    the onClick was placed on this one to test functionality, but not on the appellate table
+                    removeSearchTerm notes above the function
+                  */}
                   <span onClick={() => removeSearchTerm(filter)}>x</span>
                 </Tag>
               ))}
