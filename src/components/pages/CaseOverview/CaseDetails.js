@@ -61,9 +61,7 @@ const CaseDetails = props => {
         <p>{`Country of Origin: ${caseData.country_of_origin}`}</p>
         <p>{`Filed Within One Year: ${caseData.filed_in_one_year}`}</p>
         <p>{`Applicant Language: ${caseData.applicant_language}`}</p>
-        {/* the segment below displays the disclaimer message with the details requested by the stakeholders;
-        note that the stakeholders have also requested that we add a hyperlink to the following URL for additional context:
-        https://trac.syr.edu/immigration/reports/judgereports/ */}
+        {/* the segment below displays the disclaimer message with the details requested by the stakeholders;*/}
         <br></br>
         <p>
           This {caseData.appellate === true ? 'appellate' : 'initial'} case was
