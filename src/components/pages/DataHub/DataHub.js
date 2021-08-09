@@ -207,7 +207,6 @@ const DataHub = props => {
         added, more data can be visualized.
       </h3>
       <h2 className="h1Styles">Approvals VS Denials Nationwide</h2>
-      <p className="divider"></p>
       <div className="mainChartContainer">
         <TestDataChart />
       </div>
