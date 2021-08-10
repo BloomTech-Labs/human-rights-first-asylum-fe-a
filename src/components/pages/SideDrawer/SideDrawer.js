@@ -1,19 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Menu } from 'antd';
 import './_SideDrawer.less';
-import MenuButton from './MenuButton';
 
 const { SubMenu } = Menu;
 
 function SideDrawer() {
-  const [collapsed, setCollapsed] = useState(false);
-
   const role = window.localStorage.getItem('role_name');
-
-  const toggleCollapsed = () => {
-    setCollapsed(!collapsed);
-  };
 
   const history = useHistory();
 
@@ -29,7 +22,6 @@ function SideDrawer() {
         defaultSelectedKeys={[window.location.pathname]}
         mode="inline"
         theme="light"
-        inlineCollapsed={collapsed}
         onClick={handleRoute}
         style={{
           backgroundColor: '#F4F6F7',
@@ -37,8 +29,6 @@ function SideDrawer() {
           position: 'sticky',
         }}
       >
-        <MenuButton toggle={toggleCollapsed} collapsed={collapsed} />
-
         <Menu.Item className="home" key="/">
           Home
         </Menu.Item>
