@@ -210,6 +210,7 @@ const DataHub = props => {
       <p className="divider">
         <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
       </p>
+
       <div className="mainChartContainer">
         <TestDataChart />
       </div>
