@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import UploadCase from '../Upload/UploadCase';
 import Icon from '@ant-design/icons';
 import Profile from '../../../styles/icons/profile.svg';
-import HRFLogo from '../../../styles/HRFlogo.png';
+import HRFLogo from '../../../styles/hrf-logo-white.png';
 import Notifications from './Notifications';
 
 const MOCK_NOTIFICATIONS = [
