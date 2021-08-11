@@ -282,11 +282,10 @@ export default function JudgePage(props) {
             note that the stakeholders have also requested that we add a hyperlink to the following URL for additional context:
             https://trac.syr.edu/immigration/reports/judgereports/ */}
             <h3 className="judgeDisclaimer">
-              {judge.first_name} {judge.middle_initial}. {judge.last_name}{' '}
-              serves as a judge in the county of {judge.county}. All
-              visualizations regarding Judge {judge.first_name}{' '}
-              {judge.middle_initial}. {judge.last_name}'s asylum acceptance
-              rates and asylum denial rates reflect only the data in the
+              Judge {judge.first_name} {judge.middle_initial} {judge.last_name}{' '}
+              serves in the county of {judge.county}.<br></br>
+              <br></br> All visualizations regarding Judge {judge.last_name}'s
+              asylum acceptance and denial rates reflect only the data in the
               database. As more cases are added, more data can be visualized.
             </h3>
             <h1>
