@@ -1,7 +1,7 @@
 import React from 'react';
 import './_MainHeader.less';
 import { Menu, Dropdown } from 'antd';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import UploadCase from '../Upload/UploadCase';
 import Icon from '@ant-design/icons';
 import Profile from '../../../styles/icons/profile.svg';
@@ -75,7 +75,9 @@ export default function MainHeader(props) {
             <div className="user-button">
               <Icon
                 component={() => (
-                  <img id="avatar-icon" src={Profile} alt="profile icon" />
+                  <Link to="/account">
+                    <img id="avatar-icon" src={Profile} alt="profile icon" />
+                  </Link>
                 )}
               />
             </div>
