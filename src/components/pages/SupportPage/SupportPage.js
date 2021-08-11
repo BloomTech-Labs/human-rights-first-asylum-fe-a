@@ -5,11 +5,11 @@ import './_SupportPageStyles.less';
 import Icon from '@ant-design/icons';
 import OrangeLine from '../../../styles/orange-line.svg';
 import { CheckCircleOutlined } from '@ant-design/icons';
+
 const initialFormValues = {
   message: '',
-  email: '',
-  name: '',
 };
+
 const successNotification = () => {
   notification.open({
     message: 'Contact Us',
@@ -25,14 +25,6 @@ const SupportPage = props => {
   const [FAQ, setFaq] = useState([]);
   const [formValues, setFormValues] = useState(initialFormValues);
 
-  useEffect(() => {
-    setFormValues({
-      ...initialFormValues,
-      email: userInfo.email,
-      name: `${userInfo.firstName} ${userInfo.lastName}`,
-    });
-  }, [userInfo]);
-
   const [isModalVisible, setIsModalVisible] = useState(false);
   const showModal = () => {
     setIsModalVisible(true);
@@ -45,23 +37,20 @@ const SupportPage = props => {
   };
 
   const onChange = e => {
-    const { name, value } = e.target;
-    setFormValues({ ...formValues, [name]: value });
+    setFormValues({ ...formValues, message: e.target.value });
+    console.log(formValues);
   };
 
   const postNewMessage = message => {
     axiosWithAuth()
       .post(`/faq/contact/`, message)
       .catch(err => console.log(err));
-    setFormValues(initialFormValues);
   };
 
   const onSubmit = e => {
     e.preventDefault();
     const message = {
       message: formValues.message.trim(),
-      email: formValues.email.trim(),
-      name: formValues.name.trim(),
     };
     successNotification();
     postNewMessage(message);
@@ -131,6 +120,7 @@ const SupportPage = props => {
             </p>
             <Form.Item name="message" label="Message">
               <Input.TextArea
+                name="message"
                 onChange={onChange}
                 className="text-field"
                 value={formValues.message}

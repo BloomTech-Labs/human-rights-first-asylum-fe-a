@@ -20,6 +20,7 @@
     "@mikecousins/react-pdf": "^5.5.1",
     "@okta/okta-auth-js": "^4.8.0",
     "@okta/okta-react": "^5.0.0",
+    "@okta/okta-sdk-nodejs": "^5.0.0",
     "@okta/okta-signin-widget": "^4.1.2",
     "@react-pdf/renderer": "^2.0.4",
     "antd": "^4.15.1",
