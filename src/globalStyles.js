@@ -73,7 +73,6 @@ table {
 
 
 #root .MuiButton-root {
-  box-shadow: 0px;
   & .MuiButton-label {
     color:white;
     &:hover {
