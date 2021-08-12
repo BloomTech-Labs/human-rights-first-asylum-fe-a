@@ -45,7 +45,7 @@ const ManageUsersPage = props => {
 
   const deleteUser = profile => {
     axiosWithAuth()
-      .delete(`/profiles/${profiles.user_id}`)
+      .delete(`/profiles/${profile.user_id}`)
       .then(res => {
         alert(`${profile.first_name}'s profile was deleted`);
         loadUsers();
