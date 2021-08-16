@@ -18,6 +18,7 @@
 @light-gray: #cacccf;
 @light-blue: #a0c5dd;
 @white: #ffffff;
+@orange:  #fc7402;
 
 .ant-menu
 .ant-menu-light
@@ -94,21 +95,21 @@
   flex-direction: row;
   align-items: center;
   justify-content: left;
-  color: @gray;
+  color: @orange;
   
   &:hover {
-    color: @light-blue;
+    color: @selected-color;
     background-color: @white;
   }
 }
 
 .ant-menu-submenu-title {
-  color: @gray;
+  color: @orange;
   margin-right: 0;
   padding-left: 3.5rem !important;
 
   &:hover {
-    color: @light-blue;
+    color: @selected-color;
   }
   
   &:active {

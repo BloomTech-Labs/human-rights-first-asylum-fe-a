@@ -207,9 +207,6 @@ const DataHub = props => {
         added, more data can be visualized.
       </h3>
       <h2 className="h1Styles">Approvals vs Denials Nationwide</h2>
-      <p className="divider">
-        <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
-      </p>
 
       <div className="mainChartContainer">
         <TestDataChart />
