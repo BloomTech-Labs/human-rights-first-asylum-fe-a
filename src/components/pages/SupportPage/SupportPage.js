@@ -47,8 +47,6 @@ const SupportPage = props => {
   const onChange = e => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [e.target.props.id]: value });
-    console.log(formValues);
-    console.log(e.target.props);
   };
 
   const postNewMessage = message => {
