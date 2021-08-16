@@ -50,7 +50,6 @@ const SupportPage = props => {
   };
 
   const postNewMessage = message => {
-    console.log(message);
     axiosWithAuth()
       .post(`/faq/contact/`, message)
       .catch(err => console.log(err));
