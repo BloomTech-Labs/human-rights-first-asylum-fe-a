@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { Collapse, Input, Button, Modal, notification, Form } from 'antd';
 import './_SupportPageStyles.less';
-import Icon from '@ant-design/icons';
+import Icon, { ConsoleSqlOutlined } from '@ant-design/icons';
 import OrangeLine from '../../../styles/orange-line.svg';
 import { CheckCircleOutlined } from '@ant-design/icons';
 const initialFormValues = {
@@ -46,7 +46,7 @@ const SupportPage = props => {
 
   const onChange = e => {
     const { name, value } = e.target;
-    setFormValues({ ...formValues, [name]: value });
+    setFormValues({ ...formValues, [e.target.props.id]: value });
   };
 
   const postNewMessage = message => {
