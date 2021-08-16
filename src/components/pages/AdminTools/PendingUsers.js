@@ -30,7 +30,7 @@ const PendingUsersPage = props => {
     console.log(profile);
     successNotification();
     axiosWithAuth()
-      .post(`/profile/`, profile)
+      .put(`/profile/${profile.user_id}`, profile)
       .then(res => {
         setProfiles(res.data.profile);
         setPendingProfiles(
