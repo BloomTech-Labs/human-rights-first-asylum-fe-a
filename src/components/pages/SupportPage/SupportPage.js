@@ -29,7 +29,7 @@ const SupportPage = props => {
     setFormValues({
       ...initialFormValues,
       email: userInfo.email,
-      name: `${userInfo.firstName} ${userInfo.lastName}`,
+      name: `${userInfo.first_name} ${userInfo.last_name}`,
     });
   }, [userInfo]);
 
@@ -46,7 +46,7 @@ const SupportPage = props => {
 
   const onChange = e => {
     const { name, value } = e.target;
-    setFormValues({ ...formValues, [name]: value });
+    setFormValues({ ...formValues, [e.target.props.id]: value });
   };
 
   const postNewMessage = message => {
