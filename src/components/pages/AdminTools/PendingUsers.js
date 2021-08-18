@@ -45,8 +45,9 @@ const PendingUsersPage = props => {
   };
 
   const rejectUser = profile => {
+    console.log(profile);
     axiosWithAuth()
-      .delete(`/profiles/pending/${profile.id}`)
+      .delete(`/profiles/pending/${profile.user_id}`)
       .then(res => {
         alert(`Profile request from ${profile.email} was rejected`);
         setPendingProfiles(
