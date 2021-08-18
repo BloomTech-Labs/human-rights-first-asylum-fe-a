@@ -45,7 +45,6 @@ const PendingUsersPage = props => {
   };
 
   const rejectUser = profile => {
-    console.log(profile);
     axiosWithAuth()
       .delete(`/profiles/pending/${profile.user_id}`)
       .then(res => {
