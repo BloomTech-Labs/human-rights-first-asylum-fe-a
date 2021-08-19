@@ -10,6 +10,7 @@ import { Button, Typography, Input, Card, Drawer, Avatar } from 'antd';
 import './JudgePage.less';
 
 import FeatherIcon from 'feather-icons-react';
+import axiosWithAuth from '../../../utils/axiosWithAuth';
 
 export default function JudgePage(props) {
   const { authState } = props;
@@ -18,29 +19,23 @@ export default function JudgePage(props) {
   const { judge_id } = useParams();
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:8080/judges/${judge_id}/cases`, {
-        headers: {
-          Authorization: 'Bearer ' + authState.idToken.idToken,
-        },
-      })
+    axiosWithAuth()
+      .get(`/judges/${judge_id}/vis`)
       .then(res => {
         console.log(res.data);
         setVizData(res.data);
+      })
+      .catch(err => {
+        console.log(err);
       });
-  }, [judge_id, authState.idToken]);
-
-  // const TestDataChart = () => {
-  //   return <Plot data={vizData.data} layout={vizData.layout} />;
-  // };
+  }, [judge_id]);
 
   const CountryOriginChart = () => {
-    vizData.bar_country_of_origin.layout.title =
-      'Outcomes by Country of Origin';
+    vizData.layout.title = 'Outcomes by Protected Ground';
     return (
       <Plot
-        data={vizData.bar_country_of_origin.data}
-        layout={vizData.bar_country_of_origin.layout}
+        data={vizData.data}
+        layout={vizData.layout}
         useResizeHandler={true}
         config={{
           modeBarButtonsToRemove: [
@@ -64,68 +59,6 @@ export default function JudgePage(props) {
       />
     );
   };
-
-  const GenderChart = () => {
-    vizData.bar_gender.layout.title = 'Outcomes By Gender';
-    return (
-      <Plot
-        data={vizData.bar_gender.data}
-        layout={vizData.bar_gender.layout}
-        useResizeHandler={true}
-        config={{
-          modeBarButtonsToRemove: [
-            'toImage',
-            'zoom2d',
-            'pan2d',
-            'select2d',
-            'lasso2d',
-            'drawclosedpath',
-            'drawopenpath',
-            'zoomIn2d',
-            'zoomOut2d',
-            'autoScale2d',
-            'hoverClosestCartesian',
-            'hoverCompareCartesian',
-            'toggleSpikelines',
-          ],
-          displaylogo: false,
-        }}
-        style={{ width: '100%', height: '25rem' }}
-      />
-    );
-  };
-
-  const ProGroundsChart = () => {
-    vizData.bar_protected_grounds.layout.title =
-      'Outcomes by Protected Grounds';
-    return (
-      <Plot
-        data={vizData.bar_protected_grounds.data}
-        layout={vizData.bar_protected_grounds.layout}
-        useResizeHandler={true}
-        config={{
-          modeBarButtonsToRemove: [
-            'toImage',
-            'zoom2d',
-            'pan2d',
-            'select2d',
-            'lasso2d',
-            'drawclosedpath',
-            'drawopenpath',
-            'zoomIn2d',
-            'zoomOut2d',
-            'autoScale2d',
-            'hoverClosestCartesian',
-            'hoverCompareCartesian',
-            'toggleSpikelines',
-          ],
-          displaylogo: false,
-        }}
-        style={{ width: '100%', height: '25rem' }}
-      />
-    );
-  };
-
   const columns = [
     {
       field: 'id',
@@ -310,31 +243,7 @@ export default function JudgePage(props) {
 
           <div className="judgeStatsVizDiv">
             <div className="judgeViz">{vizData && <CountryOriginChart />}</div>
-            <div className="judgeViz">{vizData && <GenderChart />}</div>
-            <div className="judgeViz">{vizData && <ProGroundsChart />}</div>
           </div>
-
-          {/* <Drawer
-            visible={new_search}
-            onClose={toggleSearch}
-            width={'25%'}
-            style={{ marginTop: '4rem' }}
-          >
-            {drawerContent()}
-          </Drawer> */}
-
-          {/* <div className="judgePageGridContainer"> */}
-          {/* Cases: "A section including relevant information/table of active
-            cases" */}
-          {/* <DataGrid
-              rows={searching ? filter(judge.case_data) : judge.case_data}
-              columns={columns}
-              className="judgePageTable"
-              autoHeight={true}
-              components={{ Toolbar: Toolbar }}
-            /> */}
-          {/* </div> */}
-          {/* // * The above is left commented on the off chance we want to reroute and still render this info */}
         </div>
       )}
     </div>
