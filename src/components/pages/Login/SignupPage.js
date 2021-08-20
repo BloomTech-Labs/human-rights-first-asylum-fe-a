@@ -9,6 +9,7 @@ import blue from '../../../styles/blue.svg';
 import blue1 from '../../../styles/blue1.svg';
 import blue2 from '../../../styles/blue2.svg';
 import liberty from '../../../styles/liberty.png';
+import axiosWithAuth from '../../../utils/axiosWithAuth';
 
 const SignupPage = () => {
   const [form] = Form.useForm();
@@ -35,7 +36,7 @@ const SignupPage = () => {
 
   const postNewUser = newUser => {
     axios
-      .post(`${process.env.REACT_APP_API_URI}/profile/pending`, newUser)
+      .post(`${process.env.REACT_APP_API_URI}/profile`, newUser)
       .then(() => {
         successNotification();
       })
