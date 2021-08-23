@@ -137,7 +137,7 @@ function RenderHomePage(props) {
         let counter = 0;
         setMyPendingCases(
           res.data.map(eachCase => {
-            if (eachCase.status === 'Pending') {
+            if (eachCase.status === 'Processing') {
               counter += 1;
             }
             return {
@@ -148,6 +148,7 @@ function RenderHomePage(props) {
         );
         if (counter) {
           setTimeout(() => {
+            console.log('here');
             getPendingCases();
           }, 10000);
         }
