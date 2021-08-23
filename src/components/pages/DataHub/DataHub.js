@@ -5,13 +5,13 @@ import axios from 'axios';
 import { UserContext } from '../../../context/UserContext';
 import Icon from '@ant-design/icons';
 import OrangeLine from '../../../styles/orange-line.svg';
+import axiosWithAuth from '../../../utils/axiosWithAuth';
 
 const DataHub = props => {
   const { caseData } = props;
   const [vizData, setVizData] = useState({});
   const user = useContext(UserContext);
-
-  const data = caseData;
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     axios
@@ -87,7 +87,7 @@ const DataHub = props => {
 
     let trace2 = {
       x: states,
-      y: [],
+      y: [1, 2, 3],
       name: 'Denied',
       type: 'bar',
     };
@@ -96,7 +96,6 @@ const DataHub = props => {
       trace1.y.push(Math.round(Math.random() * (150 - 1)) + 1);
       trace2.y.push(Math.round(Math.random() * (150 - 1)) + 1);
     }
-
     return (
       <Plot
         data={[trace1, trace2]}

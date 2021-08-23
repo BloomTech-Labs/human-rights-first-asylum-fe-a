@@ -48,14 +48,25 @@ const UploadCase = ({ getPendingCases }) => {
   };
 
   const onFileChange = e => {
-    let multiFile = [];
-    for (let i = 0; i < e.length; i++) {
-      let dataForm = new FormData();
-      dataForm.append('target_file', e[i]);
+    // let multiFile = [];
+    // for (let i = 0; i < e.length; i++) {
+    //   let dataForm = new FormData();
+    //   dataForm.append('target_file', e[i]);
+    //   multiFile.push(dataForm);
+    // }
+    // setPostQueue([...postQueue, ...multiFile]);
+    let file = e.pop();
+    if (file) {
       setIsLoading(true);
-      multiFile.push(dataForm);
+      const fd = new FormData();
+      fd.append('image', file, file.name);
+      axiosWithAuth()
+        .post('/upload', fd)
+        .then(res => console.log(res.data.imageURL))
+        .then(() => onFileChange(e));
+    } else {
+      setIsLoading(false);
     }
-    setPostQueue([...postQueue, ...multiFile]);
   };
 
   const showModal = () => {
@@ -103,7 +114,6 @@ const UploadCase = ({ getPendingCases }) => {
             setNextPost(copy.shift());
             setPostQueue(copy);
           } else {
-            setNextPost(null);
             setIsReady(true);
           }
         })
@@ -115,7 +125,6 @@ const UploadCase = ({ getPendingCases }) => {
             setNextPost(copy.shift());
             setPostQueue(copy);
           } else {
-            setNextPost(null);
             setIsReady(true);
           }
         });
@@ -123,6 +132,7 @@ const UploadCase = ({ getPendingCases }) => {
   }, [nextPost]);
 
   useEffect(() => {
+    console.log('nexscrape', nextScrap);
     if (nextScrap) {
       axiosWithAuth()
         .post(`/upload/scrap/${nextScrap}`)
@@ -133,7 +143,6 @@ const UploadCase = ({ getPendingCases }) => {
             setNextScrap(copy.shift());
             setScrapQueue(copy);
           } else {
-            setNextScrap(null);
             setIsReady(false);
           }
         })
@@ -145,7 +154,6 @@ const UploadCase = ({ getPendingCases }) => {
             setNextScrap(copy.shift());
             setScrapQueue(copy);
           } else {
-            setNextScrap(null);
             setIsReady(false);
           }
         });
