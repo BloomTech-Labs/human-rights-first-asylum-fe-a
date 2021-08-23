@@ -13,17 +13,17 @@ const DataHub = props => {
 
   const data = caseData;
 
-  useEffect(() => {
-    axios
-      .get('http://localhost:8080/judges/2/cases', {
-        headers: {
-          Authorization: 'Bearer ' + user.authState.idToken.idToken,
-        },
-      })
-      .then(res => {
-        setVizData(res.data.judge_cases);
-      });
-  }, [user.authState.idToken.idToken]);
+  // useEffect(() => {
+  //   axios
+  //     .get('http://localhost:8080/judges/2/cases', {
+  //       headers: {
+  //         Authorization: 'Bearer ' + user.authState.idToken.idToken,
+  //       },
+  //     })
+  //     .then(res => {
+  //       setVizData(res.data.judge_cases);
+  //     });
+  // }, [user.authState.idToken.idToken]);
 
   let states = [
     'AL',
