@@ -552,9 +552,6 @@ export default function CaseTable(props) {
   return (
     <div className="cases-container">
       <h2 className="h1Styles">Cases</h2>
-      <p className="divider">
-        <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
-      </p>
 
       <CaseDetails
         caseData={detailsData}

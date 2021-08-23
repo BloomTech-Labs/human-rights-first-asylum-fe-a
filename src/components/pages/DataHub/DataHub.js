@@ -4,8 +4,7 @@ import Plot from 'react-plotly.js';
 import axios from 'axios';
 import { UserContext } from '../../../context/UserContext';
 import Icon from '@ant-design/icons';
-import OrangeLine from '../../../styles/orange-line.svg';
-
+import { Divider } from 'antd';
 const DataHub = props => {
   const { caseData } = props;
   const [vizData, setVizData] = useState({});
@@ -207,11 +206,10 @@ const DataHub = props => {
         added, more data can be visualized.
       </h3>
       <h2 className="h1Styles">Approvals vs Denials Nationwide</h2>
-
       <div className="mainChartContainer">
         <TestDataChart />
       </div>
-
+      <Divider />
       <div className="subChartsContainer">
         <CaseDataChart />
         <h2>Ratio of Cases Resulting In Granted Asylum: {grantedRatio}%</h2>

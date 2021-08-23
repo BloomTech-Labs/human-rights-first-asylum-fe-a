@@ -12,7 +12,6 @@ import './_UploadCase.less';
 // Icons for modal
 import Icon from '@ant-design/icons';
 import UploadCaseBox from '../../../styles/icons/upload-box.svg';
-import OrangeLine from '../../../styles/orange-line.svg';
 
 const UploadCase = ({ getPendingCases }) => {
   const history = useHistory();
@@ -185,11 +184,7 @@ const UploadCase = ({ getPendingCases }) => {
           <div className="pdf-container">
             <div>
               <h1 className="h1Styles">Upload Cases</h1>
-              <p className="divider">
-                <Icon
-                  component={() => <img src={OrangeLine} alt="divider icon" />}
-                />
-              </p>
+              <p className="divider"></p>
             </div>
             <div className="pdfUpload">
               <h2 className="h2Styles">
