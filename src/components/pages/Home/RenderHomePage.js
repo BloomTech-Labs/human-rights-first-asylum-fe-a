@@ -131,23 +131,33 @@ function RenderHomePage(props) {
     savedCases.length,
   ]);
   const getPendingCases = () => {
-    trackPromise(
-      axiosWithAuth().get(`/cases/pending/user/${user.userInfo.sub}`)
-    )
+    axiosWithAuth()
+      .get(`/cases/pending/user/${user.userInfo.sub}`)
       .then(res => {
+        let counter = 0;
         setMyPendingCases(
           res.data.map(eachCase => {
+            if (eachCase.status === 'Processing') {
+              counter += 1;
+            }
             return {
               ...eachCase,
               id: eachCase.case_id,
             };
           })
         );
+        if (counter) {
+          setTimeout(() => {
+            console.log('here');
+            getPendingCases();
+          }, 10000);
+        }
       })
       .catch(err => {
         console.log(err);
       });
   };
+
   const deleteFromStateById = (id, state, setState) => {
     let index = state.findIndex(item => item.id === id);
     return setState(state.slice(0, index).concat(state.slice(index + 1)));
