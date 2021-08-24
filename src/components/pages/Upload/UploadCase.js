@@ -92,7 +92,6 @@ const UploadCase = ({ getPendingCases }) => {
       onFileChange(fileList);
     },
   };
-
   return (
     <div className="uploadPage">
       <div className="uploadButton">

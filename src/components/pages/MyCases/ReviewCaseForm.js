@@ -31,28 +31,18 @@ const ReviewCaseForm = props => {
   const role = window.localStorage.getItem('role_name');
   const { handleSubmit } = useForm();
   const onSubmit = evt => {
+    delete editedFormValues.id;
+    console.log(editedFormValues);
     evt.preventDefault();
-    if (role === 'user') {
-      axiosWithAuth()
-        .post(`/upload/${currentId}`, editedFormValues)
-        .then(res => {
-          getPendingCases();
-          setVisible(false);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    } else if (role === 'admin') {
-      axiosWithAuth()
-        .post(`/cases/pending/approve/${currentId}`, editedFormValues)
-        .then(res => {
-          getPendingCases();
-          setVisible(false);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
+    axiosWithAuth()
+      .put(`/upload/update/${currentId}`, editedFormValues)
+      .then(res => {
+        getPendingCases();
+        setVisible(false);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   return (
