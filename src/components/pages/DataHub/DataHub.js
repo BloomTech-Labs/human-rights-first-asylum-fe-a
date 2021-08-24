@@ -13,17 +13,17 @@ const DataHub = props => {
   const user = useContext(UserContext);
   const [data, setData] = useState([]);
 
-  useEffect(() => {
-    axios
-      .get('http://localhost:8080/judges/2/cases', {
-        headers: {
-          Authorization: 'Bearer ' + user.authState.idToken.idToken,
-        },
-      })
-      .then(res => {
-        setVizData(res.data.judge_cases);
-      });
-  }, [user.authState.idToken.idToken]);
+  // useEffect(() => {
+  //   axios
+  //     .get('http://localhost:8080/judges/2/cases', {
+  //       headers: {
+  //         Authorization: 'Bearer ' + user.authState.idToken.idToken,
+  //       },
+  //     })
+  //     .then(res => {
+  //       setVizData(res.data.judge_cases);
+  //     });
+  // }, [user.authState.idToken.idToken]);
 
   let states = [
     'AL',
@@ -87,7 +87,7 @@ const DataHub = props => {
 
     let trace2 = {
       x: states,
-      y: [1, 2, 3],
+      y: [],
       name: 'Denied',
       type: 'bar',
     };
