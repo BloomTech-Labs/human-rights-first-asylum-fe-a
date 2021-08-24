@@ -27,10 +27,11 @@ const PendingUsersPage = props => {
     });
   };
   const approveUser = profile => {
-    console.log(profile);
     successNotification();
     axiosWithAuth()
-      .put(`/profile/${profile.user_id}`, profile)
+      .put(`/profile/${profile.user_id}`, {
+        pending: false,
+      })
       .then(res => {
         setProfiles(res.data.profile);
         setPendingProfiles(

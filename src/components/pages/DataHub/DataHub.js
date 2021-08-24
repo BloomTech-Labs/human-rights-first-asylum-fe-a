@@ -4,25 +4,26 @@ import Plot from 'react-plotly.js';
 import axios from 'axios';
 import { UserContext } from '../../../context/UserContext';
 import Icon from '@ant-design/icons';
+
 import { Divider } from 'antd';
+import axiosWithAuth from '../../../utils/axiosWithAuth';
 const DataHub = props => {
   const { caseData } = props;
   const [vizData, setVizData] = useState({});
   const user = useContext(UserContext);
+  const [data, setData] = useState([]);
 
-  const data = caseData;
-
-  useEffect(() => {
-    axios
-      .get('http://localhost:8080/judges/2/cases', {
-        headers: {
-          Authorization: 'Bearer ' + user.authState.idToken.idToken,
-        },
-      })
-      .then(res => {
-        setVizData(res.data.judge_cases);
-      });
-  }, [user.authState.idToken.idToken]);
+  // useEffect(() => {
+  //   axios
+  //     .get('http://localhost:8080/judges/2/cases', {
+  //       headers: {
+  //         Authorization: 'Bearer ' + user.authState.idToken.idToken,
+  //       },
+  //     })
+  //     .then(res => {
+  //       setVizData(res.data.judge_cases);
+  //     });x
+  // }, [user.authState.idToken.idToken]);
 
   let states = [
     'AL',
@@ -95,7 +96,6 @@ const DataHub = props => {
       trace1.y.push(Math.round(Math.random() * (150 - 1)) + 1);
       trace2.y.push(Math.round(Math.random() * (150 - 1)) + 1);
     }
-
     return (
       <Plot
         data={[trace1, trace2]}

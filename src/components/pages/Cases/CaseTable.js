@@ -41,12 +41,22 @@ export default function CaseTable(props) {
 
   let casesData = caseData.map(cases => ({
     judge_name:
-      cases.last_name +
-      ', ' +
-      cases.first_name +
-      ' ' +
-      cases.middle_initial +
-      '.',
+      (cases?.judges[0]?.first_name
+        ? cases?.judges[0]?.first_name + ' '
+        : null) +
+      (cases?.judges[0]?.middle_initial
+        ? cases?.judges[0]?.middle_initial + '. '
+        : null) +
+      (cases?.judges[0]?.last_name ? cases?.judges[0]?.last_name : null)
+        ? (cases?.judges[0]?.first_name
+            ? cases?.judges[0]?.first_name + ' '
+            : null) +
+          (cases?.judges[0]?.middle_initial
+            ? cases?.judges[0]?.middle_initial + '. '
+            : null) +
+          (cases?.judges[0]?.last_name ? cases?.judges[0]?.last_name : null)
+        : null,
+
     filed_within_year:
       cases.filed_in_one_year
         .toString()
@@ -259,7 +269,7 @@ export default function CaseTable(props) {
       sortDirections: ['descend', 'ascend'],
       ...getColumnSearchProps('judge_name'),
       render: (text, record) => (
-        <Link to={`/judge/${record.judge_id}`}>{text}</Link>
+        <Link to={`/judge/${record?.judges[0]?.judge_id}`}>{text}</Link>
       ),
     },
     {

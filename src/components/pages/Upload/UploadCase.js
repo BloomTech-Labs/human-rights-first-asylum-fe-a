@@ -47,14 +47,25 @@ const UploadCase = ({ getPendingCases }) => {
   };
 
   const onFileChange = e => {
-    let multiFile = [];
-    for (let i = 0; i < e.length; i++) {
-      let dataForm = new FormData();
-      dataForm.append('target_file', e[i]);
+    // let multiFile = [];
+    // for (let i = 0; i < e.length; i++) {
+    //   let dataForm = new FormData();
+    //   dataForm.append('target_file', e[i]);
+    //   multiFile.push(dataForm);
+    // }
+    // setPostQueue([...postQueue, ...multiFile]);
+    let file = e.pop();
+    if (file) {
       setIsLoading(true);
-      multiFile.push(dataForm);
+      const fd = new FormData();
+      fd.append('image', file, file.name);
+      axiosWithAuth()
+        .post('/upload', fd)
+        .then(res => console.log(res.data.imageURL))
+        .then(() => onFileChange(e));
+    } else {
+      setIsLoading(false);
     }
-    setPostQueue([...postQueue, ...multiFile]);
   };
 
   const showModal = () => {
@@ -80,85 +91,6 @@ const UploadCase = ({ getPendingCases }) => {
       onFileChange(fileList);
     },
   };
-
-  useEffect(() => {
-    if (!nextPost && postQueue.length !== 0) {
-      const copy = postQueue;
-      setNextPost(copy.shift());
-      setPostQueue(copy);
-    }
-  }, [postQueue]);
-
-  useEffect(() => {
-    if (nextPost) {
-      axiosWithAuth()
-        .post(`/upload`, nextPost)
-        .then(res => {
-          setIsLoading(false);
-          successNotification();
-          setScrapQueue(prev => [...prev, res.data.id]);
-          if (postQueue.length !== 0) {
-            const copy = postQueue;
-            setNextPost(copy.shift());
-            setPostQueue(copy);
-          } else {
-            setNextPost(null);
-            setIsReady(true);
-          }
-        })
-        .catch(() => {
-          setIsLoading(false);
-          failNotification();
-          if (postQueue.length !== 0) {
-            const copy = postQueue;
-            setNextPost(copy.shift());
-            setPostQueue(copy);
-          } else {
-            setNextPost(null);
-            setIsReady(true);
-          }
-        });
-    }
-  }, [nextPost]);
-
-  useEffect(() => {
-    if (nextScrap) {
-      axiosWithAuth()
-        .post(`/upload/scrap/${nextScrap}`)
-        .then(res => {
-          getPendingCases();
-          if (scrapQueue.length !== 0) {
-            const copy = scrapQueue;
-            setNextScrap(copy.shift());
-            setScrapQueue(copy);
-          } else {
-            setNextScrap(null);
-            setIsReady(false);
-          }
-        })
-        .catch(() => {
-          failNotification();
-          getPendingCases();
-          if (scrapQueue.length !== 0) {
-            const copy = scrapQueue;
-            setNextScrap(copy.shift());
-            setScrapQueue(copy);
-          } else {
-            setNextScrap(null);
-            setIsReady(false);
-          }
-        });
-    }
-  }, [nextScrap]);
-
-  useEffect(() => {
-    if (!nextScrap && scrapQueue.length !== 0 && isReady) {
-      const copy = scrapQueue;
-      setNextScrap(copy.shift());
-      setScrapQueue(copy);
-    }
-  }, [scrapQueue, isReady]);
-
   return (
     <div className="uploadPage">
       <div className="uploadButton">
