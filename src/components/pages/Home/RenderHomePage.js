@@ -148,7 +148,6 @@ function RenderHomePage(props) {
         );
         if (counter) {
           setTimeout(() => {
-            console.log('here');
             getPendingCases();
           }, 10000);
         }

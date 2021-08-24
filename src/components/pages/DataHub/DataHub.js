@@ -22,7 +22,7 @@ const DataHub = props => {
   //     })
   //     .then(res => {
   //       setVizData(res.data.judge_cases);
-  //     });
+  //     });x
   // }, [user.authState.idToken.idToken]);
 
   let states = [
