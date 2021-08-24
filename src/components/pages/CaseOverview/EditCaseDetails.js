@@ -43,7 +43,7 @@ const EditCaseDetails = props => {
           console.log(res.data);
           setFormValues({
             ...res.data,
-            date: res.data.date.slice(0, 10),
+            date: res?.data?.date?.slice(0, 10),
           });
           setLoading(false);
         })
