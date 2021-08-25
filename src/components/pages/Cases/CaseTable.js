@@ -3,7 +3,6 @@ import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { Link } from 'react-router-dom';
 import Plot from 'react-plotly.js';
 import Highlighter from 'react-highlight-words';
-import OrangeLine from '../../../styles/orange-line.svg';
 import {
   SearchOutlined,
   FileTextOutlined,
