@@ -54,7 +54,7 @@ const ReviewCaseForm = props => {
           onFinish={handleSubmit(onSubmit)}
         >
           <div>
-            <Form.Item label="Hearing Date">
+            <Form.Item label="Decision Date">
               <DatePicker id="hearing-date" />
             </Form.Item>
           </div>
