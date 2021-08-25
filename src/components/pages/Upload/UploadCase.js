@@ -183,7 +183,7 @@ const UploadCase = ({ getPendingCases }) => {
         >
           <div className="pdf-container">
             <div>
-              <h1 className="h1Styles">Upload Cases</h1>
+              <h1 className="UploadH1">Upload Cases</h1>
               <p className="divider"></p>
             </div>
             <div className="pdfUpload">
