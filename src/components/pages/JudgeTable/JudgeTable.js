@@ -9,10 +9,8 @@ import {
 } from '@ant-design/icons';
 import { Table, Space, Button, Input, Tabs, notification, Tag } from 'antd';
 import './_JudgeTableStyles.less';
-
 import Save from '../../../styles/icons/save.svg';
 import Icon from '@ant-design/icons';
-import OrangeLine from '../../../styles/orange-line.svg';
 
 export default function JudgeTable(props) {
   const { judgeData, userInfo, savedJudges, setSavedJudges } = props;
@@ -298,9 +296,6 @@ export default function JudgeTable(props) {
   return (
     <div className="judge-container">
       <h2 className="h1Styles">Judges</h2>
-      <p className="divider">
-        <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
-      </p>
       <div className="judge-table-container">
         <Tabs defaultActiveKey="1">
           <TabPane tab="Judges" key="1">

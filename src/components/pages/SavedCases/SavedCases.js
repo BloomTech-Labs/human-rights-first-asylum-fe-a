@@ -2,11 +2,9 @@ import React /*, { useEffect }*/ from 'react';
 import { Link } from 'react-router-dom';
 import { Table } from 'antd';
 import Icon from '@ant-design/icons';
-import OrangeLine from '../../../styles/orange-line.svg';
 import Delete from '../../../styles/icons/delete.svg';
 import Case from '../../../styles/icons/case.svg';
 import PDF from '../../../styles/icons/pdf.svg';
-
 import './_SavedCasesStyles.less';
 import PDFExportButton from '../Cases/PDFOverviewExport/PDFExportButton';
 
@@ -166,9 +164,7 @@ function SavedCases({ savedCases, setSavedCases, deleteBookmark }) {
     <div className="savedCasesContainer">
       <div className="savedCases">
         <h2 className="saved-cases-header">Saved Cases</h2>
-        <p className="divider">
-          <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
-        </p>
+
         <Table
           rowKey={record => record.case_id}
           columns={columns}
