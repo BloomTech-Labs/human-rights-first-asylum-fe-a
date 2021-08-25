@@ -26,7 +26,7 @@ import {
 } from 'antd';
 import './CaseTable.less';
 import CaseDetails from '../CaseOverview/CaseDetails';
-
+//
 export default function CaseTable(props) {
   const [state, setState] = useState({
     searchText: '',
