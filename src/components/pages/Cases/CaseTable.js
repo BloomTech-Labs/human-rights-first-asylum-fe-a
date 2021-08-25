@@ -14,7 +14,16 @@ import {
 import Save from '../../../styles/icons/save.svg';
 import Icon from '@ant-design/icons';
 
-import { Table, Space, Button, Input, Tabs, notification, Tag } from 'antd';
+import {
+  Table,
+  Popover,
+  Space,
+  Button,
+  Input,
+  Tabs,
+  notification,
+  Tag,
+} from 'antd';
 import './CaseTable.less';
 import CaseDetails from '../CaseOverview/CaseDetails';
 
@@ -269,7 +278,28 @@ export default function CaseTable(props) {
       sortDirections: ['descend', 'ascend'],
       ...getColumnSearchProps('judge_name'),
       render: (text, record) => (
-        <Link to={`/judge/${record?.judges[0]?.judge_id}`}>{text}</Link>
+        <div>
+          {record.appellate ? (
+            <Popover
+              content={record.judges.map(judge => {
+                return (
+                  <p>
+                    <Link to={`/judge/${judge.judge_id}`}>
+                      {judge.first_name} {judge.middle_initial}.{' '}
+                      {judge.last_name}
+                    </Link>
+                  </p>
+                );
+              })}
+              title="Judges"
+              trigger="click"
+            >
+              <Link>Show Judge</Link>
+            </Popover>
+          ) : (
+            <Link to={`/judge/${record?.judges[0]?.judge_id}`}>{text}</Link>
+          )}
+        </div>
       ),
     },
     {
