@@ -23,7 +23,7 @@ export default function ManageCases(props) {
 
   const handleAccept = record => {
     axiosWithAuth()
-      .put(`/cases/pending/approve/${record.case_id}`, { status: 'approved' })
+      .put(`/cases/pending/approve/${record.case_id}`, { status: 'Approved' })
       .then(res => {
         notification.open({
           message: 'Case Approved',
@@ -44,13 +44,9 @@ export default function ManageCases(props) {
 
   const handleReject = record => {
     record.comment = comment;
-    // BE fixing model, so here for now
-    delete record.first_name;
-    delete record.middle_initial;
-    delete record.last_name;
 
     axiosWithAuth()
-      .put(`/cases/comment/`, record)
+      .put(`/cases/comment/${record.case_id}`, record)
       .then(res => {
         axiosWithAuth()
           .put(`/cases/pending/approve/${record.case_id}`, { status: 'Review' })
@@ -165,7 +161,7 @@ export default function ManageCases(props) {
         console.log(err);
         //need to change functionality to render the error to the screen for user
       });
-  }, [authState.idToken.idToken]);
+  }, []);
 
   return (
     <div className="manage-cases-container">
