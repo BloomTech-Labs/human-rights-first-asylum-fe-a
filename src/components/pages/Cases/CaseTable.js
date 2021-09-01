@@ -38,7 +38,7 @@ export default function CaseTable(props) {
   };
 
   const { caseData, userInfo, savedCases, setSavedCases } = props;
-
+  // console.log('CASE DATA', caseData)
   let casesData = caseData.map(cases => ({
     judge_name:
       cases.last_name +
@@ -64,6 +64,7 @@ export default function CaseTable(props) {
     setState({ selectedRowID });
   };
 
+  // Config Function for ANT Start
   const getColumnSearchProps = dataIndex => ({
     filterDropdown: ({
       setSelectedKeys,
@@ -97,6 +98,7 @@ export default function CaseTable(props) {
             onClick={() => handleReset(clearFilters)}
             size="small"
             style={{ width: 90 }}
+            id={dataIndex}
           >
             Reset
           </Button>
@@ -143,6 +145,7 @@ export default function CaseTable(props) {
         text
       ),
   });
+  // Config Function for ANT End
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -178,16 +181,20 @@ export default function CaseTable(props) {
 
   // returns processed array of filters
   const processFilters = filters => {
+    // console.log('FILTER', filters)
     let res = [];
     for (const i in filters) {
       if (filters[i]) {
-        res.push(`${i}: ${filters[i]}`);
+        res.push({
+          key: i,
+          value: filters[i],
+        });
       } else if (!filters[i]) {
         let temp = [];
         if (
           currentKey === 1 &&
           initialFilters.length > 0 &&
-          initialFilters.includes(`${i}: ${filters[i]}`)
+          initialFilters.includes(`${filters[i]}`)
         ) {
           initialFilters.forEach(value => {
             if (value !== undefined) {
@@ -201,7 +208,7 @@ export default function CaseTable(props) {
         } else if (
           currentKey === 2 &&
           appFilters.length > 0 &&
-          appFilters.includes(`${i}: ${filters[i]}`)
+          appFilters.includes(`${filters[i]}`)
         ) {
           appFilters.forEach(value => {
             if (value !== undefined) {
@@ -215,6 +222,7 @@ export default function CaseTable(props) {
         }
       }
     }
+    // console.log('RESSS', res)
     return res;
   };
 
@@ -390,7 +398,7 @@ export default function CaseTable(props) {
       bookmarks.forEach(b => {
         if (savedIds.includes(b.case_id)) {
           // This should be an alert
-          console.log('Case already saved to bookmarks');
+          // console.log('Case already saved to bookmarks');
         } else {
           postBookmark(b.case_id);
         }
@@ -555,20 +563,18 @@ export default function CaseTable(props) {
    * getColumnSearchProps (above) was built with ant design, and is the header row of the table - it does not include the Filters div above it
    * the handleReset function is used in there to wipe the search of filters for specific columns, but I could not make it work for the search terms themselves
    */
-  const removeSearchTerm = filter => {
-    const term = filter.split(':')[0];
-    const key = filter.split(': ')[1];
-    const index = initialFilters[term].indexOf(key);
-    if (index > -1) {
-      initialFilters[term].splice(index, 1);
-    }
-    if (initialFilters[term].length === 0) {
-      initialFilters[term] = null;
-    }
-    setInitialFilters(initialFilters);
-    console.log(initialFilters);
+
+  const removeSearchTerm = (filterState, keyWord) => {
+    filterState[keyWord] = null;
+
+    setInitialFilters(filterState);
+
+    document.getElementById(keyWord).click();
+
+    return;
   };
 
+  // console.log('INITIAL FILTERS', initialFilters)
   return (
     <div className="cases-container">
       <h2 className="h1Styles">Cases</h2>
@@ -590,19 +596,31 @@ export default function CaseTable(props) {
           <TabPane tab="Initial Cases" key="1">
             <div>
               Filters:{' '}
-              {processFilters(initialFilters).map(filter => (
-                <Tag key={filter}>
-                  {filter}{' '}
-                  {/*
-                    spans were created for the filter on both the initial and appellate case tables
-                    the onClick was placed on this one to test functionality, but not on the appellate table
-                    removeSearchTerm notes above the function
-                  */}
-                  <span onClick={() => removeSearchTerm(filter)}>x</span>
-                </Tag>
-              ))}
+              {processFilters(initialFilters).map(filter => {
+                console.log('EACH FILTER ', filter);
+                return (
+                  <Tag key={filter.value}>
+                    {filter.value}{' '}
+                    {/*
+                      spans were created for the filter on both the initial and appellate case tables
+                      the onClick was placed on this one to test functionality, but not on the appellate table
+                      removeSearchTerm notes above the function
+                    */}
+                    <span
+                      style={{ cursor: 'pointer' }}
+                      onClick={() =>
+                        removeSearchTerm(initialFilters, filter.key)
+                      }
+                    >
+                      X
+                    </span>
+                  </Tag>
+                );
+              })}
             </div>
+
             <div className="case-table">
+              {/* {console.log(rowSelection)} */}
               <Table
                 className="cases_table iCases"
                 rowSelection={rowSelection}
@@ -617,8 +635,14 @@ export default function CaseTable(props) {
             <div>
               Filters:{' '}
               {processFilters(appFilters).map(filter => (
-                <Tag key={filter}>
-                  {filter} <span>x</span>
+                <Tag key={filter.value}>
+                  {filter.value}{' '}
+                  <span
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => removeSearchTerm(initialFilters, filter.key)}
+                  >
+                    X
+                  </span>
                 </Tag>
               ))}
             </div>
