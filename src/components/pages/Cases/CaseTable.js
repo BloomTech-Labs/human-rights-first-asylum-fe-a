@@ -64,8 +64,32 @@ export default function CaseTable(props) {
     setState({ selectedRowID });
   };
 
-  // Config Function for ANT Start
-  const getColumnSearchProps = dataIndex => ({
+  //! start of my code
+  function matchMultipleKeyWords(data, keywords) {
+    let keywordsArr = keywords.split(',');
+    let mutatedData = data.toString().toLowerCase();
+
+    for (let keyword of keywordsArr) {
+      if (mutatedData.includes(keyword.toLowerCase())) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+  //! end of my code
+
+  const [tempHook, setTempHook] = useState({
+    key: '',
+    value: '',
+  });
+  const [removing, setRemoving] = useState(false);
+  const tempFunction = async (setKeys, newValue) => {
+    await setKeys([newValue]);
+    setRemoving(false);
+  };
+  //! Config Function for ANT Start
+  const getColumnSearchProps = (dataIndex, testHook) => ({
     filterDropdown: ({
       setSelectedKeys,
       selectedKeys,
@@ -75,15 +99,26 @@ export default function CaseTable(props) {
       <div style={{ padding: 8 }}>
         <Input
           type="text"
-          id="searchInput"
+          id={`searchInput_${dataIndex}`}
           placeholder={`Search ${dataIndex.replace(/_/g, ' ')}`}
-          value={selectedKeys[0]}
-          onChange={e =>
-            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          value={
+            tempHook.value != selectedKeys[0] && dataIndex == testHook
+              ? tempHook.value
+              : selectedKeys[0]
           }
+          onChange={e => {
+            setTempHook({
+              value: e.target.value,
+              key: dataIndex,
+            });
+            setSelectedKeys(e.target.value ? [e.target.value] : []);
+          }}
           onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
           style={{ marginBottom: 8, display: 'block' }}
         />
+        {tempHook.value != selectedKeys[0] && removing && dataIndex == testHook
+          ? tempFunction(setSelectedKeys, tempHook.value)
+          : ''}
         <Space>
           <Button
             className="table-search-button"
@@ -91,6 +126,7 @@ export default function CaseTable(props) {
             icon={<SearchOutlined />}
             size="small"
             style={{ width: 90 }}
+            id={`search_${dataIndex}`}
           >
             Search
           </Button>
@@ -98,7 +134,9 @@ export default function CaseTable(props) {
             onClick={() => handleReset(clearFilters)}
             size="small"
             style={{ width: 90 }}
-            id={dataIndex}
+            id={`reset_${dataIndex}`}
+            //! start of my code  changed it to use ID instead of className
+            //! end of my code
           >
             Reset
           </Button>
@@ -121,13 +159,10 @@ export default function CaseTable(props) {
     filterIcon: filtered => (
       <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />
     ),
+    //! start of my code
     onFilter: (value, record) =>
-      record[dataIndex]
-        ? record[dataIndex]
-            .toString()
-            .toLowerCase()
-            .includes(value.toLowerCase())
-        : '',
+      record[dataIndex] ? matchMultipleKeyWords(record[dataIndex], value) : '',
+    //! end of my code
     onFilterDropdownVisibleChange: visible => {
       if (visible) {
         //setTimeout(() => searchInput.select(), 100);
@@ -177,24 +212,28 @@ export default function CaseTable(props) {
 
   useEffect(() => {
     // current use is to keep the filter state in sync.
-  }, [initialFilters, appFilters]);
+  }, [initialFilters]);
 
   // returns processed array of filters
   const processFilters = filters => {
-    // console.log('FILTER', filters)
+    //! console.log('FILTER', filters)
     let res = [];
     for (const i in filters) {
       if (filters[i]) {
+        //! start of my code
         res.push({
           key: i,
           value: filters[i],
+          //! end of my code
         });
       } else if (!filters[i]) {
         let temp = [];
         if (
           currentKey === 1 &&
           initialFilters.length > 0 &&
+          //! start of my code
           initialFilters.includes(`${filters[i]}`)
+          //! end of my code
         ) {
           initialFilters.forEach(value => {
             if (value !== undefined) {
@@ -205,24 +244,11 @@ export default function CaseTable(props) {
             }
           });
           res = temp;
-        } else if (
-          currentKey === 2 &&
-          appFilters.length > 0 &&
-          appFilters.includes(`${filters[i]}`)
-        ) {
-          appFilters.forEach(value => {
-            if (value !== undefined) {
-              const term = value.split(':')[0];
-              if (term !== i) {
-                temp.push(value);
-              }
-            }
-          });
-          res = temp;
+          //
         }
       }
     }
-    // console.log('RESSS', res)
+    //! console.log('RESSS', res)
     return res;
   };
 
@@ -256,7 +282,7 @@ export default function CaseTable(props) {
       key: 'date',
       sorter: (a, b) => a.date.localeCompare(b.date),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('date'),
+      ...getColumnSearchProps('date', tempHook.key),
       render: text => formatDate(text),
     },
     {
@@ -265,7 +291,7 @@ export default function CaseTable(props) {
       key: 'judge_name',
       sorter: (a, b) => a.last_name.localeCompare(b.last_name),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('judge_name'),
+      ...getColumnSearchProps('judge_name', tempHook.key),
       render: (text, record) => (
         <Link to={`/judge/${record.judge_id}`}>{text}</Link>
       ),
@@ -276,7 +302,7 @@ export default function CaseTable(props) {
       key: 'case_origin_city',
       sorter: (a, b) => a.case_origin_city.localeCompare(b.case_origin_city),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('case_origin_city'),
+      ...getColumnSearchProps('case_origin_city', tempHook.key),
     },
     {
       title: 'Origin State',
@@ -284,7 +310,7 @@ export default function CaseTable(props) {
       key: 'case_origin_state',
       sorter: (a, b) => a.case_origin_state.localeCompare(b.case_origin_state),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('case_origin_state'),
+      ...getColumnSearchProps('case_origin_state', tempHook.key),
     },
     {
       title: 'Filed within Year',
@@ -292,7 +318,7 @@ export default function CaseTable(props) {
       key: 'filed_within_year',
       sorter: (a, b) => a.filed_within_year.localeCompare(b.filed_within_year),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('filed_within_year'),
+      ...getColumnSearchProps('filed_within_year', tempHook.key),
     },
     {
       title: 'Protected Grounds',
@@ -300,7 +326,7 @@ export default function CaseTable(props) {
       key: 'protected_grounds',
       sorter: (a, b) => a.protected_grounds.localeCompare(b.protected_grounds),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('protected_grounds'),
+      ...getColumnSearchProps('protected_grounds', tempHook.key),
     },
     {
       title: 'Outcome',
@@ -308,7 +334,7 @@ export default function CaseTable(props) {
       key: 'outcome',
       sorter: (a, b) => a.outcome.localeCompare(b.outcome),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('outcome'),
+      ...getColumnSearchProps('outcome', tempHook.key),
     },
     {
       title: 'Country of Origin',
@@ -316,7 +342,7 @@ export default function CaseTable(props) {
       key: 'country_of_origin',
       sorter: (a, b) => a.country_of_origin.localeCompare(b.country_of_origin),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('country_of_origin'),
+      ...getColumnSearchProps('country_of_origin', tempHook.key),
     },
     {
       title: 'Applicant Gender',
@@ -324,7 +350,7 @@ export default function CaseTable(props) {
       key: 'gender',
       sorter: (a, b) => a.gender.localeCompare(b.gender),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('gender'),
+      ...getColumnSearchProps('gender', tempHook.key),
     },
     {
       title: 'Violence Experienced',
@@ -332,7 +358,7 @@ export default function CaseTable(props) {
       key: 'type_of_violence',
       sorter: (a, b) => a.type_of_violence.localeCompare(b.type_of_violence),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('type_of_violence'),
+      ...getColumnSearchProps('type_of_violence', tempHook.key),
     },
     {
       title: 'Applicant Language',
@@ -341,7 +367,7 @@ export default function CaseTable(props) {
       sorter: (a, b) =>
         a.applicant_language.localeCompare(b.applicant_language),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('applicant_language'),
+      ...getColumnSearchProps('applicant_language', tempHook.key),
     },
     {
       title: 'Download PDF',
@@ -398,7 +424,7 @@ export default function CaseTable(props) {
       bookmarks.forEach(b => {
         if (savedIds.includes(b.case_id)) {
           // This should be an alert
-          // console.log('Case already saved to bookmarks');
+          //! console.log('Case already saved to bookmarks');
         } else {
           postBookmark(b.case_id);
         }
@@ -555,26 +581,43 @@ export default function CaseTable(props) {
   };
 
   const nonAppCases = casesData.filter(item => item.appellate === false);
-  const appCases = casesData.filter(item => item.appellate === true);
+  // const appCases = casesData.filter(item => item.appellate === true);
 
-  /*
-   * This function was created to attempt to remove filters from the initialFilters object
-   * In checking the console.log in the function, you can see that it is being removed, but the page does not refresh
-   * getColumnSearchProps (above) was built with ant design, and is the header row of the table - it does not include the Filters div above it
-   * the handleReset function is used in there to wipe the search of filters for specific columns, but I could not make it work for the search terms themselves
-   */
+  //! Start of my code
+  const removeSearchTerm = async (filterState, keyWord, value) => {
+    let filteredKeyWords = filterState[keyWord][0]
+      .split(',')
+      .filter(word => word != value)
+      .join(',');
 
-  const removeSearchTerm = (filterState, keyWord) => {
-    filterState[keyWord] = null;
+    filterState[keyWord] = filteredKeyWords.length ? [filteredKeyWords] : null;
 
     setInitialFilters(filterState);
 
-    document.getElementById(keyWord).click();
+    await setTempHook(
+      filterState[keyWord]
+        ? {
+            value: filterState[keyWord][0],
+            key: keyWord,
+          }
+        : {
+            value: '',
+            key: keyWord,
+          }
+    );
+
+    setRemoving(true);
+    if (filterState[keyWord]) {
+      document.getElementById(`search_${keyWord}`).click();
+    } else {
+      document.getElementById(`reset_${keyWord}`).click();
+    }
 
     return;
+    //! End of my code
   };
 
-  // console.log('INITIAL FILTERS', initialFilters)
+  //! console.log('INITIAL FILTERS', initialFilters)
   return (
     <div className="cases-container">
       <h2 className="h1Styles">Cases</h2>
@@ -595,32 +638,37 @@ export default function CaseTable(props) {
         <Tabs defaultActiveKey="1" onChange={callback} className="tabs">
           <TabPane tab="Initial Cases" key="1">
             <div>
-              Filters:{' '}
+              Filters: {/* //!  My code starting */}
               {processFilters(initialFilters).map(filter => {
-                console.log('EACH FILTER ', filter);
-                return (
-                  <Tag key={filter.value}>
-                    {filter.value}{' '}
-                    {/*
-                      spans were created for the filter on both the initial and appellate case tables
-                      the onClick was placed on this one to test functionality, but not on the appellate table
-                      removeSearchTerm notes above the function
-                    */}
-                    <span
-                      style={{ cursor: 'pointer' }}
-                      onClick={() =>
-                        removeSearchTerm(initialFilters, filter.key)
-                      }
-                    >
-                      X
-                    </span>
-                  </Tag>
-                );
+                // console.log('EACH FILTER ', filter.value[0]);
+                return filter.value[0].split(',').map(eachKeyWord => {
+                  console.log('EACH KEYWORD', eachKeyWord);
+                  return (
+                    <Tag key={eachKeyWord}>
+                      {eachKeyWord}{' '}
+                      {/* //! Spans were created for the filter on both the initial and appellate case tables
+                        //! The onClick was placed on this one to test functionality, but not on the appellate table
+                        //! RemoveSearchTerm notes above the function */}
+                      <span
+                        style={{ cursor: 'pointer' }}
+                        onClick={() =>
+                          removeSearchTerm(
+                            initialFilters,
+                            filter.key,
+                            eachKeyWord
+                          )
+                        }
+                      >
+                        X
+                      </span>
+                    </Tag>
+                  );
+                });
               })}
+              {/* //! My code finished  */}
             </div>
 
             <div className="case-table">
-              {/* {console.log(rowSelection)} */}
               <Table
                 className="cases_table iCases"
                 rowSelection={rowSelection}
@@ -631,10 +679,11 @@ export default function CaseTable(props) {
               />
             </div>
           </TabPane>
-          <TabPane tab="Appellate Cases" key="2">
+          {/* <TabPane tab="Appellate Cases" key="2">
             <div>
               Filters:{' '}
               {processFilters(appFilters).map(filter => (
+                // ! My code starting below
                 <Tag key={filter.value}>
                   {filter.value}{' '}
                   <span
@@ -643,6 +692,7 @@ export default function CaseTable(props) {
                   >
                     X
                   </span>
+                  //! end of my code
                 </Tag>
               ))}
             </div>
@@ -656,7 +706,7 @@ export default function CaseTable(props) {
                 onChange={changeSorter}
               />
             </div>
-          </TabPane>
+          </TabPane> */}
           <TabPane
             tab={
               <Button
