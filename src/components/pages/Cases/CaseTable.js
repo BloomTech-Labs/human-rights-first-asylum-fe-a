@@ -104,7 +104,6 @@ export default function CaseTable(props) {
     setState({ selectedRowID });
   };
 
-  //! start of my code
   function matchMultipleKeyWords(data, keywords) {
     let keywordsArr = keywords.split(',');
     let mutatedData = data.toString().toLowerCase();
@@ -117,7 +116,6 @@ export default function CaseTable(props) {
 
     return false;
   }
-  //! end of my code
 
   const tempFunction = async (setKeys, newValue) => {
     await setKeys([newValue]);
@@ -170,8 +168,6 @@ export default function CaseTable(props) {
             size="small"
             style={{ width: 90 }}
             id={`reset_${dataIndex}`}
-            //! start of my code  changed it to use ID instead of className
-            //! end of my code
           >
             Reset
           </Button>
@@ -194,10 +190,10 @@ export default function CaseTable(props) {
     filterIcon: filtered => (
       <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />
     ),
-    //! start of my code
+
     onFilter: (value, record) =>
       record[dataIndex] ? matchMultipleKeyWords(record[dataIndex], value) : '',
-    //! end of my code
+
     onFilterDropdownVisibleChange: visible => {
       if (visible) {
         //setTimeout(() => searchInput.select(), 100);
@@ -232,24 +228,19 @@ export default function CaseTable(props) {
 
   // returns processed array of filters
   const processFilters = filters => {
-    //! console.log('FILTER', filters)
     let res = [];
     for (const i in filters) {
       if (filters[i]) {
-        //! start of my code
         res.push({
           key: i,
           value: filters[i],
-          //! end of my code
         });
       } else if (!filters[i]) {
         let temp = [];
         if (
           currentKey === 1 &&
           initialFilters.length > 0 &&
-          //! start of my code
           initialFilters.includes(`${filters[i]}`)
-          //! end of my code
         ) {
           initialFilters.forEach(value => {
             if (value !== undefined) {
@@ -264,7 +255,6 @@ export default function CaseTable(props) {
         }
       }
     }
-    //! console.log('RESSS', res)
     return res;
   };
 
@@ -326,8 +316,6 @@ export default function CaseTable(props) {
 
       bookmarks.forEach(b => {
         if (savedIds.includes(b.case_id)) {
-          // This should be an alert
-          //! console.log('Case already saved to bookmarks');
         } else {
           postBookmark(b.case_id);
         }
@@ -362,56 +350,11 @@ export default function CaseTable(props) {
     return filteredData;
   };
 
-  //? Right now we will only return "caseData", but never "filter(caseData)"
-  //? This functionality needs to be implemented!!!!!!
   const data = searching ? filter(caseData) : caseData;
-
-  //? To be detemined whether we should keep it here,
-  //? or delete this piece of code
-  // const CaseDataChart = () => {
-  //   let denied = 0;
-  //   let granted = 0;
-  //   let remanded = 0;
-  //   let sustained = 0;
-  //   let terminated = 0;
-
-  //   data.map(eachCase => {
-  //     if (eachCase.outcome === 'Denied') {
-  //       denied += 1;
-  //     }
-  //     if (eachCase.outcome === 'Granted') {
-  //       granted += 1;
-  //     }
-  //     if (eachCase.outcome === 'Remanded') {
-  //       remanded += 1;
-  //     }
-  //     if (eachCase.outcome === 'Sustained') {
-  //       sustained += 1;
-  //     }
-  //     if (eachCase.outcome === 'Terminated') {
-  //       terminated += 1;
-  //     }
-  //     return null;
-  //   });
-
-  //   return (
-  //     <Plot
-  //       data={[
-  //         {
-  //           type: 'bar',
-  //           x: ['Granted', 'Denied', 'Remanded', 'Sustained', 'Terminated'],
-  //           y: [granted, denied, remanded, sustained, terminated],
-  //         },
-  //       ]}
-  //       layout={{ width: 500, height: 300, title: 'Case Data' }}
-  //     />
-  //   );
-  // };
 
   const nonAppCases = casesData.filter(item => item.appellate === false);
   // const appCases = casesData.filter(item => item.appellate === true);
 
-  //! Start of my code
   const removeSearchTerm = async (filterState, keyWord, value) => {
     let filteredKeyWords = filterState[keyWord][0]
       .split(',')
@@ -421,7 +364,6 @@ export default function CaseTable(props) {
     filterState[keyWord] = filteredKeyWords.length ? [filteredKeyWords] : null;
 
     setInitialFilters(filterState);
-
     await setTempHook(
       filterState[keyWord]
         ? {
@@ -442,10 +384,8 @@ export default function CaseTable(props) {
     }
 
     return;
-    //! End of my code
   };
 
-  //! console.log('INITIAL FILTERS', initialFilters)
   return (
     <div className="cases-container">
       <h2 className="h1Styles">Cases</h2>
@@ -466,7 +406,7 @@ export default function CaseTable(props) {
         <Tabs defaultActiveKey="1" onChange={callback} className="tabs">
           <TabPane tab="Initial Cases" key="1">
             <div>
-              Filters: {/* //!  My code starting */}
+              Filters:
               {processFilters(initialFilters).map(filter => {
                 // console.log('EACH FILTER ', filter.value[0]);
                 return filter.value[0].split(',').map(eachKeyWord => {
@@ -474,9 +414,6 @@ export default function CaseTable(props) {
                   return (
                     <Tag key={eachKeyWord}>
                       {eachKeyWord}{' '}
-                      {/* //! Spans were created for the filter on both the initial and appellate case tables
-                        //! The onClick was placed on this one to test functionality, but not on the appellate table
-                        //! RemoveSearchTerm notes above the function */}
                       <span
                         style={{ cursor: 'pointer' }}
                         onClick={() =>
@@ -493,7 +430,6 @@ export default function CaseTable(props) {
                   );
                 });
               })}
-              {/* //! My code finished  */}
             </div>
 
             <div className="case-table">
