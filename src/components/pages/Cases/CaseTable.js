@@ -262,11 +262,11 @@ export default function CaseTable(props) {
     },
     {
       title: 'Case Date',
-      dataIndex: 'date',
-      key: 'date',
-      sorter: (a, b) => a.date.localeCompare(b.date),
+      dataIndex: 'decision_date',
+      key: 'decision_date',
+      sorter: (a, b) => a.decision_date.localeCompare(b.decision_date),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('date'),
+      ...getColumnSearchProps('decision_date'),
       render: text => formatDate(text),
     },
     {
