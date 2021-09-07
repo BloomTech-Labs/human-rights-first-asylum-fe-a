@@ -461,7 +461,7 @@ export default function CaseTable(props) {
     type_of_persecution: '',
     indigenous_group: '',
     applicant_language: '',
-    credible: '',
+    credibility: '',
   });
 
   const filter = data => {

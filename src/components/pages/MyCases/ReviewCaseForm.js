@@ -22,7 +22,7 @@ const ReviewCaseForm = props => {
     if (
       name === 'filed_in_one_year' ||
       name === 'initial_or_appellate' ||
-      name === 'credible'
+      name === 'credibility'
     ) {
       setEditedFormValues({ ...editedFormValues, [name]: checked });
     } else {
@@ -64,7 +64,7 @@ const ReviewCaseForm = props => {
             type_of_persecution: editedFormValues.type_of_persecution,
             initial_or_appellate: editedFormValues.initial_or_appellate,
             filed_in_one_year: editedFormValues.filed_in_one_year,
-            credible: editedFormValues.credible,
+            credibility: editedFormValues.credibility,
           }}
         >
           <div>
@@ -282,11 +282,11 @@ const ReviewCaseForm = props => {
           </div>
           <div className="checkbox">
             <Checkbox
-              name="credible"
-              checked={editedFormValues.credible}
+              name="credibility"
+              checked={editedFormValues.credibility}
               onChange={onInputChange}
             >
-              Applicant is Perceived as Credible
+              Applicant is Perceived as credibility
             </Checkbox>
           </div>
           <div className="submit-button">

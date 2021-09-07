@@ -191,7 +191,7 @@ export function MyDoc(props) {
               <Text style={styles.columnNameCell}>Application Type</Text>
             </View>
             <View style={styles.tableCol}>
-              <Text style={styles.columnNameCell}>Credible?</Text>
+              <Text style={styles.columnNameCell}>credibility?</Text>
             </View>
             <View style={styles.tableCol}>
               <Text style={styles.columnNameCell}>Indigenous Group</Text>
@@ -226,7 +226,7 @@ export function MyDoc(props) {
                 </View>
                 <View style={styles.tableCol}>
                   <Text style={styles.tableCell}>
-                    {convertTrueFalse(item.credible)}
+                    {convertTrueFalse(item.credibility)}
                   </Text>
                 </View>
                 <View style={styles.tableCol}>

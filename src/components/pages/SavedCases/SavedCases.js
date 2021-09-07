@@ -81,7 +81,7 @@ function SavedCases({ savedCases, setSavedCases, deleteBookmark }) {
               case_origin_city: record.case_origin_city,
               case_origin_state: record.case_origin_state,
               country_of_origin: record.country_of_origin,
-              credible: record.credible,
+              credibility: record.credibility,
               date: record.date,
               filed_in_one_year: record.filed_in_one_year,
               first_name: record.first_name,

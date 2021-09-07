@@ -26,7 +26,7 @@ const initialFormValues = {
   type_of_persecution: '',
   initial_or_appellate: false,
   filed_in_one_year: false,
-  credible: false,
+  credibility: false,
 };
 export default function MyCases(props) {
   const { TabPane } = Tabs;

@@ -23,7 +23,7 @@ const initialFormValues = {
   type_of_persecution: '',
   indigenous_group: '',
   applicant_language: '',
-  credible: false,
+  credibility: false,
 };
 
 const EditCaseDetails = props => {
@@ -82,8 +82,8 @@ const EditCaseDetails = props => {
   };
 
   const onCheck = e => {
-    console.log(formValues.credible);
-    setFormValues({ ...formValues, credible: !e.target.checked });
+    console.log(formValues.credibility);
+    setFormValues({ ...formValues, credibility: !e.target.checked });
   };
 
   return (
@@ -230,12 +230,12 @@ const EditCaseDetails = props => {
           />
         </Form.Item>
         <Checkbox
-          id="credible"
-          name="credible"
-          value={formValues.credible}
+          id="credibility"
+          name="credibility"
+          value={formValues.credibility}
           onClick={onCheck}
         >
-          Credible
+          credibility
         </Checkbox>
       </Form>
     </Modal>
