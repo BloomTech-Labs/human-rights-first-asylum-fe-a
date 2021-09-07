@@ -17,7 +17,7 @@ const CaseDetails = props => {
     setIsEditModalVisible(true);
   };
 
-  const theDate = new Date(caseData.date);
+  const theDate = new Date(caseData.decision_date);
   const converted = moment(theDate).format('MMMM D, Y');
 
   return (
