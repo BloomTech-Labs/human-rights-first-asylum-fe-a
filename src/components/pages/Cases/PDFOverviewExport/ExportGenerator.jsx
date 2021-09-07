@@ -213,7 +213,7 @@ export function MyDoc(props) {
                 </View>
                 <View style={styles.tableCol}>
                   <Text style={styles.tableCell}>
-                    {convertTrueFalse(item.filed_in_one_year)}
+                    {convertTrueFalse(item.check_for_one_year)}
                   </Text>
                 </View>
                 <View style={styles.tableCol}>

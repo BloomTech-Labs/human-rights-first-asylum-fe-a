@@ -66,10 +66,10 @@ export default function CaseTable(props) {
         : null,
 
     filed_within_year:
-      cases.filed_in_one_year
+      cases.check_for_one_year
         .toString()
         .charAt(0)
-        .toUpperCase() + cases.filed_in_one_year.toString().slice(1),
+        .toUpperCase() + cases.check_for_one_year.toString().slice(1),
     case_row: cases,
     ...cases,
   }));
@@ -452,7 +452,7 @@ export default function CaseTable(props) {
     judge: '',
     case_origin_city: '',
     case_origin_state: '',
-    filed_in_one_year: '',
+    check_for_one_year: '',
     application_type: '',
     protected_grounds: '',
     outcome: '',
