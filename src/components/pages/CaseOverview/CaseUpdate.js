@@ -134,8 +134,8 @@ const CaseUpdate = props => {
       </Form.Item>
 
       <Form.Item
-        label="Type of Violence Experienced"
-        name="type_of_violence_experienced"
+        label="Type of Persecution Experienced"
+        name="type_of_persecution_experienced"
       >
         <Input />
       </Form.Item>

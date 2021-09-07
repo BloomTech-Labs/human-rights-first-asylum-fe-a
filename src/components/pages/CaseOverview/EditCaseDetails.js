@@ -20,7 +20,7 @@ const initialFormValues = {
   case_origin_city: '',
   case_origin_state: '',
   gender: '',
-  type_of_violence: '',
+  type_of_persecution: '',
   indigenous_group: '',
   applicant_language: '',
   credible: false,
@@ -196,15 +196,15 @@ const EditCaseDetails = props => {
             value={formValues.gender}
           />
         </Form.Item>
-        <Form.Item label="Type of Violence">
+        <Form.Item label="Type of Persecution">
           <Input
-            id="type_of_violence"
+            id="type_of_persecution"
             type="text"
-            name="type_of_violence"
-            placeholder="Type of Violence"
+            name="type_of_persecution"
+            placeholder="Type of Persecution"
             onChange={onChange}
-            className="type_of_violence"
-            value={formValues.type_of_violence}
+            className="type_of_persecution"
+            value={formValues.type_of_persecution}
           />
         </Form.Item>
         <Form.Item label="Indigenous Group">

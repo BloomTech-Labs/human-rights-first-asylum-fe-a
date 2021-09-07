@@ -214,7 +214,8 @@ export default function ManageCases(props) {
                   {caseObj.credible ? 'True' : 'False'}
                 </p>
                 <p style={{ margin: 0 }}>
-                  Violence Experienced: {caseObj.type_of_violence_experienced}
+                  Violence Experienced:{' '}
+                  {caseObj.type_of_persecution_experienced}
                 </p>
               </div>
             ),

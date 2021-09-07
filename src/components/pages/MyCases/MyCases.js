@@ -23,7 +23,7 @@ const initialFormValues = {
   gender: '',
   applicant_language: '',
   indigenous_group: '',
-  type_of_violence: '',
+  type_of_persecution: '',
   initial_or_appellate: false,
   filed_in_one_year: false,
   credible: false,

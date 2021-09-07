@@ -359,11 +359,12 @@ export default function CaseTable(props) {
     },
     {
       title: 'Violence Experienced',
-      dataIndex: 'type_of_violence',
-      key: 'type_of_violence',
-      sorter: (a, b) => a.type_of_violence.localeCompare(b.type_of_violence),
+      dataIndex: 'type_of_persecution',
+      key: 'type_of_persecution',
+      sorter: (a, b) =>
+        a.type_of_persecution.localeCompare(b.type_of_persecution),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('type_of_violence'),
+      ...getColumnSearchProps('type_of_persecution'),
     },
     {
       title: 'Applicant Language',
@@ -457,7 +458,7 @@ export default function CaseTable(props) {
     outcome: '',
     country_of_origin: '',
     gender: '',
-    type_of_violence: '',
+    type_of_persecution: '',
     indigenous_group: '',
     applicant_language: '',
     credible: '',

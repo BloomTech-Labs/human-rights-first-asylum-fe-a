@@ -94,7 +94,7 @@ function SavedCases({ savedCases, setSavedCases, deleteBookmark }) {
               outcome: record.outcome,
               protected_grounds: record.protected_grounds,
               status: record.status,
-              type_of_violence: record.type_of_violence,
+              type_of_persecution: record.type_of_persecution,
               url: record.url,
             },
           ]} /*viz={}*/
