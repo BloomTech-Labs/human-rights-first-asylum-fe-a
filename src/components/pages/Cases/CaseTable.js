@@ -306,8 +306,6 @@ export default function CaseTable(props) {
     });
     return filteredData;
   };
-  //! WHAT WERE WE PLANNING TO DO WITH THIS BECAUSE IT DEFAULTS TO CASEDATA, IT ALWAYS FALLS INTO THE "ELSE" SITUATION
-  const data = searching ? filter(caseData) : caseData;
 
   const nonAppCases = casesData.filter(item => item.appellate === false);
 
@@ -324,7 +322,7 @@ export default function CaseTable(props) {
         isDetailsVisible={isDetailsVisible}
       />
       <div className="viz-container">
-        <DecisionRateChart data={data} className="casesViz" />
+        <DecisionRateChart data={caseData} className="casesViz" />
       </div>
 
       <div className="case-table-container">
