@@ -277,7 +277,7 @@ const ReviewCaseForm = props => {
               checked={editedFormValues.check_for_one_year}
               onChange={onInputChange}
             >
-              Case was filed Within One Year
+              Case was Filed Within One Year
             </Checkbox>
           </div>
           <div className="checkbox">
@@ -286,7 +286,7 @@ const ReviewCaseForm = props => {
               checked={editedFormValues.credibility}
               onChange={onInputChange}
             >
-              Applicant is Perceived as credibility
+              Applicant is Perceived as Credible
             </Checkbox>
           </div>
           <div className="submit-button">

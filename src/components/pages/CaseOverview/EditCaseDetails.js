@@ -235,7 +235,7 @@ const EditCaseDetails = props => {
           value={formValues.credibility}
           onClick={onCheck}
         >
-          credibility
+          Credibility
         </Checkbox>
       </Form>
     </Modal>

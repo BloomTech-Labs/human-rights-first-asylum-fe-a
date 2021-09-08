@@ -168,9 +168,7 @@ export function MyDoc(props) {
                   <Text style={styles.tableCell}>{item.gender}</Text>
                 </View>
                 <View style={styles.tableCol}>
-                  <Text style={styles.tableCell}>
-                    {item.type_of_persecution}
-                  </Text>
+                  <Text style={styles.tableCell}>{item.type_of_persecution}</Text>
                 </View>
               </View>
             );
