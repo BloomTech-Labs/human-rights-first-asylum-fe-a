@@ -3,7 +3,7 @@ import { formatDate } from '../format_date_util';
 
 export function case_columns(
   getColumnSearchProps,
-  tempHook,
+  match_tag_value_with_column_key,
   Link,
   popUpDetails,
   FileTextOutlined,
@@ -22,7 +22,7 @@ export function case_columns(
       key: 'date',
       sorter: (a, b) => a.date.localeCompare(b.date),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('date', tempHook.key),
+      ...getColumnSearchProps('date', match_tag_value_with_column_key.key),
       render: text => formatDate(text),
     },
     {
@@ -31,7 +31,10 @@ export function case_columns(
       key: 'judge_name',
       sorter: (a, b) => a.last_name.localeCompare(b.last_name),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('judge_name', tempHook.key),
+      ...getColumnSearchProps(
+        'judge_name',
+        match_tag_value_with_column_key.key
+      ),
       render: (text, record) => (
         <Link to={`/judge/${record.judge_id}`}>{text}</Link>
       ),
@@ -42,7 +45,10 @@ export function case_columns(
       key: 'case_origin_city',
       sorter: (a, b) => a.case_origin_city.localeCompare(b.case_origin_city),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('case_origin_city', tempHook.key),
+      ...getColumnSearchProps(
+        'case_origin_city',
+        match_tag_value_with_column_key.key
+      ),
     },
     {
       title: 'Origin State',
@@ -50,7 +56,10 @@ export function case_columns(
       key: 'case_origin_state',
       sorter: (a, b) => a.case_origin_state.localeCompare(b.case_origin_state),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('case_origin_state', tempHook.key),
+      ...getColumnSearchProps(
+        'case_origin_state',
+        match_tag_value_with_column_key.key
+      ),
     },
     {
       title: 'Filed within Year',
@@ -58,7 +67,10 @@ export function case_columns(
       key: 'filed_within_year',
       sorter: (a, b) => a.filed_within_year.localeCompare(b.filed_within_year),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('filed_within_year', tempHook.key),
+      ...getColumnSearchProps(
+        'filed_within_year',
+        match_tag_value_with_column_key.key
+      ),
     },
     {
       title: 'Protected Grounds',
@@ -66,7 +78,10 @@ export function case_columns(
       key: 'protected_grounds',
       sorter: (a, b) => a.protected_grounds.localeCompare(b.protected_grounds),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('protected_grounds', tempHook.key),
+      ...getColumnSearchProps(
+        'protected_grounds',
+        match_tag_value_with_column_key.key
+      ),
     },
     {
       title: 'Outcome',
@@ -74,7 +89,7 @@ export function case_columns(
       key: 'outcome',
       sorter: (a, b) => a.outcome.localeCompare(b.outcome),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('outcome', tempHook.key),
+      ...getColumnSearchProps('outcome', match_tag_value_with_column_key.key),
     },
     {
       title: 'Country of Origin',
@@ -82,7 +97,10 @@ export function case_columns(
       key: 'country_of_origin',
       sorter: (a, b) => a.country_of_origin.localeCompare(b.country_of_origin),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('country_of_origin', tempHook.key),
+      ...getColumnSearchProps(
+        'country_of_origin',
+        match_tag_value_with_column_key.key
+      ),
     },
     {
       title: 'Applicant Gender',
@@ -90,7 +108,7 @@ export function case_columns(
       key: 'gender',
       sorter: (a, b) => a.gender.localeCompare(b.gender),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('gender', tempHook.key),
+      ...getColumnSearchProps('gender', match_tag_value_with_column_key.key),
     },
     {
       title: 'Violence Experienced',
@@ -98,7 +116,10 @@ export function case_columns(
       key: 'type_of_violence',
       sorter: (a, b) => a.type_of_violence.localeCompare(b.type_of_violence),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('type_of_violence', tempHook.key),
+      ...getColumnSearchProps(
+        'type_of_violence',
+        match_tag_value_with_column_key.key
+      ),
     },
     {
       title: 'Applicant Language',
@@ -107,7 +128,10 @@ export function case_columns(
       sorter: (a, b) =>
         a.applicant_language.localeCompare(b.applicant_language),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('applicant_language', tempHook.key),
+      ...getColumnSearchProps(
+        'applicant_language',
+        match_tag_value_with_column_key.key
+      ),
     },
     {
       title: 'Download PDF',

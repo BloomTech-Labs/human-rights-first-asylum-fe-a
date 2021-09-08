@@ -20,6 +20,13 @@ import CaseDetails from '../CaseOverview/CaseDetails';
 // Case column utils import
 import { case_columns } from '../../../utils/case_utils/case_columns';
 
+// Utils for filter keywords
+import {
+  removeSearchTerm,
+  processFilters,
+  matchMultipleKeyWords,
+} from '../../../utils/filter_keyword_utils';
+
 import DecisionRateChart from './DecisionRateChart';
 
 const initialDetails = {
@@ -39,19 +46,18 @@ export default function CaseTable(props) {
 
   // state to keep track of filters being applied to the table (Initial cases section)
   const [initialFilters, setInitialFilters] = useState([]);
-  // keeping track of filters applied to the appelate section
-  const [appFilters, setAppFilters] = useState([]);
 
-  // state to keep track of the current table being displayed
-  const [currentKey, setCurrentKey] = useState(1);
-
-  const [tempHook, setTempHook] = useState({
+  const [
+    match_tag_value_with_column_key,
+    set_match_tag_value_with_column_key,
+  ] = useState({
     key: '',
     value: '',
   });
 
   const [removing, setRemoving] = useState(false);
 
+  // TBD if we are going to use it or not
   const [searching, setSearching] = useState(false);
 
   const [queryValues] = useState({
@@ -104,20 +110,9 @@ export default function CaseTable(props) {
     setState({ selectedRowID });
   };
 
-  function matchMultipleKeyWords(data, keywords) {
-    let keywordsArr = keywords.split(',');
-    let mutatedData = data.toString().toLowerCase();
-
-    for (let keyword of keywordsArr) {
-      if (mutatedData.includes(keyword.toLowerCase())) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  const tempFunction = async (setKeys, newValue) => {
+  // Removes search tag by taking in a new value of search string
+  // and reassigns that search string to the key at which the searched column matches the key
+  const removeSearchTag_helper = async (setKeys, newValue) => {
     await setKeys([newValue]);
     setRemoving(false);
   };
@@ -135,12 +130,13 @@ export default function CaseTable(props) {
           id={`searchInput_${dataIndex}`}
           placeholder={`Search ${dataIndex.replace(/_/g, ' ')}`}
           value={
-            tempHook.value != selectedKeys[0] && dataIndex == testHook
-              ? tempHook.value
+            match_tag_value_with_column_key.value != selectedKeys[0] &&
+            dataIndex == testHook
+              ? match_tag_value_with_column_key.value
               : selectedKeys[0]
           }
           onChange={e => {
-            setTempHook({
+            set_match_tag_value_with_column_key({
               value: e.target.value,
               key: dataIndex,
             });
@@ -149,8 +145,13 @@ export default function CaseTable(props) {
           onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
           style={{ marginBottom: 8, display: 'block' }}
         />
-        {tempHook.value != selectedKeys[0] && removing && dataIndex == testHook
-          ? tempFunction(setSelectedKeys, tempHook.value)
+        {match_tag_value_with_column_key.value != selectedKeys[0] &&
+        removing &&
+        dataIndex == testHook
+          ? removeSearchTag_helper(
+              setSelectedKeys,
+              match_tag_value_with_column_key.value
+            )
           : ''}
         <Space>
           <Button
@@ -193,12 +194,12 @@ export default function CaseTable(props) {
 
     onFilter: (value, record) =>
       record[dataIndex] ? matchMultipleKeyWords(record[dataIndex], value) : '',
-
-    onFilterDropdownVisibleChange: visible => {
-      if (visible) {
-        //setTimeout(() => searchInput.select(), 100);
-      }
-    },
+    // Do we need below code? What does it do?
+    // onFilterDropdownVisibleChange: visible => {
+    //   if (visible) {
+    //     //setTimeout(() => searchInput.select(), 100);
+    //   }
+    // },
     render: text =>
       searchedColumn === dataIndex ? (
         <Highlighter
@@ -225,50 +226,6 @@ export default function CaseTable(props) {
     clearFilters();
     setState({ searchText: '' });
   };
-
-  // returns processed array of filters
-  const processFilters = filters => {
-    let res = [];
-    for (const i in filters) {
-      if (filters[i]) {
-        res.push({
-          key: i,
-          value: filters[i],
-        });
-      } else if (!filters[i]) {
-        let temp = [];
-        if (
-          currentKey === 1 &&
-          initialFilters.length > 0 &&
-          initialFilters.includes(`${filters[i]}`)
-        ) {
-          initialFilters.forEach(value => {
-            if (value !== undefined) {
-              const term = value.split(':')[0];
-              if (term !== i) {
-                temp.push(value);
-              }
-            }
-          });
-          res = temp;
-          //
-        }
-      }
-    }
-    return res;
-  };
-
-  // function fires every time that the table is filtered
-  function changeSorter(pagination, filters, sorter, extra) {
-    Number(currentKey) === 1
-      ? setInitialFilters(filters)
-      : setAppFilters(filters);
-  }
-
-  // This is part of the Tabs component
-  function callback(key) {
-    setCurrentKey(key);
-  }
 
   const rowSelection = {
     selectedRowID,
@@ -349,42 +306,10 @@ export default function CaseTable(props) {
     });
     return filteredData;
   };
-
+  //! WHAT WERE WE PLANNING TO DO WITH THIS BECAUSE IT DEFAULTS TO CASEDATA, IT ALWAYS FALLS INTO THE "ELSE" SITUATION
   const data = searching ? filter(caseData) : caseData;
 
   const nonAppCases = casesData.filter(item => item.appellate === false);
-  // const appCases = casesData.filter(item => item.appellate === true);
-
-  const removeSearchTerm = async (filterState, keyWord, value) => {
-    let filteredKeyWords = filterState[keyWord][0]
-      .split(',')
-      .filter(word => word != value)
-      .join(',');
-
-    filterState[keyWord] = filteredKeyWords.length ? [filteredKeyWords] : null;
-
-    setInitialFilters(filterState);
-    await setTempHook(
-      filterState[keyWord]
-        ? {
-            value: filterState[keyWord][0],
-            key: keyWord,
-          }
-        : {
-            value: '',
-            key: keyWord,
-          }
-    );
-
-    setRemoving(true);
-    if (filterState[keyWord]) {
-      document.getElementById(`search_${keyWord}`).click();
-    } else {
-      document.getElementById(`reset_${keyWord}`).click();
-    }
-
-    return;
-  };
 
   return (
     <div className="cases-container">
@@ -403,14 +328,13 @@ export default function CaseTable(props) {
       </div>
 
       <div className="case-table-container">
-        <Tabs defaultActiveKey="1" onChange={callback} className="tabs">
+        <Tabs defaultActiveKey="1" className="tabs">
           <TabPane tab="Initial Cases" key="1">
             <div>
               Filters:
               {processFilters(initialFilters).map(filter => {
                 // console.log('EACH FILTER ', filter.value[0]);
                 return filter.value[0].split(',').map(eachKeyWord => {
-                  console.log('EACH KEYWORD', eachKeyWord);
                   return (
                     <Tag key={eachKeyWord}>
                       {eachKeyWord}{' '}
@@ -420,7 +344,10 @@ export default function CaseTable(props) {
                           removeSearchTerm(
                             initialFilters,
                             filter.key,
-                            eachKeyWord
+                            eachKeyWord,
+                            setRemoving,
+                            setInitialFilters,
+                            set_match_tag_value_with_column_key
                           )
                         }
                       >
@@ -439,14 +366,19 @@ export default function CaseTable(props) {
                 rowKey={record => record.case_id}
                 columns={case_columns(
                   getColumnSearchProps,
-                  tempHook,
+                  match_tag_value_with_column_key,
                   Link,
                   popUpDetails,
                   FileTextOutlined,
                   FilePdfOutlined
                 )}
                 dataSource={nonAppCases}
-                onChange={changeSorter}
+                // Table's "onChange" accepts a callback function. Callback functioin accepts 4 arguments
+                // pagination details, filter object, sorter, and current data respectivly. However,
+                // currently I only need filter object. Therefore, only have first and second parameter written.
+                onChange={(pag, filt) => {
+                  setInitialFilters(filt);
+                }}
               />
             </div>
           </TabPane>
