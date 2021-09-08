@@ -318,7 +318,7 @@ export default function CaseTable(props) {
       ...getColumnSearchProps('case_origin_state'),
     },
     {
-      title: 'Filed within Year',
+      title: 'Filed within One Year',
       dataIndex: 'filed_within_year',
       key: 'filed_within_year',
       sorter: (a, b) => a.filed_within_year.localeCompare(b.filed_within_year),
