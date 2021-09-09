@@ -20,7 +20,7 @@ const ReviewCaseForm = props => {
     console.log(formValues);
     const { name, value, checked } = e.target;
     if (
-      name === 'filed_in_one_year' ||
+      name === 'check_for_one_year' ||
       name === 'initial_or_appellate' ||
       name === 'credible'
     ) {
@@ -63,7 +63,7 @@ const ReviewCaseForm = props => {
             indigenous_group: editedFormValues.indigenous_group,
             type_of_violence: editedFormValues.type_of_violence,
             initial_or_appellate: editedFormValues.initial_or_appellate,
-            filed_in_one_year: editedFormValues.filed_in_one_year,
+            check_for_one_year: editedFormValues.check_for_one_year,
             credible: editedFormValues.credible,
           }}
         >
@@ -273,8 +273,8 @@ const ReviewCaseForm = props => {
           </div>
           <div className="checkbox">
             <Checkbox
-              name="filed_in_one_year"
-              checked={editedFormValues.filed_in_one_year}
+              name="check_for_one_year"
+              checked={editedFormValues.check_for_one_year}
               onChange={onInputChange}
             >
               Case was filed Within One Year

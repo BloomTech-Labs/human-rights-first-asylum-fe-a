@@ -207,7 +207,7 @@ export default function ManageCases(props) {
                 </p>
                 <p style={{ margin: 0 }}>
                   Filed 1 Year:
-                  {caseObj.filed_within_one_year}
+                  {caseObj.check_for_one_year}
                 </p>
                 <p style={{ margin: 0 }}>
                   Credible:
