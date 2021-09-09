@@ -206,9 +206,9 @@ const ManageUsersPage = props => {
     <div className="users-container">
       <div className="users">
         <h2 className="users-header"> Manage Users </h2>
-        <p className="divider">
+        <div className="users-divider">
           <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
-        </p>
+        </div>
       </div>
       <Tabs defaultActiveKey="1">
         <TabPane tab="Manage Users" key="1">
