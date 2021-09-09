@@ -210,11 +210,11 @@ export default function ManageCases(props) {
                   {caseObj.filed_within_one_year ? 'True' : 'False'}
                 </p>
                 <p style={{ margin: 0 }}>
-                  Credible:
-                  {caseObj.credible ? 'True' : 'False'}
+                  credibility:
+                  {caseObj.credibility ? 'True' : 'False'}
                 </p>
                 <p style={{ margin: 0 }}>
-                  Violence Experienced: {caseObj.type_of_violence_experienced}
+                  Persecution Experienced: {caseObj.type_of_persecution_experienced}
                 </p>
               </div>
             ),

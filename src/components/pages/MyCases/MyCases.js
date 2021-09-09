@@ -23,10 +23,10 @@ const initialFormValues = {
   gender: '',
   applicant_language: '',
   indigenous_group: '',
-  type_of_violence: '',
+  type_of_persecution: '',
   initial_or_appellate: false,
-  filed_in_one_year: false,
-  credible: false,
+  check_for_one_year: false,
+  credibility: false,
 };
 export default function MyCases(props) {
   const { TabPane } = Tabs;

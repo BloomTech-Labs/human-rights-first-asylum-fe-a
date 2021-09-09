@@ -66,10 +66,10 @@ export default function CaseTable(props) {
         : null,
 
     filed_within_year:
-      cases.filed_in_one_year
+      cases.check_for_one_year
         .toString()
         .charAt(0)
-        .toUpperCase() + cases.filed_in_one_year.toString().slice(1),
+        .toUpperCase() + cases.check_for_one_year.toString().slice(1),
     case_row: cases,
     ...cases,
   }));
@@ -270,11 +270,11 @@ export default function CaseTable(props) {
     },
     {
       title: 'Case Date',
-      dataIndex: 'date',
-      key: 'date',
-      sorter: (a, b) => a.date.localeCompare(b.date),
+      dataIndex: 'decision_date',
+      key: 'decision_date',
+      sorter: (a, b) => a.decision_date.localeCompare(b.decision_date),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('date'),
+      ...getColumnSearchProps('decision_date'),
       render: text => formatDate(text),
     },
     {
@@ -367,11 +367,12 @@ export default function CaseTable(props) {
     },
     {
       title: 'Violence Experienced',
-      dataIndex: 'type_of_violence',
-      key: 'type_of_violence',
-      sorter: (a, b) => a.type_of_violence.localeCompare(b.type_of_violence),
+      dataIndex: 'type_of_persecution',
+      key: 'type_of_persecution',
+      sorter: (a, b) =>
+        a.type_of_persecution.localeCompare(b.type_of_persecution),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('type_of_violence'),
+      ...getColumnSearchProps('type_of_persecution'),
     },
     {
       title: 'Applicant Language',
@@ -459,16 +460,16 @@ export default function CaseTable(props) {
     judge: '',
     case_origin_city: '',
     case_origin_state: '',
-    filed_in_one_year: '',
+    check_for_one_year: '',
     application_type: '',
     protected_grounds: '',
     outcome: '',
     country_of_origin: '',
     gender: '',
-    type_of_violence: '',
+    type_of_persecution: '',
     indigenous_group: '',
     applicant_language: '',
-    credible: '',
+    credibility: '',
   });
 
   const filter = data => {
