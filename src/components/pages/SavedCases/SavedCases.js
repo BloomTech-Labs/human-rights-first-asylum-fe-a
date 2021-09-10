@@ -83,7 +83,7 @@ function SavedCases({ savedCases, setSavedCases, deleteBookmark }) {
               country_of_origin: record.country_of_origin,
               credible: record.credible,
               date: record.date,
-              filed_in_one_year: record.filed_in_one_year,
+              check_for_one_year: record.check_for_one_year,
               first_name: record.first_name,
               gender: record.gender,
               indigenous_group: record.indigenous_group,

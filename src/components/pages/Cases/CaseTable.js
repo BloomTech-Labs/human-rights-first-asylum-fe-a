@@ -65,7 +65,7 @@ export default function CaseTable(props) {
           (cases?.judges[0]?.last_name ? cases?.judges[0]?.last_name : null)
         : null,
 
-    filed_within_year:
+    check_for_one_year:
       cases.check_for_one_year
         .toString()
         .charAt(0)
@@ -319,11 +319,12 @@ export default function CaseTable(props) {
     },
     {
       title: 'Filed within One Year',
-      dataIndex: 'filed_within_year',
-      key: 'filed_within_year',
-      sorter: (a, b) => a.filed_within_year.localeCompare(b.filed_within_year),
+      dataIndex: 'check_for_one_year',
+      key: 'check_for_one_year',
+      sorter: (a, b) =>
+        a.check_for_one_year.localeCompare(b.check_for_one_year),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('filed_within_year'),
+      ...getColumnSearchProps('check_for_one_year'),
     },
     {
       title: 'Protected Grounds',
