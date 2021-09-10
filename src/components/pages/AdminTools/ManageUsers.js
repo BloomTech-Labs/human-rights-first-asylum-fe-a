@@ -232,7 +232,7 @@ const ManageUsersPage = props => {
           >
             <Form layout="vertical" className="user-form" onFinish={onSubmit}>
               <h2 className="h1Styles">Edit User</h2>
-              <p className="divider" />
+              <div className="divider" />
               <Form.Item label="First Name">
                 <Input
                   id="first_name"
@@ -308,7 +308,7 @@ const ManageUsersPage = props => {
         >
           <Form layout="vertical" className="user-form" onFinish={onSubmit}>
             <h2 className="h1Styles">Add a User</h2>
-            <p className="divider" />
+            <div className="divider" />
             <Form.Item label="First Name">
               <Input
                 id="first_name"
