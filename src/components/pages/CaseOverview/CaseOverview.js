@@ -84,7 +84,7 @@ const CaseOverview = props => {
               </p>
               <p>Applicant Gender: {caseData.applicant_gender}</p>
               <p>
-                Violence Experienced: {caseData.type_of_violence_experienced}
+                Violence Experienced: {caseData.type_of_persecution_experienced}
               </p>
               <br />
               <p style={{ textDecoration: 'underline', fontWeight: 'bold' }}>

@@ -12,6 +12,9 @@ import './_JudgeTableStyles.less';
 import Save from '../../../styles/icons/save.svg';
 import Icon from '@ant-design/icons';
 
+// Column utils imports
+import { judge_columns } from '../../../utils/judge_utils/judge_columns';
+
 export default function JudgeTable(props) {
   const { judgeData, userInfo, savedJudges, setSavedJudges } = props;
   const [state, setState] = useState({
@@ -141,13 +144,6 @@ export default function JudgeTable(props) {
     onChange: onSelectChange,
   };
 
-  function formatDate(text) {
-    var year = text?.slice(0, 4);
-    var month = text?.slice(5, 7);
-    var day = text?.slice(8, 10);
-    return month + '/' + day + '/' + year;
-  }
-
   // keeping track of filters applied to the table
   const [filters, setFilters] = useState([]);
 
@@ -178,61 +174,6 @@ export default function JudgeTable(props) {
     }
     return res;
   };
-
-  const columns = [
-    {
-      title: 'Judge Name',
-      dataIndex: 'judge_name',
-      key: 'judge_name',
-      sorter: (a, b) => a.last_name.localeCompare(b.last_name),
-      sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('judge_name'),
-      render: (text, record) => (
-        <Link to={`/judge/${record.judge_id}`}>{text}</Link>
-      ),
-    },
-    {
-      title: 'Judge County',
-      dataIndex: 'judge_county',
-      key: 'judge_county',
-      sorter: (a, b) => a.judge_county.localeCompare(b.judge_county),
-      sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('judge_county'),
-    },
-    {
-      title: 'Date Appointed',
-      dataIndex: 'date_appointed',
-      key: 'date_appointed',
-      sorter: (a, b) => a.date_appointed.localeCompare(b.date_appointed),
-      sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('date_appointed'),
-      render: text => formatDate(text),
-    },
-    {
-      title: 'Appointed By',
-      dataIndex: 'appointed_by',
-      key: 'appointed_by',
-      sorter: (a, b) => a.appointed_by.localeCompare(b.appointed_by),
-      sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('appointed_by'),
-    },
-    {
-      title: 'Denial Rate',
-      dataIndex: 'denial_rate',
-      key: 'denial_rate',
-      sorter: (a, b) => a.denial_rate.localeCompare(b.denial_rate),
-      sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('denial_rate'),
-    },
-    {
-      title: 'Approval Rate',
-      dataIndex: 'approval_rate',
-      key: 'approval_rate',
-      sorter: (a, b) => a.approval_rate.localeCompare(b.approval_rate),
-      sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('approval_rate'),
-    },
-  ];
 
   const findRowByID = (rowID, rowData) => {
     for (let i = 0; i < rowData.length; i++) {
@@ -310,7 +251,7 @@ export default function JudgeTable(props) {
                 className="judges_table"
                 rowSelection={rowSelection}
                 rowKey={record => record.judge_id}
-                columns={columns}
+                columns={judge_columns(Link, getColumnSearchProps)}
                 dataSource={judgesData}
                 onChange={changeSorter}
               />

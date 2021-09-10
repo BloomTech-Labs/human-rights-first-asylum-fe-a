@@ -22,7 +22,7 @@ const ReviewCaseForm = props => {
     if (
       name === 'check_for_one_year' ||
       name === 'initial_or_appellate' ||
-      name === 'credible'
+      name === 'credibility'
     ) {
       setEditedFormValues({ ...editedFormValues, [name]: checked });
     } else {
@@ -61,10 +61,10 @@ const ReviewCaseForm = props => {
             case_origin_state: editedFormValues.case_origin_state,
             gender: editedFormValues.gender,
             indigenous_group: editedFormValues.indigenous_group,
-            type_of_violence: editedFormValues.type_of_violence,
+            type_of_persecution: editedFormValues.type_of_persecution,
             initial_or_appellate: editedFormValues.initial_or_appellate,
             check_for_one_year: editedFormValues.check_for_one_year,
-            credible: editedFormValues.credible,
+            credibility: editedFormValues.credibility,
           }}
         >
           <div>
@@ -245,17 +245,17 @@ const ReviewCaseForm = props => {
           </div>
           <div className="type-of-violence-experienced">
             <Form.Item
-              label="Type of Violence Experienced"
+              label="Type of Persecution Experienced"
               id="type-of-violence-experienced"
               type="text"
-              name="type_of_violence"
+              name="type_of_persecution"
               onChange={onInputChange}
-              placeholder="Type of Violence Experienced"
-              value={editedFormValues.type_of_violence}
+              placeholder="Type of Persecution Experienced"
+              value={editedFormValues.type_of_persecution}
               rules={[
                 {
                   required: true,
-                  message: 'Please input Type of Violence Experienced',
+                  message: 'Please input Type of Persecution Experienced',
                 },
               ]}
             >
@@ -277,13 +277,13 @@ const ReviewCaseForm = props => {
               checked={editedFormValues.check_for_one_year}
               onChange={onInputChange}
             >
-              Case was filed Within One Year
+              Case was Filed Within One Year
             </Checkbox>
           </div>
           <div className="checkbox">
             <Checkbox
-              name="credible"
-              checked={editedFormValues.credible}
+              name="credibility"
+              checked={editedFormValues.credibility}
               onChange={onInputChange}
             >
               Applicant is Perceived as Credible

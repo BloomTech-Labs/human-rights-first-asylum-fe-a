@@ -81,7 +81,7 @@ function SavedCases({ savedCases, setSavedCases, deleteBookmark }) {
               case_origin_city: record.case_origin_city,
               case_origin_state: record.case_origin_state,
               country_of_origin: record.country_of_origin,
-              credible: record.credible,
+              credibility: record.credibility,
               date: record.date,
               check_for_one_year: record.check_for_one_year,
               first_name: record.first_name,
@@ -94,7 +94,7 @@ function SavedCases({ savedCases, setSavedCases, deleteBookmark }) {
               outcome: record.outcome,
               protected_grounds: record.protected_grounds,
               status: record.status,
-              type_of_violence: record.type_of_violence,
+              type_of_persecution: record.type_of_persecution,
               url: record.url,
             },
           ]} /*viz={}*/
