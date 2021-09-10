@@ -83,9 +83,7 @@ const SupportPage = props => {
     <div className="support-container">
       <div className="faqs">
         <h2 className="support-title">Support</h2>
-        <p className="divider">
-          <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
-        </p>
+        <div className="support-divider" />
         <h2 className="faq-title"> FAQ </h2>
         <Collapse accordion>
           {FAQ.map(item => {
