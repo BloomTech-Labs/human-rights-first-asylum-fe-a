@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button as AntDButton, Modal } from 'antd';
-import '../AdminTools/_ManageUsersStyles.less';
+// import '../AdminTools/_ManageUsersStyles.less';
 import Icon from '@ant-design/icons';
 import OrangeLine from '../../../styles/orange-line.svg';
 import EditCaseDetails from '../CaseOverview/EditCaseDetails';
@@ -49,42 +49,42 @@ const CaseDetails = props => {
         <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
       </p>
       <div>
-        <p>
+        <p id="top_item_case_details_item" class="case_details_item">
           <span class="styled_case_details">Case Date: </span> {`${converted}`}
         </p>
-        <p>
+        <p class="case_details_item">
           <span class="styled_case_details">Judge Name: </span>
           {` ${caseData.first_name} ${caseData.middle_initial}. ${caseData.last_name}`}
         </p>
-        <p>
+        <p class="case_details_item">
           <span class="styled_case_details">Origin City: </span>
           {`${caseData.case_origin_city}`}
         </p>
-        <p>
+        <p class="case_details_item">
           <span class="styled_case_details">Origin State: </span>
           {`${caseData.case_origin_state}`}
         </p>
-        <p>
+        <p class="case_details_item">
           <span class="styled_case_details">Gender: </span>
           {`${caseData.gender}`}
         </p>
-        <p>
+        <p class="case_details_item">
           <span class="styled_case_details">Type of Persecution: </span>
           {`${caseData.type_of_persecution}`}
         </p>
-        <p>
+        <p class="case_details_item">
           <span class="styled_case_details">Indigenous Group: </span>
           {`${caseData.indigenous_group}`}
         </p>
-        <p>
+        <p class="case_details_item">
           <span class="styled_case_details">Protected Grounds: </span>
           {`${caseData.protected_grounds}`}
         </p>
-        <p>
+        <p class="case_details_item">
           <span class="styled_case_details">Outcome: </span>
           {`${caseData.outcome}`}
         </p>
-        <p>
+        <p class="case_details_item">
           <span class="styled_case_details">Country of Origin: </span>
           {`${caseData.country_of_origin}`}
         </p>
@@ -92,7 +92,7 @@ const CaseDetails = props => {
           <span class="styled_case_details">Filed Within One Year: </span>
           {`${caseData.check_for_one_year}`}
         </p>
-        <p>
+        <p class="case_details_item">
           <span class="styled_case_details">Applicant Language: </span>
           {`${caseData.applicant_language}`}
         </p>
