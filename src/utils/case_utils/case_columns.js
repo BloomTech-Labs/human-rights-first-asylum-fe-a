@@ -18,11 +18,14 @@ export function case_columns(
     },
     {
       title: 'Case Date',
-      dataIndex: 'date',
-      key: 'date',
-      sorter: (a, b) => a.date.localeCompare(b.date),
+      dataIndex: 'decision_date',
+      key: 'decision_date',
+      sorter: (a, b) => a.decision_date.localeCompare(b.decision_date),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('date', match_tag_value_with_column_key.key),
+      ...getColumnSearchProps(
+        'decision_date',
+        match_tag_value_with_column_key.key
+      ),
       render: text => formatDate(text),
     },
     {
