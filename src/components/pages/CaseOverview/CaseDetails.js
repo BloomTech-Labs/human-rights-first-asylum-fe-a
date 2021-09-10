@@ -83,6 +83,7 @@ const CaseDetails = props => {
         caseId={caseData.case_id}
         setIsEditModalVisible={setIsEditModalVisible}
         isEditModalVisible={isEditModalVisible}
+        caseData={caseData}
       />
     </Modal>
   );

@@ -27,7 +27,7 @@ const initialFormValues = {
 };
 
 const EditCaseDetails = props => {
-  const [formValues, setFormValues] = useState(initialFormValues);
+  const [formValues, setFormValues] = useState(props.caseData);
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(false);
   const { caseId, setIsEditModalVisible, isEditModalVisible } = props;
@@ -36,23 +36,23 @@ const EditCaseDetails = props => {
     if (localStorage.role === 'admin') {
       setIsAdmin(true);
     }
-    async function fetchCase() {
-      axiosWithAuth()
-        .get(`/case/${caseId}`)
-        .then(res => {
-          console.log(res.data);
-          setFormValues({
-            ...res.data,
-            date: res?.data?.date?.slice(0, 10),
-          });
-          setLoading(false);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
+    // async function fetchCase() {
+    //   axiosWithAuth()
+    //     .get(`/cases/${caseId}`)
+    //     .then(res => {
+    //       console.log(res.data);
+    //       setFormValues({
+    //         ...res.data,
+    //         date: res?.data?.date?.slice(0, 10),
+    //       });
+    //       setLoading(false);
+    //     })
+    //     .catch(err => {
+    //       console.log(err);
+    //     });
+    // }
     setLoading(true);
-    fetchCase();
+    // fetchCase();
   }, [caseId]);
 
   const handleEditOk = () => {
@@ -66,7 +66,7 @@ const EditCaseDetails = props => {
   const onEditSubmit = e => {
     e.preventDefault();
     axiosWithAuth()
-      .put(`/case/${caseId}`, formValues)
+      .put(`/cases/${caseId}`, formValues)
       .then(res => {
         console.log(res.data);
       })
@@ -232,7 +232,7 @@ const EditCaseDetails = props => {
         <Checkbox
           id="credibility"
           name="credibility"
-          value={formValues.credibility}
+          checked={formValues.credibility}
           onClick={onCheck}
         >
           Credibility
