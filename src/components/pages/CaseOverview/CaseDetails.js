@@ -34,7 +34,7 @@ const CaseDetails = props => {
           >
             <span>Ok</span>
           </AntDButton>
-          {localStorage.role === 'admin' || '' ? (
+          {localStorage.role_name === 'admin' || '' ? (
             <AntDButton className="btn-style" onClick={showEditModal}>
               Edit
             </AntDButton>
