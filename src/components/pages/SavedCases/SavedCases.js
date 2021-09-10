@@ -2,11 +2,9 @@ import React /*, { useEffect }*/ from 'react';
 import { Link } from 'react-router-dom';
 import { Table } from 'antd';
 import Icon from '@ant-design/icons';
-import OrangeLine from '../../../styles/orange-line.svg';
 import Delete from '../../../styles/icons/delete.svg';
 import Case from '../../../styles/icons/case.svg';
 import PDF from '../../../styles/icons/pdf.svg';
-
 import './_SavedCasesStyles.less';
 import PDFExportButton from '../Cases/PDFOverviewExport/PDFExportButton';
 
@@ -83,9 +81,9 @@ function SavedCases({ savedCases, setSavedCases, deleteBookmark }) {
               case_origin_city: record.case_origin_city,
               case_origin_state: record.case_origin_state,
               country_of_origin: record.country_of_origin,
-              credible: record.credible,
+              credibility: record.credibility,
               date: record.date,
-              filed_in_one_year: record.filed_in_one_year,
+              check_for_one_year: record.check_for_one_year,
               first_name: record.first_name,
               gender: record.gender,
               indigenous_group: record.indigenous_group,
@@ -96,7 +94,7 @@ function SavedCases({ savedCases, setSavedCases, deleteBookmark }) {
               outcome: record.outcome,
               protected_grounds: record.protected_grounds,
               status: record.status,
-              type_of_violence: record.type_of_violence,
+              type_of_persecution: record.type_of_persecution,
               url: record.url,
             },
           ]} /*viz={}*/
@@ -166,9 +164,7 @@ function SavedCases({ savedCases, setSavedCases, deleteBookmark }) {
     <div className="savedCasesContainer">
       <div className="savedCases">
         <h2 className="saved-cases-header">Saved Cases</h2>
-        <p className="divider">
-          <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
-        </p>
+
         <Table
           rowKey={record => record.case_id}
           columns={columns}

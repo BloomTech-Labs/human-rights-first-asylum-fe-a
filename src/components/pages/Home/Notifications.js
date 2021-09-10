@@ -89,6 +89,7 @@ export default function Notifications(props) {
           style={{
             fontSize: '2rem',
             paddingTop: '0.5rem',
+            color: 'white',
           }}
         />
       </Badge>

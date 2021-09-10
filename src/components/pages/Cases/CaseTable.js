@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { Link } from 'react-router-dom';
 import Highlighter from 'react-highlight-words';
-import OrangeLine from '../../../styles/orange-line.svg';
 import {
   SearchOutlined,
   FileTextOutlined,
@@ -13,10 +12,19 @@ import {
 import Save from '../../../styles/icons/save.svg';
 import Icon from '@ant-design/icons';
 
-import { Table, Space, Button, Input, Tabs, notification, Tag } from 'antd';
+import {
+  Table,
+  Popover,
+  Space,
+  Button,
+  Input,
+  Tabs,
+  notification,
+  Tag,
+} from 'antd';
 import './CaseTable.less';
 import CaseDetails from '../CaseOverview/CaseDetails';
-
+//
 // Case column utils import
 import { case_columns } from '../../../utils/case_utils/case_columns';
 
@@ -87,17 +95,27 @@ export default function CaseTable(props) {
   // console.log('CASE DATA', caseData)
   let casesData = caseData.map(cases => ({
     judge_name:
-      cases.last_name +
-      ', ' +
-      cases.first_name +
-      ' ' +
-      cases.middle_initial +
-      '.',
+      (cases?.judges[0]?.first_name
+        ? cases?.judges[0]?.first_name + ' '
+        : null) +
+      (cases?.judges[0]?.middle_initial
+        ? cases?.judges[0]?.middle_initial + '. '
+        : null) +
+      (cases?.judges[0]?.last_name ? cases?.judges[0]?.last_name : null)
+        ? (cases?.judges[0]?.first_name
+            ? cases?.judges[0]?.first_name + ' '
+            : null) +
+          (cases?.judges[0]?.middle_initial
+            ? cases?.judges[0]?.middle_initial + '. '
+            : null) +
+          (cases?.judges[0]?.last_name ? cases?.judges[0]?.last_name : null)
+        : null,
+
     filed_within_year:
-      cases.filed_in_one_year
+      cases.check_for_one_year
         .toString()
         .charAt(0)
-        .toUpperCase() + cases.filed_in_one_year.toString().slice(1),
+        .toUpperCase() + cases.check_for_one_year.toString().slice(1),
     case_row: cases,
     ...cases,
   }));
@@ -312,9 +330,6 @@ export default function CaseTable(props) {
   return (
     <div className="cases-container">
       <h2 className="h1Styles">Cases</h2>
-      <p className="divider">
-        <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
-      </p>
 
       <CaseDetails
         caseData={detailsData}

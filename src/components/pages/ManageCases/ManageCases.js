@@ -13,7 +13,7 @@ import OrangeLine from '../../../styles/orange-line.svg';
 const { TextArea } = Input;
 
 //***There is a bug*** Currently, when you expand one caseObj they all expand. This may be an issue with accept and reject buttons - we don't want to accept all or reject all on accident!
-
+//
 export default function ManageCases(props) {
   const { authState } = props;
   const [apiData, setApiData] = useState([]);
@@ -23,7 +23,7 @@ export default function ManageCases(props) {
 
   const handleAccept = record => {
     axiosWithAuth()
-      .put(`/cases/pending/approve/${record.case_id}`, { status: 'approved' })
+      .put(`/cases/pending/approve/${record.case_id}`, { status: 'Approved' })
       .then(res => {
         notification.open({
           message: 'Case Approved',
@@ -44,13 +44,9 @@ export default function ManageCases(props) {
 
   const handleReject = record => {
     record.comment = comment;
-    // BE fixing model, so here for now
-    delete record.first_name;
-    delete record.middle_initial;
-    delete record.last_name;
 
     axiosWithAuth()
-      .put(`/cases/comment/`, record)
+      .put(`/cases/comment/${record.case_id}`, record)
       .then(res => {
         axiosWithAuth()
           .put(`/cases/pending/approve/${record.case_id}`, { status: 'Review' })
@@ -165,7 +161,7 @@ export default function ManageCases(props) {
         console.log(err);
         //need to change functionality to render the error to the screen for user
       });
-  }, [authState.idToken.idToken]);
+  }, []);
 
   return (
     <div className="manage-cases-container">
@@ -214,11 +210,12 @@ export default function ManageCases(props) {
                   {caseObj.filed_within_one_year ? 'True' : 'False'}
                 </p>
                 <p style={{ margin: 0 }}>
-                  Credible:
-                  {caseObj.credible ? 'True' : 'False'}
+                  credibility:
+                  {caseObj.credibility ? 'True' : 'False'}
                 </p>
                 <p style={{ margin: 0 }}>
-                  Violence Experienced: {caseObj.type_of_violence_experienced}
+                  Persecution Experienced:{' '}
+                  {caseObj.type_of_persecution_experienced}
                 </p>
               </div>
             ),

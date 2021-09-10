@@ -4,26 +4,26 @@ import Plot from 'react-plotly.js';
 import axios from 'axios';
 import { UserContext } from '../../../context/UserContext';
 import Icon from '@ant-design/icons';
-import OrangeLine from '../../../styles/orange-line.svg';
 
+import { Divider } from 'antd';
+import axiosWithAuth from '../../../utils/axiosWithAuth';
 const DataHub = props => {
   const { caseData } = props;
   const [vizData, setVizData] = useState({});
   const user = useContext(UserContext);
+  const [data, setData] = useState([]);
 
-  const data = caseData;
-
-  useEffect(() => {
-    axios
-      .get('http://localhost:8080/judges/2/cases', {
-        headers: {
-          Authorization: 'Bearer ' + user.authState.idToken.idToken,
-        },
-      })
-      .then(res => {
-        setVizData(res.data.judge_cases);
-      });
-  }, [user.authState.idToken.idToken]);
+  // useEffect(() => {
+  //   axios
+  //     .get('http://localhost:8080/judges/2/cases', {
+  //       headers: {
+  //         Authorization: 'Bearer ' + user.authState.idToken.idToken,
+  //       },
+  //     })
+  //     .then(res => {
+  //       setVizData(res.data.judge_cases);
+  //     });x
+  // }, [user.authState.idToken.idToken]);
 
   let states = [
     'AL',
@@ -96,7 +96,6 @@ const DataHub = props => {
       trace1.y.push(Math.round(Math.random() * (150 - 1)) + 1);
       trace2.y.push(Math.round(Math.random() * (150 - 1)) + 1);
     }
-
     return (
       <Plot
         data={[trace1, trace2]}
@@ -201,18 +200,16 @@ const DataHub = props => {
 
   return (
     <div className="dataHubContainer">
+      {/* the homeDisclaimer segment below displays the disclaimer message with the details requested by the stakeholders */}
       <h3 className="homeDisclaimer">
         All visualizations reflect the data in the database. As more cases are
         added, more data can be visualized.
       </h3>
-      <h2 className="h1Styles">Approvals VS Denials Nationwide</h2>
-      <p className="divider">
-        <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
-      </p>
+      <h2 className="h1Styles">Approvals vs Denials Nationwide</h2>
       <div className="mainChartContainer">
         <TestDataChart />
       </div>
-
+      <Divider />
       <div className="subChartsContainer">
         <CaseDataChart />
         <h2>Ratio of Cases Resulting In Granted Asylum: {grantedRatio}%</h2>

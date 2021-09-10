@@ -168,7 +168,9 @@ export function MyDoc(props) {
                   <Text style={styles.tableCell}>{item.gender}</Text>
                 </View>
                 <View style={styles.tableCol}>
-                  <Text style={styles.tableCell}>{item.type_of_violence}</Text>
+                  <Text style={styles.tableCell}>
+                    {item.type_of_persecution}
+                  </Text>
                 </View>
               </View>
             );
@@ -189,7 +191,7 @@ export function MyDoc(props) {
               <Text style={styles.columnNameCell}>Application Type</Text>
             </View>
             <View style={styles.tableCol}>
-              <Text style={styles.columnNameCell}>Credible?</Text>
+              <Text style={styles.columnNameCell}>credibility?</Text>
             </View>
             <View style={styles.tableCol}>
               <Text style={styles.columnNameCell}>Indigenous Group</Text>
@@ -211,7 +213,7 @@ export function MyDoc(props) {
                 </View>
                 <View style={styles.tableCol}>
                   <Text style={styles.tableCell}>
-                    {convertTrueFalse(item.filed_in_one_year)}
+                    {convertTrueFalse(item.check_for_one_year)}
                   </Text>
                 </View>
                 <View style={styles.tableCol}>
@@ -224,7 +226,7 @@ export function MyDoc(props) {
                 </View>
                 <View style={styles.tableCol}>
                   <Text style={styles.tableCell}>
-                    {convertTrueFalse(item.credible)}
+                    {convertTrueFalse(item.credibility)}
                   </Text>
                 </View>
                 <View style={styles.tableCol}>

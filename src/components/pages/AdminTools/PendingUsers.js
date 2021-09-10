@@ -27,10 +27,11 @@ const PendingUsersPage = props => {
     });
   };
   const approveUser = profile => {
-    console.log(profile);
     successNotification();
     axiosWithAuth()
-      .post(`/profile/`, profile)
+      .put(`/profile/${profile.user_id}`, {
+        pending: false,
+      })
       .then(res => {
         setProfiles(res.data.profile);
         setPendingProfiles(
@@ -46,7 +47,7 @@ const PendingUsersPage = props => {
 
   const rejectUser = profile => {
     axiosWithAuth()
-      .delete(`/profiles/pending/${profile.id}`)
+      .delete(`/profiles/${profile.user_id}`)
       .then(res => {
         alert(`Profile request from ${profile.email} was rejected`);
         setPendingProfiles(

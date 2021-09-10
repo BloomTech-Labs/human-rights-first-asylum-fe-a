@@ -17,7 +17,7 @@ const CaseDetails = props => {
     setIsEditModalVisible(true);
   };
 
-  const theDate = new Date(caseData.date);
+  const theDate = new Date(caseData.decision_date);
   const converted = moment(theDate).format('MMMM D, Y');
 
   return (
@@ -54,14 +54,14 @@ const CaseDetails = props => {
         <p>{`Origin City: ${caseData.case_origin_city}`}</p>
         <p>{`Origin State: ${caseData.case_origin_state}`}</p>
         <p>{`Gender: ${caseData.gender}`}</p>
-        <p>{`Type of Violence: ${caseData.type_of_violence}`}</p>
+        <p>{`Type of Persecution: ${caseData.type_of_persecution}`}</p>
         <p>{`Indigenous Group: ${caseData.indigenous_group}`}</p>
         <p>{`Protected Grounds: ${caseData.protected_grounds}`}</p>
         <p>{`Outcome: ${caseData.outcome}`}</p>
         <p>{`Country of Origin: ${caseData.country_of_origin}`}</p>
-        <p>{`Filed Within One Year: ${caseData.filed_in_one_year}`}</p>
+        <p>{`Filed Within One Year: ${caseData.check_for_one_year}`}</p>
         <p>{`Applicant Language: ${caseData.applicant_language}`}</p>
-        {/* the segment below displays the disclaimer message with the details requested by the stakeholders */}
+        {/* the segment below displays the disclaimer message with the details requested by the stakeholders*/}
         <br></br>
         <p>
           This {caseData.appellate === true ? 'appellate' : 'initial'} case was
