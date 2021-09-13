@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Button as AntDButton, Modal } from 'antd';
-// import '../AdminTools/_ManageUsersStyles.less';
 import Icon from '@ant-design/icons';
 import OrangeLine from '../../../styles/orange-line.svg';
 import EditCaseDetails from '../CaseOverview/EditCaseDetails';
@@ -50,50 +49,50 @@ const CaseDetails = props => {
       </p>
       <div>
         <p id="top_item_case_details_item" class="case_details_item">
-          <span class="styled_case_details">Case Date: </span> {`${converted}`}
+          <span class="styled_case_details">Case Date:</span> {`${converted}`}
         </p>
         <p class="case_details_item">
-          <span class="styled_case_details">Judge Name: </span>
+          <span class="styled_case_details">Judge Name:</span>
           {` ${caseData.first_name} ${caseData.middle_initial}. ${caseData.last_name}`}
         </p>
         <p class="case_details_item">
-          <span class="styled_case_details">Origin City: </span>
+          <span class="styled_case_details">Origin City:</span>
           {`${caseData.case_origin_city}`}
         </p>
         <p class="case_details_item">
-          <span class="styled_case_details">Origin State: </span>
+          <span class="styled_case_details">Origin State:</span>
           {`${caseData.case_origin_state}`}
         </p>
         <p class="case_details_item">
-          <span class="styled_case_details">Gender: </span>
+          <span class="styled_case_details">Gender:</span>
           {`${caseData.gender}`}
         </p>
         <p class="case_details_item">
-          <span class="styled_case_details">Type of Persecution: </span>
+          <span class="styled_case_details">Type of Persecution:</span>
           {`${caseData.type_of_persecution}`}
         </p>
         <p class="case_details_item">
-          <span class="styled_case_details">Indigenous Group: </span>
+          <span class="styled_case_details">Indigenous Group:</span>
           {`${caseData.indigenous_group}`}
         </p>
         <p class="case_details_item">
-          <span class="styled_case_details">Protected Grounds: </span>
+          <span class="styled_case_details">Protected Grounds:</span>
           {`${caseData.protected_grounds}`}
         </p>
         <p class="case_details_item">
-          <span class="styled_case_details">Outcome: </span>
+          <span class="styled_case_details">Outcome:</span>
           {`${caseData.outcome}`}
         </p>
         <p class="case_details_item">
-          <span class="styled_case_details">Country of Origin: </span>
+          <span class="styled_case_details">Country of Origin:</span>
           {`${caseData.country_of_origin}`}
         </p>
-        <p>
-          <span class="styled_case_details">Filed Within One Year: </span>
+        <p class="case_details_item">
+          <span class="styled_case_details">Filed Within One Year:</span>
           {`${caseData.check_for_one_year}`}
         </p>
         <p class="case_details_item">
-          <span class="styled_case_details">Applicant Language: </span>
+          <span class="styled_case_details">Applicant Language:</span>
           {`${caseData.applicant_language}`}
         </p>
         {/* the segment below displays the disclaimer message with the details requested by the stakeholders*/}
