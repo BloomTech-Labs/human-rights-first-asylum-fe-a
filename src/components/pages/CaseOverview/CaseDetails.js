@@ -7,7 +7,12 @@ import EditCaseDetails from '../CaseOverview/EditCaseDetails';
 import moment from 'moment';
 
 const CaseDetails = props => {
-  const { caseData, isDetailsVisible, setIsDetailsVisible } = props;
+  const {
+    caseData,
+    setCaseData,
+    isDetailsVisible,
+    setIsDetailsVisible,
+  } = props;
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
 
   const handleCancel = () => {
@@ -84,6 +89,7 @@ const CaseDetails = props => {
         setIsEditModalVisible={setIsEditModalVisible}
         isEditModalVisible={isEditModalVisible}
         caseData={caseData}
+        setCaseData={setCaseData}
       />
     </Modal>
   );

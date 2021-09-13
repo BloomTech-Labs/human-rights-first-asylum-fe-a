@@ -333,6 +333,7 @@ export default function CaseTable(props) {
 
       <CaseDetails
         caseData={detailsData}
+        setCaseData={setDetailsData}
         setIsDetailsVisible={setIsDetailsVisible}
         isDetailsVisible={isDetailsVisible}
       />

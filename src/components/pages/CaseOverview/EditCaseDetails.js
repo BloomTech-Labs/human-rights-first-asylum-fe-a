@@ -11,26 +11,46 @@ import '../AdminTools/_ManageUsersStyles.less';
 import Icon from '@ant-design/icons';
 import OrangeLine from '../../../styles/orange-line.svg';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
-const initialFormValues = {
-  decision_date: '',
-  application_type: '',
-  protected_grounds: '',
-  outcome: '',
-  country_of_origin: '',
-  case_origin_city: '',
-  case_origin_state: '',
-  gender: '',
-  type_of_persecution: '',
-  indigenous_group: '',
-  applicant_language: '',
-  credibility: false,
-};
+// const initialFormValues = {
+//   decision_date: '',
+//   application_type: '',
+//   protected_grounds: '',
+//   outcome: '',
+//   country_of_origin: '',
+//   case_origin_city: '',
+//   case_origin_state: '',
+//   gender: '',
+//   type_of_persecution: '',
+//   indigenous_group: '',
+//   applicant_language: '',
+//   credibility: false,
+// };
 
 const EditCaseDetails = props => {
-  const [formValues, setFormValues] = useState(props.caseData);
+  const initialFormValues = {
+    decision_date: props.caseData.decision_date,
+    application_type: props.caseData.application_type,
+    protected_grounds: props.caseData.protected_grounds,
+    outcome: props.caseData.outcome,
+    country_of_origin: props.caseData.country_of_origin,
+    case_origin_city: props.caseData.case_origin_city,
+    case_origin_state: props.caseData.case_origin_state,
+    gender: props.caseData.gender,
+    type_of_persecution: props.caseData.type_of_persecution,
+    indigenous_group: props.caseData.indigenous_group,
+    applicant_language: props.caseData.applicant_language,
+    credibility: props.caseData.credibility,
+  };
+
+  const [formValues, setFormValues] = useState(initialFormValues);
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { caseId, setIsEditModalVisible, isEditModalVisible } = props;
+  const {
+    caseId,
+    setIsEditModalVisible,
+    isEditModalVisible,
+    setCaseData,
+  } = props;
 
   useEffect(() => {
     if (localStorage.role === 'admin') {
@@ -69,6 +89,10 @@ const EditCaseDetails = props => {
       .put(`/cases/${caseId}`, formValues)
       .then(res => {
         console.log(res.data);
+        setCaseData({
+          ...props.caseData,
+          formValues,
+        });
       })
       .catch(err => {
         console.log(err);
