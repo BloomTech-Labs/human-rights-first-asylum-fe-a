@@ -12,7 +12,7 @@ import Icon from '@ant-design/icons';
 import OrangeLine from '../../../styles/orange-line.svg';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
 const initialFormValues = {
-  date: '',
+  decision_date: '',
   application_type: '',
   protected_grounds: '',
   outcome: '',
