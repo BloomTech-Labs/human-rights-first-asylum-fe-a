@@ -43,6 +43,7 @@ const EditCaseDetails = props => {
   };
 
   const [formValues, setFormValues] = useState(initialFormValues);
+
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(false);
   const {
