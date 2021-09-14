@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { Link } from 'react-router-dom';
 import Highlighter from 'react-highlight-words';
@@ -14,7 +14,7 @@ import Icon from '@ant-design/icons';
 
 import {
   Table,
-  Popover,
+  // Popover,
   Space,
   Button,
   Input,
@@ -24,16 +24,17 @@ import {
 } from 'antd';
 import './CaseTable.less';
 import CaseDetails from '../CaseOverview/CaseDetails';
-//
-// Case column utils import
-import { case_columns } from '../../../utils/case_utils/case_columns';
+//* Case column utils import
+import { case_columns } from '../../../utils/case_utils/case_columns.js';
 
-// Utils for filter keywords
+//* Utils for filter keywords
 import {
   removeSearchTerm,
   processFilters,
   matchMultipleKeyWords,
 } from '../../../utils/filter_keyword_utils';
+
+import { formatDate } from '../../../utils/format_date_util.js';
 
 import DecisionRateChart from './DecisionRateChart';
 
@@ -52,7 +53,7 @@ export default function CaseTable(props) {
   const [isDetailsVisible, setIsDetailsVisible] = useState(false);
   const [detailsData, setDetailsData] = useState(initialDetails);
 
-  // state to keep track of filters being applied to the table (Initial cases section)
+  //* state to keep track of filters being applied to the table (Initial cases section)
   const [initialFilters, setInitialFilters] = useState([]);
 
   const [
@@ -65,12 +66,12 @@ export default function CaseTable(props) {
 
   const [removing, setRemoving] = useState(false);
 
-  // TBD if we are going to use it or not
+  //* TBD if we are going to use it or not
   const [searching, setSearching] = useState(false);
 
   const [queryValues] = useState({
     number: '',
-    date: '',
+    decision_date: '',
     judge: '',
     case_origin_city: '',
     case_origin_state: '',
@@ -92,25 +93,15 @@ export default function CaseTable(props) {
   };
 
   const { caseData, userInfo, savedCases, setSavedCases } = props;
-  // console.log('CASE DATA', caseData)
+  //* console.log('CASE DATA', caseData)
   let casesData = caseData.map(cases => ({
     judge_name:
-      (cases?.judges[0]?.first_name
-        ? cases?.judges[0]?.first_name + ' '
-        : null) +
-      (cases?.judges[0]?.middle_initial
-        ? cases?.judges[0]?.middle_initial + '. '
-        : null) +
-      (cases?.judges[0]?.last_name ? cases?.judges[0]?.last_name : null)
-        ? (cases?.judges[0]?.first_name
-            ? cases?.judges[0]?.first_name + ' '
-            : null) +
-          (cases?.judges[0]?.middle_initial
-            ? cases?.judges[0]?.middle_initial + '. '
-            : null) +
-          (cases?.judges[0]?.last_name ? cases?.judges[0]?.last_name : null)
-        : null,
-
+      cases.last_name +
+      ', ' +
+      cases.first_name +
+      ' ' +
+      cases.middle_initial +
+      '.',
     check_for_one_year:
       cases.check_for_one_year
         .toString()
@@ -128,14 +119,14 @@ export default function CaseTable(props) {
     setState({ selectedRowID });
   };
 
-  // Removes search tag by taking in a new value of search string
-  // and reassigns that search string to the key at which the searched column matches the key
+  //* Removes search tag by taking in a new value of search string
+  //* and reassigns that search string to the key at which the searched column matches the key
   const removeSearchTag_helper = async (setKeys, newValue) => {
     await setKeys([newValue]);
     setRemoving(false);
   };
-  //! Config Function for ANT Start
-  const getColumnSearchProps = (dataIndex, testHook) => ({
+  //* Config Function for ANT Start
+  const getColumnSearchProps = (dataIndex, columnToBeSearched) => ({
     filterDropdown: ({
       setSelectedKeys,
       selectedKeys,
@@ -149,7 +140,7 @@ export default function CaseTable(props) {
           placeholder={`Search ${dataIndex.replace(/_/g, ' ')}`}
           value={
             match_tag_value_with_column_key.value != selectedKeys[0] &&
-            dataIndex == testHook
+            dataIndex == columnToBeSearched
               ? match_tag_value_with_column_key.value
               : selectedKeys[0]
           }
@@ -165,7 +156,7 @@ export default function CaseTable(props) {
         />
         {match_tag_value_with_column_key.value != selectedKeys[0] &&
         removing &&
-        dataIndex == testHook
+        dataIndex == columnToBeSearched
           ? removeSearchTag_helper(
               setSelectedKeys,
               match_tag_value_with_column_key.value
@@ -211,13 +202,15 @@ export default function CaseTable(props) {
     ),
 
     onFilter: (value, record) =>
-      record[dataIndex] ? matchMultipleKeyWords(record[dataIndex], value) : '',
-    // Do we need below code? What does it do?
-    // onFilterDropdownVisibleChange: visible => {
-    //   if (visible) {
-    //     //setTimeout(() => searchInput.select(), 100);
-    //   }
-    // },
+      record[dataIndex]
+        ? matchMultipleKeyWords(
+            dataIndex == 'decision_date'
+              ? formatDate(record[dataIndex])
+              : record[dataIndex],
+            value
+          )
+        : '',
+
     render: text =>
       searchedColumn === dataIndex ? (
         <Highlighter
@@ -230,7 +223,7 @@ export default function CaseTable(props) {
         text
       ),
   });
-  // Config Function for ANT End
+  //* Config Function for ANT End
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -325,6 +318,8 @@ export default function CaseTable(props) {
     return filteredData;
   };
 
+  const data = searching ? filter(caseData) : caseData;
+
   const nonAppCases = casesData.filter(item => item.appellate === false);
 
   return (
@@ -346,7 +341,7 @@ export default function CaseTable(props) {
             <div>
               Filters:
               {processFilters(initialFilters).map(filter => {
-                // console.log('EACH FILTER ', filter.value[0]);
+                //* console.log('EACH FILTER ', filter.value[0]);
                 return filter.value[0].split(',').map(eachKeyWord => {
                   return (
                     <Tag key={eachKeyWord}>
@@ -386,9 +381,9 @@ export default function CaseTable(props) {
                   FilePdfOutlined
                 )}
                 dataSource={nonAppCases}
-                // Table's "onChange" accepts a callback function. Callback functioin accepts 4 arguments
-                // pagination details, filter object, sorter, and current data respectivly. However,
-                // currently I only need filter object. Therefore, only have first and second parameter written.
+                //* Table's "onChange" accepts a callback function. Callback functioin accepts 4 arguments
+                //* pagination details, filter object, sorter, and current data respectivly. However,
+                //* currently I only need filter object. Therefore, only have first and second parameter written.
                 onChange={(pag, filt) => {
                   setInitialFilters(filt);
                 }}

@@ -1,6 +1,6 @@
 import React from 'react';
-import { formatDate } from '../format_date_util';
 
+import { formatDate } from '../format_date_util';
 export function case_columns(
   getColumnSearchProps,
   match_tag_value_with_column_key,
@@ -66,12 +66,13 @@ export function case_columns(
     },
     {
       title: 'Filed within Year',
-      dataIndex: 'filed_within_year',
-      key: 'filed_within_year',
-      sorter: (a, b) => a.filed_within_year.localeCompare(b.filed_within_year),
+      dataIndex: 'check_for_one_year',
+      key: 'check_for_one_year',
+      sorter: (a, b) =>
+        a.check_for_one_year.localeCompare(b.check_for_one_year),
       sortDirections: ['descend', 'ascend'],
       ...getColumnSearchProps(
-        'filed_within_year',
+        'check_for_one_year',
         match_tag_value_with_column_key.key
       ),
     },
