@@ -84,21 +84,21 @@ const EditCaseDetails = props => {
     setFormValues(initialFormValues);
   };
 
+  //   console.log('Case Data BEFORE: ', props.caseData);
+
   const onEditSubmit = e => {
     e.preventDefault();
     axiosWithAuth()
       .put(`/cases/${caseId}`, formValues)
       .then(res => {
-        console.log(res.data);
-        setCaseData({
-          ...props.caseData,
-          formValues,
-        });
+        setCaseData(res.data[0]);
+        console.log(res.data[0]);
       })
       .catch(err => {
         console.log(err);
       });
     setIsEditModalVisible(false);
+    // console.log('Case Data AFTER: ', props.caseData);
   };
 
   const onChange = e => {
