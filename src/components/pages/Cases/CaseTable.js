@@ -344,7 +344,7 @@ export default function CaseTable(props) {
         <Tabs defaultActiveKey="1" className="tabs">
           <TabPane tab="Initial Cases" key="1">
             <div>
-              Filters:
+              Save:
               {processFilters(initialFilters).map(filter => {
                 // console.log('EACH FILTER ', filter.value[0]);
                 return filter.value[0].split(',').map(eachKeyWord => {

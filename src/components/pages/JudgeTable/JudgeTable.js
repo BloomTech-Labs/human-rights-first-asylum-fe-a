@@ -241,7 +241,7 @@ export default function JudgeTable(props) {
         <Tabs defaultActiveKey="1">
           <TabPane tab="Judges" key="1">
             <div>
-              Filters:{' '}
+              Save:{' '}
               {processFilters(filters).map(filter => (
                 <Tag key={filter}>{filter}</Tag>
               ))}
