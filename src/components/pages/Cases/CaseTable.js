@@ -92,7 +92,7 @@ export default function CaseTable(props) {
   };
 
   const { caseData, userInfo, savedCases, setSavedCases } = props;
-  // console.log('CASE DATA', caseData)
+  //   console.log('CASE DATA', caseData);
   let casesData = caseData.map(cases => ({
     judge_name:
       (cases?.judges[0]?.first_name
@@ -333,6 +333,8 @@ export default function CaseTable(props) {
 
       <CaseDetails
         caseData={detailsData}
+        tempUpdateData={caseData}
+        tempCaseUpdate={props.tempCaseUpdate}
         setCaseData={setDetailsData}
         setIsDetailsVisible={setIsDetailsVisible}
         isDetailsVisible={isDetailsVisible}

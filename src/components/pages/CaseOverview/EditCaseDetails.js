@@ -92,7 +92,6 @@ const EditCaseDetails = props => {
       .put(`/cases/${caseId}`, formValues)
       .then(res => {
         setCaseData(res.data[0]);
-        console.log(res.data[0]);
       })
       .catch(err => {
         console.log(err);

@@ -12,10 +12,15 @@ const CaseDetails = props => {
     setCaseData,
     isDetailsVisible,
     setIsDetailsVisible,
+    tempCaseUpdate,
+    tempUpdateData,
   } = props;
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
 
   const handleCancel = () => {
+    // tempCaseUpdate([...tempUpdateData, caseData]);
+    console.log('tempUpdateData: ', tempUpdateData);
+    console.log('caseData: ', caseData);
     setIsDetailsVisible(false);
   };
   const showEditModal = () => {
