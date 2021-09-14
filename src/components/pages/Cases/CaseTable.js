@@ -92,7 +92,6 @@ export default function CaseTable(props) {
   };
 
   const { caseData, userInfo, savedCases, setSavedCases } = props;
-  // console.log('CASE DATA', caseData)
   let casesData = caseData.map(cases => ({
     judge_name:
       cases.first_name + ' ' + cases.middle_initial + '. ' + cases.last_name,
