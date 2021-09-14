@@ -72,6 +72,7 @@ const EditCaseDetails = props => {
     //       console.log(err);
     //     });
     // }
+    setFormValues(initialFormValues);
     setLoading(true);
     // fetchCase();
   }, [caseId]);
