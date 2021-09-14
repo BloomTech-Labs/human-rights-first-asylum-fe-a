@@ -18,11 +18,9 @@ const CaseDetails = props => {
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
 
   const handleCancel = () => {
-    // tempCaseUpdate([...tempUpdateData, caseData]);
-    console.log('tempUpdateData: ', tempUpdateData);
-    console.log('caseData: ', caseData);
     setIsDetailsVisible(false);
   };
+
   const showEditModal = () => {
     setIsEditModalVisible(true);
   };
@@ -91,6 +89,7 @@ const CaseDetails = props => {
       </div>
       <EditCaseDetails
         caseId={caseData.case_id}
+        setHasUpdated={props.setHasUpdated}
         setIsEditModalVisible={setIsEditModalVisible}
         isEditModalVisible={isEditModalVisible}
         caseData={caseData}

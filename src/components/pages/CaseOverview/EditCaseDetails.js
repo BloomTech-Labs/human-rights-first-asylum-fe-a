@@ -92,6 +92,7 @@ const EditCaseDetails = props => {
       .put(`/cases/${caseId}`, formValues)
       .then(res => {
         setCaseData(res.data[0]);
+        props.setHasUpdated(true);
       })
       .catch(err => {
         console.log(err);

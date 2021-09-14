@@ -333,6 +333,7 @@ export default function CaseTable(props) {
 
       <CaseDetails
         caseData={detailsData}
+        setHasUpdated={props.setHasUpdated}
         tempUpdateData={caseData}
         tempCaseUpdate={props.tempCaseUpdate}
         setCaseData={setDetailsData}

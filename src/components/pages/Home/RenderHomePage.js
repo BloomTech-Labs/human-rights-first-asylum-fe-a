@@ -80,6 +80,7 @@ function RenderHomePage(props) {
   const [selectedRows, setSelectedRows] = useState({});
   const [hrfUserInfo, setHrfUserInfo] = useState([]);
   const [myPendingCases, setMyPendingCases] = useState([]);
+  const [hasUpdated, setHasUpdated] = useState(false);
   const user = useContext(UserContext);
 
   useEffect(() => {
@@ -94,11 +95,12 @@ function RenderHomePage(props) {
             };
           })
         );
+        setHasUpdated(false);
       })
       .catch(err => {
         console.log(err);
       });
-  }, [user.authState.idToken.idToken]);
+  }, [user.authState.idToken.idToken, hasUpdated]);
 
   useEffect(() => {
     trackPromise(
@@ -274,6 +276,7 @@ function RenderHomePage(props) {
                 <CaseTable
                   caseData={caseData}
                   tempCaseUpdate={setCaseData}
+                  setHasUpdated={setHasUpdated}
                   userInfo={user.userInfo}
                   savedCases={savedCases}
                   setSavedCases={setSavedCases}
