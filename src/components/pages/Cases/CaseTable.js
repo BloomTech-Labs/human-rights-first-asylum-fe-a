@@ -38,7 +38,7 @@ import {
 import DecisionRateChart from './DecisionRateChart';
 
 const initialDetails = {
-  date: '5/26/2021',
+  decision_date: '5/26/2021',
   origin_city: 'Detroit',
 };
 
@@ -70,7 +70,7 @@ export default function CaseTable(props) {
 
   const [queryValues] = useState({
     number: '',
-    date: '',
+    decision_date: '',
     judge: '',
     case_origin_city: '',
     case_origin_state: '',
@@ -80,10 +80,10 @@ export default function CaseTable(props) {
     outcome: '',
     country_of_origin: '',
     gender: '',
-    type_of_violence: '',
+    type_of_persecution: '',
     indigenous_group: '',
     applicant_language: '',
-    credible: '',
+    credibility: '',
   });
 
   const popUpDetails = rowData => {
@@ -92,24 +92,9 @@ export default function CaseTable(props) {
   };
 
   const { caseData, userInfo, savedCases, setSavedCases } = props;
-  // console.log('CASE DATA', caseData)
   let casesData = caseData.map(cases => ({
     judge_name:
-      (cases?.judges[0]?.first_name
-        ? cases?.judges[0]?.first_name + ' '
-        : null) +
-      (cases?.judges[0]?.middle_initial
-        ? cases?.judges[0]?.middle_initial + '. '
-        : null) +
-      (cases?.judges[0]?.last_name ? cases?.judges[0]?.last_name : null)
-        ? (cases?.judges[0]?.first_name
-            ? cases?.judges[0]?.first_name + ' '
-            : null) +
-          (cases?.judges[0]?.middle_initial
-            ? cases?.judges[0]?.middle_initial + '. '
-            : null) +
-          (cases?.judges[0]?.last_name ? cases?.judges[0]?.last_name : null)
-        : null,
+      cases.first_name + ' ' + cases.middle_initial + '. ' + cases.last_name,
 
     check_for_one_year:
       cases.check_for_one_year
