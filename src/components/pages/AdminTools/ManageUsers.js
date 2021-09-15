@@ -13,8 +13,6 @@ import PendingUsers from './PendingUsers';
 
 // Styling and Icons
 import './_ManageUsersStyles.less';
-import Icon from '@ant-design/icons';
-import OrangeLine from '../../../styles/orange-line.svg';
 
 const initialFormValues = {
   first_name: '',
@@ -206,9 +204,7 @@ const ManageUsersPage = props => {
     <div className="users-container">
       <div className="users">
         <h2 className="users-header"> Manage Users </h2>
-        <p className="divider">
-          <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
-        </p>
+        <div className="users-divider" />
       </div>
       <Tabs defaultActiveKey="1">
         <TabPane tab="Manage Users" key="1">
@@ -236,11 +232,7 @@ const ManageUsersPage = props => {
           >
             <Form layout="vertical" className="user-form" onFinish={onSubmit}>
               <h2 className="h1Styles">Edit User</h2>
-              <p className="divider">
-                <Icon
-                  component={() => <img src={OrangeLine} alt="divider icon" />}
-                />
-              </p>
+              <div className="divider" />
               <Form.Item label="First Name">
                 <Input
                   id="first_name"
@@ -316,11 +308,7 @@ const ManageUsersPage = props => {
         >
           <Form layout="vertical" className="user-form" onFinish={onSubmit}>
             <h2 className="h1Styles">Add a User</h2>
-            <p className="divider">
-              <Icon
-                component={() => <img src={OrangeLine} alt="divider icon" />}
-              />
-            </p>
+            <div className="divider" />
             <Form.Item label="First Name">
               <Input
                 id="first_name"

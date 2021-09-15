@@ -4,9 +4,6 @@ import { Form, Input, Button, Modal } from 'antd';
 
 import './_AddFaqStyles.less';
 
-import Icon from '@ant-design/icons';
-import OrangeLine from '../../../styles/orange-line.svg';
-
 const initialFormValues = {
   question: '',
   answer: '',
@@ -76,11 +73,7 @@ const AddFaq = () => {
         >
           <Form layout="vertical" className="faq-form" onFinish={onSubmit}>
             <h2 className="h1Styles">Add a FAQ</h2>
-            <p className="divider">
-              <Icon
-                component={() => <img src={OrangeLine} alt="divider icon" />}
-              />
-            </p>
+            <div className="divider" />
             <Form.Item label="Question">
               <Input
                 id="question"

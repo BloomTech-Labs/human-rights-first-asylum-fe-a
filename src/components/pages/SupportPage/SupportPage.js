@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { Collapse, Input, Button, Modal, notification, Form } from 'antd';
 import './_SupportPageStyles.less';
-import Icon from '@ant-design/icons';
-import OrangeLine from '../../../styles/orange-line.svg';
 import { CheckCircleOutlined } from '@ant-design/icons';
 const initialFormValues = {
   message: '',
@@ -83,9 +81,7 @@ const SupportPage = props => {
     <div className="support-container">
       <div className="faqs">
         <h2 className="support-title">Support</h2>
-        <p className="divider">
-          <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
-        </p>
+        <div className="support-divider" />
         <h2 className="faq-title"> FAQ </h2>
         <Collapse accordion>
           {FAQ.map(item => {
@@ -124,11 +120,7 @@ const SupportPage = props => {
         >
           <Form layout="vertical" className="contact-form" onFinish={onSubmit}>
             <h2 className="h1Styles">Contact Us</h2>
-            <p className="divider">
-              <Icon
-                component={() => <img src={OrangeLine} alt="divider icon" />}
-              />
-            </p>
+            <div className="divider" />
             <Form.Item name="message" label="Message">
               <Input.TextArea
                 onChange={onChange}

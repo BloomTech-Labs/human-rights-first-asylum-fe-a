@@ -237,6 +237,7 @@ export default function JudgeTable(props) {
   return (
     <div className="judge-container">
       <h2 className="h1Styles">Judges</h2>
+      <div className="judge-table-divider" />
       <div className="judge-table-container">
         <Tabs defaultActiveKey="1">
           <TabPane tab="Judges" key="1">
