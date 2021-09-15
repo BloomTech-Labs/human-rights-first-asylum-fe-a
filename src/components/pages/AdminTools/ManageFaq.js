@@ -13,8 +13,6 @@ import {
 import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import './_AddFaqStyles.less';
 import './_ManageFaqStyles.less';
-import Icon from '@ant-design/icons';
-import OrangeLine from '../../../styles/orange-line.svg';
 
 const initialFormValues = {
   question: '',
@@ -122,9 +120,7 @@ const ManageFaqPage = props => {
     <div className="manage-faq-container">
       <div className="faq">
         <h2 className="faq-header"> Manage FAQ </h2>
-        <p className="divider">
-          <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
-        </p>
+        <div className="faq-divider" />
         <Collapse accordion>
           {faq.map(item => {
             return (
@@ -176,11 +172,7 @@ const ManageFaqPage = props => {
         >
           <Form layout="vertical" className="faq-form" onFinish={onSubmit}>
             <h2 className="h1Styles">Add a FAQ</h2>
-            <p className="divider">
-              <Icon
-                component={() => <img src={OrangeLine} alt="divider icon" />}
-              />
-            </p>
+            <div className="divider" />
             <Form.Item label="Question">
               <Input
                 id="question"

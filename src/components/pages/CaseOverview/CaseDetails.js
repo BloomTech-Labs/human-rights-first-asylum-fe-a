@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Button as AntDButton, Modal } from 'antd';
-import '../AdminTools/_ManageUsersStyles.less';
 import Icon from '@ant-design/icons';
 import OrangeLine from '../../../styles/orange-line.svg';
+import '../AdminTools/_ManageUsersStyles.less';
 import EditCaseDetails from '../CaseOverview/EditCaseDetails';
 import moment from 'moment';
 
@@ -53,22 +53,55 @@ const CaseDetails = props => {
       ]}
     >
       <h2 className="h1Styles">Case Details</h2>
-      <p className="divider">
-        <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
-      </p>
+      <div className="divider" />
       <div>
-        <p>{`Case Date: ${converted}`}</p>
-        <p>{`Judge Name: ${caseData.first_name} ${caseData.middle_initial}. ${caseData.last_name}`}</p>
-        <p>{`Origin City: ${caseData.case_origin_city}`}</p>
-        <p>{`Origin State: ${caseData.case_origin_state}`}</p>
-        <p>{`Gender: ${caseData.gender}`}</p>
-        <p>{`Type of Persecution: ${caseData.type_of_persecution}`}</p>
-        <p>{`Indigenous Group: ${caseData.indigenous_group}`}</p>
-        <p>{`Protected Grounds: ${caseData.protected_grounds}`}</p>
-        <p>{`Outcome: ${caseData.outcome}`}</p>
-        <p>{`Country of Origin: ${caseData.country_of_origin}`}</p>
-        <p>{`Filed Within One Year: ${caseData.check_for_one_year}`}</p>
-        <p>{`Applicant Language: ${caseData.applicant_language}`}</p>
+        <p id="top_item_case_details_item" class="case_details_item">
+          <span class="styled_case_details">Case Date:</span> {`${converted}`}
+        </p>
+        <p class="case_details_item">
+          <span class="styled_case_details">Judge Name:</span>
+          {` ${caseData.first_name} ${caseData.middle_initial}. ${caseData.last_name}`}
+        </p>
+        <p class="case_details_item">
+          <span class="styled_case_details">Origin City:</span>
+          {`${caseData.case_origin_city}`}
+        </p>
+        <p class="case_details_item">
+          <span class="styled_case_details">Origin State:</span>
+          {`${caseData.case_origin_state}`}
+        </p>
+        <p class="case_details_item">
+          <span class="styled_case_details">Gender:</span>
+          {`${caseData.gender}`}
+        </p>
+        <p class="case_details_item">
+          <span class="styled_case_details">Type of Persecution:</span>
+          {`${caseData.type_of_persecution}`}
+        </p>
+        <p class="case_details_item">
+          <span class="styled_case_details">Indigenous Group:</span>
+          {`${caseData.indigenous_group}`}
+        </p>
+        <p class="case_details_item">
+          <span class="styled_case_details">Protected Grounds:</span>
+          {`${caseData.protected_grounds}`}
+        </p>
+        <p class="case_details_item">
+          <span class="styled_case_details">Outcome:</span>
+          {`${caseData.outcome}`}
+        </p>
+        <p class="case_details_item">
+          <span class="styled_case_details">Country of Origin:</span>
+          {`${caseData.country_of_origin}`}
+        </p>
+        <p class="case_details_item">
+          <span class="styled_case_details">Filed Within One Year:</span>
+          {`${caseData.check_for_one_year}`}
+        </p>
+        <p class="case_details_item">
+          <span class="styled_case_details">Applicant Language:</span>
+          {`${caseData.applicant_language}`}
+        </p>
         {/* the segment below displays the disclaimer message with the details requested by the stakeholders*/}
         <br></br>
         <p>

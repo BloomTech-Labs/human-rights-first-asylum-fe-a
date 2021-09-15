@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input, Button as AntDButton, Modal, Checkbox } from 'antd';
 import '../AdminTools/_ManageUsersStyles.less';
-import Icon from '@ant-design/icons';
-import OrangeLine from '../../../styles/orange-line.svg';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
 
 const EditCaseDetails = props => {
@@ -95,9 +93,7 @@ const EditCaseDetails = props => {
     >
       <Form layout="vertical" className="user-form" onFinish={onEditSubmit}>
         <h2 className="h1Styles">Edit Case Details</h2>
-        <p className="divider">
-          <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
-        </p>
+        <div className="divider" />
         <Form.Item label="Case Date">
           <Input
             id="date"
