@@ -90,6 +90,7 @@ export default function Notifications(props) {
             fontSize: '2rem',
             paddingTop: '0.5rem',
             color: 'white',
+            cursor: 'pointer',
           }}
         />
       </Badge>
