@@ -54,7 +54,13 @@ const EditCaseDetails = props => {
     axiosWithAuth()
       .put(`/cases/${caseId}`, formValues)
       .then(res => {
-        setCaseData(res.data[0]);
+        console.log(res.data[0]);
+        setCaseData({
+          ...res.data[0],
+          first_name: caseData.first_name,
+          middle_initial: caseData.middle_initial,
+          last_name: caseData.last_name,
+        });
         setHasUpdated(true);
       })
       .catch(err => {
