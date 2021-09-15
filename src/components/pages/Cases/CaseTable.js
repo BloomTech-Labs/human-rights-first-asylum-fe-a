@@ -39,7 +39,7 @@ import { formatDate } from '../../../utils/format_date_util.js';
 import DecisionRateChart from './DecisionRateChart';
 
 const initialDetails = {
-  date: '5/26/2021',
+  decision_date: '5/26/2021',
   origin_city: 'Detroit',
 };
 
@@ -81,10 +81,10 @@ export default function CaseTable(props) {
     outcome: '',
     country_of_origin: '',
     gender: '',
-    type_of_violence: '',
+    type_of_persecution: '',
     indigenous_group: '',
     applicant_language: '',
-    credible: '',
+    credibility: '',
   });
 
   const popUpDetails = rowData => {
@@ -93,6 +93,7 @@ export default function CaseTable(props) {
   };
 
   const { caseData, userInfo, savedCases, setSavedCases } = props;
+
   //* console.log('CASE DATA', caseData)
   let casesData = caseData.map(cases => ({
     judge_name:
@@ -102,6 +103,7 @@ export default function CaseTable(props) {
       ' ' +
       cases.middle_initial +
       '.',
+
     check_for_one_year:
       cases.check_for_one_year
         .toString()

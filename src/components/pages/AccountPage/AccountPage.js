@@ -3,8 +3,6 @@ import { Button, Card, Avatar, Modal, Form, Input } from 'antd';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
 
 import './_AccountPageStyles.less';
-import Icon from '@ant-design/icons';
-import OrangeLine from '../../../styles/orange-line.svg';
 
 const initialFormValues = {
   first_name: '',
@@ -68,10 +66,7 @@ const AccountPage = props => {
     <div className="account-container">
       <div className="account-card">
         <h2 className="faq-header">My Account </h2>
-        <p className="divider">
-          <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
-        </p>
-
+        <div className="account-divider" />
         <Card
           title={`${hrfUserInfo.first_name} ${hrfUserInfo.last_name}`}
           className="card"
@@ -145,13 +140,7 @@ const AccountPage = props => {
                 onFinish={onEditSubmit}
               >
                 <h2 className="h1Styles">Edit User</h2>
-                <p className="divider">
-                  <Icon
-                    component={() => (
-                      <img src={OrangeLine} alt="divider icon" />
-                    )}
-                  />
-                </p>
+                <div className="divider" />
                 <Form.Item label="First Name">
                   <Input
                     id="first_name"

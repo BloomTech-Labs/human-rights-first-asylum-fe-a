@@ -65,7 +65,8 @@ export function case_columns(
       ),
     },
     {
-      title: 'Filed within Year',
+
+      title: 'Filed within One Year',
       dataIndex: 'check_for_one_year',
       key: 'check_for_one_year',
       sorter: (a, b) =>
@@ -115,13 +116,14 @@ export function case_columns(
       ...getColumnSearchProps('gender', match_tag_value_with_column_key.key),
     },
     {
-      title: 'Violence Experienced',
-      dataIndex: 'type_of_violence',
-      key: 'type_of_violence',
-      sorter: (a, b) => a.type_of_violence.localeCompare(b.type_of_violence),
+      title: 'Persecution Experienced',
+      dataIndex: 'type_of_persecution',
+      key: 'type_of_persecution',
+      sorter: (a, b) =>
+        a.type_of_persecution.localeCompare(b.type_of_persecution),
       sortDirections: ['descend', 'ascend'],
       ...getColumnSearchProps(
-        'type_of_violence',
+        'type_of_persecution',
         match_tag_value_with_column_key.key
       ),
     },
