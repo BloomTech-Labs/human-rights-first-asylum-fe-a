@@ -54,7 +54,6 @@ const EditCaseDetails = props => {
     axiosWithAuth()
       .put(`/cases/${caseId}`, formValues)
       .then(res => {
-        console.log(res.data[0]);
         setCaseData({
           ...res.data[0],
           first_name: caseData.first_name,
@@ -75,7 +74,6 @@ const EditCaseDetails = props => {
   };
 
   const onCheck = e => {
-    console.log(formValues.credibility);
     setFormValues({ ...formValues, credibility: !e.target.checked });
   };
 
