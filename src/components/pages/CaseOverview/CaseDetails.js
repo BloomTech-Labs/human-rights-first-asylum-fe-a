@@ -11,7 +11,8 @@ const CaseDetails = props => {
     caseData,
     setCaseData,
     isDetailsVisible,
-    setIsDetailsVisible
+    setIsDetailsVisible,
+    setHasUpdated
   } = props;
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
 
@@ -120,7 +121,7 @@ const CaseDetails = props => {
       </div>
       <EditCaseDetails
         caseId={caseData.case_id}
-        setHasUpdated={props.setHasUpdated}
+        setHasUpdated={setHasUpdated}
         setIsEditModalVisible={setIsEditModalVisible}
         isEditModalVisible={isEditModalVisible}
         caseData={caseData}
