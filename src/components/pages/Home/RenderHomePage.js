@@ -275,7 +275,6 @@ function RenderHomePage(props) {
               <>
                 <CaseTable
                   caseData={caseData}
-                  tempCaseUpdate={setCaseData}
                   setHasUpdated={setHasUpdated}
                   userInfo={user.userInfo}
                   savedCases={savedCases}
