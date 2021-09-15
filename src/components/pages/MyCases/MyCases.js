@@ -25,7 +25,7 @@ const initialFormValues = {
   indigenous_group: '',
   type_of_persecution: '',
   initial_or_appellate: false,
-  check_for_one_year: false,
+  check_for_one_year: 'no',
   credibility: false,
 };
 export default function MyCases(props) {

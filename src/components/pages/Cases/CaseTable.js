@@ -74,7 +74,7 @@ export default function CaseTable(props) {
     judge: '',
     case_origin_city: '',
     case_origin_state: '',
-    filed_in_one_year: '',
+    check_for_one_year: '',
     application_type: '',
     protected_grounds: '',
     outcome: '',
@@ -111,7 +111,7 @@ export default function CaseTable(props) {
           (cases?.judges[0]?.last_name ? cases?.judges[0]?.last_name : null)
         : null,
 
-    filed_within_year:
+    check_for_one_year:
       cases.check_for_one_year
         .toString()
         .charAt(0)

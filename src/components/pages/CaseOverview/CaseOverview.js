@@ -72,10 +72,7 @@ const CaseOverview = props => {
                 {caseData.initial_or_appellate ? 'True' : 'False'}
               </p>
               <p>Case Origin: {caseData.case_origin}</p>
-              <p>
-                Filed 1 Year:{' '}
-                {caseData.filed_within_one_year ? 'True' : 'False'}
-              </p>
+              <p>Filed 1 Year: {caseData.check_for_one_year}</p>
               <br />
               <p style={{ textDecoration: 'underline', fontWeight: 'bold' }}>
                 Client Specifics

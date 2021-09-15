@@ -8,8 +8,6 @@ import {
   CheckCircleOutlined,
   CloseCircleOutlined,
 } from '@ant-design/icons';
-import Icon from '@ant-design/icons';
-import OrangeLine from '../../../styles/orange-line.svg';
 const { TextArea } = Input;
 
 //***There is a bug*** Currently, when you expand one caseObj they all expand. This may be an issue with accept and reject buttons - we don't want to accept all or reject all on accident!
@@ -167,9 +165,7 @@ export default function ManageCases(props) {
     <div className="manage-cases-container">
       <div className="manage-cases">
         <h2 className="manage-cases-title">Review Cases</h2>
-        <p className="divider">
-          <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
-        </p>
+        <div className="manage-cases-divider" />
         <Table
           columns={columns}
           dataSource={apiData[0]}
@@ -207,7 +203,7 @@ export default function ManageCases(props) {
                 </p>
                 <p style={{ margin: 0 }}>
                   Filed 1 Year:
-                  {caseObj.filed_within_one_year ? 'True' : 'False'}
+                  {caseObj.check_for_one_year}
                 </p>
                 <p style={{ margin: 0 }}>
                   credibility:

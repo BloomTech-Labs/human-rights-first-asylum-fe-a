@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button as AntDButton, Modal } from 'antd';
 import Icon from '@ant-design/icons';
 import OrangeLine from '../../../styles/orange-line.svg';
+import '../AdminTools/_ManageUsersStyles.less';
 import EditCaseDetails from '../CaseOverview/EditCaseDetails';
 import moment from 'moment';
 
@@ -44,9 +45,7 @@ const CaseDetails = props => {
       ]}
     >
       <h2 className="h1Styles">Case Details</h2>
-      <p className="divider">
-        <Icon component={() => <img src={OrangeLine} alt="divider icon" />} />
-      </p>
+      <div className="divider" />
       <div>
         <p id="top_item_case_details_item" class="case_details_item">
           <span class="styled_case_details">Case Date:</span> {`${converted}`}
