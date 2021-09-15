@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { Link } from 'react-router-dom';
 import Highlighter from 'react-highlight-words';
@@ -15,6 +15,11 @@ import Icon from '@ant-design/icons';
 // Column utils imports
 import { judge_columns } from '../../../utils/judge_utils/judge_columns';
 
+// import {
+//   removeSearchTerm,
+//   processFilters,
+//   matchMultipleKeyWords
+//  } from '../../../utils/filter_keyword_utils.js';
 export default function JudgeTable(props) {
   const { judgeData, userInfo, savedJudges, setSavedJudges } = props;
   const [state, setState] = useState({
@@ -24,6 +29,7 @@ export default function JudgeTable(props) {
   });
 
   const { searchText, searchedColumn, selectedRowID } = state;
+  const [filters, setFilters] = useState([]);
 
   let judgesData = judgeData.map(judges => ({
     judge_name:
@@ -42,7 +48,7 @@ export default function JudgeTable(props) {
     console.log('selectedRowID changed: ', selectedRowID);
     setState({ selectedRowID });
   };
-
+  //* Config for ANT start
   const getColumnSearchProps = dataIndex => ({
     filterDropdown: ({
       setSelectedKeys,
@@ -121,7 +127,7 @@ export default function JudgeTable(props) {
         text
       ),
   });
-
+  //* Config for ANT End
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
     setState({
@@ -145,21 +151,20 @@ export default function JudgeTable(props) {
   };
 
   // keeping track of filters applied to the table
-  const [filters, setFilters] = useState([]);
 
-  useEffect(() => {
-    // current use is to keep the filter state in sync.
-  }, [filters]);
+  // useEffect(() => {
+  //   // current use is to keep the filter state in sync.
+  // }, [filters]);
 
   // returns processed array of filters
   const processFilters = filters => {
     let res = [];
     for (const i in filters) {
       if (filters[i]) {
-        res.push(`${i}: ${filters[i]}`);
+        res.push(`${filters[i]}`);
       } else if (!filters[i]) {
         let temp = [];
-        if (filters.length > 0 && filters.includes(`${i}: ${filters[i]}`)) {
+        if (filters.length > 0 && filters.includes(`${filters[i]}`)) {
           filters.forEach(value => {
             if (value !== undefined) {
               const term = value.split(':')[0];
