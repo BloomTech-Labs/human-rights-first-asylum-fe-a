@@ -11,9 +11,7 @@ const CaseDetails = props => {
     caseData,
     setCaseData,
     isDetailsVisible,
-    setIsDetailsVisible,
-    tempCaseUpdate,
-    tempUpdateData,
+    setIsDetailsVisible
   } = props;
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
 
