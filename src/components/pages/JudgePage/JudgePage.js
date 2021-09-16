@@ -125,9 +125,6 @@ export default function JudgePage(props) {
       {judge && (
         <div>
           <div className="imgBox">
-            {/* the judgeDisclaimer segment below displays the disclaimer message with the details requested by the stakeholders;
-            note that the stakeholders have also requested that we add a hyperlink to the following URL for additional context:
-            https://trac.syr.edu/immigration/reports/judgereports/ */}
             <h3 className="judgeDisclaimer">
               Judge {judge.first_name} {judge.middle_initial} {judge.last_name}{' '}
               serves in the county of {judge.county}.<br></br>
