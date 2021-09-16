@@ -131,7 +131,7 @@ export default function JudgePage(props) {
               <br></br> All visualizations regarding Judge {judge.last_name}'s
               asylum acceptance and denial rates reflect only the data in the
               database. As more cases are added, more data can be visualized.
-              You can find a more context for individual judge data at this
+              You can find more context for individual judge data at this
               resource's
               <a href="https://trac.syr.edu/immigration/reports/judgereports/">
                 {' '}
