@@ -1,56 +1,44 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Form,
-  Input,
-  Button as AntDButton,
-  Modal,
-  Radio,
-  Checkbox,
-} from 'antd';
+import { Form, Input, Button as AntDButton, Modal, Checkbox } from 'antd';
 import '../AdminTools/_ManageUsersStyles.less';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
-const initialFormValues = {
-  date: '',
-  application_type: '',
-  protected_grounds: '',
-  outcome: '',
-  country_of_origin: '',
-  case_origin_city: '',
-  case_origin_state: '',
-  gender: '',
-  type_of_persecution: '',
-  indigenous_group: '',
-  applicant_language: '',
-  credibility: false,
-};
 
 const EditCaseDetails = props => {
+  const {
+    caseId,
+    setIsEditModalVisible,
+    isEditModalVisible,
+    setCaseData,
+    caseData,
+    setHasUpdated,
+  } = props;
+
+  const initialFormValues = {
+    decision_date: caseData.decision_date,
+    application_type: caseData.application_type,
+    protected_grounds: caseData.protected_grounds,
+    outcome: caseData.outcome,
+    country_of_origin: caseData.country_of_origin,
+    case_origin_city: caseData.case_origin_city,
+    case_origin_state: caseData.case_origin_state,
+    gender: caseData.gender,
+    type_of_persecution: caseData.type_of_persecution,
+    indigenous_group: caseData.indigenous_group,
+    applicant_language: caseData.applicant_language,
+    credibility: caseData.credibility,
+  };
+
   const [formValues, setFormValues] = useState(initialFormValues);
+
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { caseId, setIsEditModalVisible, isEditModalVisible } = props;
 
   useEffect(() => {
     if (localStorage.role === 'admin') {
       setIsAdmin(true);
     }
-    async function fetchCase() {
-      axiosWithAuth()
-        .get(`/case/${caseId}`)
-        .then(res => {
-          console.log(res.data);
-          setFormValues({
-            ...res.data,
-            date: res?.data?.date?.slice(0, 10),
-          });
-          setLoading(false);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
+    setFormValues(initialFormValues);
     setLoading(true);
-    fetchCase();
   }, [caseId]);
 
   const handleEditOk = () => {
@@ -64,9 +52,15 @@ const EditCaseDetails = props => {
   const onEditSubmit = e => {
     e.preventDefault();
     axiosWithAuth()
-      .put(`/case/${caseId}`, formValues)
+      .put(`/cases/${caseId}`, formValues)
       .then(res => {
-        console.log(res.data);
+        setCaseData({
+          ...res.data[0],
+          first_name: caseData.first_name,
+          middle_initial: caseData.middle_initial,
+          last_name: caseData.last_name,
+        });
+        setHasUpdated(true);
       })
       .catch(err => {
         console.log(err);
@@ -80,7 +74,6 @@ const EditCaseDetails = props => {
   };
 
   const onCheck = e => {
-    console.log(formValues.credibility);
     setFormValues({ ...formValues, credibility: !e.target.checked });
   };
 
@@ -228,7 +221,7 @@ const EditCaseDetails = props => {
         <Checkbox
           id="credibility"
           name="credibility"
-          value={formValues.credibility}
+          checked={formValues.credibility}
           onClick={onCheck}
         >
           Credibility
