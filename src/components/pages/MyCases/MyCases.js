@@ -197,6 +197,9 @@ export default function MyCases(props) {
   };
   return (
     <div className="myCaseContainer">
+      <h2 className="h1Styles" id="myCasesH1Style">
+        My Cases
+      </h2>
       <div className="myCaseTableContainer">
         <Tabs defaultActiveKey="1">
           <TabPane tab="Initial Cases" key="1">

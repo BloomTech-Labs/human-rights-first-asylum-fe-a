@@ -314,7 +314,9 @@ export default function CaseTable(props) {
 
   return (
     <div className="cases-container">
-      <h2 className="h1Styles">Cases</h2>
+      <h2 className="h1Styles" id="casesTextHeader">
+        Cases
+      </h2>
 
       <CaseDetails
         caseData={detailsData}
