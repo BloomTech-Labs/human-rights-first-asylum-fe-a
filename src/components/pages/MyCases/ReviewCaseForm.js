@@ -42,9 +42,6 @@ const ReviewCaseForm = props => {
       .catch(err => {
         console.log(err);
       });
-    console.log('I have tried to submit');
-    console.log(editedFormValues);
-    console.log(evt);
   };
 
   return (
