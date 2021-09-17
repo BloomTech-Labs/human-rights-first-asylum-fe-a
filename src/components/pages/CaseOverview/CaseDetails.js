@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { Button as AntDButton, Modal } from 'antd';
-import Icon from '@ant-design/icons';
-import OrangeLine from '../../../styles/orange-line.svg';
 import '../AdminTools/_ManageUsersStyles.less';
 import EditCaseDetails from '../CaseOverview/EditCaseDetails';
 import moment from 'moment';
@@ -12,7 +10,7 @@ const CaseDetails = props => {
     setCaseData,
     isDetailsVisible,
     setIsDetailsVisible,
-    setHasUpdated
+    setHasUpdated,
   } = props;
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
 
