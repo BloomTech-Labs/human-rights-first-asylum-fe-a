@@ -319,6 +319,8 @@ export default function CaseTable(props) {
 
       <CaseDetails
         caseData={detailsData}
+        setHasUpdated={props.setHasUpdated}
+        setCaseData={setDetailsData}
         setIsDetailsVisible={setIsDetailsVisible}
         isDetailsVisible={isDetailsVisible}
       />
