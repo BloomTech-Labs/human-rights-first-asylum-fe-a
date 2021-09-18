@@ -15,11 +15,11 @@ import Icon from '@ant-design/icons';
 // Column utils imports
 import { judge_columns } from '../../../utils/judge_utils/judge_columns';
 
-// import {
-//   removeSearchTerm,
-//   processFilters,
-//   matchMultipleKeyWords
-//  } from '../../../utils/filter_keyword_utils.js';
+import {
+  removeSearchTerm,
+  processFilters,
+  matchMultipleKeyWords,
+} from '../../../utils/filter_keyword_utils.js';
 export default function JudgeTable(props) {
   const { judgeData, userInfo, savedJudges, setSavedJudges } = props;
   const [state, setState] = useState({
@@ -29,7 +29,7 @@ export default function JudgeTable(props) {
   });
 
   const { searchText, searchedColumn, selectedRowID } = state;
-  const [filters, setFilters] = useState([]);
+  const [initialFilters, setInitialFilters] = useState([]);
 
   let judgesData = judgeData.map(judges => ({
     judge_name:
@@ -142,7 +142,7 @@ export default function JudgeTable(props) {
   };
 
   function changeSorter(pagination, filters, sorter, extra) {
-    setFilters(filters);
+    setInitialFilters(initialFilters);
   }
 
   const rowSelection = {
@@ -157,28 +157,28 @@ export default function JudgeTable(props) {
   // }, [filters]);
 
   // returns processed array of filters
-  const processFilters = filters => {
-    let res = [];
-    for (const i in filters) {
-      if (filters[i]) {
-        res.push(`${filters[i]}`);
-      } else if (!filters[i]) {
-        let temp = [];
-        if (filters.length > 0 && filters.includes(`${filters[i]}`)) {
-          filters.forEach(value => {
-            if (value !== undefined) {
-              const term = value.split(':')[0];
-              if (term !== i) {
-                temp.push(value);
-              }
-            }
-          });
-          res = temp;
-        }
-      }
-    }
-    return res;
-  };
+  // const processFilters = filters => {
+  //   let res = [];
+  //   for (const i in filters) {
+  //     if (filters[i]) {
+  //       res.push(`${filters[i]}`);
+  //     } else if (!filters[i]) {
+  //       let temp = [];
+  //       if (filters.length > 0 && filters.includes(`${filters[i]}`)) {
+  //         filters.forEach(value => {
+  //           if (value !== undefined) {
+  //             const term = value.split(':')[0];
+  //             if (term !== i) {
+  //               temp.push(value);
+  //             }
+  //           }
+  //         });
+  //         res = temp;
+  //       }
+  //     }
+  //   }
+  //   return res;
+  // };
 
   const findRowByID = (rowID, rowData) => {
     for (let i = 0; i < rowData.length; i++) {
@@ -247,9 +247,9 @@ export default function JudgeTable(props) {
         <Tabs defaultActiveKey="1">
           <TabPane tab="Judges" key="1">
             <div>
-              Filters:{' '}
-              {processFilters(filters).map(filter => (
-                <Tag key={filter}>{filter}</Tag>
+              Filters:
+              {processFilters(initialFilters).map(initialFilters => (
+                <Tag key={initialFilters}>{initialFilters}</Tag>
               ))}
             </div>
             <div className="judge-table">
