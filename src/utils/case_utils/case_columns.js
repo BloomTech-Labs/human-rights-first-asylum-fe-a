@@ -149,6 +149,5 @@ export function case_columns(
       ),
     },
   ];
-
   return columns;
 }
