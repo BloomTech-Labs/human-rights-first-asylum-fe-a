@@ -1,6 +1,4 @@
-// import React from 'react'
-
-// Removes search terms from the "filters" section
+//* Removes search terms from the "filters" section
 export async function removeSearchTerm(
   filterState,
   keyWord,
@@ -39,7 +37,7 @@ export async function removeSearchTerm(
   return;
 }
 
-//   Creates a "Tag" in "filters" section for each keyword searched
+//*   Creates a "Tag" in "filters" section for each keyword searched
 export function processFilters(filters) {
   let res = [];
   for (const i in filters) {
