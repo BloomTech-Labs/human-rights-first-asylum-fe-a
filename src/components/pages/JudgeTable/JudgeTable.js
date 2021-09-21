@@ -30,7 +30,15 @@ export default function JudgeTable(props) {
 
   const { searchText, searchedColumn, selectedRowID } = state;
   const [initialFilters, setInitialFilters] = useState([]);
+  const [
+    match_tag_value_with_column_key,
+    set_match_tag_value_with_column_key,
+  ] = useState({
+    key: '',
+    value: '',
+  });
 
+  const [removing, setRemoving] = useState(false);
   let judgesData = judgeData.map(judges => ({
     judge_name:
       judges.last_name +
@@ -48,8 +56,12 @@ export default function JudgeTable(props) {
     console.log('selectedRowID changed: ', selectedRowID);
     setState({ selectedRowID });
   };
+  const removeSearchTag_helper = async (setKeys, newValue) => {
+    await setKeys([newValue]);
+    setRemoving(false);
+  };
   //* Config for ANT start
-  const getColumnSearchProps = dataIndex => ({
+  const getColumnSearchProps = (dataIndex, columnToBeSearched) => ({
     filterDropdown: ({
       setSelectedKeys,
       selectedKeys,
@@ -59,15 +71,42 @@ export default function JudgeTable(props) {
       <div style={{ padding: 8 }}>
         <Input
           type="text"
-          id="searchInput"
+          id={`searchInput_${dataIndex}`}
           placeholder={`Search ${dataIndex.replace(/_/g, ' ')}`}
-          value={selectedKeys[0]}
-          onChange={e =>
-            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          value={
+            match_tag_value_with_column_key.value != selectedKeys[0] &&
+            dataIndex == columnToBeSearched
+              ? match_tag_value_with_column_key.value
+              : selectedKeys[0]
           }
+          onChange={e => {
+            set_match_tag_value_with_column_key({
+              value: e.target.value,
+              key: dataIndex,
+            });
+            setSelectedKeys(e.target.value ? [e.target.value] : []);
+          }}
           onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
           style={{ marginBottom: 8, display: 'block' }}
+
+          // type="text"
+          // id="searchInput"
+          // placeholder={`Search ${dataIndex.replace(/_/g, ' ')}`}
+          // value={selectedKeys[0]}
+          // onChange={e =>
+          //   setSelectedKeys(e.target.value ? [e.target.value] : [])
+          // }
+          // onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+          // style={{ marginBottom: 8, display: 'block' }}
         />
+        {match_tag_value_with_column_key.value != selectedKeys[0] &&
+        removing &&
+        dataIndex == columnToBeSearched
+          ? removeSearchTag_helper(
+              setSelectedKeys,
+              match_tag_value_with_column_key.value
+            )
+          : ''}
         <Space>
           <Button
             onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
@@ -81,6 +120,7 @@ export default function JudgeTable(props) {
             onClick={() => handleReset(clearFilters)}
             size="small"
             style={{ width: 90 }}
+            id={`reset_${dataIndex}`}
           >
             Reset
           </Button>
@@ -150,36 +190,6 @@ export default function JudgeTable(props) {
     onChange: onSelectChange,
   };
 
-  // keeping track of filters applied to the table
-
-  // useEffect(() => {
-  //   // current use is to keep the filter state in sync.
-  // }, [filters]);
-
-  // returns processed array of filters
-  // const processFilters = filters => {
-  //   let res = [];
-  //   for (const i in filters) {
-  //     if (filters[i]) {
-  //       res.push(`${filters[i]}`);
-  //     } else if (!filters[i]) {
-  //       let temp = [];
-  //       if (filters.length > 0 && filters.includes(`${filters[i]}`)) {
-  //         filters.forEach(value => {
-  //           if (value !== undefined) {
-  //             const term = value.split(':')[0];
-  //             if (term !== i) {
-  //               temp.push(value);
-  //             }
-  //           }
-  //         });
-  //         res = temp;
-  //       }
-  //     }
-  //   }
-  //   return res;
-  // };
-
   const findRowByID = (rowID, rowData) => {
     for (let i = 0; i < rowData.length; i++) {
       let currentRow = rowData[i];
@@ -248,18 +258,46 @@ export default function JudgeTable(props) {
           <TabPane tab="Judges" key="1">
             <div>
               Filters:
-              {processFilters(initialFilters).map(initialFilters => (
-                <Tag key={initialFilters}>{initialFilters}</Tag>
-              ))}
+              {processFilters(initialFilters).map(filter => {
+                return filter.value[0].split(',').map(eachKeyWord => {
+                  return (
+                    <Tag key={eachKeyWord}>
+                      {eachKeyWord}{' '}
+                      <span
+                        style={{ cursor: 'pointer' }}
+                        onClick={() =>
+                          removeSearchTerm(
+                            initialFilters,
+                            filter.key,
+                            eachKeyWord,
+                            setRemoving,
+                            setInitialFilters,
+                            set_match_tag_value_with_column_key
+                          )
+                        }
+                      >
+                        X
+                      </span>
+                    </Tag>
+                  );
+                });
+              })}
             </div>
+
             <div className="judge-table">
               <Table
                 className="judges_table"
                 rowSelection={rowSelection}
                 rowKey={record => record.judge_id}
-                columns={judge_columns(Link, getColumnSearchProps)}
+                columns={judge_columns(
+                  Link,
+                  getColumnSearchProps,
+                  match_tag_value_with_column_key
+                )}
                 dataSource={judgesData}
-                onChange={changeSorter}
+                onChange={(pag, filt) => {
+                  setInitialFilters(filt);
+                }}
               />
             </div>
           </TabPane>

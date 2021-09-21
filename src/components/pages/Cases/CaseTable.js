@@ -374,7 +374,7 @@ export default function CaseTable(props) {
                   FilePdfOutlined
                 )}
                 dataSource={nonAppCases}
-                //* Table's "onChange" accepts a callback function. Callback functioin accepts 4 arguments
+                //* Table's "onChange" accepts a callback function. Callback function accepts 4 arguments
                 //* pagination details, filter object, sorter, and current data respectivly. However,
                 //* currently I only need filter object. Therefore, only have first and second parameter written.
                 onChange={(pag, filt) => {
