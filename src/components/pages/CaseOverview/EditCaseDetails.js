@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Form, Input, Button as AntDButton, Modal, Checkbox } from 'antd';
 import '../AdminTools/_ManageUsersStyles.less';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
+import { formatDateYMD } from '../../../utils/format_date_util';
 
 const EditCaseDetails = props => {
   const {
@@ -14,7 +15,7 @@ const EditCaseDetails = props => {
   } = props;
 
   const initialFormValues = {
-    decision_date: caseData.decision_date,
+    decision_date: formatDateYMD(caseData.decision_date),
     application_type: caseData.application_type,
     protected_grounds: caseData.protected_grounds,
     outcome: caseData.outcome,
@@ -102,10 +103,10 @@ const EditCaseDetails = props => {
           <Input
             id="date"
             type="date"
-            name="date"
+            name="decision_date"
             onChange={onChange}
             className="text-field"
-            value={formValues.date}
+            value={formValues.decision_date}
           />
         </Form.Item>
         <Form.Item label="Application Type">
