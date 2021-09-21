@@ -9,8 +9,6 @@ import {
   CloseCircleOutlined,
   CheckCircleOutlined,
 } from '@ant-design/icons';
-// import Save from '../../../styles/icons/save.svg';
-// import Icon from '@ant-design/icons';
 
 import {
   Table,
@@ -394,7 +392,6 @@ export default function CaseTable(props) {
                 }}
               >
                 Save
-                {/* <Icon component={() => <img src={Save} alt="save icon" />} /> */}
               </Button>
             }
             disabled
