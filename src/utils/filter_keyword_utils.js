@@ -1,6 +1,4 @@
-// import React from 'react'
-
-// Removes search terms from the "filters" section
+//* Removes search terms from the "filters" section
 export async function removeSearchTerm(
   filterState,
   keyWord,

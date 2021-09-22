@@ -25,8 +25,8 @@ function SavedJudges({ savedJudges, deleteSavedJudge }) {
     },
     {
       title: 'Court Location',
-      dataIndex: 'judge_county',
-      key: 'judge_county',
+      dataIndex: 'county',
+      key: 'county',
       width: '20%',
     },
     {
