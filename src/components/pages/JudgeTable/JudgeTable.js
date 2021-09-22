@@ -39,8 +39,8 @@ export default function JudgeTable(props) {
     key: '',
     value: '',
   });
-
   const [removing, setRemoving] = useState(false);
+
   let judgesData = judgeData.map(judges => ({
     judge_name:
       judges.last_name +
@@ -55,9 +55,9 @@ export default function JudgeTable(props) {
   const { TabPane } = Tabs;
 
   const onSelectChange = selectedRowID => {
-    console.log('selectedRowID changed: ', selectedRowID);
     setState({ selectedRowID });
   };
+
   const removeSearchTag_helper = async (setKeys, newValue) => {
     await setKeys([newValue]);
     setRemoving(false);

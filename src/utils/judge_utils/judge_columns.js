@@ -23,14 +23,11 @@ export function judge_columns(
     },
     {
       title: 'Judge County',
-      dataIndex: 'judge_county',
-      key: 'judge_county',
-      sorter: (a, b) => a.judge_county.localeCompare(b.judge_county),
+      dataIndex: 'county',
+      key: 'county',
+      sorter: (a, b) => a.county.localeCompare(b.county),
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps(
-        'judge_county',
-        match_tag_value_with_column_key.key
-      ),
+      ...getColumnSearchProps('county', match_tag_value_with_column_key.key),
     },
     {
       title: 'Date Appointed',
