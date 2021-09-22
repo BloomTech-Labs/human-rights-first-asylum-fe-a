@@ -12,16 +12,9 @@ import {
 import Save from '../../../styles/icons/save.svg';
 import Icon from '@ant-design/icons';
 
-import {
-  Table,
-  // Popover,
-  Space,
-  Button,
-  Input,
-  Tabs,
-  notification,
-  Tag,
-} from 'antd';
+
+import { Table, Space, Button, Input, Tabs, notification, Tag } from 'antd';
+
 import './CaseTable.less';
 import CaseDetails from '../CaseOverview/CaseDetails';
 //* Case column utils import
@@ -39,7 +32,7 @@ import { formatDate } from '../../../utils/format_date_util.js';
 import DecisionRateChart from './DecisionRateChart';
 
 const initialDetails = {
-  decision_date: '5/26/2021',
+  date: '5/26/2021',
   origin_city: 'Detroit',
 };
 
@@ -81,10 +74,10 @@ export default function CaseTable(props) {
     outcome: '',
     country_of_origin: '',
     gender: '',
-    type_of_persecution: '',
+    type_of_violence: '',
     indigenous_group: '',
     applicant_language: '',
-    credibility: '',
+    credible: '',
   });
 
   const popUpDetails = rowData => {
@@ -385,7 +378,8 @@ export default function CaseTable(props) {
                   FilePdfOutlined
                 )}
                 dataSource={nonAppCases}
-                //* Table's "onChange" accepts a callback function. Callback functioin accepts 4 arguments
+
+                //* Table's "onChange" accepts a callback function. Callback function accepts 4 arguments
                 //* pagination details, filter object, sorter, and current data respectivly. However,
                 //* currently I only need filter object. Therefore, only have first and second parameter written.
                 onChange={(pag, filt) => {

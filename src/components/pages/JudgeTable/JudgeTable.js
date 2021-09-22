@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
 import { Link } from 'react-router-dom';
 import Highlighter from 'react-highlight-words';
@@ -15,6 +15,11 @@ import Icon from '@ant-design/icons';
 // Column utils imports
 import { judge_columns } from '../../../utils/judge_utils/judge_columns';
 
+import {
+  removeSearchTerm,
+  processFilters,
+  matchMultipleKeyWords,
+} from '../../../utils/filter_keyword_utils.js';
 export default function JudgeTable(props) {
   const { judgeData, userInfo, savedJudges, setSavedJudges } = props;
   const [state, setState] = useState({
@@ -24,7 +29,16 @@ export default function JudgeTable(props) {
   });
 
   const { searchText, searchedColumn, selectedRowID } = state;
+  const [initialFilters, setInitialFilters] = useState([]);
+  const [
+    match_tag_value_with_column_key,
+    set_match_tag_value_with_column_key,
+  ] = useState({
+    key: '',
+    value: '',
+  });
 
+  const [removing, setRemoving] = useState(false);
   let judgesData = judgeData.map(judges => ({
     judge_name:
       judges.last_name +
@@ -42,8 +56,12 @@ export default function JudgeTable(props) {
     console.log('selectedRowID changed: ', selectedRowID);
     setState({ selectedRowID });
   };
-
-  const getColumnSearchProps = dataIndex => ({
+  const removeSearchTag_helper = async (setKeys, newValue) => {
+    await setKeys([newValue]);
+    setRemoving(false);
+  };
+  //* Config for ANT start
+  const getColumnSearchProps = (dataIndex, columnToBeSearched) => ({
     filterDropdown: ({
       setSelectedKeys,
       selectedKeys,
@@ -53,15 +71,42 @@ export default function JudgeTable(props) {
       <div style={{ padding: 8 }}>
         <Input
           type="text"
-          id="searchInput"
+          id={`searchInput_${dataIndex}`}
           placeholder={`Search ${dataIndex.replace(/_/g, ' ')}`}
-          value={selectedKeys[0]}
-          onChange={e =>
-            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          value={
+            match_tag_value_with_column_key.value != selectedKeys[0] &&
+            dataIndex == columnToBeSearched
+              ? match_tag_value_with_column_key.value
+              : selectedKeys[0]
           }
+          onChange={e => {
+            set_match_tag_value_with_column_key({
+              value: e.target.value,
+              key: dataIndex,
+            });
+            setSelectedKeys(e.target.value ? [e.target.value] : []);
+          }}
           onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
           style={{ marginBottom: 8, display: 'block' }}
+
+          // type="text"
+          // id="searchInput"
+          // placeholder={`Search ${dataIndex.replace(/_/g, ' ')}`}
+          // value={selectedKeys[0]}
+          // onChange={e =>
+          //   setSelectedKeys(e.target.value ? [e.target.value] : [])
+          // }
+          // onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+          // style={{ marginBottom: 8, display: 'block' }}
         />
+        {match_tag_value_with_column_key.value != selectedKeys[0] &&
+        removing &&
+        dataIndex == columnToBeSearched
+          ? removeSearchTag_helper(
+              setSelectedKeys,
+              match_tag_value_with_column_key.value
+            )
+          : ''}
         <Space>
           <Button
             onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
@@ -75,6 +120,7 @@ export default function JudgeTable(props) {
             onClick={() => handleReset(clearFilters)}
             size="small"
             style={{ width: 90 }}
+            id={`reset_${dataIndex}`}
           >
             Reset
           </Button>
@@ -121,7 +167,7 @@ export default function JudgeTable(props) {
         text
       ),
   });
-
+  //* Config for ANT End
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
     setState({
@@ -136,43 +182,12 @@ export default function JudgeTable(props) {
   };
 
   function changeSorter(pagination, filters, sorter, extra) {
-    setFilters(filters);
+    setInitialFilters(initialFilters);
   }
 
   const rowSelection = {
     selectedRowID,
     onChange: onSelectChange,
-  };
-
-  // keeping track of filters applied to the table
-  const [filters, setFilters] = useState([]);
-
-  useEffect(() => {
-    // current use is to keep the filter state in sync.
-  }, [filters]);
-
-  // returns processed array of filters
-  const processFilters = filters => {
-    let res = [];
-    for (const i in filters) {
-      if (filters[i]) {
-        res.push(`${i}: ${filters[i]}`);
-      } else if (!filters[i]) {
-        let temp = [];
-        if (filters.length > 0 && filters.includes(`${i}: ${filters[i]}`)) {
-          filters.forEach(value => {
-            if (value !== undefined) {
-              const term = value.split(':')[0];
-              if (term !== i) {
-                temp.push(value);
-              }
-            }
-          });
-          res = temp;
-        }
-      }
-    }
-    return res;
   };
 
   const findRowByID = (rowID, rowData) => {
@@ -242,19 +257,47 @@ export default function JudgeTable(props) {
         <Tabs defaultActiveKey="1">
           <TabPane tab="Judges" key="1">
             <div>
-              Filters:{' '}
-              {processFilters(filters).map(filter => (
-                <Tag key={filter}>{filter}</Tag>
-              ))}
+              Filters:
+              {processFilters(initialFilters).map(filter => {
+                return filter.value[0].split(',').map(eachKeyWord => {
+                  return (
+                    <Tag key={eachKeyWord}>
+                      {eachKeyWord}{' '}
+                      <span
+                        style={{ cursor: 'pointer' }}
+                        onClick={() =>
+                          removeSearchTerm(
+                            initialFilters,
+                            filter.key,
+                            eachKeyWord,
+                            setRemoving,
+                            setInitialFilters,
+                            set_match_tag_value_with_column_key
+                          )
+                        }
+                      >
+                        X
+                      </span>
+                    </Tag>
+                  );
+                });
+              })}
             </div>
+
             <div className="judge-table">
               <Table
                 className="judges_table"
                 rowSelection={rowSelection}
                 rowKey={record => record.judge_id}
-                columns={judge_columns(Link, getColumnSearchProps)}
+                columns={judge_columns(
+                  Link,
+                  getColumnSearchProps,
+                  match_tag_value_with_column_key
+                )}
                 dataSource={judgesData}
-                onChange={changeSorter}
+                onChange={(pag, filt) => {
+                  setInitialFilters(filt);
+                }}
               />
             </div>
           </TabPane>

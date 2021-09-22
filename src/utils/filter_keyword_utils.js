@@ -33,7 +33,6 @@ export async function removeSearchTerm(
   } else {
     document.getElementById(`reset_${keyWord}`).click();
   }
-
   return;
 }
 
@@ -52,9 +51,9 @@ export function processFilters(filters) {
   return res;
 }
 
-// Matches Table data to the keywords that are in the "Filters" section
-// Returns "true" for an object if the keyword is in this particular ibject
-// Boolean value is required to be returned as per ANT's documentation
+//* Matches Table data to the keywords that are in the "Filters" section
+//* Returns "true" for an object if the keyword is in this particular ibject
+//* Boolean value is required to be returned as per ANT's documentation
 export function matchMultipleKeyWords(data, keywords) {
   let keywordsArr = keywords.split(',');
   let mutatedData = data.toString().toLowerCase();
