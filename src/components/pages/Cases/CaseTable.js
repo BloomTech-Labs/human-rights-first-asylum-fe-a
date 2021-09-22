@@ -57,9 +57,6 @@ export default function CaseTable(props) {
 
   const [removing, setRemoving] = useState(false);
 
-  //* TBD if we are going to use it or not
-  const [searching, setSearching] = useState(false);
-
   const [queryValues] = useState({
     number: '',
     decision_date: '',
@@ -309,8 +306,6 @@ export default function CaseTable(props) {
     return filteredData;
   };
 
-  const data = searching ? filter(caseData) : caseData;
-
   const nonAppCases = casesData.filter(item => item.appellate === false);
 
   return (
@@ -377,6 +372,7 @@ export default function CaseTable(props) {
                 //* Table's "onChange" accepts a callback function. Callback function accepts 4 arguments
                 //* pagination details, filter object, sorter, and current data respectivly. However,
                 //* currently I only need filter object. Therefore, only have first and second parameter written.
+
                 onChange={(pag, filt) => {
                   setInitialFilters(filt);
                 }}

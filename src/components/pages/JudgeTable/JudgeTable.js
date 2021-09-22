@@ -145,11 +145,7 @@ export default function JudgeTable(props) {
             value
           )
         : '',
-    // onFilterDropdownVisibleChange: visible => {
-    //   if (visible) {
-    //     //setTimeout(() => searchInput.select(), 100);
-    //   }
-    // },
+
     render: text =>
       searchedColumn === dataIndex ? (
         <Highlighter
