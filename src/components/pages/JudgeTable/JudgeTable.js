@@ -250,7 +250,7 @@ export default function JudgeTable(props) {
             <div>
               Filters:
               {processFilters(initialFilters).map(filter => {
-                return filter.value[0].split(',').map(eachKeyWord => {
+                return filter.value[0].split(', ').map(eachKeyWord => {
                   return (
                     <Tag key={eachKeyWord}>
                       {eachKeyWord}{' '}
