@@ -92,7 +92,6 @@
 
 .ant-menu-item {
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: left;
   color: @selected-color;
@@ -189,4 +188,22 @@ li {
   &:hover {
     background-color: #f4f6f7;
   }
+}
+
+.sideDrawerMenu {
+  display: flex;
+  flex-direction: column;
+}
+
+button.collapseButton {
+  position: absolute;
+  bottom: 10rem;
+  background-color:rgb(244, 246, 247);
+  align-self: center;
+  box-shadow: none;
+  
+  &:hover {
+    background-color:@white;
+  }
+
 }
