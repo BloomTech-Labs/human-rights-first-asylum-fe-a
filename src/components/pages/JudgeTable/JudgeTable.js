@@ -10,7 +10,7 @@ import {
 import { Table, Space, Button, Input, Tabs, notification, Tag } from 'antd';
 import './_JudgeTableStyles.less';
 
-// Column utils imports
+//* Column utils imports
 import { judge_columns } from '../../../utils/judge_utils/judge_columns';
 
 import { formatDate } from '../../../utils/format_date_util.js';
