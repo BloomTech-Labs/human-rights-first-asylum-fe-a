@@ -9,10 +9,10 @@ import {
   CloseCircleOutlined,
   CheckCircleOutlined,
 } from '@ant-design/icons';
-import Save from '../../../styles/icons/save.svg';
-import Icon from '@ant-design/icons';
+
 
 import { Table, Space, Button, Input, Tabs, notification, Tag } from 'antd';
+
 import './CaseTable.less';
 import CaseDetails from '../CaseOverview/CaseDetails';
 //* Case column utils import
@@ -39,6 +39,7 @@ export default function CaseTable(props) {
     searchText: '',
     searchedColumn: '',
     selectedRowID: [],
+    isDisabled: true,
   });
 
   const [isDetailsVisible, setIsDetailsVisible] = useState(false);
@@ -81,6 +82,7 @@ export default function CaseTable(props) {
   };
 
   const { caseData, userInfo, savedCases, setSavedCases } = props;
+
   let casesData = caseData.map(cases => ({
     judge_name:
       cases.last_name +
@@ -89,6 +91,7 @@ export default function CaseTable(props) {
       ' ' +
       cases.middle_initial +
       '.',
+
     check_for_one_year:
       cases.check_for_one_year
         .toString()
@@ -100,10 +103,13 @@ export default function CaseTable(props) {
 
   const { TabPane } = Tabs;
 
-  const { searchText, searchedColumn, selectedRowID } = state;
+  const { searchText, searchedColumn, selectedRowID, isDisabled } = state;
 
   const onSelectChange = selectedRowID => {
     setState({ selectedRowID });
+    selectedRowID.length > 0
+      ? setState({ isDisabled: false })
+      : setState({ isDisabled: true });
   };
 
   //* Removes search tag by taking in a new value of search string
@@ -179,7 +185,7 @@ export default function CaseTable(props) {
               });
             }}
           >
-            Filter
+            Save
           </Button>
         </Space>
       </div>
@@ -367,6 +373,7 @@ export default function CaseTable(props) {
                   FilePdfOutlined
                 )}
                 dataSource={nonAppCases}
+
                 //* Table's "onChange" accepts a callback function. Callback function accepts 4 arguments
                 //* pagination details, filter object, sorter, and current data respectivly. However,
                 //* currently I only need filter object. Therefore, only have first and second parameter written.
@@ -381,11 +388,12 @@ export default function CaseTable(props) {
             tab={
               <Button
                 className="save-cases-btn"
+                disabled={isDisabled}
                 onClick={() => {
                   bookmarkCases(selectedRowID);
                 }}
               >
-                <Icon component={() => <img src={Save} alt="save icon" />} />
+                Save
               </Button>
             }
             disabled
