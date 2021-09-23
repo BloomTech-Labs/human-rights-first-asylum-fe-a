@@ -13,6 +13,8 @@ import './_JudgeTableStyles.less';
 // Column utils imports
 import { judge_columns } from '../../../utils/judge_utils/judge_columns';
 
+import { formatDate } from '../../../utils/format_date_util.js';
+
 import {
   removeSearchTerm,
   processFilters,
@@ -90,16 +92,6 @@ export default function JudgeTable(props) {
           }}
           onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
           style={{ marginBottom: 8, display: 'block' }}
-
-          // type="text"
-          // id="searchInput"
-          // placeholder={`Search ${dataIndex.replace(/_/g, ' ')}`}
-          // value={selectedKeys[0]}
-          // onChange={e =>
-          //   setSelectedKeys(e.target.value ? [e.target.value] : [])
-          // }
-          // onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
-          // style={{ marginBottom: 8, display: 'block' }}
         />
         {match_tag_value_with_column_key.value != selectedKeys[0] &&
         removing &&
@@ -115,6 +107,7 @@ export default function JudgeTable(props) {
             icon={<SearchOutlined />}
             size="small"
             style={{ width: 90 }}
+            id={`search_${dataIndex}`}
           >
             Search
           </Button>
@@ -147,16 +140,14 @@ export default function JudgeTable(props) {
     ),
     onFilter: (value, record) =>
       record[dataIndex]
-        ? record[dataIndex]
-            .toString()
-            .toLowerCase()
-            .includes(value.toLowerCase())
+        ? matchMultipleKeyWords(
+            dataIndex == 'decision_date'
+              ? formatDate(record[dataIndex])
+              : record[dataIndex],
+            value
+          )
         : '',
-    onFilterDropdownVisibleChange: visible => {
-      if (visible) {
-        //setTimeout(() => searchInput.select(), 100);
-      }
-    },
+
     render: text =>
       searchedColumn === dataIndex ? (
         <Highlighter
