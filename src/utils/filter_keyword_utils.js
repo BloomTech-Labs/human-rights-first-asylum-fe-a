@@ -9,9 +9,9 @@ export async function removeSearchTerm(
   set_match_tag_value_with_column_key
 ) {
   let filteredKeyWords = filterState[keyWord][0]
-    .split(',')
+    .split(', ')
     .filter(word => word != value)
-    .join(',');
+    .join(', ');
 
   filterState[keyWord] = filteredKeyWords.length ? [filteredKeyWords] : null;
 
@@ -56,7 +56,7 @@ export function processFilters(filters) {
 //* Returns "true" for an object if the keyword is in this particular ibject
 //* Boolean value is required to be returned as per ANT's documentation
 export function matchMultipleKeyWords(data, keywords) {
-  let keywordsArr = keywords.split(',');
+  let keywordsArr = keywords.split(', ');
   let mutatedData = data.toString().toLowerCase();
 
   for (let keyword of keywordsArr) {

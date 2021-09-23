@@ -38,8 +38,8 @@ export default function JudgeTable(props) {
     key: '',
     value: '',
   });
-
   const [removing, setRemoving] = useState(false);
+
   let judgesData = judgeData.map(judges => ({
     judge_name:
       judges.last_name +
@@ -54,12 +54,12 @@ export default function JudgeTable(props) {
   const { TabPane } = Tabs;
 
   const onSelectChange = selectedRowID => {
-    console.log('selectedRowID changed: ', selectedRowID);
     setState({ selectedRowID });
     selectedRowID.length > 0
       ? setState({ isDisabled: false })
       : setState({ isDisabled: true });
   };
+
   const removeSearchTag_helper = async (setKeys, newValue) => {
     await setKeys([newValue]);
     setRemoving(false);
@@ -252,7 +252,7 @@ export default function JudgeTable(props) {
             <div>
               Filters:
               {processFilters(initialFilters).map(filter => {
-                return filter.value[0].split(',').map(eachKeyWord => {
+                return filter.value[0].split(', ').map(eachKeyWord => {
                   return (
                     <Tag key={eachKeyWord}>
                       {eachKeyWord}{' '}

@@ -70,10 +70,10 @@ export default function CaseTable(props) {
     outcome: '',
     country_of_origin: '',
     gender: '',
-    type_of_violence: '',
+    type_of_persecution: '',
     indigenous_group: '',
     applicant_language: '',
-    credible: '',
+    credibility: '',
   });
 
   const popUpDetails = rowData => {
@@ -83,7 +83,6 @@ export default function CaseTable(props) {
 
   const { caseData, userInfo, savedCases, setSavedCases } = props;
 
-  //* console.log('CASE DATA', caseData)
   let casesData = caseData.map(cases => ({
     judge_name:
       cases.last_name +
@@ -335,8 +334,7 @@ export default function CaseTable(props) {
             <div>
               Filters:
               {processFilters(initialFilters).map(filter => {
-                //* console.log('EACH FILTER ', filter.value[0]);
-                return filter.value[0].split(',').map(eachKeyWord => {
+                return filter.value[0].split(', ').map(eachKeyWord => {
                   return (
                     <Tag key={eachKeyWord}>
                       {eachKeyWord}{' '}
