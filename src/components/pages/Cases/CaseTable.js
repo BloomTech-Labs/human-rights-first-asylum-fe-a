@@ -9,8 +9,6 @@ import {
   CloseCircleOutlined,
   CheckCircleOutlined,
 } from '@ant-design/icons';
-import Save from '../../../styles/icons/save.svg';
-import Icon from '@ant-design/icons';
 
 
 import { Table, Space, Button, Input, Tabs, notification, Tag } from 'antd';
@@ -41,6 +39,7 @@ export default function CaseTable(props) {
     searchText: '',
     searchedColumn: '',
     selectedRowID: [],
+    isDisabled: true,
   });
 
   const [isDetailsVisible, setIsDetailsVisible] = useState(false);
@@ -108,10 +107,13 @@ export default function CaseTable(props) {
 
   const { TabPane } = Tabs;
 
-  const { searchText, searchedColumn, selectedRowID } = state;
+  const { searchText, searchedColumn, selectedRowID, isDisabled } = state;
 
   const onSelectChange = selectedRowID => {
     setState({ selectedRowID });
+    selectedRowID.length > 0
+      ? setState({ isDisabled: false })
+      : setState({ isDisabled: true });
   };
 
   //* Removes search tag by taking in a new value of search string
@@ -187,7 +189,7 @@ export default function CaseTable(props) {
               });
             }}
           >
-            Filter
+            Save
           </Button>
         </Space>
       </div>
@@ -392,11 +394,12 @@ export default function CaseTable(props) {
             tab={
               <Button
                 className="save-cases-btn"
+                disabled={isDisabled}
                 onClick={() => {
                   bookmarkCases(selectedRowID);
                 }}
               >
-                <Icon component={() => <img src={Save} alt="save icon" />} />
+                Save
               </Button>
             }
             disabled
