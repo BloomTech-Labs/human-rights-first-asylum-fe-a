@@ -1,18 +1,23 @@
 import React, { useState } from 'react';
 import { Button as AntDButton, Modal } from 'antd';
-import Icon from '@ant-design/icons';
-import OrangeLine from '../../../styles/orange-line.svg';
 import '../AdminTools/_ManageUsersStyles.less';
 import EditCaseDetails from '../CaseOverview/EditCaseDetails';
 import moment from 'moment';
 
 const CaseDetails = props => {
-  const { caseData, isDetailsVisible, setIsDetailsVisible } = props;
+  const {
+    caseData,
+    setCaseData,
+    isDetailsVisible,
+    setIsDetailsVisible,
+    setHasUpdated,
+  } = props;
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
 
   const handleCancel = () => {
     setIsDetailsVisible(false);
   };
+
   const showEditModal = () => {
     setIsEditModalVisible(true);
   };
@@ -34,7 +39,7 @@ const CaseDetails = props => {
           >
             <span>Ok</span>
           </AntDButton>
-          {localStorage.role === 'admin' || '' ? (
+          {localStorage.role_name === 'admin' || '' ? (
             <AntDButton className="btn-style" onClick={showEditModal}>
               Edit
             </AntDButton>
@@ -114,8 +119,11 @@ const CaseDetails = props => {
       </div>
       <EditCaseDetails
         caseId={caseData.case_id}
+        setHasUpdated={setHasUpdated}
         setIsEditModalVisible={setIsEditModalVisible}
         isEditModalVisible={isEditModalVisible}
+        caseData={caseData}
+        setCaseData={setCaseData}
       />
     </Modal>
   );
