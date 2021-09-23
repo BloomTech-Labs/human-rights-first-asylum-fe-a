@@ -9,8 +9,6 @@ import {
 } from '@ant-design/icons';
 import { Table, Space, Button, Input, Tabs, notification, Tag } from 'antd';
 import './_JudgeTableStyles.less';
-import Save from '../../../styles/icons/save.svg';
-import Icon from '@ant-design/icons';
 
 // Column utils imports
 import { judge_columns } from '../../../utils/judge_utils/judge_columns';
@@ -28,9 +26,10 @@ export default function JudgeTable(props) {
     searchText: '',
     searchedColumn: '',
     selectedRowID: [],
+    isDisabled: true,
   });
 
-  const { searchText, searchedColumn, selectedRowID } = state;
+  const { searchText, searchedColumn, selectedRowID, isDisabled } = state;
   const [initialFilters, setInitialFilters] = useState([]);
   const [
     match_tag_value_with_column_key,
@@ -57,6 +56,9 @@ export default function JudgeTable(props) {
   const onSelectChange = selectedRowID => {
     console.log('selectedRowID changed: ', selectedRowID);
     setState({ selectedRowID });
+    selectedRowID.length > 0
+      ? setState({ isDisabled: false })
+      : setState({ isDisabled: true });
   };
   const removeSearchTag_helper = async (setKeys, newValue) => {
     await setKeys([newValue]);
@@ -128,7 +130,7 @@ export default function JudgeTable(props) {
               });
             }}
           >
-            Filter
+            Save
           </Button>
         </Space>
       </div>
@@ -296,11 +298,12 @@ export default function JudgeTable(props) {
             tab={
               <Button
                 className="save-cases-btn"
+                disabled={isDisabled}
                 onClick={() => {
                   bookmarkJudges(selectedRowID);
                 }}
               >
-                <Icon component={() => <img src={Save} alt="save icon" />} />
+                Save
               </Button>
             }
             disabled
