@@ -6,6 +6,7 @@ import {
   SearchOutlined,
   CloseCircleOutlined,
   CheckCircleOutlined,
+  CloseOutlined,
 } from '@ant-design/icons';
 import { Table, Space, Button, Input, Tabs, notification, Tag } from 'antd';
 import './_JudgeTableStyles.less';
@@ -130,7 +131,7 @@ export default function JudgeTable(props) {
               });
             }}
           >
-            Save
+            Filter
           </Button>
         </Space>
       </div>
@@ -249,7 +250,7 @@ export default function JudgeTable(props) {
       <div className="judge-table-container">
         <Tabs defaultActiveKey="1">
           <TabPane tab="Judges" key="1">
-            <div>
+            <div className="filterGallery">
               Filters:
               {processFilters(initialFilters).map(filter => {
                 return filter.value[0].split(', ').map(eachKeyWord => {
@@ -257,6 +258,7 @@ export default function JudgeTable(props) {
                     <Tag key={eachKeyWord}>
                       {eachKeyWord}{' '}
                       <span
+                        className="remove-filter-button"
                         style={{ cursor: 'pointer' }}
                         onClick={() =>
                           removeSearchTerm(
@@ -269,7 +271,11 @@ export default function JudgeTable(props) {
                           )
                         }
                       >
-                        X
+                        <CloseOutlined
+                          style={{
+                            marginLeft: '0.5rem',
+                          }}
+                        />
                       </span>
                     </Tag>
                   );
