@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Menu } from 'antd';
+import { Menu, Button } from 'antd';
+import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import './_SideDrawer.less';
-
 const { SubMenu } = Menu;
 
 function SideDrawer() {
+  const [isCollapsed, setIsCollapsed] = useState(false);
   const role = window.localStorage.getItem('role_name');
 
   const history = useHistory();
@@ -14,6 +15,10 @@ function SideDrawer() {
     if (key) {
       history.push(`${key}`);
     }
+  };
+
+  const toggleCollapse = () => {
+    setIsCollapsed(!isCollapsed);
   };
 
   return (
@@ -28,6 +33,8 @@ function SideDrawer() {
           height: '100vh',
           position: 'sticky',
         }}
+        inlineCollapsed={isCollapsed}
+        className="sideDrawerMenu"
       >
         <Menu.Item className="home" key="/">
           Home
@@ -71,6 +78,16 @@ function SideDrawer() {
             </SubMenu>
           </>
         ) : null}
+        <Button
+          className="collapseButton"
+          type="primary"
+          onClick={toggleCollapse}
+          shape="round"
+        >
+          {React.createElement(
+            isCollapsed ? ArrowRightOutlined : ArrowLeftOutlined
+          )}
+        </Button>
       </Menu>
     </div>
   );
