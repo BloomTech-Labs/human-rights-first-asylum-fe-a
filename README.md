@@ -66,3 +66,7 @@ The base technologies are JavaScript, HTML and CSS. The frontend leverages [Reac
 - The disclaimer messages that our stakeholders requested we add to the application are located in the following three React components: DataHub.js, JudgePage.js, CaseDetails.js
 - The stakeholders requested that we add to the disclaimer message at the top of each individual judge page (JudgePage.js component) a link to the following url to give more context to the data: https://trac.syr.edu/immigration/reports/judgereports/
 
+## Dataflow
+This diagram shows the flow of data through frontend, backend, data science, and the database.
+![Screen Shot 2021-09-22 at 11 58 06 AM](https://user-images.githubusercontent.com/71359375/134429532-aaaebcc9-a2fd-4cfc-a916-12e2855c4c9d.png)
+
