@@ -88,7 +88,7 @@ const ReviewCaseForm = props => {
                 },
               ]}
             >
-              <Input />
+              <Input required />
             </Form.Item>
           </div>
           <div>
@@ -107,7 +107,7 @@ const ReviewCaseForm = props => {
                 },
               ]}
             >
-              <Input />
+              <Input required />
             </Form.Item>
           </div>
           <div>
@@ -126,7 +126,7 @@ const ReviewCaseForm = props => {
               placeholder="Protected Ground"
               value={editedFormValues.protected_grounds}
             >
-              <Input />
+              <Input required />
             </Form.Item>
           </div>
           <div>
@@ -145,7 +145,7 @@ const ReviewCaseForm = props => {
               placeholder="Application Type"
               value={editedFormValues.application_type}
             >
-              <Input />
+              <Input required />
             </Form.Item>
           </div>
           <div>
@@ -164,7 +164,7 @@ const ReviewCaseForm = props => {
                 },
               ]}
             >
-              <Input />
+              <Input required />
             </Form.Item>
           </div>
           <div>
@@ -183,7 +183,7 @@ const ReviewCaseForm = props => {
                 },
               ]}
             >
-              <Input />
+              <Input required />
             </Form.Item>
           </div>
           <div>
@@ -202,7 +202,7 @@ const ReviewCaseForm = props => {
                 },
               ]}
             >
-              <Input />
+              <Input required />
             </Form.Item>
           </div>
           <div>
@@ -221,7 +221,7 @@ const ReviewCaseForm = props => {
                 },
               ]}
             >
-              <Input />
+              <Input required />
             </Form.Item>
           </div>
           <div>
@@ -240,7 +240,7 @@ const ReviewCaseForm = props => {
                 },
               ]}
             >
-              <Input />
+              <Input required />
             </Form.Item>
           </div>
           <div className="type-of-violence-experienced">
@@ -259,7 +259,7 @@ const ReviewCaseForm = props => {
                 },
               ]}
             >
-              <Input />
+              <Input required />
             </Form.Item>
           </div>
           <div className="checkbox">
