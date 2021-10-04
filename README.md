@@ -5,7 +5,7 @@
 Human Rights First (HRF) is a non-profit, nonpartisan, 501(c)(3), international human rights organization based in New York, Washington D.C., Houston, and Los Angeles. HRF works to link immigration attorneys and advocates with asylum seekers and provide those attorneys with resources to best represent their clients. Our application leverages historical data to better inform advocates of a judge’s past decisions. The hope is that advocates for asylum seekers can use our tools to tailor their arguments before a particular judge and maximize their client's chances of receiving asylum.
 
 ## Getting Started
-The base technologies are JavaScript, HTML and CSS. The frontend leverages [React](https://reactjs.org/), the backend uses [Express](https://expressjs.com/) and [PostgreSQL](https://www.postgresql.org/), the server runs on [Heroku](heroku.com), and the authentication workflow runs on [Okta](https://developer.okta.com/okta-sdk-nodejs/jsdocs/). The frontend is hosted on [AWS](https://aws.amazon.com/) and the style guide/wireframe is located on [Figma](https://www.figma.com/file/V2XbE5rpvqrNLOXs3m82k8/HRF-Asylum-Labs34-A)
+The base technologies are JavaScript, HTML and CSS. The frontend leverages [React](https://reactjs.org/), the backend uses [Express](https://expressjs.com/) and [PostgreSQL](https://www.postgresql.org/), the server runs on [Heroku](heroku.com), and the authentication workflow runs on [Okta](https://developer.okta.com/okta-sdk-nodejs/jsdocs/). The frontend is hosted on [AWS](https://aws.amazon.com/) and the style guide/wireframe is located on [Figma](https://www.figma.com/file/V2XbE5rpvqrNLOXs3m82k8/HRF-Asylum-Labs34-A).
 
 ### Developer Instructions
 1. Clone both the [front-end](https://github.com/Lambda-School-Labs/human-rights-first-asylum-fe-a) and [back-end](https://github.com/Lambda-School-Labs/human-rights-first-asylum-be-a) repositories to your machine. DO NOT FORK.
@@ -46,10 +46,10 @@ The base technologies are JavaScript, HTML and CSS. The frontend leverages [Reac
 
 ### Still Needs Work
 
-- Home Page needs to accommdate for custom visualization with a form
+- Home Page needs to accommodate for custom visualization with a form
 - The ability to request to join the app still needs work see Trello Board
 - Groundwork has been laid for in-app notifications to work
-- BE needs to be built out for noticiations to work
+- BE needs to be built out for notifications to work
 - Stakeholders are deciding on what email notification system they want to use for external notifications, but not super important right now
 - Stakeholders have also mentioned users might want to be able to favorite/subscribe to specific judges so they can watch for new cases to be added that might be most relevant to them
 - Sort out where the support contact form goes (Check backend ENV credentials)
