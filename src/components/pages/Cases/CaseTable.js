@@ -8,8 +8,8 @@ import {
   FilePdfOutlined,
   CloseCircleOutlined,
   CheckCircleOutlined,
+  CloseOutlined,
 } from '@ant-design/icons';
-
 
 import { Table, Space, Button, Input, Tabs, notification, Tag } from 'antd';
 
@@ -185,7 +185,7 @@ export default function CaseTable(props) {
               });
             }}
           >
-            Save
+            Filter
           </Button>
         </Space>
       </div>
@@ -333,7 +333,7 @@ export default function CaseTable(props) {
       <div className="case-table-container">
         <Tabs defaultActiveKey="1" className="tabs">
           <TabPane tab="Initial Cases" key="1">
-            <div>
+            <div className="filterGallery">
               Filters:
               {processFilters(initialFilters).map(filter => {
                 return filter.value[0].split(', ').map(eachKeyWord => {
@@ -341,6 +341,7 @@ export default function CaseTable(props) {
                     <Tag key={eachKeyWord}>
                       {eachKeyWord}{' '}
                       <span
+                        className="remove-filter-button"
                         style={{ cursor: 'pointer' }}
                         onClick={() =>
                           removeSearchTerm(
@@ -353,7 +354,11 @@ export default function CaseTable(props) {
                           )
                         }
                       >
-                        X
+                        <CloseOutlined
+                          style={{
+                            marginLeft: '0.5rem',
+                          }}
+                        />
                       </span>
                     </Tag>
                   );
@@ -375,7 +380,6 @@ export default function CaseTable(props) {
                   FilePdfOutlined
                 )}
                 dataSource={nonAppCases}
-
                 //* Table's "onChange" accepts a callback function. Callback function accepts 4 arguments
                 //* pagination details, filter object, sorter, and current data respectivly. However,
                 //* currently I only need filter object. Therefore, only have first and second parameter written.
