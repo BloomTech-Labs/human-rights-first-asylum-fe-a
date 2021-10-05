@@ -14,9 +14,12 @@ import {
 import { Table, Space, Button, Input, Tabs, notification, Tag } from 'antd';
 
 import './CaseTable.less';
+
 import CaseDetails from '../CaseOverview/CaseDetails';
 //* Case column utils import
 import { case_columns } from '../../../utils/case_utils/case_columns.js';
+
+import { formatDate } from '../../../utils/format_date_util.js';
 
 //* Utils for filter keywords
 import {
@@ -24,8 +27,6 @@ import {
   processFilters,
   matchMultipleKeyWords,
 } from '../../../utils/filter_keyword_utils';
-
-import { formatDate } from '../../../utils/format_date_util.js';
 
 import DecisionRateChart from './DecisionRateChart';
 
@@ -42,11 +43,14 @@ export default function CaseTable(props) {
     isDisabled: true,
   });
 
-  const [isDetailsVisible, setIsDetailsVisible] = useState(false);
-  const [detailsData, setDetailsData] = useState(initialDetails);
+  const { caseData, userInfo, savedCases, setSavedCases } = props;
 
+  const { searchText, searchedColumn, selectedRowID, isDisabled } = state;
   //* state to keep track of filters being applied to the table (Initial cases section)
   const [initialFilters, setInitialFilters] = useState([]);
+
+  const [isDetailsVisible, setIsDetailsVisible] = useState(false);
+  const [detailsData, setDetailsData] = useState(initialDetails);
 
   const [
     match_tag_value_with_column_key,
@@ -57,6 +61,26 @@ export default function CaseTable(props) {
   });
 
   const [removing, setRemoving] = useState(false);
+
+  let casesData = caseData.map(cases => ({
+    judge_name:
+      cases.last_name +
+      ', ' +
+      cases.first_name +
+      ' ' +
+      cases.middle_initial +
+      '.',
+
+    check_for_one_year:
+      cases.check_for_one_year
+        .toString()
+        .charAt(0)
+        .toUpperCase() + cases.check_for_one_year.toString().slice(1),
+    case_row: cases,
+    ...cases,
+  }));
+
+  const { TabPane } = Tabs;
 
   const [queryValues] = useState({
     number: '',
@@ -80,30 +104,6 @@ export default function CaseTable(props) {
     setDetailsData(rowData);
     setIsDetailsVisible(true);
   };
-
-  const { caseData, userInfo, savedCases, setSavedCases } = props;
-
-  let casesData = caseData.map(cases => ({
-    judge_name:
-      cases.last_name +
-      ', ' +
-      cases.first_name +
-      ' ' +
-      cases.middle_initial +
-      '.',
-
-    check_for_one_year:
-      cases.check_for_one_year
-        .toString()
-        .charAt(0)
-        .toUpperCase() + cases.check_for_one_year.toString().slice(1),
-    case_row: cases,
-    ...cases,
-  }));
-
-  const { TabPane } = Tabs;
-
-  const { searchText, searchedColumn, selectedRowID, isDisabled } = state;
 
   const onSelectChange = selectedRowID => {
     setState({ selectedRowID });

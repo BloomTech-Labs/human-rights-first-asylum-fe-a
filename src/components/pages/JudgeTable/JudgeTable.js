@@ -8,10 +8,12 @@ import {
   CheckCircleOutlined,
   CloseOutlined,
 } from '@ant-design/icons';
+
 import { Table, Space, Button, Input, Tabs, notification, Tag } from 'antd';
+
 import './_JudgeTableStyles.less';
 
-// Column utils imports
+//* Column utils imports
 import { judge_columns } from '../../../utils/judge_utils/judge_columns';
 
 import { formatDate } from '../../../utils/format_date_util.js';
@@ -21,8 +23,8 @@ import {
   processFilters,
   matchMultipleKeyWords,
 } from '../../../utils/filter_keyword_utils.js';
+
 export default function JudgeTable(props) {
-  const { judgeData, userInfo, savedJudges, setSavedJudges } = props;
   const [state, setState] = useState({
     searchText: '',
     searchedColumn: '',
@@ -30,8 +32,12 @@ export default function JudgeTable(props) {
     isDisabled: true,
   });
 
+  const { judgeData, userInfo, savedJudges, setSavedJudges } = props;
+
   const { searchText, searchedColumn, selectedRowID, isDisabled } = state;
+  //* state to keep track of filters being applied to the table (Initial cases section)
   const [initialFilters, setInitialFilters] = useState([]);
+
   const [
     match_tag_value_with_column_key,
     set_match_tag_value_with_column_key,
@@ -39,6 +45,7 @@ export default function JudgeTable(props) {
     key: '',
     value: '',
   });
+
   const [removing, setRemoving] = useState(false);
 
   let judgesData = judgeData.map(judges => ({
@@ -104,6 +111,7 @@ export default function JudgeTable(props) {
           : ''}
         <Space>
           <Button
+            className="table-search-button"
             onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
             icon={<SearchOutlined />}
             size="small"
@@ -139,10 +147,11 @@ export default function JudgeTable(props) {
     filterIcon: filtered => (
       <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />
     ),
+
     onFilter: (value, record) =>
       record[dataIndex]
         ? matchMultipleKeyWords(
-            dataIndex == 'decision_date'
+            dataIndex === 'date_appointed'
               ? formatDate(record[dataIndex])
               : record[dataIndex],
             value
@@ -162,6 +171,7 @@ export default function JudgeTable(props) {
       ),
   });
   //* Config for ANT End
+
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
     setState({
@@ -187,8 +197,8 @@ export default function JudgeTable(props) {
   const findRowByID = (rowID, rowData) => {
     for (let i = 0; i < rowData.length; i++) {
       let currentRow = rowData[i];
-
       if (currentRow.judge_id === rowID) {
+        //flag dif
         return currentRow;
       }
     }
@@ -294,6 +304,10 @@ export default function JudgeTable(props) {
                   match_tag_value_with_column_key
                 )}
                 dataSource={judgesData}
+                //* Table's "onChange" accepts a callback function. Callback function accepts 4 arguments
+                //* pagination details, filter object, sorter, and current data respectivly. However,
+                //* currently I only need filter object. Therefore, only have first and second parameter written.
+
                 onChange={(pag, filt) => {
                   setInitialFilters(filt);
                 }}
