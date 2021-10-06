@@ -51,10 +51,8 @@ table {
 }
 /* End of Meyer Reset ------------ */
 
-/* My own reset style--------*/
 * {
     box-sizing:border-box;
-	/* max-width: 100%; // this line prevents the table from rendering for wahtever reason */
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
