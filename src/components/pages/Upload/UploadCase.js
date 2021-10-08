@@ -58,7 +58,7 @@ const UploadCase = ({ getPendingCases }) => {
     if (file) {
       setIsLoading(true);
       const fd = new FormData();
-      fd.append('image', file, file.name);
+      fd.append('case', file, file.name);
       axiosWithAuth()
         .post('/upload', fd)
         .then(res => console.log(res.data.imageURL))
@@ -82,7 +82,7 @@ const UploadCase = ({ getPendingCases }) => {
   };
 
   const DragProps = {
-    name: 'file',
+    name: 'case',
     multiple: true,
     accept: '.pdf',
     progress: false,
@@ -126,7 +126,7 @@ const UploadCase = ({ getPendingCases }) => {
                 Once your files have finished uploading, please make any
                 necessary corrections to the fields before submitting.
               </h2>
-              <form>
+              <form enctype="multipart/form-data">
                 <div className="pdf-upload">
                   <Dragger {...DragProps}>
                     <p className="ant-upload-drag-icon">
