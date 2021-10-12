@@ -4,7 +4,6 @@ import { Table } from 'antd';
 import Icon from '@ant-design/icons';
 import Delete from '../../../styles/icons/delete.svg';
 import './_SavedJudgesStyles.less';
-import { Divider } from 'antd';
 
 function SavedJudges({ savedJudges, deleteSavedJudge }) {
   const columns = [
@@ -58,7 +57,6 @@ function SavedJudges({ savedJudges, deleteSavedJudge }) {
     <div className="savedJudgesContainer">
       <div className="savedJudges">
         <h2 className="saved-judges-header">Saved Judges</h2>
-        {/* <Divider /> */}
         <Table columns={columns} dataSource={savedJudges} />
       </div>
     </div>
