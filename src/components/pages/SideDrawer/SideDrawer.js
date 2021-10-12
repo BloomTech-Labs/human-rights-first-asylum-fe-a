@@ -54,8 +54,12 @@ function SideDrawer() {
           title="Saved"
           style={{ backgroundColor: '#F4F6F7', paddingRight: 30 }}
         >
-          <Menu.Item key="/saved-cases">Saved Cases</Menu.Item>
-          <Menu.Item key="/saved-judges">Saved Judges</Menu.Item>
+          <Menu.Item className="saved-submenu-item" key="/saved-cases">
+            Saved Cases
+          </Menu.Item>
+          <Menu.Item className="saved-submenu-item" key="/saved-judges">
+            Saved Judges
+          </Menu.Item>
         </SubMenu>
 
         <Menu.Item className="my-cases" key="/my-cases">
