@@ -10,8 +10,6 @@ import {
 } from '@ant-design/icons';
 const { TextArea } = Input;
 
-//***There is a bug*** Currently, when you expand one caseObj they all expand. This may be an issue with accept and reject buttons - we don't want to accept all or reject all on accident!
-//
 export default function ManageCases(props) {
   const { authState } = props;
   const [apiData, setApiData] = useState([]);
@@ -169,6 +167,7 @@ export default function ManageCases(props) {
         <Table
           columns={columns}
           dataSource={apiData[0]}
+          rowKey={currentCase => currentCase.case_id}
           expandable={{
             expandedRowRender: caseObj => (
               <div key={caseObj.case_id}>
