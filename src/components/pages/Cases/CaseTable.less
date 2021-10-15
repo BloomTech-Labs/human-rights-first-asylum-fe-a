@@ -43,6 +43,7 @@
   margin: 0 0 2rem 10rem;
   padding: 1rem;
   display: flex;
+  position: relative;
 }
 
 .save-cases-btn {
@@ -109,4 +110,66 @@ button.ant-btn:hover {
   justify-content: center;
   align-items: center;
   margin: 0.5rem 0.5rem 0 0;
+}
+
+//horizontal-arrow-scroll indicator
+.arrow,
+.arrow:before {
+  position: absolute;
+}
+
+.arrow:after {
+  position: absolute;
+}
+
+.arrow{
+  top: 105px;
+  left: 95%;
+  -webkit-transform: rotate(318deg);
+}
+
+.arrow:after{
+  content: '';
+  width:30px;
+  height: 30px;
+  margin: -10px 0 0 -10px;
+  border-left: none;
+  border-top: none;
+  border-right: 5px #2a5c8d solid;
+  border-bottom: 5px #2a5c8d solid;
+  animation-duration: 1.8s;
+  animation-iteration-count: 4;
+  animation-name: arrow;
+  animation-name: hideAnimation 0s ease-in 5s;
+  animation-fill-mode: forwards;
+}
+
+.arrow:before{
+  content: '';
+  width:20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border-left: none;
+  border-top: none;
+  border-right: 5px #2a5c8d solid;
+  border-bottom: 5px #2a5c8d solid;
+  animation-duration: 1.8s;
+  animation-iteration-count: 4;
+  animation-name: arrow;
+  animation-name: hideAnimation 0s ease-in 5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes arrow {
+  0%{ opacity: 1}
+  100%{ opacity: 0;
+    transform: translate(-10px, -10px)}
+}
+
+@keyframes hideAnimation {
+  to {
+    visibility: hidden;
+    width: 0;
+    height: 0;
+  }
 }
