@@ -125,19 +125,6 @@ export default function JudgePage(props) {
       {judge && (
         <div>
           <div className="imgBox">
-            <h3 className="judgeDisclaimer">
-              Judge {judge.first_name} {judge.middle_initial} {judge.last_name}{' '}
-              serves in the county of {judge.county}.<br></br>
-              <br></br> All visualizations regarding Judge {judge.last_name}'s
-              asylum acceptance and denial rates reflect only the data in the
-              database. As more cases are added, more data can be visualized.
-              You can find more context for individual judge data at this
-              resource's
-              <a href="https://trac.syr.edu/immigration/reports/judgereports/">
-                {' '}
-                website.
-              </a>
-            </h3>
             <h1>
               {judge.first_name +
                 ' ' +
@@ -156,6 +143,20 @@ export default function JudgePage(props) {
             >
               Biography
             </a>
+            <br></br>
+            <h3 className="judgeDisclaimer">
+              Judge {judge.first_name} {judge.middle_initial} {judge.last_name}{' '}
+              serves in the county of {judge.county}.<br></br>
+              <br></br> All visualizations regarding Judge {judge.last_name}'s
+              asylum acceptance and denial rates reflect only the data in the
+              database. As more cases are added, more data can be visualized.
+              You can find more context for individual judge data at this
+              resource's
+              <a href="https://trac.syr.edu/immigration/reports/judgereports/">
+                {' '}
+                website.
+              </a>
+            </h3>
           </div>
 
           <div className="judgeStatsVizDiv">
