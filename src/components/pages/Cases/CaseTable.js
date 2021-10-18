@@ -333,6 +333,7 @@ export default function CaseTable(props) {
       <div className="case-table-container">
         <Tabs defaultActiveKey="1" className="tabs">
           <TabPane tab="Initial Cases" key="1">
+            <div className="arrow"></div>
             <div className="filterGallery">
               Filters:
               {processFilters(initialFilters).map(filter => {
