@@ -31,7 +31,7 @@ import ManageUsersPage from '../AdminTools/ManageUsers';
 import AddFaq from '../AdminTools/AddFaq';
 import ManageFaqPage from '../AdminTools/ManageFaq';
 import EditFaqPage from '../AdminTools/EditFaq';
-
+import HomePageUpload from '../Upload/HomePageUpload';
 // Global styling for MUI components
 import Lato from '../../../styles/Lato-Font.woff2';
 
@@ -82,6 +82,7 @@ function RenderHomePage(props) {
   const [myPendingCases, setMyPendingCases] = useState([]);
   const [hasUpdated, setHasUpdated] = useState(false);
   const user = useContext(UserContext);
+  const { GetPendingCases } = props;
 
   useEffect(() => {
     axiosWithAuth()
@@ -269,6 +270,7 @@ function RenderHomePage(props) {
 
             <Route exact path="/">
               <DataHub caseData={caseData} />
+              <HomePageUpload GetPendingCases={GetPendingCases} />
             </Route>
 
             <Route exact path="/cases">

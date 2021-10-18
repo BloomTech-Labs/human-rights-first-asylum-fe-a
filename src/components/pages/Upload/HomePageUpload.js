@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
-import { notification, Upload, Modal, Button, Spin } from 'antd';
+import { notification, Upload, Button, Spin } from 'antd';
 import {
   CheckCircleOutlined,
   CloseCircleOutlined,
@@ -13,7 +13,7 @@ import './_UploadCase.less';
 import Icon from '@ant-design/icons';
 import UploadCaseBox from '../../../styles/icons/upload-box.svg';
 
-const UploadCase = ({ getPendingCases }) => {
+const HomePageUpload = ({ getPendingCases }) => {
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
   const { Dragger } = Upload;
@@ -58,7 +58,7 @@ const UploadCase = ({ getPendingCases }) => {
     if (file) {
       setIsLoading(true);
       const fd = new FormData();
-      fd.append('case', file, file.name);
+      fd.append('image', file, file.name);
       axiosWithAuth()
         .post('/upload', fd)
         .then(res => console.log(res.data.imageURL))
@@ -66,10 +66,6 @@ const UploadCase = ({ getPendingCases }) => {
     } else {
       setIsLoading(false);
     }
-  };
-
-  const showModal = () => {
-    setIsModalVisible(true);
   };
 
   const handleOk = () => {
@@ -82,7 +78,7 @@ const UploadCase = ({ getPendingCases }) => {
   };
 
   const DragProps = {
-    name: 'case',
+    name: 'file',
     multiple: true,
     accept: '.pdf',
     progress: false,
@@ -93,70 +89,63 @@ const UploadCase = ({ getPendingCases }) => {
   };
   return (
     <div className="uploadPage">
-      <div className="uploadButton">
-        <Button className="upload-btn" onClick={showModal}>
-          <span>Upload A Case</span>
-        </Button>
-        <Modal
-          title=""
-          visible={isModalVisible}
-          onOk={handleOk}
-          onCancel={handleCancel}
-          footer={[
-            <div key="footer" className="footer-btn">
-              <Button className="not-now-btn" key="back" onClick={handleCancel}>
-                Not Now
-              </Button>
-              <Button className="review-btn" key="review" onClick={handleOk}>
-                Review Cases
-              </Button>
-            </div>,
-          ]}
-        >
-          <div className="pdf-container">
-            <div>
-              <h1 className="uploadh1">Upload Cases</h1>
-              {/*<div className="divider" />*/}
-            </div>
-            <div className="pdfUpload">
-              <h2 className="h2Styles">
-                Select the PDF case files that you wish to upload.
-              </h2>
-              <h2 className="h2Styles">
-                Once your files have finished uploading, please make any
-                necessary corrections to the fields before submitting.
-              </h2>
-              <form enctype="multipart/form-data">
-                <div className="pdf-upload">
-                  <Dragger {...DragProps}>
-                    <p className="ant-upload-drag-icon">
-                      <Icon
-                        component={() => (
-                          <img src={UploadCaseBox} alt="uplaod case icon" />
-                        )}
-                      />
-                    </p>
-                    <p className="ant-upload-text">
-                      Click here or drag files to this area to upload
-                    </p>
-                  </Dragger>
-                  <>
-                    {isLoading ? (
-                      <div className="spinner_container">
-                        <Spin indicator={spinner} />
-                      </div>
-                    ) : (
-                      <p />
-                    )}
-                  </>
-                </div>
-              </form>
-            </div>
+      <div
+        title=""
+        onOk={handleOk}
+        onCancel={handleCancel}
+        footer={[
+          <div key="footer" className="footer-btn">
+            <Button className="not-now-btn" key="back" onClick={handleCancel}>
+              Not Now
+            </Button>
+            <Button className="review-btn" key="review" onClick={handleOk}>
+              Review Cases
+            </Button>
+          </div>,
+        ]}
+      >
+        <div className="pdf-container">
+          <div>
+            <h1 className="uploadh1">Upload A Case</h1>
           </div>
-        </Modal>
+          <div className="pdfUpload">
+            <h2 className="h2Styles">
+              Select the PDF case files that you wish to upload.
+            </h2>
+            <h2 className="h2Styles">
+              Once your files have finished uploading, please make any necessary
+              corrections to the fields before submitting.
+            </h2>
+            <form>
+              <div className="pdf-upload">
+                <Dragger {...DragProps}>
+                  <p className="ant-upload-drag-icon">
+                    <Icon
+                      component={() => (
+                        <img src={UploadCaseBox} alt="uplaod case icon" />
+                      )}
+                    />
+                  </p>
+                  <p className="ant-upload-text">
+                    Click here or drag files to this area to upload
+                  </p>
+                </Dragger>
+                <>
+                  {isLoading ? (
+                    <div className="spinner_container">
+                      <Spin indicator={spinner} />
+                    </div>
+                  ) : (
+                    <p />
+                  )}
+                </>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
-export default UploadCase;
+export default HomePageUpload;
