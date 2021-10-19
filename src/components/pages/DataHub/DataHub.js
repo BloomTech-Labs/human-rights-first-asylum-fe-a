@@ -210,10 +210,10 @@ const DataHub = props => {
         <TestDataChart />
       </div>
       <Divider />
-      <div className="subChartsContainer">
+      {/*<div className="subChartsContainer">
         <CaseDataChart />
         <h2>Ratio of Cases Resulting In Granted Asylum: {grantedRatio}%</h2>
-      </div>
+      </div>*/}
     </div>
   );
 };
