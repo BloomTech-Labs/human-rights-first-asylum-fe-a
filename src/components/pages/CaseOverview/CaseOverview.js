@@ -84,7 +84,7 @@ const CaseOverview = props => {
               </p>
               <p>Applicant Gender: {caseData.applicant_gender}</p>
               <p>
-                Persecution Experienced:{' '}
+                Type of Persecution Experienced:
                 {caseData.type_of_persecution_experienced}
               </p>
               <br />
