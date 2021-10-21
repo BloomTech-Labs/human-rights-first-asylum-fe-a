@@ -104,9 +104,9 @@ const HomePageUpload = ({ getPendingCases }) => {
           </div>,
         ]}
       >
-        <div className="pdf-container">
+        <div className="Home-pdf-container">
           <div>
-            <h1 className="uploadh1">Upload A Case</h1>
+            <h1 className="uploadh1">Upload a Case</h1>
           </div>
           <div className="pdfUpload">
             <h2 className="h2Styles">
@@ -118,7 +118,7 @@ const HomePageUpload = ({ getPendingCases }) => {
             </h2>
             <form>
               <div className="pdf-upload">
-                <Dragger {...DragProps}>
+                <Dragger {...DragProps} className="Dragger">
                   <p className="ant-upload-drag-icon">
                     <Icon
                       component={() => (
