@@ -72,7 +72,7 @@ const CaseOverview = props => {
                 {caseData.initial_or_appellate ? 'True' : 'False'}
               </p>
               <p>Case Origin: {caseData.case_origin}</p>
-              <p>Filed 1 Year: {caseData.check_for_one_year}</p>
+              <p>Filed Within One Year: {caseData.check_for_one_year}</p>
               <br />
               <p style={{ textDecoration: 'underline', fontWeight: 'bold' }}>
                 Client Specifics
@@ -84,7 +84,8 @@ const CaseOverview = props => {
               </p>
               <p>Applicant Gender: {caseData.applicant_gender}</p>
               <p>
-                Violence Experienced: {caseData.type_of_persecution_experienced}
+                Type of Persecution Experienced:
+                {caseData.type_of_persecution_experienced}
               </p>
               <br />
               <p style={{ textDecoration: 'underline', fontWeight: 'bold' }}>
